@@ -3,17 +3,20 @@ import React from 'react'
 import Campground from './Campground'
 
 class Campgrounds extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (
       <div>
         <ul>
           {this.props.campgrounds.map(val => {
-            return <Campground name={val.name} image={val.image} id={val.id}/>
-            })
+            return (
+              <li key={val.id}>
+                <Campground name={val.name} image={val.image}/>
+              </li>
+            )})
           }
         </ul>
       </div>

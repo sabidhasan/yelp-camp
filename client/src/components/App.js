@@ -1,18 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 // TO--DO: IMPORT CSS
 import Header from './Header'
 import Banner from './Banner'
 import Campgrounds from './Campgrounds'
+import AddCampground from './AddCampground'
 import Footer from './Footer'
 
 
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       campgrounds: []
     }
+
+    this.addNewCampground = this.addNewCampground.bind(this);
+  }
+
+  addNewCampground(campground) {
+    this.setState({ campgrounds: campground })
   }
 
   componentDidMount() {
@@ -30,6 +37,7 @@ class App extends Component {
         <Header />
         <Banner />
         <Campgrounds campgrounds={this.state.campgrounds} />
+        <AddCampground onSuccess={this.addNewCampground}/>
         <Footer />
       </div>
     );
