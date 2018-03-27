@@ -1,0 +1,16 @@
+# TO DO LIST
+
+## Google map integration
+## Comments
+## Ratings
+
+
+Each camp should have:
+## name
+## description
+## submitted by
+## ratings
+## price
+## tags (two random amenities) / amenities
+## address
+## open time of year
