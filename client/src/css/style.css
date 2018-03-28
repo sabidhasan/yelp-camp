@@ -1,1 +1,32 @@
-body {background: pink}
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 15px 10px;
+}
+header > * {
+  display: block;
+}
+.title {
+  flex: 5;
+  font-size: 2rem;
+  font-weight: bold;
+}
+header > a {
+  flex: 1;
+  text-align: center;
+}
