@@ -9,17 +9,16 @@ class Campgrounds extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul>
-          {this.props.campgrounds.map(val => {
-            return (
-              <li key={val.id}>
-                <Campground name={val.name} image={val.image}/>
-              </li>
-            )})
-          }
-        </ul>
-      </div>
+      <ul className="highlightedCampgrounds">
+        <h1></h1>
+        {this.props.campgrounds.map(val => {
+          return (
+            <li key={val.id}>
+              <Campground name={val.name} image={val.image}/>
+            </li>
+          )})
+        }
+      </ul>
     )
   }
 }

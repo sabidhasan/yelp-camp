@@ -2,6 +2,17 @@ import React from 'react'
 import SearchBar from './SearchBar'
 
 class Banner extends React.Component {
+
+
+
+  componentDidMount() {
+    fetch('/randomCampground')
+      .then(res => res.json())
+      .then(campground => {
+        console.log(document.styleSheets[0]);
+      })
+    }
+
   render(props) {
     return (
       <div className="banner">
@@ -10,9 +21,9 @@ class Banner extends React.Component {
           <h2>Search for campgrounds ⛺ across Canada 🍁</h2>
         </div>
         <SearchBar />
-        <caption>
+        <span>
           This is the photo caption.
-        </caption>
+        </span>
       </div>
     )
   }
