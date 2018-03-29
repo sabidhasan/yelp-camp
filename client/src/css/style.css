@@ -25,20 +25,20 @@ body {
 }
 
 /* TOP NAV */
-header {
+nav {
   padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-header > * {
+nav > * {
   display: block;
 }
 .title {
   font-size: 1.5rem;
   font-weight: bold;
 }
-header > a {
+nav > a {
   flex: 1;
   text-align: center;
 }
@@ -69,7 +69,7 @@ header > a {
   /* align-self: flex-end; */
 }
 .banner h2 {
-  font-weight: normal;
+  font-weight: 200;
   /* align-self: flex-start; */
 }
 .banner span {
@@ -115,4 +115,49 @@ header > a {
 }
 .searchbar > input:focus {
   width: 80vw;
+}
+
+.highlightedCampgrounds {
+  margin: 40px 10px;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 15px;
+}
+.highlightedCampgrounds h1 {
+  display: flex;
+  grid-column: 1 / -1;
+  font-size: 1.7rem;
+  font-weight: 200;
+}
+.highlightedCampgrounds h1 span:first-child {
+  flex: 1;
+}
+.highlightedCampgrounds li {
+  border: 1px solid gray;
+  text-align: center;
+  padding: 10px 0px;
+  animation: item-fade-in 1s;
+}
+.highlightedCampgrounds li span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.highlightedCampgrounds li a {
+  flex-basis: 100%;
+}
+.highlightedCampgrounds li img {
+  max-width: 90%;
+  border-radius: 3px;
+  max-height: 250px;
+  flex-basis: 100%;
+}
+
+@keyframes item-fade-in {
+  from {opacity: 0; background: black;}
+  to {opacity: 1; background: white;}
 }
