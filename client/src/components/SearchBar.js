@@ -5,7 +5,7 @@ class SearchBar extends React.Component {
     return (
       <form className="searchbar">
         <label htmlFor="search">Find</label>
-        <input name="search" type="text" placeholder="Provice, Region, City or Campground Name" />
+        <input name="search" type="text" placeholder="Province, Region, City or Campground Name" />
         <button type="submit">🔎</button>
       </form>
     )

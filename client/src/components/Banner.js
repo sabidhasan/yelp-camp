@@ -6,11 +6,11 @@ class Banner extends React.Component {
 
 
   componentDidMount() {
-    fetch('/randomCampground')
-      .then(res => res.json())
-      .then(campground => {
-        console.log(document.styleSheets[0]);
-      })
+    // fetch('/randomCampground')
+    //   .then(res => res.json())
+    //   .then(campground => {
+    //     console.log(document.styleSheets[0]);
+    //   })
     }
 
   render(props) {
@@ -22,7 +22,7 @@ class Banner extends React.Component {
         </div>
         <SearchBar />
         <span>
-          This is the photo caption.
+          {this.props.quote /*"This is the photo caption"*/}
         </span>
       </div>
     )
