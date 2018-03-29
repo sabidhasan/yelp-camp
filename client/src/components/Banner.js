@@ -1,12 +1,18 @@
 import React from 'react'
+import SearchBar from './SearchBar'
 
 class Banner extends React.Component {
   render(props) {
     return (
       <div className="banner">
-        <h1>Welcome to YelpCamp!</h1>
-        <h2>View our hand picked campgrounds from all over the country!</h2>
-        <button className="addCampground">Add Campground</button>
+        <div className="title">
+          <h1>Welcome to YelpCamp!</h1>
+          <h2>Search for campgrounds ⛺ across Canada 🍁</h2>
+        </div>
+        <SearchBar />
+        <caption>
+          This is the photo caption.
+        </caption>
       </div>
     )
   }

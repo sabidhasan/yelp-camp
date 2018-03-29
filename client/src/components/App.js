@@ -33,7 +33,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <Header />
         <Banner />
         <Campgrounds campgrounds={this.state.campgrounds} />
