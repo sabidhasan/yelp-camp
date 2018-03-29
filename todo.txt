@@ -3,7 +3,7 @@
 ## Google map integration
 ## Comments
 ## Ratings
-
+## Search
 
 Each camp should have:
 ## name
