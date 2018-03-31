@@ -74,7 +74,6 @@ class App extends React.Component {
                 <Banner {...routerProps} quote={this.state.quote} />
                 <Campgrounds {...routerProps} campgrounds={this.state.highlightedCampgrounds}
                   newRandoms={this.newRandoms}
-                  
                 />
               </React.Fragment>
             )
