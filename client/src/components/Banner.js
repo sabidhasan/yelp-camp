@@ -22,7 +22,7 @@ class Banner extends React.Component {
         </div>
         <SearchBar />
         <span>
-          {this.props.quote /*"This is the photo caption"*/}
+          { this.props.quote }
         </span>
       </div>
     )

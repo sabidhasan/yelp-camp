@@ -2,10 +2,10 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div>
-      <h2>Trademark YelpCamp 2016. All Rights Reserved</h2>
-      <h3>YelpCamp created in The Web Developer Bootcamp by Colt Steele</h3>
-    </div>
+    <footer>
+      <h2>Copyright YelpCamp 2016</h2>
+      <h3>YelpCamp was created as part of <a href="#">The Web Developer Bootcamp</a> by Colt Steele</h3>
+    </footer>
   )
 }
 

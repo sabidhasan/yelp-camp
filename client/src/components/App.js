@@ -1,5 +1,6 @@
 import React from 'react';
-// TO--DO: IMPORT CSS
+import { Switch, Route } from 'react-router-dom'
+
 import Header from './Header'
 import Banner from './Banner'
 import Campgrounds from './Campgrounds'
@@ -53,7 +54,7 @@ class App extends React.Component {
       .then(campgrounds => {
         this.setState({ campgrounds: campgrounds });
         //gerate new highlighted campgrounds
-        this.newRandoms();
+        this.newRandoms(8);
       });
 
       fetch('/quote')
@@ -65,11 +66,20 @@ class App extends React.Component {
     return (
       <div className="container">
         <Header />
-        <Banner quote={this.state.quote} />
-        <Campgrounds campgrounds={this.state.highlightedCampgrounds}
-          newRandoms={this.newRandoms} />
-        <AddCampground onSuccess={this.addNewCampground}/>
+
+        <Switch>
+          <Route exact path='/' render={(routerProps) => {
+            return (
+              <React.Fragment>
+                <Banner {...routerProps} quote={this.state.quote} />
+                <Campgrounds {...routerProps} campgrounds={this.state.highlightedCampgrounds} newRandoms={this.newRandoms} />
+              </React.Fragment>
+            )
+          }} />
+        </Switch>
+
         <Footer />
+
       </div>
     );
   }
