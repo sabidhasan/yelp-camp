@@ -6,8 +6,6 @@ class Campgrounds extends React.Component {
   constructor(props) {
     super(props);
       this.state = {spin: false};
-      this.addSpin = this.addSpin.bind(this);
-      this.removeSpin = this.removeSpin.bind(this);
   }
 
   componentDidMount() {

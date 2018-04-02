@@ -6,6 +6,7 @@ import Banner from './Banner'
 import Campgrounds from './Campgrounds'
 import AddCampground from './AddCampground'
 import Footer from './Footer'
+import SingleCampground from './SingleCampground'
 
 
 
@@ -49,7 +50,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/campgrounds')
+    fetch('/campground')
       .then(res => res.json())
       .then(campgrounds => {
         this.setState({ campgrounds: campgrounds });
@@ -66,7 +67,11 @@ class App extends React.Component {
     return (
       <div className="container">
         <Header />
-
+        {/* ROUTES:
+          1. /
+          2. /campground/id
+          3. /addreview => campground POST in backend
+        */}
         <Switch>
           <Route exact path='/' render={(routerProps) => {
             return (
@@ -76,8 +81,13 @@ class App extends React.Component {
                   newRandoms={this.newRandoms}
                 />
               </React.Fragment>
-            )
+            );
           }} />
+
+          <Route exact path="/campground/:id" render={(routerProps) => {
+              return <SingleCampground {...routerProps} />
+          }} />
+
         </Switch>
 
         <Footer />
