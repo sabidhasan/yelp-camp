@@ -1,16 +1,38 @@
 # TO DO LIST
 
-## Google map integration
+1. Scrape Data
+
+2. ## FRONT END ROUTES
+	/			welcome page
+	/campground/:id		single campground page
+	/signup
+	/logout			?
+	/signin
+	/search			shows search suggestions
+
+3. ## BACK END ROUTES
+	/
+	/campgrounds
+	/quote
+	/search			returns search suggestions
+
+4. Mobile Layout
+
+
+## Single Campground Page
+	Each camp should have:
+	## name
+	## description
+	## submitted by
+	## ratings
+	## price
+	## tags (two random amenities) / amenities
+	## address (SHOW MAP)
+	## open time of year
+	## number of sites
+	## phone number
+
+
 ## Comments
 ## Ratings
 ## Search
-
-Each camp should have:
-## name
-## description
-## submitted by
-## ratings
-## price
-## tags (two random amenities) / amenities
-## address
-## open time of year
