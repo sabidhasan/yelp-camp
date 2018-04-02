@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
 
+
 // Settings
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
@@ -58,7 +59,25 @@ const quotes = [
   "Cold Air Dark Night Warm Fire Bright Stars",
   "Camp more, worry less",
   "Of all the paths you can take in life, make sure a few of them are dirt",
-  "The forest makes your heart gentle"
+  "The forest makes your heart gentle",
+  "Adopt the pace of nature: her secret is patience",
+  "Adventure is waiting",
+  "Born to camp",
+  "Nothing adventured, nothing attained",
+  "The earth has music for those who listen",
+  "Wander without a reason or purpose",
+  "Live in the sunshine, swim in the sea, drink the wild air",
+  "The poetry of the earth is never dead",
+  "I took a walk in the woods and came out taller than the trees",
+  "Take only memories, leave only footprints",
+  "Camping is nature's way of promoting the motel business",
+  "A crude meal, no doubt, but the best of all sauces is hunger.",
+  "A great many people, and more all the time, live their entire lives without ever once sleeping out under the stars",
+  "The stars were better company anyway. They were very beautiful, and they almost never snored.",
+  "“Forget not that the earth delights to feel your bare feet and winds long to play with your hair",
+  "Nature gives to every time and season some beauties of its own",
+  "Choose only one master – Nature",
+  "We do not see nature with our eyes, but with our understandings and our hearts"
 ];
 
 
@@ -66,11 +85,20 @@ app.get('/quote', function(req, res) {
     res.json([quotes[Math.floor(Math.random() * quotes.length)]]);
 });
 
-app.get('/campgrounds', function(req, res) {
-  // return all campgrounds for front end
+app.get('/campground', function(req, res) {
+  // return a particular campground (if requested) or all campgrounds
+  if (req.query.id) {
+    // TO-DO: MONGODB WILL HANDLE THIS REQUEST
+    if (campgrounds[req.query.id]) {
+      res.json(campgrounds[req.query.id]);
+    } else {
+      res.sendStatus(400);
+    }
+  }
+  //send all campgrounds, since no valid request
   res.json(campgrounds);
 });
-app.post('/campgrounds', function(req, res) {
+app.post('/campground', function(req, res) {
   //add to campgrounds array... basic validation
   try {
     if (req.body.name.length > 10 || req.body.image.length > 20) throw new Error();

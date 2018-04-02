@@ -1,6 +1,7 @@
 // Basic file for loading react
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom'
 
 import './css/style.css';
 
@@ -10,4 +11,9 @@ import App from './components/App.js';
 // TO--DO
 // add logic here for routing using BrowserRouter
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
