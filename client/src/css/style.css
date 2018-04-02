@@ -13,6 +13,9 @@ html, body {
 a {
   text-decoration: none;
 }
+.bold {
+  font-weight: bold;
+}
 
 /* BODY */
 body {
@@ -21,15 +24,17 @@ body {
 
 /* WHOLE APP CONTAINER */
 .container {
-  padding: 15px 0;
+  padding: 0;
 }
 
 /* TOP NAV */
 nav {
-  padding: 0 10px;
-  display: flex;
+  padding: 10px;
+  background: red;
+  display: grid;
+  grid-template-columns: 1fr repeat(3, auto);
+  grid-gap: 75px;
   align-items: center;
-  justify-content: flex-start;
 }
 nav > * {
   display: block;
@@ -136,6 +141,7 @@ nav > a {
 }
 .highlightedCampgrounds li {
   border: 1px solid gray;
+  border-radius: 3px;
   text-align: center;
   padding: 10px 0px;
   animation: item-fade-in 1s;
@@ -157,7 +163,105 @@ nav > a {
   flex-basis: 100%;
 }
 
+footer {
+  padding: 10px;
+  background: lightgray;
+  border-top: 2px solid gray;
+  text-align: center;
+}
+footer > * {
+  margin: 0;
+  padding: 0;
+  font-size: .8rem;
+  font-weight: normal;
+}
 @keyframes item-fade-in {
   from {opacity: 0; background: black;}
   to {opacity: 1; background: white;}
+}
+
+
+.spin {
+  animation: test .5s;
+  animation-iteration-count: 1;
+}
+@keyframes test {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+.singleCampground {
+  padding: 20px 10px;
+}
+.singleCampground img {
+  max-width: 100%;
+}
+
+.mapContainer {
+  height: 300px;
+  width: 70%;
+}
+.map {
+  width: 100%;
+  height: 300px;
+}
+.gmnoprint, .gm-style-cc {
+  display: none;
+}
+
+.infoBox {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.rating {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 3px;
+}
+.rating h2 {
+  flex-basis: 100%;
+  margin: 0;
+}
+.star {
+  /* background for star */
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  background: red;
+  margin: 0 3px;
+  overflow: hidden;
+  /* To force ::before/::after divs to be positioned */
+  position: relative;
+}
+.star:after {
+  /* star text content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '★';
+  color: white;
+  font-size: 1.5rem;
+}
+.star:before {
+  display: block;
+  content: ' ';
+  height: 100%;
+  background: green;
+  opacity: 0.8;
+}
+
+.star100:before {
+  transform: translateX(0%);
+}
+.star50:before {
+  transform: translateX(-50%);
+}
+.star0:before {
+  transform: translateX(-100%);
 }
