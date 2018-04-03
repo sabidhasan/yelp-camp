@@ -10,6 +10,8 @@
 	/signin
 	/search			shows search suggestions
 
+	Add a new review feature in reviews component (and update it!)
+
 3. ## BACK END ROUTES
 	/
 	/campgrounds
