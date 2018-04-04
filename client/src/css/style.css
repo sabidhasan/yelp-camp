@@ -370,8 +370,32 @@ footer > * {
 .star100:before {
   transform: translateX(0%);
 }
+.star90:before {
+  transform: translateX(-10%);
+}
+.star80:before {
+  transform: translateX(-20%);
+}
+.star70:before {
+  transform: translateX(-30%);
+}
+.star60:before {
+  transform: translateX(-40%);
+}
 .star50:before {
   transform: translateX(-50%);
+}
+.star40:before {
+  transform: translateX(-60%);
+}
+.star30:before {
+  transform: translateX(-70%);
+}
+.star20:before {
+  transform: translateX(-80%);
+}
+.star10:before {
+  transform: translateX(-90%);
 }
 .star0:before {
   transform: translateX(-100%);
