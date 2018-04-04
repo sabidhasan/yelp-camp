@@ -1,6 +1,5 @@
 import React from 'react'
-
-import Campground from './Campground'
+import CampgroundTile from './CampgroundTile'
 
 class Campgrounds extends React.Component {
   constructor(props) {
@@ -29,7 +28,7 @@ class Campgrounds extends React.Component {
         {this.props.campgrounds.map(val => {
           return (
             <li key={val.id}>
-              <Campground name={val.name} image={val.image}/>
+              <CampgroundTile id={val.id} name={val.name} image={val.image}/>
             </li>
           )})
         }

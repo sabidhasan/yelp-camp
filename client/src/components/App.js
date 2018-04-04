@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom'
 import Header from './Header'
 import Banner from './Banner'
 import Campgrounds from './Campgrounds'
-import AddCampground from './AddCampground'
 import Footer from './Footer'
 import SingleCampground from './SingleCampground'
 
