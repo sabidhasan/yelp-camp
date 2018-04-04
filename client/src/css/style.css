@@ -56,9 +56,13 @@ nav {
 nav > * {
   display: block;
 }
-.title {
-  font-size: 1.5rem;
+nav > .title {
+  font-size: 1.9rem;
+  letter-spacing: .15rem;
   font-weight: bold;
+  text-align: left;
+  color: white;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
 nav > a {
   flex: 1;

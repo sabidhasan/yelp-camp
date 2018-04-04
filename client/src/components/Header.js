@@ -4,10 +4,10 @@ class Header extends React.Component {
   render(props) {
     return (
       <nav>
-        <span className="title">YelpCamp</span>
-        <a href="#" className="discover">Discover</a>
-        <a href="#" className="Login">Login</a>
-        <a href="#" className="Sign Up">Sign Up</a>
+        <a className='title' href='/'>YelpCamp</a>
+        <a href='#' className='discover'>Discover</a>
+        <a href='#' className='Login'>Login</a>
+        <a href='#' className='Sign Up'>Sign Up</a>
       </nav>
     )
   }
