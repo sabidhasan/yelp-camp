@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import CampMap from './CampMap'
 import InfoBox from './InfoBox'
 import SideBarInfoBox from './SideBarInfoBox'
@@ -9,11 +10,10 @@ import NewReviewForm from './NewReviewForm'
 class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
-    this.requestedID = this.props.match.params.id;
+    this.requestedID = parseInt(this.props.match.params.id);
 
     this.state = {
       editable: false,
-      id: undefined,
       image: undefined,
       name: undefined,
       rating: 3.5,
@@ -28,22 +28,23 @@ class SingleCampground extends React.Component {
       hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'},
       prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'},
       paymentMethods: ['interac', 'cash'],
-      reviews: [
-        {id: 0, author: 'John', time: 'Apr 1, 2018', rating: 5, text: 'More text here'},
-        {id: 1, author: 'Jane', time: 'Mar 28, 2018', rating: 4, text: 'Lorem Ipsum'},
-        {id: 2, author: 'Jim', time: 'Mar 22, 2018', rating: 2, text: 'This is an OK campground'},
-        {id: 3, author: 'Jason', time: 'Jan 2, 2018', rating: 0, text: 'Worst camp ever'}
-      ]
+      comments: []
     }
 
-    this.editFormToggle = this.editFormToggle.bind(this);
+    this.toggleReviewForm = this.toggleReviewForm.bind(this);
+    this.addNewComment = this.addNewComment.bind(this);
+    this.calculateRating = this.calculateRating.bind(this);
   }
 
-  componentDidMount(props) {
+  // componentWillReceiveProps(np) {
+  //   console.log(np);
+  // }
+
+  componentDidMount() {
     fetch(`/campground?id=${this.requestedID}`)
       .then(res => res.json())
       .then(campground => {
-        this.setState({id: campground.id, image: campground.image, name: campground.name});
+        this.setState({comments: campground.comments, image: campground.image, name: campground.name});
       })
       .catch(err => {
         //TO--DO proper error handling for all fetch
@@ -51,13 +52,28 @@ class SingleCampground extends React.Component {
       });
   }
 
-  editFormToggle(event) {
+  calculateRating() {
+    if (this.state.comments.length) {
+      console.log();
+      return this.state.comments.reduce((acc, val) => acc + val.rating, 0) / this.state.comments.length
+    }
+    return 0;
+  }
+
+  addNewComment(comment) {
+    //takes comment from NewReviewForm and adds to this components comments array
+    const newCommentArray = this.state.comments.concat([comment]);
+    this.setState({comments: newCommentArray});
+  }
+
+  toggleReviewForm(event, show) {
+    //show true = show form, false = hide form
     event.preventDefault();
-    const test = !this.state.editable;
-    this.setState({editable: test}, () => console.log(this.state));
-    // const newreviews = this.state.reviews.concat([{id: 4, author: 'test', time: '2', rating: '4', text: 'sometext'}])
-    // this.setState({reviews: newreviews}, () => console.log(this.state, 'edit complete'));
-    // this.setState({rating: 5})
+    this.setState({editable: show});
+    if (show) {
+      const form = ReactDOM.findDOMNode(this.refs.reviewForm);
+      window.scrollTo(0, form.offsetTop);
+    }
   }
 
   render() {
@@ -65,11 +81,11 @@ class SingleCampground extends React.Component {
       <div className='singleCampground'>
         <h1 className='title'>{this.state.name}</h1>
 
-        <button href="#" className="review-link" onClick={this.editFormToggle} >Write a Review</button>
+        <button href="#" className="review-link" onClick={(event) => this.toggleReviewForm(event, true)} >Write a Review</button>
 
         <div className='rating'>
-          <RatingBar rating={this.state.rating} />
-          <h2>{this.state.reviews.length} Reviews</h2>
+          <RatingBar rating={this.calculateRating()} />
+          <h2>{this.state.comments.length} Reviews</h2>
         </div>
 
 
@@ -97,9 +113,14 @@ class SingleCampground extends React.Component {
 
         <img className='campground-image' src={this.state.image} alt="" />
 
-        <h1>Reviews</h1>
-        <NewReviewForm editable={this.state.editable} editFormToggle={this.editFormToggle} />
-        <Reviews reviews={this.state.reviews} />
+        <h1 ref='reviewForm'>Reviews</h1>
+        <NewReviewForm
+          editable={this.state.editable}
+          campgroundID={this.requestedID}
+          toggleReviewForm={this.toggleReviewForm}
+          addNewComment={this.addNewComment}
+        />
+        <Reviews comments={this.state.comments} />
       </div>
     )
   }

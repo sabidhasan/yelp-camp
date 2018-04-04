@@ -4,11 +4,15 @@ import RatingBar from './RatingBar'
 class Reviews extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {reviews: props.reviews}
+    this.state = {comments: props.comments};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({comments: nextProps.comments});
   }
 
   render() {
-    return this.state.reviews.map(val => {
+    return this.state.comments.map(val => {
       return (
         <div className='review' key={val.id}>
           <span className='review__author'>{val.author}</span>

@@ -8,13 +8,17 @@ class NewReviewForm extends React.Component {
     //editFormToggle is a parent function that toggles the editable
     this.state = {
       editable: props.editable,
-      editFormToggle: props.editFormToggle,
+      campgroundID: props.campgroundID,
+      toggleReviewForm: props.toggleReviewForm,
+      addNewComment: props.addNewComment,
       pickedRating: 0,
-      reviewText: ''
+      reviewText: '',
+      errorMessage: null
     }
     // This function sets picked rating for new review
     this.updatePickedRating = this.updatePickedRating.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.postReview = this.postReview.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -22,13 +26,48 @@ class NewReviewForm extends React.Component {
     this.setState({editable: nextProps.editable});
   }
 
+  postReview(event) {
+    event.preventDefault();
+    //TO--DO: check for logged in user
+    if (!this.state.reviewText) {
+      this.setState({errorMessage: 'No review text entered!'});
+    } else if (this.state.reviewText.length < 10) {
+      this.setState({errorMessage: 'Review too short'})
+    } else if (this.state.pickedRating === 0) {
+      this.setState({errorMessage: 'Please pick a rating'})
+    } else {
+      //post to server
+      console.log('getching');
+      fetch('/comment', {
+        method: 'POST',
+        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          id: this.state.campgroundID,
+          author: 'Jane Doe',
+          pickedRating: this.state.pickedRating,
+          reviewText: this.state.reviewText})
+      })
+      .then(res => {
+        console.log('res');
+        if (!res.ok) throw Error(res.statusText);
+        return res.json();
+      })
+      .then(data => {
+        this.state.addNewComment(data);
+      })
+      .catch(err => {
+        this.setState({errorMessage: 'Could not post review at this time. Try again'});
+        console.log(err);
+      })
+    }
+  }
+
   handleChange(event) {
     // change handle for text area
-    this.setState({reviewText: event.target.value})
+    this.setState({reviewText: event.target.value, errorMessage: null})
   }
 
   updatePickedRating(newRating) {
-    console.log('updated');
     this.setState({pickedRating: newRating})
   }
 
@@ -40,31 +79,24 @@ class NewReviewForm extends React.Component {
           <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
         </span>
         <textarea
+          required
           className='review-form__text'
           value={this.state.reviewText}
           onChange={this.handleChange}
-          placeHolder='Add some review stuff here!'
+          placeholder='Add some review stuff here!'
+          name='reviewText'
         />
-
+        <span className='error'>{this.state.errorMessage}</span>
         <div className='review-form__buttons'>
-          <button onClick={(e) => {e.preventDefault(); console.log(this.state)}}>Submit</button>
-          <button onClick={this.state.editFormToggle}>Cancel</button>
+          <button className='review-link' onClick={this.postReview}>Post Your Review</button>
+          <button onClick={(event) => {
+            this.setState({errorMessage: null});
+            this.state.toggleReviewForm(event, false)
+          }}>Cancel</button>
         </div>
       </form>
     )
   }
 }
-
-  // constructor(props) {
-  //
-  //
-  // }
-
-//   render(props) {
-//     console.log(props);
-//
-
-//   }
-// }
 
 export default NewReviewForm;

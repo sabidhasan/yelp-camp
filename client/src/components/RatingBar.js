@@ -31,7 +31,7 @@ class RatingBar extends React.Component {
           <span
             key={idx}
             onClick={() => {if (this.state.updateRating) this.state.updateRating(idx + 1)}}
-            className={'star star' + (val * 100)}></span>
+            className={'star star' + (Math.floor(val * 10) / 10 * 100)}></span>
         );
       });
     }
