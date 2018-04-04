@@ -1,13 +1,13 @@
 import React from 'react'
 
-const Campground = (props) => {
+const CampgroundTile = (props) => {
   return (
     <span>
       <img src={props.image} alt="" />
       <h2>{props.name}</h2>
-      <a href="#">More Info</a>
+      <a href={'campground/' + props.id}>More Info</a>
     </span>
   )
 }
 
-export default Campground
+export default CampgroundTile
