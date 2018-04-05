@@ -9,8 +9,16 @@ app.set("view engine", "ejs");
 
 // TEMPORARY
 const activities = [
-  {"Sea-Doo rental"}, {"Spa / Sauna"}, {"Summer camp"}, {"Beach swimming"}, {"Cycling trails"},
-  {"Fishing"}, {"Hiking trails"}, {"Marina"}, {"Motor boating"}, {"Playground"}
+  {name: 'Canoeing', logo: '🚣'},
+  {name: 'Spa / Sauna', logo: '💆'},
+  {name: 'Summer camp', logo: '⛺'},
+  {name: 'Beach swimming', logo: '🏊'},
+  {name: 'Cycling trails', logo: '🚲'},
+  {name: 'Fishing', logo: '🐟'},
+  {name: 'Hiking trails', logo: '🗻'},
+  {name: 'Tennis', logo: '🎾'},
+  {name: 'Basketball', logo: '🏀'},
+  {name: 'Kids activities', logo: '👶'}
 ]
 
 function getRandomActivities() {
@@ -19,7 +27,7 @@ function getRandomActivities() {
   for (var i = 0; i < randNum; i++) {
     ret.push(activities[Math.floor(Math.random() * activities.length)]);
   }
-  return ret;
+  return ret.slice(2);
 }
 
 let campgrounds = [

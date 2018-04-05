@@ -6,6 +6,7 @@ import SideBarInfoBox from './SideBarInfoBox'
 import Reviews from './Reviews'
 import RatingBar from './RatingBar'
 import NewReviewForm from './NewReviewForm'
+import ReviewButton from './ReviewButton'
 
 class SingleCampground extends React.Component {
   constructor(props) {
@@ -16,19 +17,18 @@ class SingleCampground extends React.Component {
       editable: false,
       image: undefined,
       name: undefined,
-      rating: 3.5,
-      description: "Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.",
-      author: "Automatic",
-      address: "48033 370 Ave E, Okotoks, AB  T1S 1B5",
-      email: 'info@riverbendcampground.ca',
-      lat: -34,
-      lon: 150.66,
-      phone: "(403) 938-2017",
-      sites: 280,
-      hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'},
-      prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'},
-      paymentMethods: ['interac', 'cash'],
-      comments: []
+      description: undefined,
+      address: undefined,
+      lat: undefined,
+      lon: undefined,
+      email: undefined,
+      phone: undefined,
+      sites: undefined,
+      hours: {daily: null, seasonal: null},
+      prices: {visitors: null, daily: [], weekly: [], seasonal: null},
+      paymentMethods: [],
+      comments: [],
+      activities: []
     }
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
@@ -36,15 +36,27 @@ class SingleCampground extends React.Component {
     this.calculateRating = this.calculateRating.bind(this);
   }
 
-  // componentWillReceiveProps(np) {
-  //   console.log(np);
-  // }
-
   componentDidMount() {
     fetch(`/campground?id=${this.requestedID}`)
       .then(res => res.json())
       .then(campground => {
-        this.setState({comments: campground.comments, image: campground.image, name: campground.name});
+        console.log(campground.activities);
+        this.setState({
+          comments: campground.comments,
+          image: campground.image,
+          name: campground.name,
+          description: campground.description,
+          address: campground.address,
+          lat: campground.lat,
+          lon: campground.lon,
+          email: campground.email,
+          phone: campground.phone,
+          sites: campground.sites,
+          hours: campground.hours,
+          prices: campground.prices,
+          paymentMethods: campground.paymentMethods,
+          activities: campground.activities
+        });
       })
       .catch(err => {
         //TO--DO proper error handling for all fetch
@@ -63,12 +75,12 @@ class SingleCampground extends React.Component {
   addNewComment(comment) {
     //takes comment from NewReviewForm and adds to this components comments array
     const newCommentArray = this.state.comments.concat([comment]);
-    this.setState({comments: newCommentArray});
+    this.setState({comments: newCommentArray, editable: false, });
   }
 
   toggleReviewForm(event, show) {
     //show true = show form, false = hide form
-    event.preventDefault();
+    if (event) event.preventDefault();
     this.setState({editable: show});
     if (show) {
       const form = ReactDOM.findDOMNode(this.refs.reviewForm);
@@ -77,11 +89,12 @@ class SingleCampground extends React.Component {
   }
 
   render() {
+    console.log(this.state.activities);
     return (
       <div className='singleCampground'>
         <h1 className='title'>{this.state.name}</h1>
 
-        <button href="#" className="review-link" onClick={(event) => this.toggleReviewForm(event, true)} >Write a Review</button>
+        <ReviewButton toggleReviewForm={this.toggleReviewForm} />
 
         <div className='rating'>
           <RatingBar rating={this.calculateRating()} />
@@ -113,7 +126,15 @@ class SingleCampground extends React.Component {
 
         <img className='campground-image' src={this.state.image} alt="" />
 
-        <h1 ref='reviewForm'>Reviews</h1>
+        <h1>Activities</h1>
+        <ul>
+          <Activities activitiesList={this.state.activities} />
+        </ul>
+
+        <h1 className='reviews-header' ref='reviewForm'>
+          Reviews
+          <ReviewButton toggleReviewForm={this.toggleReviewForm} />
+        </h1>
         <NewReviewForm
           editable={this.state.editable}
           campgroundID={this.requestedID}
