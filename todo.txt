@@ -2,7 +2,7 @@
 
 1. Scrape Data
 
-2. ## FRONT END ROUTES
+2. ## FRONT END TO DOS
 	/			welcome page
 	/campground/:id		single campground page
 	/signup
@@ -11,7 +11,12 @@
 	/search			shows search suggestions
 
 	Reviews Pagination
-	
+	Animations for stuff coming in (e.g. review form)
+	Map pin placement
+	Prop types
+	Time stamp formatting
+	Loading spinners
+	Searching on main page
 
 3. ## BACK END ROUTES
 	/
