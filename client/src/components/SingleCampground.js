@@ -7,6 +7,7 @@ import Reviews from './Reviews'
 import RatingBar from './RatingBar'
 import NewReviewForm from './NewReviewForm'
 import ReviewButton from './ReviewButton'
+import Activities from './Activities'
 
 class SingleCampground extends React.Component {
   constructor(props) {
@@ -40,7 +41,6 @@ class SingleCampground extends React.Component {
     fetch(`/campground?id=${this.requestedID}`)
       .then(res => res.json())
       .then(campground => {
-        console.log(campground.activities);
         this.setState({
           comments: campground.comments,
           image: campground.image,
@@ -89,7 +89,6 @@ class SingleCampground extends React.Component {
   }
 
   render() {
-    console.log(this.state.activities);
     return (
       <div className='singleCampground'>
         <h1 className='title'>{this.state.name}</h1>
@@ -126,8 +125,8 @@ class SingleCampground extends React.Component {
 
         <img className='campground-image' src={this.state.image} alt="" />
 
-        <h1>Activities</h1>
-        <ul>
+        <h1>Activities at {this.state.name}</h1>
+        <ul className='activities__list'>
           <Activities activitiesList={this.state.activities} />
         </ul>
 

@@ -13,7 +13,7 @@ class Reviews extends React.Component {
 
   render() {
     if (!this.state.comments.length) {
-      return <h2>Be the first to review this campground</h2>
+      return <h2 className='review__first'>Be the first to review this campground</h2>
     }
     return this.state.comments.map(val => {
       return (
