@@ -37,7 +37,6 @@ class NewReviewForm extends React.Component {
       this.setState({errorMessage: 'Please pick a rating'})
     } else {
       //post to server
-      console.log('getching');
       fetch('/comment', {
         method: 'POST',
         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -54,6 +53,9 @@ class NewReviewForm extends React.Component {
       })
       .then(data => {
         this.state.addNewComment(data);
+        //hide the form
+        this.setState({pickedRating: 0, reviewText: '', errorMessage: null})
+        this.state.toggleReviewForm(null, false);
       })
       .catch(err => {
         this.setState({errorMessage: 'Could not post review at this time. Try again'});
@@ -90,7 +92,7 @@ class NewReviewForm extends React.Component {
         <div className='review-form__buttons'>
           <button className='review-link' onClick={this.postReview}>Post Your Review</button>
           <button onClick={(event) => {
-            this.setState({errorMessage: null});
+            this.setState({pickedRating: 0, reviewText: '', errorMessage: null});
             this.state.toggleReviewForm(event, false)
           }}>Cancel</button>
         </div>

@@ -12,6 +12,9 @@ class Reviews extends React.Component {
   }
 
   render() {
+    if (!this.state.comments.length) {
+      return <h2>Be the first to review this campground</h2>
+    }
     return this.state.comments.map(val => {
       return (
         <div className='review' key={val.id}>

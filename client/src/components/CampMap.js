@@ -1,16 +1,27 @@
 import React from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
-const CampMap = withScriptjs(withGoogleMap((props) =>
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: props.lat, lng: props.lon }}
-    defaultOptions={{disableDefaultUI: true}}
-  >
-    {<Marker position={{ lat: props.lat, lng: props.lon }} />}
-  </GoogleMap>
+const CampMap = withScriptjs(withGoogleMap((props) => {
+    let lat = props.lat;
+    let lon = props.lon;
+    let marker;
+
+    if (!props.lat || !props.lon) {
+      lat = 0;
+      lon = 0;
+      marker = null;
+    } else {
+      marker = <Marker position={{ lat: lat, lng: lon }} />
+    }
+
+    return (<GoogleMap
+      defaultZoom={8}
+      defaultCenter={{ lat: lat, lng: lon }}
+      defaultOptions={{disableDefaultUI: true}}
+    >
+      { marker }
+    </GoogleMap>)
+  }
 ))
-
-
 
 export default CampMap
