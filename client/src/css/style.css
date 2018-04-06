@@ -28,7 +28,7 @@ h1, h2 {
 }
 h1 {
   font-size: 1.7rem;
-  letter-spacing: 0.06rem;
+  letter-spacing: 0.03rem;
 }
 h2 {
   font-size: 1.1rem;
@@ -231,7 +231,7 @@ footer > * {
 .singleCampground {
   display: grid;
   grid-template-columns: 3.5fr minmax(230px, 1fr);
-  padding: 20px 10px;
+  padding: 20px 90px;
   grid-gap: 0 55px;
   grid-template-areas: "title reviewlink"
       "rating rating"
@@ -245,12 +245,14 @@ footer > * {
 }
 .singleCampground > .review-link {
   grid-area: reviewlink;
-  justify-self: center;
+  justify-self: flex-end;
   align-self: center;
 }
 .singleCampground > .title {
   grid-area: title;
   margin: 0;
+  color: black;
+  font-size: 2.4rem;
 }
 .singleCampground > .rating {
   grid-area: rating;
@@ -261,6 +263,13 @@ footer > * {
   align-self: flex-start;
   justify-self: flex-start;
   grid-area: basicinfo;
+
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-items: center;
+}
+.infoBox__icon {
+  justify-self: center;
 }
 .singleCampground > .sidebar {
   grid-area: sidebar;
@@ -336,11 +345,6 @@ footer > * {
 }
 .gmnoprint, .gm-style-cc {
   display: none;
-}
-
-.infoBox {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
 }
 
 .activities__list {

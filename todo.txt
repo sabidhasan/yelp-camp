@@ -17,6 +17,7 @@
 	Time stamp formatting
 	Loading spinners
 	Searching on main page
+	Distance for current campground from your location
 
 3. ## BACK END ROUTES
 	/
