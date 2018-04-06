@@ -85,10 +85,8 @@ app.post('/comment', function(req, res) {
 
 app.get('/search', function(req, res) {
 
-  search.doSearch(req.query.q)
-  return
-
-  res.json(invertedIndex);
+  res.json(search.doSearch(req.query.q))
+  // res.json(search.doSearch());
 
 });
 
