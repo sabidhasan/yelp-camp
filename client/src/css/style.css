@@ -16,6 +16,9 @@ a {
 .bold {
   font-weight: bold;
 }
+.hidden {
+  display: none;
+}
 .error {
   color: red;
   font-weight: bold;
@@ -122,11 +125,12 @@ nav > a {
 
 .searchbar {
   display: flex;
+  flex-wrap: wrap;
+  width: 85vw;
 }
 .searchbar > label {
   display: flex;
   align-items: center;
-  flex: 2;
   padding: 0 10px;
   border: 1px solid gray;
   border-right: none;
@@ -147,6 +151,7 @@ nav > a {
 }
 .searchbar > input {
   width: 50vw;
+  flex: 1;
   font-size: 1.5rem;
   font-weight: 200;
   padding: 5px 10px;
@@ -154,11 +159,48 @@ nav > a {
   outline: none;
   border: 1px solid gray;
   border-left: none;
-  transition: all 0.5s;
 }
-.searchbar > input:focus {
+/* .searchbar > input:focus {
   width: 80vw;
+} */
+.searchbar > .results {
+  flex-basis: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: white;
+  opacity: 0.85;
 }
+.results > li {
+  display: flex;
+}
+.search-icon {
+  font-size: 2rem;
+  font-style: normal;
+  padding: 0 20px;
+}
+.searchtext {
+  flex: 1;
+  text-align: left;
+}
+.searchtext > h1 {
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 3px 0;
+}
+.searchtext > h2 {
+  margin: 0;
+  padding: 0;
+  color: gray;
+  font-size: 0.9rem;
+}
+.selected {
+  background: rgb(0, 110, 180);
+  color: white;
+}
+.selected > div > * {color: white!important;}
+
 
 .highlightedCampgrounds {
   margin: 40px 10px;
