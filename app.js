@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
-
+var commonWords = require('common-words');
 
 // Settings
 app.use(bodyParser.json());
@@ -40,11 +40,10 @@ let campgrounds = [
   {id: 3, name: "Salmon Creek 3", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -100, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/6757/feet-morning-adventure-camping.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 4, name: "Salmon Creek 4", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -80, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/618848/pexels-photo-618848.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 5, name: "Salmon Creek 5", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -70, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/6714/light-forest-trees-morning.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
-  {id: 6, name: "Salmon Creek 6", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -129, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/45241/tent-camp-night-star-45241.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
+  {id: 6, name: "Salmon Salmon 6", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -129, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/45241/tent-camp-night-star-45241.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 7, name: "Salmon Creek 7", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -129, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/558454/pexels-photo-558454.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 8, name: "Salmon Creek 8", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -15 , lon: 30, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/176381/pexels-photo-176381.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 9, name: "Salmon Creek 9", activities: getRandomActivities(), email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -129, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/116104/pexels-photo-116104.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
-  {id: 10,name: "Salmon Creek 10", activities: getRandomActivities(), description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park."', comments: [], image: "https://images.pexels.com/photos/868306/pexels-photo-868306.jpeg"},
 ];
 
 const quotes = [
@@ -160,6 +159,76 @@ app.post('/comment', function(req, res) {
     campgrounds[req.body.id].comments.push(newComment);
     res.json(newComment)
   }
+});
+
+app.get('/search', function(req, res) {
+  //activities
+  // const searchTerm = req.query.q;
+  const provinces = {'AB': 'Alberta', 'BC': 'British Columbia'}
+  const punctuation = ['!', '.', ';', '’s']
+  const badWords = commonWords.map(val => val.word).concat(['near', 'within']);
+  const sanitize = (word) => {
+    // strip empty spaces
+    word = word.replace(/^\s+|\s+$/g, '');
+    // remove punctuation
+    punctuation.forEach(val => word = word.replace(val, ''));
+    return word;
+  }
+
+  let invertedIndex = {}
+  campgrounds.forEach((cg, idx) => {
+    //we build an index like this: {'keyword': [undefined, undefined, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], undefined]}
+    //index name
+    cg.name.split(' ').forEach(val => {
+      if (!(val in invertedIndex)) {
+        invertedIndex[val] = [];
+      }
+      if (!invertedIndex[val][idx]) {
+        invertedIndex[val][idx] = [];
+      }
+      //find 'type'=='name' in array, and increase its importance
+      const importance = Math.floor(val.length / cg.name.length * 100);
+      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'name');
+      if (index !== -1) {
+        console.log(index, invertedIndex[val][idx]);
+        invertedIndex[val][idx][index]['importance'] += importance;
+      } else {
+        invertedIndex[val][idx].push({type: 'name', importance: importance});
+      }
+
+    });
+    // cg.paymentMethods.forEach(val => {
+    //   if (!(val in invertedIndex)) invertedIndex[val] = [];
+    //   invertedIndex[val].push({id: idx, importance: 100})
+    // });
+    // cg.address.split(' ').forEach(val => {
+    //   if ((val.length <= 2 && !(val in provinces)) || val.match(/^\d*$/) || (badWords.indexOf(val.toLowerCase()) !== -1)) return
+    //   if (!(val in invertedIndex)) invertedIndex[val] = [];
+    //   invertedIndex[val].push({id: idx, importance: Math.floor(val.length / cg.address.length * 100)})
+    //   //index the province
+    //   if (val in provinces) {
+    //     if (!(provinces[val] in invertedIndex)) invertedIndex[provinces[val]] = [];
+    //     invertedIndex[provinces[val]].push({id: idx, importance: 100})
+    //   }
+    // });
+    // cg.description.split(' ').forEach(val => {
+    //   if (val.length <= 2 || (badWords.indexOf(val.toLowerCase()) !== -1)) return
+    //   val = sanitize(val);
+    //   if (!(val in invertedIndex)) invertedIndex[val] = [];
+    //   invertedIndex[val].push({id: idx, importance: Math.floor(val.length / cg.description.length * 100)})
+    // })
+    // cg.activities.forEach(val => {
+    //   const words = val.name.split(' ')
+    //   words.forEach(word => {
+    //     if (!(word in invertedIndex)) invertedIndex[word] = [];
+    //     invertedIndex[word].push({id: idx, importance: Math.round(Math.floor(1 / cg.activities.length * 100) / words.length)})
+    //   });
+    // })
+    // return {score: __, type: __greatest_contributer_to_score__, }
+  });
+
+  res.json(invertedIndex);
+
 });
 
 app.listen(3001, function() {
