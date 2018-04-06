@@ -165,7 +165,7 @@ app.get('/search', function(req, res) {
   //activities
   // const searchTerm = req.query.q;
   const provinces = {'AB': 'Alberta', 'BC': 'British Columbia'}
-  const punctuation = ['!', '.', ';', '’s']
+  const punctuation = ['!', '.', ';', '’s', ',']
   const badWords = commonWords.map(val => val.word).concat(['near', 'within']);
   const sanitize = (word) => {
     // strip empty spaces
@@ -176,54 +176,80 @@ app.get('/search', function(req, res) {
   }
 
   let invertedIndex = {}
+  console.log(badWords.indexOf('to'));
   campgrounds.forEach((cg, idx) => {
-    //we build an index like this: {'keyword': [undefined, undefined, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], undefined]}
-    //index name
-    cg.name.split(' ').forEach(val => {
-      if (!(val in invertedIndex)) {
-        invertedIndex[val] = [];
-      }
-      if (!invertedIndex[val][idx]) {
-        invertedIndex[val][idx] = [];
-      }
+    //we build an index like this: {'keyword': [empty, empty, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], empty]}
+    const categoryDict = {
+      'name': {data: cg.name.split(' '), func: parseName},
+      'paymentMethods': {data: cg.paymentMethods, func: parsePaymentMethods},
+      'activities': {data: cg.activities.map(val => val.name), func: parseActivities},
+      'address': {data: cg.address.split(' ').filter(val => (val.length > 3 || val in provinces) && (!val.match(/^\d*$/) || badWords.indexOf(val.toLowerCase()) !== -1)), func: parseAddress},
+      'description': {data: cg.description.split(' ').filter(val => val.length > 2 && badWords.indexOf(val.toLowerCase()) === -1), func: parseDescription}
+    }
+
+    function parseName(val) {
       //find 'type'=='name' in array, and increase its importance
-      const importance = Math.floor(val.length / cg.name.length * 100);
+      const importance = Math.floor(val.length / categoryDict.name.data.join('').length * 100);
       const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'name');
       if (index !== -1) {
-        console.log(index, invertedIndex[val][idx]);
         invertedIndex[val][idx][index]['importance'] += importance;
       } else {
         invertedIndex[val][idx].push({type: 'name', importance: importance});
       }
+    }
+    function parsePaymentMethods(val) {
+      const importance = 100;
+      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'paymentMethods');
+      if (index !== -1) {
+        invertedIndex[val][idx][index]['importance'] += importance;
+      } else {
+        invertedIndex[val][idx].push({type: 'parsePaymentMethods', importance: importance});
+      }
+    }
+    function parseActivities(val) {
+      const importance = Math.floor(1 / categoryDict.activities.data.length * 100);
+      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'activities');
+      if (index !== -1) {
+        invertedIndex[val][idx][index]['importance'] += importance;
+      } else {
+        invertedIndex[val][idx].push({type: 'activities', importance: importance});
+      }
+    }
+    function parseAddress(val) {
+      const importance = Math.floor(val.length / categoryDict.address.data.length * 100);
+      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'address');
+      if (index !== -1) {
+        invertedIndex[val][idx][index]['importance'] += importance;
+      } else {
+        invertedIndex[val][idx].push({type: 'address', importance: importance});
+      }
+    }
+    function parseDescription(val) {
+      const importance = Math.floor(val.length / categoryDict.description.data.length * 100);
+      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'description');
+      if (index !== -1) {
+        invertedIndex[val][idx][index]['importance'] += importance;
+      } else {
+        invertedIndex[val][idx].push({type: 'description', importance: importance});
+      }
 
-    });
-    // cg.paymentMethods.forEach(val => {
-    //   if (!(val in invertedIndex)) invertedIndex[val] = [];
-    //   invertedIndex[val].push({id: idx, importance: 100})
-    // });
-    // cg.address.split(' ').forEach(val => {
-    //   if ((val.length <= 2 && !(val in provinces)) || val.match(/^\d*$/) || (badWords.indexOf(val.toLowerCase()) !== -1)) return
-    //   if (!(val in invertedIndex)) invertedIndex[val] = [];
-    //   invertedIndex[val].push({id: idx, importance: Math.floor(val.length / cg.address.length * 100)})
-    //   //index the province
-    //   if (val in provinces) {
-    //     if (!(provinces[val] in invertedIndex)) invertedIndex[provinces[val]] = [];
-    //     invertedIndex[provinces[val]].push({id: idx, importance: 100})
-    //   }
-    // });
-    // cg.description.split(' ').forEach(val => {
-    //   if (val.length <= 2 || (badWords.indexOf(val.toLowerCase()) !== -1)) return
-    //   val = sanitize(val);
-    //   if (!(val in invertedIndex)) invertedIndex[val] = [];
-    //   invertedIndex[val].push({id: idx, importance: Math.floor(val.length / cg.description.length * 100)})
-    // })
-    // cg.activities.forEach(val => {
-    //   const words = val.name.split(' ')
-    //   words.forEach(word => {
-    //     if (!(word in invertedIndex)) invertedIndex[word] = [];
-    //     invertedIndex[word].push({id: idx, importance: Math.round(Math.floor(1 / cg.activities.length * 100) / words.length)})
-    //   });
-    // })
+    }
+
+    for (var category in categoryDict) {
+      categoryDict[category].data.forEach(val => {
+        val = sanitize(val);
+        if (!(val in invertedIndex)) {
+          invertedIndex[val] = [];
+        }
+        if (!invertedIndex[val][idx]) {
+          invertedIndex[val][idx] = [];
+        }
+        categoryDict[category].func(val);
+      });
+    }
+
+
+
     // return {score: __, type: __greatest_contributer_to_score__, }
   });
 
