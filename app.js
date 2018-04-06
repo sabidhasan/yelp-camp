@@ -166,7 +166,7 @@ app.get('/search', function(req, res) {
   // const searchTerm = req.query.q;
   const provinces = {'AB': 'Alberta', 'BC': 'British Columbia'}
   const punctuation = ['!', '.', ';', '’s', ',']
-  const badWords = commonWords.map(val => val.word).concat(['near', 'within']);
+  const badWords = commonWords.map(val => val.word).concat(['near', 'within', 'kms']);
   const sanitize = (word) => {
     // strip empty spaces
     word = word.replace(/^\s+|\s+$/g, '');
@@ -176,63 +176,31 @@ app.get('/search', function(req, res) {
   }
 
   let invertedIndex = {}
-  console.log(badWords.indexOf('to'));
+
   campgrounds.forEach((cg, idx) => {
     //we build an index like this: {'keyword': [empty, empty, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], empty]}
     const categoryDict = {
       'name': {data: cg.name.split(' '), func: parseName},
       'paymentMethods': {data: cg.paymentMethods, func: parsePaymentMethods},
       'activities': {data: cg.activities.map(val => val.name), func: parseActivities},
-      'address': {data: cg.address.split(' ').filter(val => (val.length > 3 || val in provinces) && (!val.match(/^\d*$/) || badWords.indexOf(val.toLowerCase()) !== -1)), func: parseAddress},
+      'address': {data: cg.address.split(' ').filter(val => (val.length > 3 || val in provinces) && (!val.match(/^\d*$/) || badWords.indexOf(val.toLowerCase()) !== -1)).map(val => val in provinces ? provinces[val] : val), func: parseAddress},
       'description': {data: cg.description.split(' ').filter(val => val.length > 2 && badWords.indexOf(val.toLowerCase()) === -1), func: parseDescription}
     }
 
     function parseName(val) {
-      //find 'type'=='name' in array, and increase its importance
-      const importance = Math.floor(val.length / categoryDict.name.data.join('').length * 100);
-      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'name');
-      if (index !== -1) {
-        invertedIndex[val][idx][index]['importance'] += importance;
-      } else {
-        invertedIndex[val][idx].push({type: 'name', importance: importance});
-      }
+      return importance = Math.floor(val.length / categoryDict.name.data.join('').length * 100);
     }
     function parsePaymentMethods(val) {
-      const importance = 100;
-      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'paymentMethods');
-      if (index !== -1) {
-        invertedIndex[val][idx][index]['importance'] += importance;
-      } else {
-        invertedIndex[val][idx].push({type: 'parsePaymentMethods', importance: importance});
-      }
+      return importance = 100;
     }
     function parseActivities(val) {
-      const importance = Math.floor(1 / categoryDict.activities.data.length * 100);
-      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'activities');
-      if (index !== -1) {
-        invertedIndex[val][idx][index]['importance'] += importance;
-      } else {
-        invertedIndex[val][idx].push({type: 'activities', importance: importance});
-      }
+      return importance = Math.floor(1 / categoryDict.activities.data.length * 100);
     }
     function parseAddress(val) {
-      const importance = Math.floor(val.length / categoryDict.address.data.length * 100);
-      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'address');
-      if (index !== -1) {
-        invertedIndex[val][idx][index]['importance'] += importance;
-      } else {
-        invertedIndex[val][idx].push({type: 'address', importance: importance});
-      }
+      return importance = Math.floor(val.length / categoryDict.address.data.join('').length * 100);
     }
     function parseDescription(val) {
-      const importance = Math.floor(val.length / categoryDict.description.data.length * 100);
-      const index = invertedIndex[val][idx].findIndex(elem => elem.type == 'description');
-      if (index !== -1) {
-        invertedIndex[val][idx][index]['importance'] += importance;
-      } else {
-        invertedIndex[val][idx].push({type: 'description', importance: importance});
-      }
-
+      return importance = Math.floor(val.length / categoryDict.description.data.length * 100);
     }
 
     for (var category in categoryDict) {
@@ -244,11 +212,17 @@ app.get('/search', function(req, res) {
         if (!invertedIndex[val][idx]) {
           invertedIndex[val][idx] = [];
         }
-        categoryDict[category].func(val);
+        const importance = categoryDict[category].func(val);
+
+
+        const index = invertedIndex[val][idx].findIndex(elem => elem.type == category);
+        if (index !== -1) {
+          invertedIndex[val][idx][index]['importance'] += importance;
+        } else {
+          invertedIndex[val][idx].push({type: category, importance: importance});
+        }
       });
     }
-
-
 
     // return {score: __, type: __greatest_contributer_to_score__, }
   });
