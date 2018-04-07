@@ -1,6 +1,8 @@
 # TO DO LIST
 
 1. Scrape Data
+	Address to Lat/Lon
+	
 
 2. ## FRONT END TO DOS
 	/			welcome page
@@ -24,6 +26,9 @@
 	/campgrounds
 	/quote
 	/search			returns search suggestions
+
+	search indexing for dates campground is open (“winter camping”, etc)
+	handling multiple search terms
 
 4. Mobile Layout
 

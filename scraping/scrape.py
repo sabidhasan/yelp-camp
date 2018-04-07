@@ -4,29 +4,41 @@
 from bs4 import BeautifulSoup
 import requests, re
 
-#
-#http://www.camping-canada.com/campground_search_results_list_e.asp?str_where=(Province%20%3C%3E%20%27%27)%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demo%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demobasic%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demofree%27)%20&PgNo=3&sortby=&req_origin=paging&sortbyratings=False
-bads = ['camping', 'fair', 'good', 'rate', 'rating', 'sorry', 'click', 'pixel', 'previous', 'search', 'next' 'map',
-'share', 'Association', 'RV Council', 'Camping Nova Scotia', 'bec',
-'et de caravaning', 'campground recreation', 'campground services', 'next', 'previous', 'map', 'pix']
+# Attempts to load camping data from camping-canada
 
+# Words that will be excluded
+bads = ['camping', 'fair', 'good', 'rate', 'rating', 'sorry', 'click', 'pixel',
+'previous', 'search', 'next' 'map', 'share', 'Association', 'RV Council',
+'Camping Nova Scotia', 'bec', 'et de caravaning', 'campground recreation',
+'campground services', 'next', 'previous', 'map', 'pix']
 
+provinces = {'BC': 'British Columbia', 'AB': 'Alberta', 'SK': 'Saskatchewan',
+    'MB': 'Manitoba', 'ON': 'Ontario', 'QC': 'Quebec', 'PE': 'PEI', 'NB': 'New Brunswick',
+    'NS': 'Nova Scotia', 'NL': 'Newfoundland', 'YT': 'Yukon', 'NT': 'Nunavut'}
+
+# loop through all pages
 for i in range(1):
+    print '############################################################'
     print '\n\n\n\nGetting page number %s of 67' % str(i + 1)
-    r  = requests.get('http://www.camping-canada.com/campground_search_results_list_e.asp?str_where=(Province %3C%3E%20%27%27)%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demo%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demobasic%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demofree%27)%20&PgNo={0}&sortby=&req_origin=paging&sortbyratings=False'.format(30))
-
-    data = r.text
+    # Get the page using requests, soup the data
+    data  = requests.get('http://www.camping-canada.com/campground_search_results_list_e.asp?str_where=(Province %3C%3E%20%27%27)%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demo%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demobasic%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demofree%27)%20&PgNo={0}&sortby=&req_origin=paging&sortbyratings=False'.format(30)).text
     soup = BeautifulSoup(data, 'html.parser')
+
+    # Get tables with pertinent class from page
     tables = soup.findAll("table", {'class': 'greytable_1V'})
 
+# email, hours, paymentMethods, prices
+# latitude, longitude, description, image
+# activities [object with name and logo]
+
+    # This is master list of all scraped data
     master_ret = []
 
+    # Loop through tables (each contains one campground)
     for i, table in enumerate(tables):
-        print '############################################################'
-        print 'TABLE OBTAINED'
-        print 'Reading line %s' % (i + 1)
-        print '############################################################'
-        tmp_dict = {}
+        print '\tTABLE OBTAINED'
+        print '\tReading line %s' % (i + 1)
+        tmp_dict = {'id': len(master_ret)}
         for j, elem in enumerate(table.findAll('td')):
             if j not in [2, 3, 5, 6, 7]: continue
             defs = {2: 'name', 3: 'region', 5: 'type', 6: 'sites'}
@@ -38,6 +50,10 @@ for i in range(1):
                 # re.search(tmp_dict
                 tmp_dict['phone'] = tmp_soup.split(u'     ')[1]
                 tmp_dict['address'] = tmp_soup.split(u'     ')[0]
+                tmp_dict['province'] = ''
+                for prov in provinces.keys():
+                    if prov in tmp_dict['address']:
+                        tmp_dict['province'] = provinces[prov]
             else:
                 tmp_dict[defs[j]] = tmp_soup
         master_ret.append(tmp_dict)
