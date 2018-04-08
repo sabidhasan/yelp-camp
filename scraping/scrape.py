@@ -24,30 +24,28 @@ def get_maps_key(address):
     try:
         coordinates = parsed_json['results'][0]['geometry']['location']
     except IndexError, TypeError:
-        print "Error with address, couldnt find location ", address
+        print "\tError with address, couldnt find location ", address
         coordinates = {'lat': None, 'lng': None}
     return (coordinates['lat'], coordinates['lng'])
+
+# This is master list of all scraped data
+master_ret = []
 
 # loop through all pages
 for i in range(1):
     print '############################################################'
-    print '\n\n\n\nGetting page number %s of 67' % str(i + 1)
+    print '\n\n\n\n\n\n\n\nGetting page number %s of 67' % str(i + 1)
     # Get the page using requests, soup the data
     data  = requests.get('http://www.camping-canada.com/campground_search_results_list_e.asp?str_where=(Province %3C%3E%20%27%27)%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demo%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demobasic%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demofree%27)%20&PgNo={0}&sortby=&req_origin=paging&sortbyratings=False'.format(1)).text
     soup = BeautifulSoup(data, 'html.parser')
 
     # Get tables with pertinent class from page
     tables = soup.findAll("table", {'class': 'greytable_1V'})
-    print "Page obtained successfully"
-
-# activities [object with name and logo]
-
-    # This is master list of all scraped data
-    master_ret = []
+    print "Page obtained successfully!"
 
     # Loop through tables (each contains one campground)
     for i, table in enumerate(tables):
-        print '\tTABLE %s OBTAINED' % str(i+1)
+        print '\n\n\tTABLE %s OBTAINED' % str(i+1)
 
         tmp_dict = {'id': len(master_ret), 'prices': None, 'email': None, 'hours': {}, 'image': 'https://images.freeimages.com/images/large-previews/19a/tent-1-1552981.jpg'}
 
@@ -59,8 +57,12 @@ for i in range(1):
             if j == 7:
                 # must find phone, address and description
                 try:
-                    tmp_dict['phone'] = tmp_soup.split(u'     ')[1]
+                    # raw_phone = tmp_soup.split(u'     ')[1]
+                    # raw_phone = re.findall("\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}", tmp_soup)
+                    raw_phone = re.findall("\(?\d{3}\)?[ -]?\d{3}[ -]?\d{4}", tmp_soup)
+                    tmp_dict['phone'] = raw_phone[0]
                 except IndexError:
+                    print "\tError with phone number"
                     tmp_dict['phone'] = None
                 tmp_dict['address'] = tmp_soup.split(u'     ')[0]
                 # Convert address into latitude/longitude
@@ -73,13 +75,16 @@ for i in range(1):
                 # Description
                 description = BeautifulSoup(str(elem), 'html.parser').findAll("a", {"class": "popuptext"})
                 if len(description):
-                    # print description[0].text[9:]
-                    print "\t\tFound description"
+                    print "\tFound description"
+                    description = description[0].text
                 else:
-                    p = tmp_dict['phone'] if tmp_dict['phone'] != None else ""
-                    a = tmp_dict['address'] if tmp_dict['address'] != None else ""
-                    print elem.text.replace(p, "").replace(a, "")
-                    #.replace(tmp_dict['address'], "")
+                    print "\tReading description from main page"
+                    try:
+                        description = re.findall("(?:\w+[. ';,]{1,}){8,}", elem.text)[0]
+                    except IndexError:
+                        print "\tNo description found!"
+                        description = None
+                tmp_dict['description'] = description
             else:
                 tmp_dict[defs[j]] = tmp_soup
 
@@ -139,17 +144,18 @@ for i in range(1):
 
         master_ret.append(tmp_dict)
 
+        # If on the final table, then find amenities for all campground on this page
         if i == len(tables) - 1:
             cgs = str(table.parent.parent.parent).split('class="greytable_1V"')
-            for i, campground in enumerate(cgs):
-                print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+            starting_index = master_ret[-1]['id'] - len(cgs)
+            for c, campground in enumerate(cgs):
                 ret = []
-                for x in re.findall(r'alt=".*?"', str(campground)):
+                for amenity in re.findall(r'alt=".*?"', str(campground)):
                     keep = True
                     for bad in bads:
-                        if bad.lower() in x.lower(): keep = False
-                    if keep: ret.append(x.replace('alt=', '').replace('"', ''))
-                # print ret
-                master_ret[i - 1]['amenities'] = ret
-    for line in master_ret:
-        print line, '\n'
+                        if bad.lower() in amenity.lower(): keep = False
+                    if keep: ret.append(amenity.replace('alt=', '').replace('"', ''))
+                master_ret[starting_index + c]['amenities'] = ret
+
+for line in master_ret:
+    print line, '\n'
