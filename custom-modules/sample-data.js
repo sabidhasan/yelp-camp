@@ -29,7 +29,7 @@ campgrounds = [
     {name: 'Firewood', logo: "*"},{name: 'Dishwashing station', logo: "*"}],
     'paymentMethods': ['interac', 'cash'],
     'comments': [],
-  'address': '1 Riverview Drive, Campbellton, NB\xa0 E3N 0E1', 'prices': {'seasonal': null, 'daily': '$38.00 to $55.00', 'weekly': null},
+  'address': '1 Riverview Drive, Campbellton, NB\xa0 E3N 0E1', 'prices': {'seasonal': null, 'daily': ['38.00', '55.00'], 'weekly': null},
   'region': 'Restigouche', 'type': 'Municipal', 'id': 50,
   'description': 'Campbellton RV Camping is a RV park that is part of the attractions of the Restigouche River Experience Centre located on the outskirts of this majestic river famous for salmon fishing. 86 sites. 3 services. 30 and 50 amps. Pulltrough and regular. 7th night free. 18 seasonal sites available.'},
 

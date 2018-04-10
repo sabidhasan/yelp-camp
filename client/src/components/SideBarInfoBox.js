@@ -23,15 +23,15 @@ const SideBarInfoBox = (props) => {
       </span>
       <span>
         <h2>Daily</h2>
-        <span>{props.prices.daily.join ? '$'+props.prices.daily.join(' - $') : 'None'}</span>
+        <span>{props.prices.daily ? '$'+props.prices.daily.join(' - $') : 'None'}</span>
       </span>
       <span>
         <h2>Weekly</h2>
-        <span>{props.prices.weekly.join ? '$'+props.prices.weekly.join(' - $') : 'None'}</span>
+        <span>{props.prices.weekly ? '$'+props.prices.weekly.join(' - $') : 'None'}</span>
       </span>
       <span>
         <h2>Seasonal</h2>
-        <span>{props.prices.weekly.seasonal ? '$'+props.prices.seasonal.join(' - $') : 'None'}</span>
+        <span>{props.prices.seasonal ? '$'+props.prices.seasonal.join(' - $') : 'None'}</span>
       </span>
       <span>{props.prices.description}</span>
 
