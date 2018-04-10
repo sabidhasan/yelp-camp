@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
-import requests, re, json
+import requests, re, json, shelve
 import apikey
 
 # Attempts to load camping data from camping-canada
@@ -11,11 +11,14 @@ import apikey
 bads = ['camping', 'fair', 'good', 'rate', 'rating', 'sorry', 'click', 'pixel',
 'previous', 'search', 'next' 'map', 'share', 'Association', 'RV Council',
 'Camping Nova Scotia', 'bec', 'et de caravaning', 'campground recreation',
-'campground services', 'next', 'previous', 'map', 'pix']
+'campground services', 'next', 'previous', 'map', 'pix', 'listing', 'Excellent',
+'Discounts', 'phone']
 
 provinces = {'BC': 'British Columbia', 'AB': 'Alberta', 'SK': 'Saskatchewan',
     'MB': 'Manitoba', 'ON': 'Ontario', 'QC': 'Quebec', 'PE': 'PEI', 'NB': 'New Brunswick',
     'NS': 'Nova Scotia', 'NL': 'Newfoundland', 'YT': 'Yukon', 'NT': 'Nunavut'}
+
+defs = {2: 'name', 3: 'region', 5: 'type', 6: 'sites'}
 
 def get_maps_key(address):
     # Given an address, return the lat/lon using google maps API
@@ -31,12 +34,24 @@ def get_maps_key(address):
 # This is master list of all scraped data
 master_ret = []
 
+shelf = shelve.open('shelf')
+def download_page(url, page_type):
+    if page_type == 'mainpage':
+        slug = page_type + str(url)
+        url = 'http://www.camping-canada.com/campground_search_results_list_e.asp?str_where=(Province %3C%3E%20%27%27)%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demo%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demobasic%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demofree%27)%20&PgNo={0}&sortby=&req_origin=paging&sortbyratings=False'.format(str(url))
+
+    if not shelf.has_key(slug):
+        page = requests.get(url)
+        shelf[slug] = page
+        
+    return shelf[slug]
+
 # loop through all pages
-for i in range(1):
+for i in range(2):
     print '############################################################'
     print '\n\n\n\n\n\n\n\nGetting page number %s of 67' % str(i + 1)
     # Get the page using requests, soup the data
-    data  = requests.get('http://www.camping-canada.com/campground_search_results_list_e.asp?str_where=(Province %3C%3E%20%27%27)%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demo%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demobasic%27)%20%20AND%20(Campgrounds.CampgroundId%20%3C%3E%20%27demofree%27)%20&PgNo={0}&sortby=&req_origin=paging&sortbyratings=False'.format(1)).text
+    data  = download_page(i+1, 'mainpage').text
     soup = BeautifulSoup(data, 'html.parser')
 
     # Get tables with pertinent class from page
@@ -47,20 +62,19 @@ for i in range(1):
     for i, table in enumerate(tables):
         print '\n\n\tTABLE %s OBTAINED' % str(i+1)
 
-        tmp_dict = {'id': len(master_ret), 'prices': None, 'email': None, 'hours': {}, 'image': 'https://images.freeimages.com/images/large-previews/19a/tent-1-1552981.jpg'}
+        tmp_dict = {'id': len(master_ret), 'prices': None,
+        'email': None, 'hours': {}, 'comments': [],
+        'image': 'https://images.freeimages.com/images/large-previews/19a/tent-1-1552981.jpg'}
 
         for j, elem in enumerate(table.findAll('td')):
             if j not in [2, 3, 5, 6, 7]: continue
-            defs = {2: 'name', 3: 'region', 5: 'type', 6: 'sites'}
+
             tmp_soup = BeautifulSoup(str(elem), 'html.parser').text.strip()
 
             if j == 7:
                 # must find phone, address and description
                 try:
-                    # raw_phone = tmp_soup.split(u'     ')[1]
-                    # raw_phone = re.findall("\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}", tmp_soup)
-                    raw_phone = re.findall("\(?\d{3}\)?[ -]?\d{3}[ -]?\d{4}", tmp_soup)
-                    tmp_dict['phone'] = raw_phone[0]
+                    tmp_dict['phone'] = re.findall("\(?\d{3}\)?[ -]?\d{3}[ -]?\d{4}", tmp_soup)[0]
                 except IndexError:
                     print "\tError with phone number"
                     tmp_dict['phone'] = None
@@ -69,78 +83,79 @@ for i in range(1):
                 tmp_dict['lat'], tmp_dict['lon'] = get_maps_key(tmp_dict['address'])
                 tmp_dict['province'] = ''
                 for prov in provinces.keys():
-                    if prov in tmp_dict['address']:
-                        tmp_dict['province'] = provinces[prov]
+                    if prov in tmp_dict['address']: tmp_dict['province'] = provinces[prov]
 
                 # Description
                 description = BeautifulSoup(str(elem), 'html.parser').findAll("a", {"class": "popuptext"})
                 if len(description):
                     print "\tFound description"
-                    description = description[0].text
+                    description = description[0].text.replace("more info", "").strip()
                 else:
                     print "\tReading description from main page"
                     try:
-                        description = re.findall("(?:\w+[. ';,]{1,}){8,}", elem.text)[0]
+                        description = re.findall("(?:\w+[. ';,]{1,}){8,}", elem.text)[0].strip()
                     except IndexError:
                         print "\tNo description found!"
                         description = None
                 tmp_dict['description'] = description
+            elif j == 6:
+                tmp_dict[defs[j]] = int(tmp_soup)
             else:
                 tmp_dict[defs[j]] = tmp_soup
 
         # Find link to more information
-        # try:
-        print "\tObtaining campground's page using requests"
-        # Get link to obtain: email, hours, paymentMethods, prices, description
-        link = table.findAll('a')[0]['href']
-        page = BeautifulSoup(requests.get('http://www.camping-canada.com/' + link).text, 'html.parser')
-
-        # 1. Find rates
-        print "\tFinding campground rates"
-        prices = filter(lambda x: x != '$144', re.findall("\$[0-9.,]*(?: to \$[0-9.,]*)?", page.text))[:-2][:3]
-        prices_obj = {"daily": None, "weekly": None, "seasonal": None}
         try:
-            prices_obj["daily"] = prices[0]
-            prices_obj["weekly"] = prices[1]
-            prices_obj["seasonal"] = prices[2]
-        except IndexError:
-            print "\t\tMissing some rates... Using None", prices_obj
-        tmp_dict["prices"] = prices_obj
+            print "\tObtaining campground's page using requests"
+            # Get link to obtain: email, hours, paymentMethods, prices, description
+            link = table.findAll('a')[0]['href']
+            page = BeautifulSoup(requests.get('http://www.camping-canada.com/' + link).text, 'html.parser')
 
-        # 2. Find Email address
-        print "\tFinding email address"
-        email = None
-        for link in page.findAll("a"):
-            if 'mailto:' in link.get('href', '') and "@" in link.get('href', '') and not "camping-canada" in link.get('href', ''):
-                email = link['href'].replace("mailto:", "")
-        tmp_dict["email"] = email
+            # 1. Find rates
+            print "\tFinding campground rates"
+            prices = filter(lambda x: x != '$144', re.findall("\$[0-9.,]*(?: to \$[0-9.,]*)?", page.text))[:-2][:3]
+            prices_obj = {"daily": None, "weekly": None, "seasonal": None}
+            try:
+                prices_obj["daily"] = prices[0]
+                prices_obj["weekly"] = prices[1]
+                prices_obj["seasonal"] = prices[2]
+            except IndexError:
+                print "\t\tMissing some rates... Using None", prices_obj
+            tmp_dict["prices"] = prices_obj
 
-        # 3. Get seasonal hours (dates)
-        print "\tFinding seasonal dates"
-        start, end = None, None
-        expression = "(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}"
-        try:
-            start, end = re.findall(expression, page.text)[0], re.findall(expression, page.text)[1]
+            # 2. Find Email address
+            print "\tFinding email address"
+            email = None
+            for link in page.findAll("a"):
+                if 'mailto:' in link.get('href', '') and "@" in link.get('href', '') and not "camping-canada" in link.get('href', ''):
+                    email = link['href'].replace("mailto:", "")
+            tmp_dict["email"] = email
+
+            # 3. Get seasonal hours (dates)
+            print "\tFinding seasonal dates"
+            start, end = None, None
+            expression = "(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}"
+            try:
+                start, end = re.findall(expression, page.text)[0], re.findall(expression, page.text)[1]
+            except:
+                print "\t\tMissing seasonal dates... Using None"
+            tmp_dict["hours"]["seasonal"] = [start, end]
+
+            # 3. Find daily hours
+            print "\tFinding daily hours"
+            office_hours = None
+            try:
+                office_hours = re.findall('Office hours.*', page.text)[0]
+                office_hours = office_hours.replace("Office hours:", "").strip()
+            except:
+                print "\t\tError getting office hours. Using None"
+            tmp_dict["hours"]["daily"] = office_hours
+
+            # 3. Get payment methods
+                # for idx, line in enumerate(page.findAll('img')):
+
         except:
-            print "\t\tMissing seasonal dates... Using None"
-        tmp_dict["hours"]["seasonal"] = [start, end]
-
-        # 3. Find daily hours
-        print "\tFinding daily hours"
-        office_hours = None
-        try:
-            office_hours = re.findall('Office hours.*', page.text)[0]
-            office_hours = office_hours.replace("Office hours:", "").strip()
-        except:
-            print "\t\tError getting office hours. Using None"
-        tmp_dict["hours"]["daily"] = office_hours
-
-        # 3. Get payment methods
-            # for idx, line in enumerate(page.findAll('img')):
-
-    # except:
-        # No link must exist
-        # print "\t\tError occured in parsing child campground page"
+            # No link must exist
+            print "\tCouldn't download child page - must not exist"
 
         master_ret.append(tmp_dict)
 
@@ -155,7 +170,7 @@ for i in range(1):
                     for bad in bads:
                         if bad.lower() in amenity.lower(): keep = False
                     if keep: ret.append(amenity.replace('alt=', '').replace('"', ''))
-                master_ret[starting_index + c]['amenities'] = ret
+                master_ret[starting_index + c + 1]['activities'] = list(set(ret))
 
 for line in master_ret:
     print line, '\n'
