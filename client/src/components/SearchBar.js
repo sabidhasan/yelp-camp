@@ -4,12 +4,10 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      highlightedIndex: 0,
-      results: [
-        {icon: '🌆', name: 'Campground 1', text: '...search text...'},
-        {icon: '🌆', name: 'Campground 3', text: '...search text...'},
-        {icon: '🌆', name: 'Campground 2', text: '...search text...'}
-      ],
+      // which search result is highlighted, list of search results, whether
+      // box has focus, and searchbox contents
+      highlightedIndex: -1,
+      results: [],
       active: false,
       searchQuery: ''
     }
@@ -20,24 +18,42 @@ class SearchBar extends React.Component {
   }
 
   doSearch(e) {
-    // do search in server
-    if (e.key == 'ArrowUp') {
+    // handle arrow key input
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
       const newIndex = Math.max(this.state.highlightedIndex - 1, -1);
-      this.setState({
-        highlightedIndex: newIndex,
-        searchQuery: this.state.results[newIndex].name
-      });
-    } else if (e.key == 'ArrowDown') {
+      this.setState({highlightedIndex: newIndex});
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
       const newIndex = Math.min(this.state.highlightedIndex + 1, this.state.results.length - 1);
-      this.setState({
-        highlightedIndex: newIndex,
-        searchQuery: this.state.results[newIndex].name
-      });
+      this.setState({highlightedIndex: newIndex});
+    } else if (e.key === 'Enter') {
+      console.log('enter');
+      // if something is selected then go to it
+      if (this.state.highlightedIndex !== -1) {
+        window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
+      }
+    } else {
+      // do search
+      const icons = {
+        'name': '⛺', 'paymentMethods': '💵', 'activities': '🚣',
+        'address': '📍', 'description': '📛', 'province': '🌎'
+      }
+      fetch(`/search?q=${e.target.value}`)
+        .then(res => res.json())
+        .then(search => {
+          console.log(search);
+          const stateSearch = search.map(v => {
+            return {id: v.id, icon: icons[v.type], name: v.campgroundName, text: v.excerpt}
+          })
+
+          this.setState({results: stateSearch})
+        })
     }
   }
 
   handleChange(e) {
-    // console.log(e.target);
+    // update text
     this.setState({searchQuery: e.target.value})
   }
 
@@ -47,19 +63,19 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <form autoComplete='off' className="searchbar">
-        <label htmlFor="search">Find</label>
+      <form autoComplete='off' className='searchbar' onSubmit={(e) => e.preventDefault()}>
+        <label htmlFor='search'>Find</label>
         <input
-          name="search"
-          type="text"
-          placeholder="Province, Region, City, Campground Name, etc."
-          onKeyDown={this.doSearch}
+          name='search'
+          type='text'
+          placeholder='Province, Region, City, Campground Name, etc.'
           onFocus={this.setFocus}
           onBlur={this.setFocus}
-          onChange={this.handleChange}
           value={this.state.searchQuery}
+          onKeyUp={this.doSearch}
+          onChange={this.handleChange}
         />
-        <button type="submit">🔎</button>
+        <button type='submit'>🔎</button>
           <ul className={this.state.active ? 'results' : 'hidden'}>
               {this.state.results.map((v, i) => {
               return (<li key={i} className={i === this.state.highlightedIndex ? 'selected' : ''}>
