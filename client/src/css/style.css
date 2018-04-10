@@ -30,11 +30,11 @@ h1, h2 {
   color: red;
 }
 h1 {
-  font-size: 1.7rem;
+  font-size: 2rem;
   letter-spacing: 0.03rem;
 }
 h2 {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }
 button {
   align-self: center;
@@ -112,11 +112,11 @@ nav > a {
 }
 .banner h1 {
   margin: 0;
-  /* align-self: flex-end; */
+  color: black;
 }
 .banner h2 {
+  color: black;
   font-weight: 200;
-  /* align-self: flex-start; */
 }
 .banner span {
   margin: 20px 0;
