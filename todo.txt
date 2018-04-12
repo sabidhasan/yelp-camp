@@ -2,7 +2,7 @@
 
 1. Scrape Data
 	Address to Lat/Lon
-	
+
 
 2. ## FRONT END TO DOS
 	/			welcome page
@@ -12,6 +12,8 @@
 	/signin
 	/search			shows search suggestions
 
+	Search index (and query searching) should be lower case only and stripped of punctuation
+	Serch qiuery should be "uniquified" - remove duplicate parameters ("salmon salmon")
 	Reviews Pagination
 	Animations for stuff coming in (e.g. review form)
 	Map pin placement
@@ -29,6 +31,7 @@
 
 	search indexing for dates campground is open (“winter camping”, etc)
 	handling multiple search terms
+	404 Page for Not Found (Or in ReactRouter)
 
 4. Mobile Layout
 

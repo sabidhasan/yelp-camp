@@ -35,7 +35,7 @@ campgrounds = [
 
 
   {id: 0, name: "Salmon Creek 0", province: 'Alberta', activities: [activities[4], activities[7], activities[2]], email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: 0, lon: 0, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A tiny town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [{id: 0, author: 'Test', time: '12:24', text: 'test comment', rating: 2}, {id: 1, author: 'Test 2', time: '12:24', text: 'test comment 2', rating: 4}], image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg"},
-  {id: 1, name: "Salmon Creek 1", province: 'Alberta', activities: [activities[4], activities[7], activities[2]], email: 'test@test.com', phone: '123 456 7890000', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: 10, lon: 10, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/803226/pexels-photo-803226.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
+  {id: 1, name: "Black Creek 1", province: 'Alberta Black', activities: [activities[4], activities[7], activities[2]], email: 'test@test.com', phone: '123 456 7890000', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: 10, lon: 10, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/803226/pexels-photo-803226.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 2, name: "Salmon Creek 2", province: 'Alberta', activities: [activities[4], activities[7], activities[2]], email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -100, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/776117/pexels-photo-776117.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 3, name: "Salmon Creek 3", province: 'Alberta', activities: [activities[4], activities[7], activities[2]], email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -100, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/6757/feet-morning-adventure-camping.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
   {id: 4, name: "Salmon Creek 4", province: 'Alberta', activities: [activities[4], activities[7], activities[2]], email: 'test@test.com', phone: '123 456 7890', sites: 200, hours: {daily: '9 am to 9 pm (front gate closed at 11 pm)', seasonal: 'Open all year'}, paymentMethods: ['interac', 'cash'], prices: {visitors: 2, daily: [40, 50], weekly: [270, 330], seasonal: null, description: 'Free for children 6 and under.'}, address: "48033 370 Ave E, Okotoks, AB  T1S 1B5", lat: -80, lon: 50, description: 'Riverbend Campground is located on the Sheep River near Okotoks, Alberta. A small town just 20 kms from Calgary’s city limits. Riverbend is in the heart of Alberta’s ranchlands with a view of the spectacular Rocky Mountains and within a day trip to Banff National Park.', comments: [], image: "https://images.pexels.com/photos/618848/pexels-photo-618848.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
@@ -107,7 +107,6 @@ module.exports = {
       this.badWords = commonWords.map(val => val.word).concat(['near', 'within', 'kms']);
       this.sanitize = (word) => {
         // strip empty spaces
-        console.log(word);
         word = word.replace(/^\s+|\s+$/g, '');
         // remove punctuation
         this.punctuation.forEach(val => word = word.replace(val, ''));
@@ -170,12 +169,8 @@ module.exports = {
         }
 
         for (var category in categoryDict) {
-          console.log('\n\n');
-          console.log(categoryDict);
-          console.log(category);
-
           categoryDict[category].data.forEach(val => {
-            val = this.sanitize(val);
+            val = this.sanitize(val).toLowerCase();
             if (!(val in this.invertedIndex)) {
               this.invertedIndex[val] = [];
             }
@@ -195,15 +190,11 @@ module.exports = {
       });
     }
 
-    getIndex() {
-        return this.invertedIndex;
-    }
-
     generateExcerpt(campgroundsData, matchType, queryString) {
       // queryString = what user searched for, campgroundsData is data from campgrounds object
+      queryString = queryString.toLowerCase()
       if (matchType == 'activities') {
-        console.log(campgroundsData);
-        var rawString = campgroundsData.map(v => v.name).join(' ')
+        var rawString = campgroundsData.map(v => v.name.toLowerCase()).join(' ')
       } else if (matchType == 'paymentMethods') {
         var rawString = 'Accepts ' + campgroundsData.join(' ');
       // }
@@ -219,30 +210,65 @@ module.exports = {
         var rawString = campgroundsData;
       }
 
-      const keepWords = 4;
+      const keepWords = 5;
       const splitText = rawString.split(' ');
-      const findIndex = splitText.findIndex(item => item.includes(queryString));
+      const findIndex = splitText.findIndex(item => item.toLowerCase().includes(queryString));
       // slice it, keeping
       const excerpt = splitText.slice(Math.max(findIndex - keepWords, 0), findIndex + keepWords)
-      console.log(rawString);
       if (findIndex > keepWords) excerpt.unshift('...');
       if (findIndex < splitText.length - keepWords) excerpt.push('...');
       return excerpt.join(' ');
     }
 
     doSearch(query) {
-      // return this.getIndex();
+      // return this.invertedIndex
+      query = query.toLowerCase();
+      let ret = []
+      //TO--DO: remove duplicates from swearch query as that breaks it
+
+      for (let word of query.split(" ")) {
+        // Search for just this word
+        const singleWordResults = this.searchOneWord(word);
+        //  loop through results and add to ret
+        for (let idx in singleWordResults) {
+          let matchingIDAndType = ret.findIndex(val => val.type === singleWordResults[idx].type && val.id === singleWordResults[idx].id)
+          if (matchingIDAndType !== -1) {
+            // update that old item
+            ret[matchingIDAndType].percentMatch += singleWordResults[idx].percentMatch;
+            ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
+          } else {
+            ret.push(singleWordResults[idx])
+          }
+        }
+      }
+      ret = ret.sort((a, b) => a.percentMatch < b.percentMatch ? 1 : -1);
+      // Remove campground duplicates (each CG should only have one search result at most)
+      let alreadyIncluded = new Set([]);
+      return ret.filter(val => {
+        // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
+        if (!alreadyIncluded.has(val.id)) {
+          alreadyIncluded.add(val.id);
+          return true;
+        }
+        return false;
+      })
+      return ret;
+    }
+
+
+    searchOneWord(word) {
       // data that will be returned
       let filteredResults = []
-      if (!query) return filteredResults;
+
+      if (!word) return filteredResults;
       // Loop through pre fabricated index
       for (var searchIndexKeyword in this.invertedIndex) {
         // if item doesn't match then move on
-        if (!searchIndexKeyword.toLowerCase().includes(query.toLowerCase())) continue;
+        if (!searchIndexKeyword.toLowerCase().includes(word.toLowerCase())) continue;
         // determine percent match (this is multiplied by importance)
         // "importance" - how important that search keyword is to the campground's data
         // "percentMatch" - how strong of a match it is
-        const percentMatch = query.length / searchIndexKeyword.length
+        const percentMatch = word.length / searchIndexKeyword.length
 
         this.invertedIndex[searchIndexKeyword].forEach((val, idx) => {
           // in case there is no value (arrays are camproundID-indexed)
@@ -250,23 +276,32 @@ module.exports = {
           // the match objects appended with extra data for front end
           val.forEach(match => {
             //generate excerpt of match
-            const excerpt = this.generateExcerpt(campgrounds[idx][match.type], match.type, query);
-            if (match.type == 'address') console.log(campgrounds[idx][match.type]);
-            filteredResults.push({
-                type: match.type,
-                percentMatch: Math.round(match.importance * percentMatch),
-                campgroundName: campgrounds[idx].name,
-                keyword: searchIndexKeyword,
-                excerpt: excerpt,
-                id: idx
-            })
-          })
+            const excerpt = this.generateExcerpt(campgrounds[idx][match.type], match.type, word);
+            const resultsPercentMatch = Math.round(match.importance * percentMatch);
+            // if filteredResults doesnt have id then add it in
+            const newResult = {
+              type: match.type,
+              percentMatch: resultsPercentMatch,
+              campgroundName: campgrounds[idx].name,
+              keyword: searchIndexKeyword,
+              excerpt: excerpt,
+              id: idx
+            };
+
+            // Look for campground in existing results
+            // const oldResultIndex = filteredResults.findIndex(e => e.id === idx);
+            // if (oldResultIndex === -1) {
+              // Doesn't exist yet, so insert
+              filteredResults.push(newResult);
+            // } else if (filteredResults[oldResultIndex].percentMatch < resultsPercentMatch) {
+              // old one must be deleted, and new one inserted
+              // filteredResults.splice(oldResultIndex, 1, newResult);
+            // }
+          });
         })
       }
-      // return top 5 results
-      return filteredResults.sort((a, b) => a.percentMatch < b.percentMatch ? 1 : -1).splice(0, 5);
+      // return results
+      return filteredResults
     }
-
-
   }
 }
