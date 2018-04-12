@@ -5,6 +5,16 @@ from bs4 import BeautifulSoup
 import requests, re, json, shelve
 import apikey
 
+class Bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 # Attempts to load camping data from camping-canada
 
 # Words that will be excluded from description
@@ -27,7 +37,7 @@ def get_maps_key(address):
     try:
         coordinates = parsed_json['results'][0]['geometry']['location']
     except IndexError, TypeError:
-        print "\tError with address, couldnt find location ", address
+        print "\t", Bcolors.FAIL + "Error with address, couldn't find location ", address, Bcolors.ENDC
         coordinates = {'lat': None, 'lng': None}
     return (coordinates['lat'], coordinates['lng'])
 
@@ -43,20 +53,20 @@ def download_page(url, page_type):
     if not shelf.has_key(slug):
         page = requests.get(url)
         shelf[slug] = page
-        
+
     return shelf[slug]
 
 # loop through all pages
-for i in range(2):
-    print '############################################################'
-    print '\n\n\n\n\n\n\n\nGetting page number %s of 67' % str(i + 1)
+for i in range(67):
+    print Bcolors.OKGREEN, '############################################################', Bcolors.ENDC
+    print Bcolors.OKGREEN, '\n\n\nGetting page number %s of 67' % str(i + 1), Bcolors.ENDC
     # Get the page using requests, soup the data
     data  = download_page(i+1, 'mainpage').text
     soup = BeautifulSoup(data, 'html.parser')
 
     # Get tables with pertinent class from page
     tables = soup.findAll("table", {'class': 'greytable_1V'})
-    print "Page obtained successfully!"
+    print Bcolors.OKGREEN, "\tPage obtained successfully!", Bcolors.ENDC
 
     # Loop through tables (each contains one campground)
     for i, table in enumerate(tables):
@@ -76,7 +86,7 @@ for i in range(2):
                 try:
                     tmp_dict['phone'] = re.findall("\(?\d{3}\)?[ -]?\d{3}[ -]?\d{4}", tmp_soup)[0]
                 except IndexError:
-                    print "\tError with phone number"
+                    print Bcolors.FAIL, "\tError with phone number", Bcolors.ENDC
                     tmp_dict['phone'] = None
                 tmp_dict['address'] = tmp_soup.split(u'     ')[0]
                 # Convert address into latitude/longitude
@@ -95,7 +105,7 @@ for i in range(2):
                     try:
                         description = re.findall("(?:\w+[. ';,]{1,}){8,}", elem.text)[0].strip()
                     except IndexError:
-                        print "\tNo description found!"
+                        print "\t" + Bcolors.FAIL + "\tNo description found!" + Bcolors.ENDC
                         description = None
                 tmp_dict['description'] = description
             elif j == 6:
@@ -109,7 +119,7 @@ for i in range(2):
             # Get link to obtain: email, hours, paymentMethods, prices, description
             link = table.findAll('a')[0]['href']
             page = BeautifulSoup(requests.get('http://www.camping-canada.com/' + link).text, 'html.parser')
-
+            print Bcolors.OKGREEN, "\t\tPage obtained successfully", Bcolors.ENDC
             # 1. Find rates
             print "\tFinding campground rates"
             prices = filter(lambda x: x != '$144', re.findall("\$[0-9.,]*(?: to \$[0-9.,]*)?", page.text))[:-2][:3]
@@ -119,7 +129,7 @@ for i in range(2):
                 prices_obj["weekly"] = prices[1]
                 prices_obj["seasonal"] = prices[2]
             except IndexError:
-                print "\t\tMissing some rates... Using None", prices_obj
+                print Bcolors.FAIL, "\t\tMissing some rates... Using None", prices_obj, Bcolors.ENDC
             tmp_dict["prices"] = prices_obj
 
             # 2. Find Email address
@@ -137,7 +147,7 @@ for i in range(2):
             try:
                 start, end = re.findall(expression, page.text)[0], re.findall(expression, page.text)[1]
             except:
-                print "\t\tMissing seasonal dates... Using None"
+                print Bcolors.FAIL, "\t\tMissing seasonal dates... Using None", Bcolors.ENDC
             tmp_dict["hours"]["seasonal"] = [start, end]
 
             # 3. Find daily hours
@@ -147,7 +157,7 @@ for i in range(2):
                 office_hours = re.findall('Office hours.*', page.text)[0]
                 office_hours = office_hours.replace("Office hours:", "").strip()
             except:
-                print "\t\tError getting office hours. Using None"
+                print Bcolors.FAIL, "\t\tError getting office hours. Using None", Bcolors.ENDC
             tmp_dict["hours"]["daily"] = office_hours
 
             # 3. Get payment methods
@@ -155,22 +165,24 @@ for i in range(2):
 
         except:
             # No link must exist
-            print "\tCouldn't download child page - must not exist"
+            print Bcolors.WARNING, "\tCouldn't download child page - must not exist", Bcolors.ENDC
 
         master_ret.append(tmp_dict)
 
-        # If on the final table, then find amenities for all campground on this page
-        if i == len(tables) - 1:
-            cgs = str(table.parent.parent.parent).split('class="greytable_1V"')
-            starting_index = master_ret[-1]['id'] - len(cgs)
-            for c, campground in enumerate(cgs):
-                ret = []
-                for amenity in re.findall(r'alt=".*?"', str(campground)):
-                    keep = True
-                    for bad in bads:
-                        if bad.lower() in amenity.lower(): keep = False
-                    if keep: ret.append(amenity.replace('alt=', '').replace('"', ''))
-                master_ret[starting_index + c + 1]['activities'] = list(set(ret))
+        curr_cg = str(table.parent.parent.parent).split('class="greytable_1V"')[i]
+        ret = []
+        for amenity in re.findall(r'alt=".*?"', curr_cg):
+            keep = True
+            for bad in bads:
+                if bad.lower() in amenity.lower(): keep = False
+            if keep: ret.append(amenity.replace('alt=', '').replace('"', ''))
+        master_ret[-1]['activities'] = list(set(ret))
 
-for line in master_ret:
-    print line, '\n'
+        print Bcolors.BOLD, ":::LENGTH:::", len(master_ret[-1]), Bcolors.ENDC
+        print "\n\n", master_ret[-1]
+
+        # Insert into MONGODB
+
+    print master_ret[-len(tables)]
+    x = raw_input('\nEnter to continue...')
+    print "\n" * 90
