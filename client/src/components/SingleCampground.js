@@ -119,9 +119,10 @@ class SingleCampground extends React.Component {
           lon={this.state.lon}
         />
 
-        <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
-
-        <WeatherBox weather={this.state.weather} />
+        <div className='infoBox'>
+          <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
+          <WeatherBox weather={this.state.weather} />
+        </div>
 
         <div className="description">
           <h1>Description</h1>

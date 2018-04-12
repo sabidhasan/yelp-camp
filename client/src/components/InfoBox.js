@@ -2,7 +2,7 @@ import React from 'react'
 
 const InfoBox = (props) => {
   return (
-    <div className='infoBox'>
+    <div className='infoBox__info'>
       <span className='infoBox__icon'>📍</span>
       <span className='infoBox__data bold'>{props.address}</span>
       <span className='infoBox__icon'>🚗</span>

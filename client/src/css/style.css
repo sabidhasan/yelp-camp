@@ -306,7 +306,11 @@ footer > * {
   align-self: flex-start;
   justify-self: flex-start;
   grid-area: basicinfo;
-
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  width: 100%;
+}
+.singleCampground .infoBox__info {
   display: grid;
   grid-template-columns: 40px 1fr;
   align-items: center;
