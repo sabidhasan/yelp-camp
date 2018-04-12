@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
-import requests, re, json, shelve
+import requests, re, json, shelve, pymongo
+from pymongo import MongoClient
 import apikey
 
 class Bcolors:
@@ -16,6 +17,11 @@ class Bcolors:
     UNDERLINE = '\033[4m'
 
 # Attempts to load camping data from camping-canada
+
+#MongoDB client
+client = MongoClient()
+db = client.yelp_camp
+dbtable = db.campgrounds
 
 # Words that will be excluded from description
 bads = ['camping', 'fair', 'good', 'rate', 'rating', 'sorry', 'click', 'pixel',
@@ -76,6 +82,12 @@ for i in range(67):
         'email': None, 'hours': {}, 'comments': [],
         'image': 'https://images.freeimages.com/images/large-previews/19a/tent-1-1552981.jpg'}
 
+        #Check for old data in MONGO DB
+        if dbtable.find_one({"id": tmp_dict['id']}) is not None:
+            print Bcolors.FAIL, "\nWARNING: MONGO DB ID %s ALREADY EXISTS. USE drop table FIRST " % tmp_dict['id'], Bcolors.ENDC
+            master_ret.append(0)
+            continue
+
         for j, elem in enumerate(table.findAll('td')):
             if j not in [2, 3, 5, 6, 7]: continue
 
@@ -108,10 +120,11 @@ for i in range(67):
                         print "\t" + Bcolors.FAIL + "\tNo description found!" + Bcolors.ENDC
                         description = None
                 tmp_dict['description'] = description
-            elif j == 6:
-                tmp_dict[defs[j]] = int(tmp_soup)
             else:
-                tmp_dict[defs[j]] = tmp_soup
+                try:
+                    tmp_dict[defs[j]] = int(tmp_soup)
+                except ValueError:
+                    tmp_dict[defs[j]] = tmp_soup
 
         # Find link to more information
         try:
@@ -182,6 +195,8 @@ for i in range(67):
         print "\n\n", master_ret[-1]
 
         # Insert into MONGODB
+        new_id = dbtable.insert_one(master_ret[-1]).inserted_id
+        print "\nInserted new record successfully. ID: ", new_id
 
     print master_ret[-len(tables)]
     x = raw_input('\nEnter to continue...')
