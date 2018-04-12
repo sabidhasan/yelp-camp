@@ -2,12 +2,14 @@ var express    = require("express"),
     app        = express(),
     bodyParser = require('body-parser'),
     sampleData = require('./custom-modules/sample-data'),
+    weatherKey = require('./custom-modules/weatherKey').apiKey,
+    ForecastIo = require('forecastio'),
     mongoose   = require('mongoose')
 
 
 // Allow parsing body from post requests
 app.use(bodyParser.json());
-// app.set("view engine", "ejs");
+var weatherEngine = new ForecastIo(weatherKey);
 
 // Connect to MONGODB, and define schemas
 mongoose.connect('mongodb://localhost/yelp_camp')
@@ -38,17 +40,32 @@ app.get('/quote', function(req, res) {
   //send a random quote back
   res.json([quotes[Math.floor(Math.random() * quotes.length)]]);
 });
+// TO--DO: is anything using this route???
 app.get('/randomCampground', function(req, res) {
   const random = Math.floor(Math.random(campgrounds.length))
   res.json(campgrounds[random])
 })
 
 
-app.get('/campground', function(req, res) {
+app.get('/campground', async function(req, res) {
   // return a particular campground (if requested) or all campgrounds
+  // get the weather
   if (req.query.id) {
     // TO-DO: MONGODB WILL HANDLE THIS REQUEST
     if (campgrounds[req.query.id]) {
+      const lat = campgrounds[req.query.id].lat
+      const lon = campgrounds[req.query.id].lon
+      campgrounds[req.query.id].weather = {}
+      await weatherEngine.forecast(lon, lat).then(function(data) {
+        data = data.currently;
+        const kmWindspeed = data.windSpeed * 1.6;
+
+        campgrounds[req.query.id].weather.summary = data.summary;
+        campgrounds[req.query.id].weather.temperature = (data.temperature - 32) * 5 / 9;
+        campgrounds[req.query.id].weather.humidity = data.humidity * 100
+        campgrounds[req.query.id].weather.windSpeed = kmWindspeed < 5 ? 'calm': kmWindspeed;
+      });
+
       res.json(campgrounds[req.query.id]);
       return;
     } else {
