@@ -8,9 +8,9 @@ const SideBarInfoBox = (props) => {
       <h1>Hours</h1>
       <span>
         <h2>Daily</h2>
-        <span>{props.hours.daily}</span>
+        <span>{props.hours ? props.hours.daily : ''}</span>
         <h2>Seasonal</h2>
-        <span>{props.hours.seasonal}</span>
+        <span>{props.hours ? props.hours.seasonal : ''}</span>
       </span>
 
       <h1>Camp sites</h1>
@@ -19,24 +19,24 @@ const SideBarInfoBox = (props) => {
       <h1>Prices</h1>
       <span>
         <h2>Visitors</h2>
-        <span>${props.prices.visitors || 'Free'}</span>
+        <span>${props.prices ? (props.prices.visitors || 'Free') : ''}</span>
       </span>
       <span>
         <h2>Daily</h2>
-        <span>{props.prices.daily ? '$'+props.prices.daily.join(' - $') : 'None'}</span>
+        <span>{props.prices ? (props.prices.daily ? '$'+props.prices.daily.join(' - $') : 'None') : ''}</span>
       </span>
       <span>
         <h2>Weekly</h2>
-        <span>{props.prices.weekly ? '$'+props.prices.weekly.join(' - $') : 'None'}</span>
+        <span>{props.prices ? (props.prices.weekly ? '$'+props.prices.weekly.join(' - $') : 'None') : ''}</span>
       </span>
       <span>
         <h2>Seasonal</h2>
-        <span>{props.prices.seasonal ? '$'+props.prices.seasonal.join(' - $') : 'None'}</span>
+        <span>{props.prices ? (props.prices.seasonal ? '$'+props.prices.seasonal.join(' - $') : 'None') : ''}</span>
       </span>
-      <span>{props.prices.description}</span>
+      <span>{props.prices ? props.prices.description : ''}</span>
 
       <h1>Payment Methods</h1>
-      <span>{props.paymentMethods.map((val, idx) => <h2 key={idx}>{paymentLogos[val]} {val}</h2>)}</span>
+      <span>{props.paymentMethods ? props.paymentMethods.map((val, idx) => <h2 key={idx}>{paymentLogos[val]} {val}</h2>) : ''}</span>
     </div>
   )
 }

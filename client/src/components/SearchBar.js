@@ -41,7 +41,6 @@ class SearchBar extends React.Component {
       fetch(`/search?q=${e.target.value}`)
         .then(res => res.json())
         .then(search => {
-          console.log(search);
           const stateSearch = search.map(v => {
             return {id: v.id, icon: icons[v.type], name: v.campgroundName, text: v.excerpt}
           })
