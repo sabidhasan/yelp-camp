@@ -7,9 +7,7 @@ const CampMap = withScriptjs(withGoogleMap((props) => {
     let marker;
 
     if (!props.lat || !props.lon) {
-      lat = 0;
-      lon = 0;
-      marker = null;
+      return null
     } else {
       marker = <Marker position={{ lat: lat, lng: lon }} />
     }
