@@ -61,6 +61,7 @@ class SingleCampground extends React.Component {
       .catch(err => {
         //TO--DO proper error handling for all fetch
         console.log("there is an error");
+        window.location = `/not-found/${this.requestedID}`;
       });
   }
 

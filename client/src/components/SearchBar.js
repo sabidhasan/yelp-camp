@@ -28,7 +28,6 @@ class SearchBar extends React.Component {
       const newIndex = Math.min(this.state.highlightedIndex + 1, this.state.results.length - 1);
       this.setState({highlightedIndex: newIndex});
     } else if (e.key === 'Enter') {
-      console.log('enter');
       // if something is selected then go to it
       if (this.state.highlightedIndex !== -1) {
         window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
@@ -46,8 +45,8 @@ class SearchBar extends React.Component {
           const stateSearch = search.map(v => {
             return {id: v.id, icon: icons[v.type], name: v.campgroundName, text: v.excerpt}
           })
-
-          this.setState({results: stateSearch})
+          // Update the state for results, trimming it to top 5
+          this.setState({results: stateSearch.slice(0, 5)})
         })
     }
   }

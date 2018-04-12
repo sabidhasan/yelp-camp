@@ -1,13 +1,31 @@
-var express = require("express");
-var app = express();
-var bodyParser = require('body-parser');
-var sampleData = require('./custom-modules/sample-data');
-// console.log(x.test);
+var express    = require("express"),
+    app        = express(),
+    bodyParser = require('body-parser'),
+    sampleData = require('./custom-modules/sample-data'),
+    mongoose   = require('mongoose')
 
 
-// Settings
+// Allow parsing body from post requests
 app.use(bodyParser.json());
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
+
+// Connect to MONGODB, and define schemas
+mongoose.connect('mongodb://localhost/yelp_camp')
+var campgroundSchema = new mongoose.Schema({
+  name: String, province: String, lat: Number, lon: Number,
+  sites: Number, image: [String], email: String, address: String,
+  comments: [], paymentMethods: [], region: String, type: String,
+  id: Number, description: String, phone: String,
+  activities: [{name: String, logo: String}],
+  hours: {seasonal: {type: [String]}, daily: String},
+  prices: {seasonal: [Number], daily: [Number], weekly: [Number]}
+});
+
+var Campground = mongoose.model("Campground", campgroundSchema);
+
+Campground.create({
+  name: 'testoing 1234', province: "Ontario"
+})
 
 // TEMPORARY
 const activities = sampleData.activities
