@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import CampMap from './CampMap'
+import WeatherBox from './WeatherBox'
 import InfoBox from './InfoBox'
 import SideBarInfoBox from './SideBarInfoBox'
 import Reviews from './Reviews'
@@ -13,24 +14,25 @@ class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
     this.requestedID = parseInt(this.props.match.params.id);
-
-    this.state = {
-      editable: false,
-      image: undefined,
-      name: undefined,
-      description: undefined,
-      address: undefined,
-      lat: undefined,
-      lon: undefined,
-      email: undefined,
-      phone: undefined,
-      sites: undefined,
-      hours: {daily: null, seasonal: null},
-      prices: {visitors: null, daily: [], weekly: [], seasonal: null},
-      paymentMethods: [],
-      comments: [],
-      activities: []
-    }
+    this.state = {};
+    // this.state = {
+    //   editable: false,
+    //   image: undefined,
+    //   name: undefined,
+    //   description: undefined,
+    //   address: undefined,
+    //   lat: undefined,
+    //   lon: undefined,
+    //   weather: undefined,
+    //   email: undefined,
+    //   phone: undefined,
+    //   sites: undefined,
+    //   hours: {daily: null, seasonal: null},
+    //   prices: {visitors: null, daily: [], weekly: [], seasonal: null},
+    //   paymentMethods: [],
+    //   comments: [],
+    //   activities: []
+    // }
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
@@ -49,6 +51,7 @@ class SingleCampground extends React.Component {
           address: campground.address,
           lat: campground.lat,
           lon: campground.lon,
+          weather: campground.weather,
           email: campground.email,
           phone: campground.phone,
           sites: campground.sites,
@@ -58,15 +61,20 @@ class SingleCampground extends React.Component {
           activities: campground.activities
         });
       })
-      .catch(err => {
-        //TO--DO proper error handling for all fetch
-        console.log("there is an error");
-        window.location = `/not-found/${this.requestedID}`;
-      });
+      // .catch(err => {
+      //   //TO--DO proper error handling for all fetch
+      //   console.log("there is an error");
+      //   window.location = `/not-found/${this.requestedID}`;
+      // });
+  }
+
+  shouldComponentUpdate(prevProps, prevState) {
+    // Update only when props exist
+    return !(prevState.name === undefined);
   }
 
   calculateRating() {
-    if (this.state.comments.length) {
+    if (this.state.comments && this.state.comments.length) {
       console.log();
       return this.state.comments.reduce((acc, val) => acc + val.rating, 0) / this.state.comments.length
     }
@@ -98,7 +106,7 @@ class SingleCampground extends React.Component {
 
         <div className='rating'>
           <RatingBar rating={this.calculateRating()} />
-          <h2>{this.state.comments.length} Reviews</h2>
+          <h2>{this.state.comments ? this.state.comments.length : 0} Reviews</h2>
         </div>
 
 
@@ -112,6 +120,8 @@ class SingleCampground extends React.Component {
         />
 
         <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
+
+        <WeatherBox weather={this.state.weather} />
 
         <div className="description">
           <h1>Description</h1>
