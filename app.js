@@ -22,12 +22,7 @@ var campgroundSchema = new mongoose.Schema({
   hours: {seasonal: {type: [String]}, daily: String},
   prices: {seasonal: [Number], daily: [Number], weekly: [Number]}
 });
-
 var Campground = mongoose.model("Campground", campgroundSchema);
-
-Campground.create({
-  name: 'testoing 1234', province: "Ontario"
-})
 
 // TEMPORARY
 const activities = sampleData.activities
