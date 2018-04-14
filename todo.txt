@@ -1,16 +1,26 @@
 # TO DO LIST
 
 1. Scrape Data
-	Address to Lat/Lon
+	Address to Lat/Lon for missing addresses or deal with them somehow (~500)
+	Push backup of DB to Git repo
+	Fix MongoDB so it plays nicely with front end
 
 
 2. ## FRONT END TO DOS
-	/			welcome page
+	/			welcome page (highlight some CGs)
 	/campground/:id		single campground page
-	/signup
-	/logout			?
-	/signin
-	/search			shows search suggestions
+	/search			shows search suggestions (have param for short or long
+				short collates multiple matches for one CG into only
+				highest match)
+
+	/signup			sign up
+	/logout			log out
+	/signin			log in
+
+	Commenting adds to MongoDB
+	Reading of campgrounds done fr
+	Logo array in app.js gives activities logos on the fly
+	Helpers.js has searcher class functions
 
 	Search index (and query searching) should be lower case only and stripped of punctuation
 	Serch qiuery should be "uniquified" - remove duplicate parameters ("salmon salmon")
