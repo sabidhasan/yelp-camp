@@ -1,15 +1,27 @@
 var express    = require("express"),
     app        = express(),
     bodyParser = require('body-parser'),
-    sampleData = require('./custom-modules/sample-data'),
     weatherKey = require('./custom-modules/weatherKey').apiKey,
-    ForecastIo = require('forecastio'),
-    mongoose   = require('mongoose')
+    ForecastIo = require('forecast.io'),
+    mongoose   = require('mongoose'),
+    helpers    = require('./custom-modules/helpers')
 
+    sampleData = require('./custom-modules/sample-data')
 
 // Allow parsing body from post requests
 app.use(bodyParser.json());
-var weatherEngine = new ForecastIo(weatherKey);
+// ForecastIo is not promisified - adding asyncGetWeather method to allow a
+// promise-based wrapper around native 'get' method
+ForecastIo.prototype.asyncGetWeather = function(lat, lon) {
+  return new Promise(function(resolve, reject) {
+    weatherEngine.get(lat, lon, function(error, results, data) {
+      if (error) reject(error);
+      resolve(data);
+    });
+  });
+}
+var weatherEngine = new ForecastIo({APIKey: weatherKey, timeout: 1000});
+
 
 // Connect to MONGODB, and define schemas
 mongoose.connect('mongodb://localhost/yelp_camp')
@@ -18,58 +30,71 @@ var campgroundSchema = new mongoose.Schema({
   sites: Number, image: [String], email: String, address: String,
   comments: [], paymentMethods: [], region: String, type: String,
   id: Number, description: String, phone: String,
-  activities: [{name: String, logo: String}],
+  activities: [String],
   hours: {seasonal: {type: [String]}, daily: String},
   prices: {seasonal: [Number], daily: [Number], weekly: [Number]}
 });
-var Campground = mongoose.model("Campground", campgroundSchema);
+const Campground = mongoose.model("Campground", campgroundSchema);
 
 // TEMPORARY
 const activities = sampleData.activities
 const getRandomActivities = sampleData.getRandomActivities
 let campgrounds = sampleData.campgrounds
-const quotes = sampleData.quotes
 const search = new sampleData.searcher(campgrounds);
 
 app.get('/quote', function(req, res) {
   //send a random quote back
-  res.json([quotes[Math.floor(Math.random() * quotes.length)]]);
+  const randomQuote = helpers.quotes[Math.floor(Math.random() * helpers.quotes.length)]
+  res.json([randomQuote]);
 });
-// TO--DO: is anything using this route???
-app.get('/randomCampground', function(req, res) {
-  const random = Math.floor(Math.random(campgrounds.length))
-  res.json(campgrounds[random])
-})
-
 
 app.get('/campground', async function(req, res) {
-  // return a particular campground (if requested) or all campgrounds
-  // get the weather
-  if (req.query.id) {
-    // TO-DO: MONGODB WILL HANDLE THIS REQUEST
-    if (campgrounds[req.query.id]) {
-      const lat = campgrounds[req.query.id].lat
-      const lon = campgrounds[req.query.id].lon
-      campgrounds[req.query.id].weather = {}
-      await weatherEngine.forecast(lon, lat).then(function(data) {
-        data = data.currently;
-        const kmWindspeed = data.windSpeed * 1.6;
+  // return a particular campground
+  if (!(req.query.id)) res.json(404)
 
-        campgrounds[req.query.id].weather.summary = data.summary;
-        campgrounds[req.query.id].weather.temperature = (data.temperature - 32) * 5 / 9;
-        campgrounds[req.query.id].weather.humidity = data.humidity * 100
-        campgrounds[req.query.id].weather.windSpeed = kmWindspeed < 5 ? 'calm': kmWindspeed;
-      });
+  // Get database from DB
+  Campground.find({"id": req.query.id}, async (err, results) => {
+    // Handle errors
+    if (!(results.length) || err) res.sendStatus(404);
+    // Grab first result - should only be one since searching by ID...
+    ret = results[0]["_doc"];
 
-      res.json(campgrounds[req.query.id]);
-      return;
-    } else {
-      res.sendStatus(400);
-      return;
-    }
-  }
+    // Give activities their symbols
+    ret.activities = ret.activities.map(v => {
+      return {name: v, logo: helpers.activitySymbols[v] || '*'}
+    });
+
+    // Get weather
+    ret.weather = {}
+    await weatherEngine.asyncGetWeather(ret.lat, ret.lon)
+      .then(data => ret.weather = data.currently)
+      .catch(err => console.log("Error in obtaining weather data", err))
+
+    res.json(ret)
+  })
+
+  // if (campgrounds[req.query.id]) {
+    // const lat = campgrounds[req.query.id].lat
+    // const lon = campgrounds[req.query.id].lon
+    // campgrounds[req.query.id].weather = {}
+    // await weatherEngine.forecast(lon, lat).then(function(data) {
+    //   data = data.currently;
+    //   const kmWindspeed = data.windSpeed * 1.6;
+    //
+    //   campgrounds[req.query.id].weather.summary = data.summary;
+    //   campgrounds[req.query.id].weather.temperature = (data.temperature - 32) * 5 / 9;
+    //   campgrounds[req.query.id].weather.humidity = data.humidity * 100
+    //   campgrounds[req.query.id].weather.windSpeed = kmWindspeed < 5 ? 'calm': kmWindspeed;
+    // });
+
+    // res.json(campgrounds[req.query.id]);
+    // return;
+  // } else {
+    // res.sendStatus(400);
+    // return;
+  // }
   //send all campgrounds, since no valid request
-  res.json(campgrounds);
+  // res.json(campgrounds);
 });
 app.post('/campground', function(req, res) {
   //add to campgrounds array... basic validation
