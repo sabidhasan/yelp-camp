@@ -10,6 +10,7 @@ var express    = require("express"),
 
 // Allow parsing body from post requests
 app.use(bodyParser.json());
+
 // ForecastIo is not promisified - adding asyncGetWeather method to allow a
 // promise-based wrapper around native 'get' method
 ForecastIo.prototype.asyncGetWeather = function(lat, lon) {
@@ -21,7 +22,6 @@ ForecastIo.prototype.asyncGetWeather = function(lat, lon) {
   });
 }
 var weatherEngine = new ForecastIo({APIKey: weatherKey, timeout: 1000});
-
 
 // Connect to MONGODB, and define schemas
 mongoose.connect('mongodb://localhost/yelp_camp')
@@ -37,10 +37,10 @@ var campgroundSchema = new mongoose.Schema({
 const Campground = mongoose.model("Campground", campgroundSchema);
 
 // TEMPORARY
-const activities = sampleData.activities
-const getRandomActivities = sampleData.getRandomActivities
-let campgrounds = sampleData.campgrounds
-const search = new sampleData.searcher(campgrounds);
+// const activities = sampleData.activities
+// const getRandomActivities = sampleData.getRandomActivities
+// let campgrounds = sampleData.campgrounds
+// const search = new sampleData.searcher(campgrounds);
 
 app.get('/quote', function(req, res) {
   //send a random quote back
@@ -49,53 +49,29 @@ app.get('/quote', function(req, res) {
 });
 
 app.get('/campground', async function(req, res) {
-  // return a particular campground
-  if (!(req.query.id)) res.json(404)
+  // requested ID
+  const requestedID = req.query.id || Math.floor(Math.random() * 1578);
 
-  // Get database from DB
-  Campground.find({"id": req.query.id}, async (err, results) => {
-    // Handle errors
-    if (!(results.length) || err) res.sendStatus(404);
-    // Grab first result - should only be one since searching by ID...
-    ret = results[0]["_doc"];
-
-    // Give activities their symbols
-    ret.activities = ret.activities.map(v => {
-      return {name: v, logo: helpers.activitySymbols[v] || '*'}
-    });
-
-    // Get weather
-    ret.weather = {}
-    await weatherEngine.asyncGetWeather(ret.lat, ret.lon)
-      .then(data => ret.weather = data.currently)
-      .catch(err => console.log("Error in obtaining weather data", err))
-
-    res.json(ret)
-  })
-
-  // if (campgrounds[req.query.id]) {
-    // const lat = campgrounds[req.query.id].lat
-    // const lon = campgrounds[req.query.id].lon
-    // campgrounds[req.query.id].weather = {}
-    // await weatherEngine.forecast(lon, lat).then(function(data) {
-    //   data = data.currently;
-    //   const kmWindspeed = data.windSpeed * 1.6;
-    //
-    //   campgrounds[req.query.id].weather.summary = data.summary;
-    //   campgrounds[req.query.id].weather.temperature = (data.temperature - 32) * 5 / 9;
-    //   campgrounds[req.query.id].weather.humidity = data.humidity * 100
-    //   campgrounds[req.query.id].weather.windSpeed = kmWindspeed < 5 ? 'calm': kmWindspeed;
-    // });
-
-    // res.json(campgrounds[req.query.id]);
-    // return;
-  // } else {
-    // res.sendStatus(400);
-    // return;
-  // }
-  //send all campgrounds, since no valid request
-  // res.json(campgrounds);
+  // Get campground data
+  Campground.find({"id": requestedID}, async (err, results) => {
+      // Handle errors
+      if (!(results.length) || err) res.sendStatus(404);
+      // Grab first result - should only be one since searching by ID...
+      let ret = results[0]["_doc"];
+      // Give activities their symbols
+      ret.activities = ret.activities.map(v => {
+        return {name: v, logo: helpers.activitySymbols[v] || '*'}
+      });
+      // Get weather for this campground
+      ret.weather = {};
+      await weatherEngine.asyncGetWeather(ret.lat, ret.lon)
+        .then(data => ret.weather = data.currently)
+        .catch(err => console.log("Error in obtaining weather data", err))
+        
+      res.json(ret);
+  });
 });
+
 app.post('/campground', function(req, res) {
   //add to campgrounds array... basic validation
   try {
@@ -139,10 +115,7 @@ app.post('/comment', function(req, res) {
 });
 
 app.get('/search', function(req, res) {
-
-  res.json(search.doSearch(req.query.q))
-  // res.json(search.doSearch());
-
+  // res.json(search.doSearch(req.query.q))
 });
 
 app.listen(3001, function() {
