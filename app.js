@@ -6,8 +6,6 @@ var express    = require("express"),
     mongoose   = require('mongoose'),
     helpers    = require('./custom-modules/helpers')
 
-    sampleData = require('./custom-modules/sample-data')
-
 // Allow parsing body from post requests
 app.use(bodyParser.json());
 
@@ -36,8 +34,11 @@ var campgroundSchema = new mongoose.Schema({
 });
 const Campground = mongoose.model("Campground", campgroundSchema);
 
-// TEMPORARY
-// let campgrounds = sampleData.campgrounds
+// Search Index - first get all campgrounds, then build index
+const allCG = Campground.find({}, (err, res) => {
+  const search = new 
+  res
+})
 // const search = new sampleData.searcher(campgrounds);
 
 app.get('/quote', function(req, res) {
