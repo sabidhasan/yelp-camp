@@ -30,15 +30,13 @@ var campgroundSchema = new mongoose.Schema({
   sites: Number, image: [String], email: String, address: String,
   comments: [], paymentMethods: [], region: String, type: String,
   id: Number, description: String, phone: String,
-  activities: [String],
+  activities: [],
   hours: {seasonal: {type: [String]}, daily: String},
   prices: {seasonal: [Number], daily: [Number], weekly: [Number]}
 });
 const Campground = mongoose.model("Campground", campgroundSchema);
 
 // TEMPORARY
-// const activities = sampleData.activities
-// const getRandomActivities = sampleData.getRandomActivities
 // let campgrounds = sampleData.campgrounds
 // const search = new sampleData.searcher(campgrounds);
 
@@ -49,25 +47,42 @@ app.get('/quote', function(req, res) {
 });
 
 app.get('/campground', async function(req, res) {
-  // requested ID
-  const requestedID = req.query.id || Math.floor(Math.random() * 1578);
+  // requested ID will hold what was requested (either one CG or random CGs)
+  var requestedID = [];
+  if (req.query.id) {
+    requestedID.push(req.query.id);
+  } else {
+    do {
+      newNum = Math.floor(Math.random() * 1578);
+      if (!requestedID.includes(newNum)) requestedID.push(newNum);
+    } while (requestedID.length !== 8)
+  }
 
   // Get campground data
-  Campground.find({"id": requestedID}, async (err, results) => {
+  Campground.find({"id": {"$in": requestedID}}, async (err, results) => {
       // Handle errors
       if (!(results.length) || err) res.sendStatus(404);
-      // Grab first result - should only be one since searching by ID...
+
+      // Add activities logos for every campground found
+      for (var result in results) {
+        results[result].activities = results[result].activities.map(v => {
+          return {name: v, logo: helpers.activitySymbols[v] || '*'}
+        });
+      }
+
+      // If randoms requested, return results, otherwise we need to get weather
+      if (!req.query.id) res.json(results);
+
+      // First result must be the one requested...
       let ret = results[0]["_doc"];
-      // Give activities their symbols
-      ret.activities = ret.activities.map(v => {
-        return {name: v, logo: helpers.activitySymbols[v] || '*'}
-      });
+
       // Get weather for this campground
       ret.weather = {};
       await weatherEngine.asyncGetWeather(ret.lat, ret.lon)
         .then(data => ret.weather = data.currently)
         .catch(err => console.log("Error in obtaining weather data", err))
-        
+
+      // Send data
       res.json(ret);
   });
 });
@@ -78,8 +93,8 @@ app.post('/campground', function(req, res) {
     if (req.body.name.length > 10 || req.body.image.length > 20) throw new Error();
     console.log("ADDING TO DB");
     //add to array
-    campgrounds.push({id: campgrounds.length, name: req.body.name, comments: [], image: req.body.image});
-    res.json(campgrounds);
+    // campgrounds.push({id: campgrounds.length, name: req.body.name, comments: [], image: req.body.image});
+    // res.json(campgrounds);
     return;
   } catch (err) {
     //send error
