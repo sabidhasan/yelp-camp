@@ -402,23 +402,30 @@ footer > * {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 .activities__list > li {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 .activity__name {
-  display: none;
+  /* display: none; */
+  position: absolute;
+  transform: translateX(200%);
+  transition: all 0.5s;
 }
 .activity__logo {
   font-size: 3rem;
+  transition: all 0.5s;
   padding: 0 15px 0 0;
 }
-.activity__logo:hover + .activity__name {
+.activities__list > li:hover .activity__name {
   /* show on hover */
-  display: block;
+  transform: translateX(0);
+  position: initial;
 }
 
 .rating {
