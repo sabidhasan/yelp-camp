@@ -1,8 +1,9 @@
 import React from 'react'
 
 const Activities = (props) => {
-  if (!(props.activities)) return null;
-  
+  console.log(props.activitiesList);
+  if (!(props.activitiesList)) return null;
+
   return props.activitiesList.map((activity, idx) => {
     //make into li
     return (<li key={idx}>

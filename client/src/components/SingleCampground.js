@@ -15,24 +15,6 @@ class SingleCampground extends React.Component {
     super(props);
     this.requestedID = parseInt(this.props.match.params.id);
     this.state = {};
-    // this.state = {
-    //   editable: false,
-    //   image: undefined,
-    //   name: undefined,
-    //   description: undefined,
-    //   address: undefined,
-    //   lat: undefined,
-    //   lon: undefined,
-    //   weather: undefined,
-    //   email: undefined,
-    //   phone: undefined,
-    //   sites: undefined,
-    //   hours: {daily: null, seasonal: null},
-    //   prices: {visitors: null, daily: [], weekly: [], seasonal: null},
-    //   paymentMethods: [],
-    //   comments: [],
-    //   activities: []
-    // }
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
@@ -75,7 +57,6 @@ class SingleCampground extends React.Component {
 
   calculateRating() {
     if (this.state.comments && this.state.comments.length) {
-      console.log();
       return this.state.comments.reduce((acc, val) => acc + val.rating, 0) / this.state.comments.length
     }
     return 0;
@@ -84,7 +65,7 @@ class SingleCampground extends React.Component {
   addNewComment(comment) {
     //takes comment from NewReviewForm and adds to this components comments array
     const newCommentArray = this.state.comments.concat([comment]);
-    this.setState({comments: newCommentArray, editable: false, });
+    this.setState({comments: newCommentArray, editable: false });
   }
 
   toggleReviewForm(event, show) {
