@@ -212,43 +212,43 @@ class Searcher {
     return word;
   }
 
-  makeExcerptForIndex(rawData, keyWord) {
-    // Takes raw data in string format such as address, description, etc. and
+  makeExcerpt(rawData, keyWord) {
+    // Takes raw data in array format such as address, description, etc. and
     // a keyword (these are keys in teh inverted index) and generates an excerpt
     if (!keyWord) return '';
-    // Remove punctiation
-    // rawData = this.sanitize(rawData).toLowerCase().split(' ');
-    rawData = rawData.toLowerCase().split(' ');
 
-    // Loops through rawData, finding all matches' indices
+    // Loop through rawData, finding all matches' indices
     let matches = [], startIdx = 0, foundIndex = -1;
-    // console.log(keyWord, '\n\n\n\n', rawData);
-
     do {
+      // startIdx = where to start looking from in rawData
       startIdx = matches.length ? matches[matches.length - 1] + 1: 0;
-      // console.log('\t\tstarting at', startIdx);
-      //matches.reduce((a, v) => a + v + keyWord.length, 0);
-      foundIndex = rawData.slice(startIdx).findIndex(v => v.includes(keyWord.toLowerCase()));
-
-      // console.log('\t\t found at', foundIndex);
+      foundIndex = rawData.slice(startIdx)
+          .findIndex(v => v.includes(keyWord.toLowerCase()));
+      // if found, then add to matches
       if (foundIndex !== -1) matches.push(startIdx + foundIndex)
     } while (foundIndex !== -1);
 
+    // Filter to remove those that overlap, generate
     const wordsToKeep = Math.min(Math.ceil(12 / matches.length / 2), 3);
-    // console.log(matches);
-    // return rawData
     return matches.filter((v, i) => {
-      return matches[i + 1] > 5 || matches[i + 1] == undefined;
+      // check if the next match is close to this one
+      return matches[i + 1] > v + wordsToKeep || matches[i + 1] == undefined;
     }).map(v => {
-      const startIndex = Math.max(v - 5, 0);
-      return `${rawData.slice(startIndex, v + 5).join(' ')}`
+      const startIndex = Math.max(v - wordsToKeep, 0);
+      return rawData.slice(startIndex, v + wordsToKeep).join(' ')
     }).join('...')
-    // matches.map(idx => {
-    //   // find closet 'wordsToKeep' words
-    // });
-    // const keyWordIndex = rawData.toLowerCase().indexOf(keyWord.toLowerCase());
-    //
-    // return  rawData.slice(startIndex, matches[0] + 10);
+
+    if (type == 'activities' && matches.length) {
+     console.log(
+        matches.filter((v, i) => {
+          return matches[i + 1] > v + 5 || matches[i + 1] == undefined;
+        }).map(v => {
+          const startIndex = Math.max(v - 5, 0);
+          return rawData.slice(startIndex, v + 5).join(' ');
+        }).join('...')
+     );
+    }
+
   }
 
   buildSearchIndex(campgrounds, minimumKeyLength) {
@@ -256,37 +256,38 @@ class Searcher {
       //we build an index like this: {'keyword': [empty, empty, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], empty]}
       cg.description = cg.description || ''
       cg.address = cg.address || ''
+      cg.region = cg.region || ''
       const idx = parseInt(cg.id)
 
       const categoryDict = {
         'name': {
           data: cg.name.split(' '),
-          originalData: cg.name,
+          originalData: cg.name.toLowerCase().split(' '),
           func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
         },
-        'paymentMethods': {
-          data: cg.paymentMethods,
-          originalData: cg.paymentMethods.join(' '),
+        'region': {
+          data: [cg.region],
+          originalData: [cg.region.toLowerCase()],
           func: function (val) {return 100}
         },
         'activities': {
-          data: cg.activities.map(val => val.name),
-          originalData: cg.activities.map(v => v.name).join(' '),
+          data: cg.activities,
+          originalData: cg.activities.map(v => v.toLowerCase()),
           func: function (val) {return Math.floor(1 / this.data.length * 100)}
         },
         'address': {
           data: cg.address.split(' ').filter(val => (val.length > 3 || val in provinces) && (!val.match(/^\d*$/) || this.badWords.indexOf(val.toLowerCase()) !== -1)).map(val => val in provinces ? provinces[val] : val),
-          originalData: cg.address,
+          originalData: cg.address.toLowerCase().split(' '),
           func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
         },
         'description': {
           data: cg.description.split(' ').filter(val => val.length >= 4 && this.badWords.indexOf(val.toLowerCase()) === -1),
-          originalData: cg.description,
+          originalData: cg.description.toLowerCase().split(' '),
           func: function (val) {return Math.floor(val.length / this.data.length * 100)}
         },
         'province': {
           data: [cg.province],
-          originalData: cg.province,
+          originalData: [cg.province.toLowerCase()],
           func: function (val) {return 100}
         }
       }
@@ -294,7 +295,8 @@ class Searcher {
       // loop through each category, and within each loop thru data
       for (var category in categoryDict) {
         categoryDict[category].data.forEach(val => {
-          if (!val || val.length < minimumKeyLength || val.indexOf(' ') !== -1) return;
+
+          if (!val || val.length < minimumKeyLength) return;
           val = this.sanitize(val).toLowerCase();
           // see if current value in inverted index
           if (!(val in this.invertedIndex)) {
@@ -313,44 +315,13 @@ class Searcher {
               type: category,
               importance: importance,
               name: cg.name,
-              excerpt: this.makeExcerptForIndex(categoryDict[category].originalData, val)
+              excerpt: this.makeExcerpt(categoryDict[category].originalData, val, category)
             });
           }
         });
       }
     });
   }
-
-  // generateExcerpt(campgroundIndex, matchType, queryString) {
-  //   // Use the campground index to access DB
-  //   // queryString = what user searched for, campgroundsData is data from campgrounds object
-  //   queryString = queryString.toLowerCase()
-  //   if (matchType == 'activities') {
-  //     var rawString = campgroundsData.map(v => v.name.toLowerCase()).join(' ')
-  //   } else if (matchType == 'paymentMethods') {
-  //     var rawString = 'Accepts ' + campgroundsData.join(' ');
-  //   // }
-  //   // else if (matchType == 'address') {
-  //   //   // find what the province is
-  //   //   rawString = campgroundsData
-  //   //   let replaceString;
-  //   //   if (queryString.toLowerCase() in this.provinces) replaceString = `${queryString} ${this.provinces[queryString]}`
-  //   //   if (queryString.toLowerCase() in this.provincesReversed) replaceString = `${queryString} ${this.provincesReversed[queryString]}`
-  //   //   rawString = rawString.replace(queryString, replaceString);
-  //   //   console.log(rawString);
-  //   } else {
-  //     var rawString = campgroundsData;
-  //   }
-  //
-  //   const keepWords = 5;
-  //   const splitText = rawString.split(' ');
-  //   const findIndex = splitText.findIndex(item => item.toLowerCase().includes(queryString));
-  //   // slice it, keeping
-  //   const excerpt = splitText.slice(Math.max(findIndex - keepWords, 0), findIndex + keepWords)
-  //   if (findIndex > keepWords) excerpt.unshift('...');
-  //   if (findIndex < splitText.length - keepWords) excerpt.push('...');
-  //   return excerpt.join(' ');
-  // }
 
   doSearch(query) {
     query = query.toLowerCase();

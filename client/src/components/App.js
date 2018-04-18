@@ -15,7 +15,6 @@ class App extends React.Component {
     this.state = {
       quote: undefined
     }
-
     // this.newRandoms = this.newRandoms.bind(this);
   }
 

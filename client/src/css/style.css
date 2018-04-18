@@ -195,6 +195,7 @@ nav > a {
 .searchtext {
   flex: 1;
   text-align: left;
+  text-transform: capitalize;
 }
 .searchtext > h1 {
   color: black;

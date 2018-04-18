@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Activities = (props) => {
-  console.log(props.activitiesList);
   if (!(props.activitiesList)) return null;
 
   return props.activitiesList.map((activity, idx) => {
