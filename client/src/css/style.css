@@ -40,15 +40,21 @@ button {
   align-self: center;
   justify-self: center;
   grid-area: reviewlink;
-  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
   outline: none;
-  background: linear-gradient(120deg, #e20d0d, #B02020);
+  background: linear-gradient(#e20d0d, #B02020);
   color: white;
   font-weight: bold;
   font-size: .95rem;
-  padding: 9px 18px;
+  padding: 6px 16px;
   border: 1px solid black;
   box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+button > .button-large {
+  font-size: 1.5rem;
+  padding-right: 10px;
 }
 button:active {
   background: linear-gradient(300deg, #E20D0D, #B02020);
@@ -63,6 +69,7 @@ body {
 /* WHOLE APP CONTAINER */
 .container {
   padding: 0;
+  background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 380px, #fff 380px)
 }
 
 /* TOP NAV */
@@ -99,6 +106,7 @@ nav > a {
   justify-content: space-around;
   text-align: center;
   position: relative;
+  z-index: 999;
 }
 .banner:before {
   content: ' ';
@@ -114,10 +122,14 @@ nav > a {
 .banner h1 {
   margin: 0;
   color: black;
+  font-weight: 400;
+  font-size: 5.5rem;
+  text-shadow: 0 3px 5px rgba(0,0,0,0.5);
 }
 .banner h2 {
-  color: black;
+  color: white;
   font-weight: 200;
+  font-size: 2rem;
 }
 .banner span {
   margin: 20px 0;
@@ -189,6 +201,7 @@ nav > a {
   font-size: 1rem;
   font-weight: bold;
   margin: 3px 0;
+  text-shadow: none;
 }
 .searchtext > h2 {
   margin: 0;
@@ -461,7 +474,7 @@ footer > * {
   top: 0;
   left: 0;
   content: '★';
-  color: white;
+  color: #EAEAEA;
   font-size: 1.5rem;
 }
 .star:before {
@@ -527,6 +540,7 @@ footer > * {
 }
 .review-form__buttons {
   grid-column: 1 / -1;
+  display: flex;
 }
 .review-form__buttons > * {
   margin-right: 5px;
