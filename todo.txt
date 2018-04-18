@@ -2,36 +2,70 @@
 
 1. Scrape Data
 	Address to Lat/Lon for missing addresses or deal with them somehow (~500)
-	Push backup of DB to Git repo
-	Fix MongoDB so it plays nicely with front end
 
 
 2. ## FRONT END TO DOS
-	/			welcome page (highlight some CGs)
-	/campground/:id		single campground page
-	/search			shows search suggestions (have param for short or long
-				short collates multiple matches for one CG into only
-				highest match)
+	OVERALL			TODO :	Mobile layout
+					Animations for stuff coming in (e.g. review form)
+					React PropTypes
+					Loading spinners
+					Random photos for campgrounds (some variety)
+					All <a> should have proper href
+					Mocha testing?
 
-	/signup			sign up
-	/logout			log out
-	/signin			log in
+	/			GOAL :	Welcome page (highlight some CGs)
+				TODO :	Add a logo
+					Nav bar should have stars behind it like Yelp
+					Random photo in the back of banner every time
+					Chevron in top to scroll down (see Skip the Dish)
+						this section needs to be added
+						THOUSANDS OF CAMPGROUNDS
+						DETAILED INFORMATION
+						TRUSTED REVIEWS
+					Search button styling
+					Hovering over search results should highlight
+					Click on search results should work 
+					
+	/search			GOAL :	shows full search suggestions (rather than dropdown on /)
+					(param for short or long search. short collates matches
+					for one CG into only highest match as it is now)
+				TODO :	apply filters to search (activ., # campsites, hrs)
+					picture, name, reviews, address
+					type (public/private), distance from you
+					map of all results
+					ideally paginated
 
-	Commenting adds to MongoDB
-	Reading of campgrounds done fr
-	Logo array in app.js gives activities logos on the fly
-	Helpers.js has searcher class functions
+	/campground/:id		GOAL :	Single campground page
+				TODO :	Unknown campground should 404
+					Get directions link - modal search
+					Write a review button should have a logo (like Yelp)
+					Distance for current campground from your location
+					Missing basics should hide logo (#1723 email address)
+					Reviews add to MongoDB
+					Reviews check for spam
+					Reviews pagination
+					Only add review after signed in
+					Time stamp formatting
+					Photo gallery (NPM?) for photos
+					NaN error for weather (e.g. 28)
 
-	Search index (and query searching) should be lower case only and stripped of punctuation
-	Serch qiuery should be "uniquified" - remove duplicate parameters ("salmon salmon")
-	Reviews Pagination
-	Animations for stuff coming in (e.g. review form)
-	Map pin placement
-	Prop types
-	Time stamp formatting
-	Loading spinners
-	Searching multiple words
-	Distance for current campground from your location
+	/add-campground		GOAL :	form for adding new CG
+				TODO :	see Colt Steele for proper naming of this route
+					adds new campground
+					only allow if logged in
+	
+	/add-photo		GOAL :	add new photo for a campground
+				TODO : 	implement
+
+	/signup			GOAL :	signs you up in case you haven’t done so
+				TODO :	implement
+
+	/logout			GOAL :	logs you out
+				TODO : 	implement
+
+	/signin			GOAL : 	logs you in (use OAuth)
+
+		
 
 3. ## BACK END ROUTES
 	/
@@ -40,26 +74,5 @@
 	/search			returns search suggestions
 
 	search indexing for dates campground is open (“winter camping”, etc)
-	handling multiple search terms
-	404 Page for Not Found (Or in ReactRouter)
-
-4. Mobile Layout
-
-
-## Single Campground Page
-	Each camp should have:
-	## name
-	## description
-	## submitted by
-	## ratings
-	## price
-	## tags (two random amenities) / amenities
-	## address (SHOW MAP)
-	## open time of year
-	## number of sites
-	## phone number
-
-
-## Comments
-## Ratings
-## Search
+	payment Methods not scraped
+	“submitted by” for each campground in Mongo/on page
