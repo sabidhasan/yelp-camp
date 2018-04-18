@@ -35,11 +35,10 @@ var campgroundSchema = new mongoose.Schema({
 const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Search Index - first get all campgrounds, then build index
+var search;
 const allCG = Campground.find({}, (err, res) => {
-  const search = new 
-  res
+ search = new helpers.searcher(res.slice())
 })
-// const search = new sampleData.searcher(campgrounds);
 
 app.get('/quote', function(req, res) {
   //send a random quote back
@@ -88,21 +87,21 @@ app.get('/campground', async function(req, res) {
   });
 });
 
-app.post('/campground', function(req, res) {
-  //add to campgrounds array... basic validation
-  try {
-    if (req.body.name.length > 10 || req.body.image.length > 20) throw new Error();
-    console.log("ADDING TO DB");
-    //add to array
-    // campgrounds.push({id: campgrounds.length, name: req.body.name, comments: [], image: req.body.image});
-    // res.json(campgrounds);
-    return;
-  } catch (err) {
-    //send error
-    console.log("SENDING ERROR", err);
-    res.sendStatus(403);
-  }
-});
+// app.post('/campground', function(req, res) {
+//   //add to campgrounds array... basic validation
+//   try {
+//     if (req.body.name.length > 10 || req.body.image.length > 20) throw new Error();
+//     console.log("ADDING TO DB");
+//     //add to array
+//     // campgrounds.push({id: campgrounds.length, name: req.body.name, comments: [], image: req.body.image});
+//     // res.json(campgrounds);
+//     return;
+//   } catch (err) {
+//     //send error
+//     console.log("SENDING ERROR", err);
+//     res.sendStatus(403);
+//   }
+// });
 
 app.post('/comment', function(req, res) {
   //post new comment to given id
@@ -131,7 +130,7 @@ app.post('/comment', function(req, res) {
 });
 
 app.get('/search', function(req, res) {
-  // res.json(search.doSearch(req.query.q))
+  res.json(search.doSearch(req.query.q))
 });
 
 app.listen(3001, function() {
