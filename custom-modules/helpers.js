@@ -217,7 +217,8 @@ class Searcher {
     // a keyword (these are keys in teh inverted index) and generates an excerpt
     if (!keyWord) return '';
     // Remove punctiation
-    rawData = this.sanitize(rawData).toLowerCase().split(' ');
+    // rawData = this.sanitize(rawData).toLowerCase().split(' ');
+    rawData = rawData.toLowerCase().split(' ');
 
     // Loops through rawData, finding all matches' indices
     let matches = [], startIdx = 0, foundIndex = -1;
@@ -227,7 +228,7 @@ class Searcher {
       startIdx = matches.length ? matches[matches.length - 1] + 1: 0;
       // console.log('\t\tstarting at', startIdx);
       //matches.reduce((a, v) => a + v + keyWord.length, 0);
-      foundIndex = rawData.slice(startIdx).indexOf(keyWord.toLowerCase());
+      foundIndex = rawData.slice(startIdx).findIndex(v => v.includes(keyWord.toLowerCase()));
 
       // console.log('\t\t found at', foundIndex);
       if (foundIndex !== -1) matches.push(startIdx + foundIndex)
@@ -235,12 +236,18 @@ class Searcher {
 
     const wordsToKeep = Math.min(Math.ceil(12 / matches.length / 2), 3);
     // console.log(matches);
-    return matches.map(v => `${rawData.slice(v - 4, v + 4)}`)
+    // return rawData
+    return matches.filter((v, i) => {
+      return matches[i + 1] > 5 || matches[i + 1] == undefined;
+    }).map(v => {
+      const startIndex = Math.max(v - 5, 0);
+      return `${rawData.slice(startIndex, v + 5).join(' ')}`
+    }).join('...')
     // matches.map(idx => {
     //   // find closet 'wordsToKeep' words
     // });
     // const keyWordIndex = rawData.toLowerCase().indexOf(keyWord.toLowerCase());
-    // const startIndex = Math.max(matches[0] - 10, 0)
+    //
     // return  rawData.slice(startIndex, matches[0] + 10);
   }
 
@@ -287,7 +294,7 @@ class Searcher {
       // loop through each category, and within each loop thru data
       for (var category in categoryDict) {
         categoryDict[category].data.forEach(val => {
-          if (!val || val.length < minimumKeyLength) return;
+          if (!val || val.length < minimumKeyLength || val.indexOf(' ') !== -1) return;
           val = this.sanitize(val).toLowerCase();
           // see if current value in inverted index
           if (!(val in this.invertedIndex)) {
@@ -359,7 +366,7 @@ class Searcher {
         if (matchingIDAndType !== -1) {
           // update that old item
           ret[matchingIDAndType].percentMatch += singleWordResults[idx].percentMatch;
-          ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
+          //ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
         } else {
           ret.push(singleWordResults[idx])
         }
@@ -377,7 +384,6 @@ class Searcher {
       }
       return false;
     });
-    return ret;
   }
 
   searchOneWord(word) {
