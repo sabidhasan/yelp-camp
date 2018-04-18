@@ -71,7 +71,10 @@ app.get('/campground', async function(req, res) {
       }
 
       // If randoms requested, return results, otherwise we need to get weather
-      if (!req.query.id) res.json(results);
+      if (!req.query.id) {
+        res.json(results);
+        return;
+      };
 
       // First result must be the one requested...
       let ret = results[0]["_doc"];
