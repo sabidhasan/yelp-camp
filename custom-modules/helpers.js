@@ -1,3 +1,5 @@
+var commonWords = require('common-words');
+
 quotes = [
   "Time camping isn’t time spent, it’s invested",
   "Away is a place where it’s not about the money you spend.It’s about the moments you share",
@@ -44,8 +46,6 @@ quotes = [
   "Choose only one master – Nature",
   "We do not see nature with our eyes, but with our understandings and our hearts"
 ]
-
-
 
 // Code for working with database
 // function remove (arr, str) { if (arr.indexOf(str) > -1) { arr.splice(arr.indexOf(str), 1) } return arr }
@@ -157,7 +157,270 @@ const activitySymbols = {
   'volleyball court': '*'
 }
 
+const provinces = {
+  'bc': 'british columbia',
+  'ab': 'alberta',
+  'sk': 'saskatchewan',
+  'mb': 'manitoba',
+  'on': 'ontario',
+  'qc': 'quebec',
+  'pe': 'prince edward island',
+  'nb': 'new brunswick',
+  'ns': 'nova scotia',
+  'nl': 'newfoundland',
+  'yt': 'yukon territory',
+  'nt': 'northwest territories'
+}
+const provincesReversed = {
+  'british columbia' : 'bc',
+  'alberta' : 'ab',
+  'saskatchewan' : 'sk',
+  'manitoba' : 'mb',
+  'ontario' : 'on',
+  'quebec' : 'qc',
+  'prince edward island' : 'pe',
+  'new brunswick' : 'nb',
+  'nova scotia' : 'ns',
+  'newfoundland' : 'nl',
+  'yukon territory' : 'yt',
+  'northwest territories' : 'nt',
+}
+
+
+class Searcher {
+  constructor(campgrounds) {
+    /* CONSTANTS and METHODS */
+    this.punctuation = ['!', '.', ';', '’s', "'s", ',', '(', ')', '$']
+    this.badWords = commonWords.map(val => val.word).concat(['near', 'within', 'kms']);
+
+    /* Make search index */
+    this.invertedIndex = {}
+    this.buildSearchIndex(campgrounds, 2);
+  }
+
+  sanitize(word) {
+    // strip empty spaces
+    word = word.replace(/^\s+|\s+$/g, '');
+    // remove punctuation
+    let oldLength;
+    do {
+      oldLength = word.length;
+      this.punctuation.forEach(val => {
+        word = word.replace(val, '');
+      });
+    } while (oldLength !== word.length)
+    return word;
+  }
+
+  makeExcerptForIndex(rawData, keyWord) {
+    // Takes raw data in string format such as address, description, etc. and
+    // a keyword (these are keys in teh inverted index) and generates an excerpt
+    if (!keyWord) return '';
+    // Remove punctiation
+    rawData = this.sanitize(rawData).toLowerCase().split(' ');
+
+    // Loops through rawData, finding all matches' indices
+    let matches = [], startIdx = 0, foundIndex = -1;
+    // console.log(keyWord, '\n\n\n\n', rawData);
+
+    do {
+      startIdx = matches.length ? matches[matches.length - 1] + 1: 0;
+      // console.log('\t\tstarting at', startIdx);
+      //matches.reduce((a, v) => a + v + keyWord.length, 0);
+      foundIndex = rawData.slice(startIdx).indexOf(keyWord.toLowerCase());
+
+      // console.log('\t\t found at', foundIndex);
+      if (foundIndex !== -1) matches.push(startIdx + foundIndex)
+    } while (foundIndex !== -1);
+
+    const wordsToKeep = Math.min(Math.ceil(12 / matches.length / 2), 3);
+    // console.log(matches);
+    return matches.map(v => `${rawData.slice(v - 4, v + 4)}`)
+    // matches.map(idx => {
+    //   // find closet 'wordsToKeep' words
+    // });
+    // const keyWordIndex = rawData.toLowerCase().indexOf(keyWord.toLowerCase());
+    // const startIndex = Math.max(matches[0] - 10, 0)
+    // return  rawData.slice(startIndex, matches[0] + 10);
+  }
+
+  buildSearchIndex(campgrounds, minimumKeyLength) {
+    campgrounds.forEach(cg => {
+      //we build an index like this: {'keyword': [empty, empty, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], empty]}
+      cg.description = cg.description || ''
+      cg.address = cg.address || ''
+      const idx = parseInt(cg.id)
+
+      const categoryDict = {
+        'name': {
+          data: cg.name.split(' '),
+          originalData: cg.name,
+          func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
+        },
+        'paymentMethods': {
+          data: cg.paymentMethods,
+          originalData: cg.paymentMethods.join(' '),
+          func: function (val) {return 100}
+        },
+        'activities': {
+          data: cg.activities.map(val => val.name),
+          originalData: cg.activities.map(v => v.name).join(' '),
+          func: function (val) {return Math.floor(1 / this.data.length * 100)}
+        },
+        'address': {
+          data: cg.address.split(' ').filter(val => (val.length > 3 || val in provinces) && (!val.match(/^\d*$/) || this.badWords.indexOf(val.toLowerCase()) !== -1)).map(val => val in provinces ? provinces[val] : val),
+          originalData: cg.address,
+          func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
+        },
+        'description': {
+          data: cg.description.split(' ').filter(val => val.length >= 4 && this.badWords.indexOf(val.toLowerCase()) === -1),
+          originalData: cg.description,
+          func: function (val) {return Math.floor(val.length / this.data.length * 100)}
+        },
+        'province': {
+          data: [cg.province],
+          originalData: cg.province,
+          func: function (val) {return 100}
+        }
+      }
+
+      // loop through each category, and within each loop thru data
+      for (var category in categoryDict) {
+        categoryDict[category].data.forEach(val => {
+          if (!val || val.length < minimumKeyLength) return;
+          val = this.sanitize(val).toLowerCase();
+          // see if current value in inverted index
+          if (!(val in this.invertedIndex)) {
+            this.invertedIndex[val] = [];
+          }
+          if (!this.invertedIndex[val][idx]) {
+            this.invertedIndex[val][idx] = [];
+          }
+          const importance = categoryDict[category].func(val);
+
+          const index = this.invertedIndex[val][idx].findIndex(elem => elem.type == category);
+          if (index !== -1) {
+            this.invertedIndex[val][idx][index]['importance'] += importance;
+          } else {
+            this.invertedIndex[val][idx].push({
+              type: category,
+              importance: importance,
+              name: cg.name,
+              excerpt: this.makeExcerptForIndex(categoryDict[category].originalData, val)
+            });
+          }
+        });
+      }
+    });
+  }
+
+  // generateExcerpt(campgroundIndex, matchType, queryString) {
+  //   // Use the campground index to access DB
+  //   // queryString = what user searched for, campgroundsData is data from campgrounds object
+  //   queryString = queryString.toLowerCase()
+  //   if (matchType == 'activities') {
+  //     var rawString = campgroundsData.map(v => v.name.toLowerCase()).join(' ')
+  //   } else if (matchType == 'paymentMethods') {
+  //     var rawString = 'Accepts ' + campgroundsData.join(' ');
+  //   // }
+  //   // else if (matchType == 'address') {
+  //   //   // find what the province is
+  //   //   rawString = campgroundsData
+  //   //   let replaceString;
+  //   //   if (queryString.toLowerCase() in this.provinces) replaceString = `${queryString} ${this.provinces[queryString]}`
+  //   //   if (queryString.toLowerCase() in this.provincesReversed) replaceString = `${queryString} ${this.provincesReversed[queryString]}`
+  //   //   rawString = rawString.replace(queryString, replaceString);
+  //   //   console.log(rawString);
+  //   } else {
+  //     var rawString = campgroundsData;
+  //   }
+  //
+  //   const keepWords = 5;
+  //   const splitText = rawString.split(' ');
+  //   const findIndex = splitText.findIndex(item => item.toLowerCase().includes(queryString));
+  //   // slice it, keeping
+  //   const excerpt = splitText.slice(Math.max(findIndex - keepWords, 0), findIndex + keepWords)
+  //   if (findIndex > keepWords) excerpt.unshift('...');
+  //   if (findIndex < splitText.length - keepWords) excerpt.push('...');
+  //   return excerpt.join(' ');
+  // }
+
+  doSearch(query) {
+    query = query.toLowerCase();
+    let ret = []
+    //TO--DO: remove duplicates from swearch query as that breaks it
+
+    for (let word of query.split(" ")) {
+      // Search for just this word
+      const singleWordResults = this.searchOneWord(word);
+      //  loop through results and add to ret
+      for (let idx in singleWordResults) {
+        let matchingIDAndType = ret.findIndex(val => val.type === singleWordResults[idx].type && val.id === singleWordResults[idx].id)
+        if (matchingIDAndType !== -1) {
+          // update that old item
+          ret[matchingIDAndType].percentMatch += singleWordResults[idx].percentMatch;
+          ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
+        } else {
+          ret.push(singleWordResults[idx])
+        }
+      }
+    }
+
+    ret = ret.sort((a, b) => a.percentMatch < b.percentMatch ? 1 : -1);
+    // Remove campground duplicates (each CG should only have one search result at most)
+    let alreadyIncluded = new Set([]);
+    return ret.filter(val => {
+      // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
+      if (!alreadyIncluded.has(val.id)) {
+        alreadyIncluded.add(val.id);
+        return true;
+      }
+      return false;
+    });
+    return ret;
+  }
+
+  searchOneWord(word) {
+    // data that will be returned
+    let filteredResults = []
+
+    if (!word) return filteredResults;
+    // Loop through pre fabricated index
+    for (var searchIndexKeyword in this.invertedIndex) {
+      // if item doesn't match then move on
+      if (!searchIndexKeyword.toLowerCase().startsWith(word.toLowerCase())) continue;
+      // determine percent match (this is multiplied by importance)
+      // "importance" - how important that search keyword is to the campground's data
+      // "percentMatch" - how strong of a match it is, vs search's query word
+      const percentMatch = word.length / searchIndexKeyword.length
+
+      this.invertedIndex[searchIndexKeyword].forEach((val, idx) => {
+        // in case there is no value (arrays are camproundID-indexed)
+        if (!val) return;
+        // the match objects appended with extra data for front end
+        val.forEach(match => {
+          //generate excerpt of match
+          const resultsPercentMatch = Math.round(match.importance * percentMatch);
+          // if filteredResults doesnt have id then add it in
+          const newResult = {
+            type: match.type,
+            percentMatch: resultsPercentMatch,
+            campgroundName: match.name,
+            keyword: searchIndexKeyword,
+            excerpt: match.excerpt,
+            id: idx
+          }
+          // Add to results
+          filteredResults.push(newResult);
+        });
+      })
+    }
+    return filteredResults
+  }
+}
+
 module.exports = {
   quotes: quotes,
-  activitySymbols: activitySymbols
+  activitySymbols: activitySymbols,
+  searcher: Searcher
 }
