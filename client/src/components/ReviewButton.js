@@ -5,8 +5,8 @@ const ReviewButton = (props) => {
     <button
       href='#'
       className='review-link'
-      onClick={(event) => props.toggleReviewForm(event, true)}
-    >Write a Review
+      onClick={(event) => props.toggleReviewForm(event, true)}>
+      <span className='button-large'>✏️</span> Write a Review
     </button>
   )
 }

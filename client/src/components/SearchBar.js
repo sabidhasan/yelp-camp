@@ -15,6 +15,8 @@ class SearchBar extends React.Component {
     this.doSearch = this.doSearch.bind(this);
     this.setFocus = this.setFocus.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleMouse = this.handleMouse.bind(this);
+    this.goToCampground = this.goToCampground.bind(this);
   }
 
   doSearch(e) {
@@ -29,33 +31,49 @@ class SearchBar extends React.Component {
       this.setState({highlightedIndex: newIndex});
     } else if (e.key === 'Enter') {
       // if something is selected then go to it
-      if (this.state.highlightedIndex !== -1) {
-        window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
-      }
+      this.goToCampground();
     } else {
       // do search
       const icons = {
         'name': '⛺', 'paymentMethods': '💵', 'activities': '🚣',
-        'address': '📍', 'description': '📛', 'province': '🌎'
+        'address': '📍', 'description': '📛', 'province': '🌎',
+        'region': '🗾'
       }
       fetch(`/search?q=${e.target.value}`)
         .then(res => res.json())
         .then(search => {
           const stateSearch = search.map(v => {
-            return {id: v.id, icon: icons[v.type], name: v.campgroundName, text: v.excerpt}
+            return {
+              id: v.id,
+              icon: icons[v.type],
+              name: v.campgroundName,
+              text: `${v.type}: ${v.excerpt}`}
           })
           // Update the state for results, trimming it to top 5
           this.setState({results: stateSearch.slice(0, 5)})
         })
+        .catch(err => console.log("Error occurred while searching ", err))
     }
   }
 
+  handleMouse(key) {
+    // Called when mousingover the search results
+    this.setState({highlightedIndex: key})
+  }
+
+  goToCampground() {
+    // Redirects to currently selected campground
+    if (this.state.highlightedIndex === -1) return;
+    window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
+  }
+
   handleChange(e) {
-    // update text
+    // handles search box controlled component
     this.setState({searchQuery: e.target.value})
   }
 
   setFocus() {
+    // Called when losing/gaining focus to input box
     this.setState({active: !this.state.active});
   }
 
@@ -76,12 +94,19 @@ class SearchBar extends React.Component {
         <button type='submit'>🔎</button>
           <ul className={this.state.active ? 'results' : 'hidden'}>
               {this.state.results.map((v, i) => {
-              return (<li key={i} className={i === this.state.highlightedIndex ? 'selected' : ''}>
-                <i className='search-icon'>{v.icon}</i>
-                <div className='searchtext'>
-                  <h1>{v.name}</h1><h2>{v.text}</h2>
-                </div>
-              </li>)
+              return (
+                <li
+                  key={i}
+                  className={i === this.state.highlightedIndex ? 'selected' : ''}
+                  onMouseOver={() => this.handleMouse(i)}
+                  onMouseDown={this.goToCampground}
+                >
+                  <i className='search-icon'>{v.icon}</i>
+                  <div className='searchtext'>
+                    <h1>{v.name}</h1><h2>{v.text}</h2>
+                  </div>
+                </li>
+            )
             })}
           </ul>
       </form>
