@@ -5,8 +5,10 @@ import Banner from './Banner'
 import Campgrounds from './Campgrounds'
 import Footer from './Footer'
 import SingleCampground from './SingleCampground'
-import { firebaseauth } from '../firebase/firebase';
-import { firebase } from '../firebase/firebase'
+// import { firebaseauth } from '../firebase/firebase';
+// import * as authHelper from '../firebase/firebase'
+// import firebase, { auth, provider } from '../firebase/firebase'
+import { signInFunc, signOutFunc, auth } from '../firebase/firebase'
 
 class App extends React.Component {
   constructor(props) {
@@ -15,37 +17,26 @@ class App extends React.Component {
     this.state = {
       quote: undefined
     }
-    this.signUp = this.signUp.bind(this)
-    this.signIn = this.signIn.bind(this)
-    this.signOut = this.signOut.bind(this)
+    // this.signUp = this.signUp.bind(this)
+    // this.signIn = this.signIn.bind(this)
+    // this.signOut = this.signOut.bind(this)
   }
 
   signOut() {
     // Sign out the user
-    firebaseauth.doSignOut();
+    signOutFunc()
+    .then(() => console.log('signed out'))
+    .catch((err) => console.log('error occured'))
   }
 
   signIn() {
-    firebaseauth.doSignInWithEmailAndPassword()
-      .then(authUser => {
-        console.log('authenticating');
-        console.log(authUser);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    signInFunc()
+    .then(val => console.log(val))
+    .catch(err => console.log(err))
   }
-  signUp() {
-    firebaseauth.doCreateUserWithEmailAndPassword()
-        .then(authUser => {
-          console.log(authUser);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-  }
+
   componentDidMount() {
-    firebase.auth.onAuthStateChanged(authUser => {
+    auth.onAuthStateChanged(authUser => {
       if (authUser) {
           console.log('logged in');
           console.log(authUser);
@@ -53,7 +44,6 @@ class App extends React.Component {
         console.log('not logged in');
       }
     });
-
 
     // Get quote
     fetch('/quote')
