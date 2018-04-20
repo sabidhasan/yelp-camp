@@ -2,14 +2,17 @@ import React from 'react'
 import SearchBar from './SearchBar'
 
 class Banner extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {quote: undefined};
+  }
 
   componentDidMount() {
-    // fetch('/randomCampground')
-    //   .then(res => res.json())
-    //   .then(campground => {
-    //     console.log(document.styleSheets[0]);
-    //   })
-    }
+    // Get quote
+    fetch('/quote')
+      .then(res => res.json())
+      .then(quote => this.setState({quote: quote[0]}));
+  }
 
   render(props) {
     return (
@@ -20,10 +23,9 @@ class Banner extends React.Component {
         </div>
         <SearchBar />
         <span>
-          { this.props.quote }
+          { this.state.quote }
         </span>
         <i className="fas fa-chevron-down down-arrow"></i>
-        {/* 2px solid #e6e6e6 */}
       </div>
     )
   }
