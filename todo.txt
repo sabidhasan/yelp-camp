@@ -7,6 +7,7 @@
 2. ## FRONT END TO DOS
 	OVERALL			TODO :	Mobile layout
 					Animations for stuff coming in (e.g. review form)
+					Firebase Verify ID JWT Token before comments/add CG
 					React PropTypes
 					Loading spinners
 					Random photos for campgrounds (some variety)
