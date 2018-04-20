@@ -80,6 +80,7 @@ nav {
   grid-template-columns: 1fr repeat(3, auto);
   grid-gap: 75px;
   align-items: center;
+  max-height: 10vh;
 }
 nav > * {
   display: block;
@@ -99,7 +100,7 @@ nav > a {
 
 /* SPLASH SCREEN/SEARCH BANNER */
 .banner {
-  height: 85vh;
+  height: 91vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -215,10 +216,40 @@ nav > a {
   color: white;
 }
 .selected > div > * {color: white!important;}
+.down-arrow {
+  font-size: 3.5rem;
+  color: white;
+  opacity: 0.7;
+}
 
+.landing-text {
+  display: flex;
+  padding: 60px 40px 0px 40px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.landing-text > section {
+  flex: 1;
+  padding: 0 20px;
+  border-left: 2px solid #e6e6e6;
+}
+.landing-text > section:first-child {
+  border-left: none;
+}
+.landing-text section > h1 {
+  margin: 0;
+  height: 70px;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  font-weight: 100;
+}
+.landing-text section > p {
+  line-height: 1.5rem;
+}
 
 .highlightedCampgrounds {
-  margin: 40px 10px;
+  margin: 0px 10px 40px 10px;
   list-style: none;
   padding: 0;
   display: grid;
