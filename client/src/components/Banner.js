@@ -3,8 +3,6 @@ import SearchBar from './SearchBar'
 
 class Banner extends React.Component {
 
-
-
   componentDidMount() {
     // fetch('/randomCampground')
     //   .then(res => res.json())
@@ -24,6 +22,8 @@ class Banner extends React.Component {
         <span>
           { this.props.quote }
         </span>
+        <i className="fas fa-chevron-down down-arrow"></i>
+        {/* 2px solid #e6e6e6 */}
       </div>
     )
   }

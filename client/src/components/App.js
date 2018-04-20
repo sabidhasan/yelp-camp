@@ -5,6 +5,8 @@ import Banner from './Banner'
 import Campgrounds from './Campgrounds'
 import Footer from './Footer'
 import SingleCampground from './SingleCampground'
+import LandingText from './LandingText'
+
 // import { firebaseauth } from '../firebase/firebase';
 // import * as authHelper from '../firebase/firebase'
 // import firebase, { auth, provider } from '../firebase/firebase'
@@ -54,9 +56,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <a href='#' onClick={this.signUp}>SIGN UP </a><span>------</span>
+        {/* <a href='#' onClick={this.signUp}>SIGN UP </a><span>------</span>
         <a href='#' onClick={this.signIn}>SIGN IN </a><span>------</span>
-        <a href='#' onClick={this.signOut}>SIGNOUT </a>
+        <a href='#' onClick={this.signOut}>SIGNOUT </a> */}
         <Header />
         {/* ROUTES:
           1. /
@@ -68,9 +70,8 @@ class App extends React.Component {
             return (
               <React.Fragment>
                 <Banner {...routerProps} quote={this.state.quote} />
-                <Campgrounds {...routerProps} //campgrounds={this.state.campgrounds}
-                  //newRandoms={this.newRandoms}
-                />
+                <LandingText />
+                <Campgrounds {...routerProps} />
               </React.Fragment>
             );
           }} />
