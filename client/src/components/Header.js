@@ -17,8 +17,7 @@ class Header extends React.Component {
       <nav>
         <a className='title' href='/'>YelpCamp</a>
         <a href='#' className='discover'>Discover</a>
-        <a href='#' className='Login'>Login</a>
-        <a href='#' className='Sign Up'>Sign Up</a>
+        <a href='#' className='login'>Sign In</a>
       </nav>
     )
   }
