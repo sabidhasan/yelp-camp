@@ -37,11 +37,9 @@ h2 {
   font-size: 1.5rem;
 }
 button {
-  align-self: center;
-  justify-self: center;
-  grid-area: reviewlink;
   display: flex;
   align-items: center;
+  justify-content: center;
   border-radius: 5px;
   outline: none;
   background: linear-gradient(#e20d0d, #B02020);
@@ -72,12 +70,69 @@ body {
   background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 380px, #fff 380px)
 }
 
+/* LOGIN FORM */
+.login-background {
+  /* Needed to bring overlay to the top */
+  position: absolute;
+  top: 0;
+  /* Make it stretch whole screen */
+  width: 100vw;
+  height: 100vh;
+  /* To make the actual "form" (child div) be centered */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-background:before {
+  /* The overlay is done as :before to have opacity on background while
+  having no transparency on the child 'form' */
+  content: ' ';
+  position: absolute;
+  /* Force the 'overlay' to cover whole screen */
+  width: 100vw;
+  height: 100vh;
+  /* Give it opaque background */
+  background: black;
+  opacity: .8;
+  /* The banner is also opaque (at z-index 999, so make this higher) */
+  z-index: 1000;
+}
+.login-background > .login-form {
+  z-index: 1001;
+  background: white;
+  width: 50%;
+  height: 80%;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 25px;
+  align-items: center;
+  justify-items: center;
+  grid-template-rows: 50px 50px 50px;
+}
+.login-form > h1 {
+  margin: 0;
+  padding: 0;
+}
+.login-form > .login-form__close {
+  font-size: 2rem;
+  font-weight: bold;
+  grid-column: 2;
+}
+.login-form > .login-form__close:hover {
+  cursor: pointer;
+}
+.login-form > button {
+  grid-column: 1 / -1;
+  width: 40%;
+}
+
 /* TOP NAV */
 nav {
   padding: 10px;
   background: red;
   display: grid;
-  grid-template-columns: 1fr repeat(3, auto);
+  grid-template-columns: 1fr repeat(2, auto);
   grid-gap: 75px;
   align-items: center;
   max-height: 10vh;

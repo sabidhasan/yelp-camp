@@ -6,22 +6,25 @@ import Campgrounds from './Campgrounds'
 import Footer from './Footer'
 import SingleCampground from './SingleCampground'
 import LandingText from './LandingText'
+import LoginForm from './LoginForm'
 
-// import { firebaseauth } from '../firebase/firebase';
-// import * as authHelper from '../firebase/firebase'
-// import firebase, { auth, provider } from '../firebase/firebase'
 import { signInFunc, signOutFunc, auth } from '../firebase/firebase'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      quote: undefined
+      showLogin: true
     }
     // this.signUp = this.signUp.bind(this)
     // this.signIn = this.signIn.bind(this)
     // this.signOut = this.signOut.bind(this)
+    this.toggleLoginForm = this.toggleLoginForm.bind(this)
+  }
+
+  toggleLoginForm() {
+    const newLoginState = !this.state.showLogin
+    this.setState({showLogin: newLoginState});
   }
 
   signOut() {
@@ -47,10 +50,6 @@ class App extends React.Component {
       }
     });
 
-    // Get quote
-    fetch('/quote')
-      .then(res => res.json())
-      .then(quote => this.setState({quote: quote[0]}));
   }
 
   render() {
@@ -60,17 +59,18 @@ class App extends React.Component {
         <a href='#' onClick={this.signIn}>SIGN IN </a><span>------</span>
         <a href='#' onClick={this.signOut}>SIGNOUT </a> */}
         <Header />
-        {/* ROUTES:
-          1. /
-          2. /campground/id
-          3. /addreview => campground POST in backend
-        */}
+
+        { this.state.showLogin ?
+            <LoginForm toggleLoginForm={this.toggleLoginForm} /> :
+            null
+        }
+
         <Switch>
           <Route exact path='/' render={(routerProps) => {
             return (
               <React.Fragment>
-                <Banner {...routerProps} quote={this.state.quote} />
-                <LandingText />
+                <Banner {...routerProps} />
+                <LandingText {...routerProps} />
                 <Campgrounds {...routerProps} />
               </React.Fragment>
             );
@@ -79,7 +79,6 @@ class App extends React.Component {
           <Route exact path="/campground/:id" render={(routerProps) => {
               return <SingleCampground {...routerProps} />
           }} />
-
         </Switch>
 
         <Footer />
