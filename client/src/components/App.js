@@ -5,8 +5,8 @@ import Banner from './Banner'
 import Campgrounds from './Campgrounds'
 import Footer from './Footer'
 import SingleCampground from './SingleCampground'
-
-
+import { firebaseauth } from '../firebase/firebase';
+import { firebase } from '../firebase/firebase'
 
 class App extends React.Component {
   constructor(props) {
@@ -15,25 +15,46 @@ class App extends React.Component {
     this.state = {
       quote: undefined
     }
-    // this.newRandoms = this.newRandoms.bind(this);
+    this.signUp = this.signUp.bind(this)
+    this.signIn = this.signIn.bind(this)
+    this.signOut = this.signOut.bind(this)
   }
 
-  // newRandoms() {
-  //   // Reset the state, then add 10 new campgrounds to it
-  //   this.setState({ campgrounds: [] }, () => {
-  //     for (var i = 0; i < 8; i++) {
-  //       fetch('/campground')
-  //         .then(res => res.json())
-  //         .then(cg => {
-  //           let x = this.state.campgrounds.slice();
-  //           x.push(cg)
-  //           this.setState({ campgrounds: x });
-  //       })
-  //     }
-  //   })
-  // }
+  signOut() {
+    // Sign out the user
+    firebaseauth.doSignOut();
+  }
 
+  signIn() {
+    firebaseauth.doSignInWithEmailAndPassword()
+      .then(authUser => {
+        console.log('authenticating');
+        console.log(authUser);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  signUp() {
+    firebaseauth.doCreateUserWithEmailAndPassword()
+        .then(authUser => {
+          console.log(authUser);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+  }
   componentDidMount() {
+    firebase.auth.onAuthStateChanged(authUser => {
+      if (authUser) {
+          console.log('logged in');
+          console.log(authUser);
+      } else {
+        console.log('not logged in');
+      }
+    });
+
+
     // Get quote
     fetch('/quote')
       .then(res => res.json())
@@ -43,6 +64,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
+        <a href='#' onClick={this.signUp}>SIGN UP </a><span>------</span>
+        <a href='#' onClick={this.signIn}>SIGN IN </a><span>------</span>
+        <a href='#' onClick={this.signOut}>SIGNOUT </a>
         <Header />
         {/* ROUTES:
           1. /

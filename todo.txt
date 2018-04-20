@@ -23,8 +23,6 @@
 						DETAILED INFORMATION
 						TRUSTED REVIEWS
 					Search button styling
-					Hovering over search results should highlight
-					Click on search results should work 
 					
 	/search			GOAL :	shows full search suggestions (rather than dropdown on /)
 					(param for short or long search. short collates matches
@@ -37,6 +35,7 @@
 
 	/campground/:id		GOAL :	Single campground page
 				TODO :	Unknown campground should 404
+					Show distance from your location
 					Get directions link - modal search
 					Write a review button should have a logo (like Yelp)
 					Distance for current campground from your location

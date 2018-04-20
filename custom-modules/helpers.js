@@ -156,7 +156,6 @@ const activitySymbols = {
   'shaded sites': '*',
   'volleyball court': '*'
 }
-
 const provinces = {
   'bc': 'british columbia',
   'ab': 'alberta',

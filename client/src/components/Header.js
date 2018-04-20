@@ -1,6 +1,17 @@
 import React from 'react'
+// import { auth } from '../firebase'
 
 class Header extends React.Component {
+  constructor() {
+    super();
+    // this.login = this.login.bind(this);
+  }
+
+  // login(e) {
+  //   e.preventDefault();
+  //   auth.doSignInWithEmailAndPassword();
+  // }
+
   render(props) {
     return (
       <nav>
