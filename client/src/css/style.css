@@ -141,14 +141,19 @@ nav {
   background: red;
   display: grid;
   grid-template-columns: 1fr repeat(2, auto);
-  grid-gap: 75px;
-  align-items: center;
-  max-height: 10vh;
+  grid-gap: 25px;
+  align-items: stretch;
+  max-height: 12vh;
 }
 nav > * {
   display: block;
+  flex: 1;
+  text-align: center;
+  /* Ensure all items are vertically centered (it's for the login image in nav bar) */
+  display: flex;
+  align-items: center;
 }
-nav > .title {
+nav > .nav__title {
   font-size: 1.9rem;
   letter-spacing: .15rem;
   font-weight: bold;
@@ -156,14 +161,22 @@ nav > .title {
   color: white;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
-nav > a {
-  flex: 1;
-  text-align: center;
+nav .nav__user-image {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 50%;
+}
+nav > a:not(.nav__title) {
+  background: maroon;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
 }
 
 /* SPLASH SCREEN/SEARCH BANNER */
 .banner {
-  height: 91vh;
+  height: 89vh;
   display: flex;
   flex-direction: column;
   align-items: center;
