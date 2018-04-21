@@ -1,5 +1,8 @@
+// Import React and router stuff
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
+
+// Import components
 import Header from './Header'
 import Banner from './Banner'
 import Campgrounds from './Campgrounds'
@@ -9,50 +12,32 @@ import LandingText from './LandingText'
 import LoginForm from './LoginForm'
 import AuthenticationHOC from './AuthenticationHOC'
 
-import PropTypes from 'prop-types';
-
-import { signInFunc, signOutFunc, auth } from '../firebase/firebase'
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLogin: true
+      showLoginOverlay: false
     }
-    // this.signUp = this.signUp.bind(this)
-    // this.signIn = this.signIn.bind(this)
-    // this.signOut = this.signOut.bind(this)
     this.toggleLoginForm = this.toggleLoginForm.bind(this)
   }
 
   toggleLoginForm() {
-    const newLoginState = !this.state.showLogin
-    this.setState({showLogin: newLoginState});
-  }
-
-  signOut() {
-    // Sign out the user
-    signOutFunc()
-    .then(() => console.log('signed out'))
-    .catch((err) => console.log('error occured'))
-  }
-
-  signIn() {
-    signInFunc()
-    .then(val => console.log(val))
-    .catch(err => console.log(err))
+    const newLoginState = !this.state.showLoginOverlay
+    this.setState({showLoginOverlay: newLoginState});
   }
 
   render() {
-    console.log(React);
     return (
       <div className="container">
         {/* <a href='#' onClick={this.signUp}>SIGN UP </a><span>------</span>
         <a href='#' onClick={this.signIn}>SIGN IN </a><span>------</span>
         <a href='#' onClick={this.signOut}>SIGNOUT </a> */}
-        <Header />
+        <Header toggleLoginForm={this.toggleLoginForm} />
 
-        <LoginForm toggleLoginForm={this.toggleLoginForm} show={this.state.showLogin} />
+        {this.state.showLoginOverlay ?
+          <LoginForm toggleLoginForm={this.toggleLoginForm} />
+          : null
+        }
 
         <Switch>
           <Route exact path='/' render={(routerProps) => {
@@ -76,10 +61,5 @@ class App extends React.Component {
     );
   }
 }
-
-
-App.contextTypes = {
-  user: PropTypes.object
-};
 
 export default AuthenticationHOC(App);

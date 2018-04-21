@@ -1,26 +1,35 @@
 import React from 'react'
-// import { auth } from '../firebase'
+import PropTypes from 'prop-types';
+
 
 class Header extends React.Component {
-  constructor() {
-    super();
-    // this.login = this.login.bind(this);
+  constructor(props) {
+    super(props);
   }
 
-  // login(e) {
-  //   e.preventDefault();
-  //   auth.doSignInWithEmailAndPassword();
-  // }
+  static contextTypes = {
+    user: PropTypes.object,
+    signOut: PropTypes.func
+  };
 
   render(props) {
+    // console.log(props);
     return (
       <nav>
-        <a className='title' href='/'>YelpCamp</a>
-        <a href='#' className='discover'>Discover</a>
-        <a href='#' className='login'>Sign In</a>
+        <a className='nav__title' href='/'>YelpCamp</a>
+        <a href='#'>Discover</a>
+        {this.context.user ?
+          <a href='#' onClick={this.context.signOut}>
+            <img className='nav__user-image' src={this.context.user.providerData[0].photoURL} />
+            Log Out
+          </a>
+        :
+          <a href='#' className='login' onClick={this.props.toggleLoginForm}>Sign In</a>
+        }
       </nav>
     )
   }
 }
+
 
 export default Header

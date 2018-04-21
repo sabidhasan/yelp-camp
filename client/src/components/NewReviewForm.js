@@ -9,8 +9,8 @@ class NewReviewForm extends React.Component {
     this.state = {
       editable: props.editable,
       campgroundID: props.campgroundID,
-      toggleReviewForm: props.toggleReviewForm,
-      addNewComment: props.addNewComment,
+      // toggleReviewForm: props.toggleReviewForm,
+      // addNewComment: props.addNewComment,
       pickedRating: 0,
       reviewText: '',
       errorMessage: null
@@ -52,10 +52,10 @@ class NewReviewForm extends React.Component {
         return res.json();
       })
       .then(data => {
-        this.state.addNewComment(data);
+        this.props.addNewComment(data);
         //hide the form
         this.setState({pickedRating: 0, reviewText: '', errorMessage: null})
-        this.state.toggleReviewForm(null, false);
+        this.props.toggleReviewForm(null, false);
       })
       .catch(err => {
         this.setState({errorMessage: 'Could not post review at this time. Try again'});

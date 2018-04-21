@@ -3,7 +3,10 @@ import React from 'react'
 class RatingBar extends React.Component {
     constructor(props) {
       super(props)
-      this.state = {rating: props.rating || 0, updateRating: props.updateRating || undefined}
+      this.state = {
+        rating: props.rating || 0,
+        // updateRating: props.updateRating || undefined
+      }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,7 +33,7 @@ class RatingBar extends React.Component {
         return (
           <span
             key={idx}
-            onClick={() => {if (this.state.updateRating) this.state.updateRating(idx + 1)}}
+            onClick={() => {if (this.props.updateRating) this.props.updateRating(idx + 1)}}
             className={'star star' + (Math.floor(val * 10) / 10 * 100)}></span>
         );
       });
