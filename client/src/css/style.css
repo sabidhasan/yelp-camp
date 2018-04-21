@@ -176,7 +176,7 @@ nav > a:not(.nav__title) {
 
 /* SPLASH SCREEN/SEARCH BANNER */
 .banner {
-  height: 89vh;
+  height: 91vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -699,4 +699,31 @@ footer > .social-media .social-media__linkedin:hover {
   outline: none;
   line-height: 1.5rem;
   font-family: inherit;
+}
+
+
+@media screen and (max-width: 767px) {
+  h1, h2 {margin: 0;}
+  nav {grid-gap: 5px;}
+  nav > .nav__title {font-size: 1.4rem;}
+  nav > a:not(.nav__title) {padding: 4px 8px;}
+  nav .nav__user-image {height: 20px; padding: 0 5px;}
+  .banner {height: 93vh; justify-content: flex-start;}
+  .banner > .title {margin: 0 0 35px 0;}
+  .banner h1 {font-size: 2.5rem; margin: 0 0 10px 0;}
+  .banner h2 {margin: 0; font-size: 1.5rem; color: black;}
+  .down-arrow { flex: 1; display: flex; align-items: flex-end;}
+  .searchbar {width: 95vw;}
+  .searchbar > label {display: none;}
+  .searchbar > input {border: 2px solid gray; font-size: 0.9rem;}
+  .searchbar >  button {border: 2px solid gray; padding: 2px;}
+  .searchtext > h1, .searchtext > h2 {font-size: .9rem;}
+  .search-icon {padding: 0 5px; font-size: 1.4rem;}
+  .banner span {display: none;}
+  .landing-text {display: grid; grid-template-columns: 100% 100% 100%;
+    padding: 60px 0 0 0; overflow: auto;}
+  .landing-text section > h1 {height: auto;}
+  .landing-text section > p {margin: 0;}
+
+
 }

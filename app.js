@@ -36,6 +36,11 @@ var campgroundSchema = new mongoose.Schema({
 });
 const Campground = mongoose.model("Campground", campgroundSchema);
 
+// Initialize Firebase App (used for authentication of user credentials from front end)
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseKey)
+});
+
 // Search Index - first get all campgrounds, then build index
 var search;
 const allCG = Campground.find({}, (err, res) => {
@@ -93,9 +98,6 @@ app.get('/campground', async function(req, res) {
 });
 
 app.post('/verifyUser', function(req, res) {
-  admin.initializeApp({
-    credential: admin.credential.cert(firebaseKey)
-  });
   admin.auth().verifyIdToken(req.body.a)
   .then((decodedToken) => {
     var uid = decodedToken.uid;
