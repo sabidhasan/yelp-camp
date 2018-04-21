@@ -7,6 +7,9 @@ import Footer from './Footer'
 import SingleCampground from './SingleCampground'
 import LandingText from './LandingText'
 import LoginForm from './LoginForm'
+import AuthenticationHOC from './AuthenticationHOC'
+
+import PropTypes from 'prop-types';
 
 import { signInFunc, signOutFunc, auth } from '../firebase/firebase'
 
@@ -40,19 +43,8 @@ class App extends React.Component {
     .catch(err => console.log(err))
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-          console.log('logged in');
-          console.log(authUser);
-      } else {
-        console.log('not logged in');
-      }
-    });
-
-  }
-
   render() {
+    console.log(React);
     return (
       <div className="container">
         {/* <a href='#' onClick={this.signUp}>SIGN UP </a><span>------</span>
@@ -60,10 +52,7 @@ class App extends React.Component {
         <a href='#' onClick={this.signOut}>SIGNOUT </a> */}
         <Header />
 
-        { this.state.showLogin ?
-            <LoginForm toggleLoginForm={this.toggleLoginForm} /> :
-            null
-        }
+        <LoginForm toggleLoginForm={this.toggleLoginForm} show={this.state.showLogin} />
 
         <Switch>
           <Route exact path='/' render={(routerProps) => {
@@ -88,4 +77,9 @@ class App extends React.Component {
   }
 }
 
-export default App;
+
+App.contextTypes = {
+  user: PropTypes.object
+};
+
+export default AuthenticationHOC(App);

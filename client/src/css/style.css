@@ -82,6 +82,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* So 0 height doesn;t mess it up */
+  overflow: hidden;
 }
 .login-background:before {
   /* The overlay is done as :before to have opacity on background while
@@ -97,6 +99,9 @@ body {
   /* The banner is also opaque (at z-index 999, so make this higher) */
   z-index: 1000;
 }
+.login-background__hide {
+  height: 0;
+}
 .login-background > .login-form {
   z-index: 1001;
   background: white;
@@ -108,7 +113,7 @@ body {
   padding: 25px;
   align-items: center;
   justify-items: center;
-  grid-template-rows: 50px 50px 50px;
+  grid-template-rows: 50px 110px repeat(auto-fit, 50px);
 }
 .login-form > h1 {
   margin: 0;
@@ -121,6 +126,9 @@ body {
 }
 .login-form > .login-form__close:hover {
   cursor: pointer;
+}
+.login-form > p {
+  align-self: flex-start;
 }
 .login-form > button {
   grid-column: 1 / -1;
