@@ -1,10 +1,12 @@
-var express    = require("express"),
-    app        = express(),
-    bodyParser = require('body-parser'),
-    weatherKey = require('./custom-modules/weatherKey').apiKey,
-    ForecastIo = require('forecast.io'),
-    mongoose   = require('mongoose'),
-    helpers    = require('./custom-modules/helpers')
+var express     = require('express'),
+    app         = express(),
+    bodyParser  = require('body-parser'),
+    weatherKey  = require('./custom-modules/weatherKey').apiKey,
+    ForecastIo  = require('forecast.io'),
+    mongoose    = require('mongoose'),
+    helpers     = require('./custom-modules/helpers'),
+    admin       = require('firebase-admin'),
+    firebaseKey = require('./custom-modules/serverkey.json')
 
 // Allow parsing body from post requests
 app.use(bodyParser.json());
@@ -91,7 +93,17 @@ app.get('/campground', async function(req, res) {
 });
 
 app.post('/verifyUser', function(req, res) {
-  console.log(req.body);
+  admin.initializeApp({
+    credential: admin.credential.cert(firebaseKey)
+  });
+  admin.auth().verifyIdToken(req.body.a)
+  .then((decodedToken) => {
+    var uid = decodedToken.uid;
+    console.log(decodedToken);
+  })
+
+
+  // console.log(req.body);
 });
 
 // app.post('/campground', function(req, res) {
