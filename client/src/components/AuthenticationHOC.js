@@ -52,7 +52,19 @@ const AuthenticationHOC = (Component) => {
         if (authUser) {
             this.setState({user: authUser});
             authUser.getIdToken()
-            .then(token => console.log(token))
+            .then(token => {
+              console.log(token);
+              fetch('/verifyUser', {
+                method: 'post',
+                body: JSON.stringify({'a': token}), //JSON.stringify(token.json),
+                headers: {
+                  'Accept': 'application/json, text/plain, */*',
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then(response => response.json())
+              .then(result => console.log(result))
+            })
         } else {
           this.setState({user: null})
         }

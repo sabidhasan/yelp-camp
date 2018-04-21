@@ -90,6 +90,10 @@ app.get('/campground', async function(req, res) {
   });
 });
 
+app.post('/verifyUser', function(req, res) {
+  console.log(req.body);
+});
+
 // app.post('/campground', function(req, res) {
 //   //add to campgrounds array... basic validation
 //   try {
