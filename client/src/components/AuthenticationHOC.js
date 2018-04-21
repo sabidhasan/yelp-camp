@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-import { auth } from '../firebase/firebase'
-// import ContextLoggedIn from './ContextLoggedIn'
-// import AuthUserContext from './AuthUserContext';
+// Import helper sign in/sign out functions
+import { signInFunc, signOutFunc, auth } from '../firebase/firebase'
 
 const AuthenticationHOC = (Component) => {
   // Create a component that will render the passed in component
@@ -13,44 +12,62 @@ const AuthenticationHOC = (Component) => {
       this.state = {
         user: null
       }
+      this.signInUser = this.signInUser.bind(this)
+      this.signOutUser = this.signOutUser.bind(this)
+    }
+
+    static childContextTypes = {
+      user: PropTypes.object,
+      signIn: PropTypes.func,
+      signOut: PropTypes.func
+    }
+
+    signInUser() {
+      signInFunc()
+      .then(val => {
+        this.setState({user: val})
+      })
+      .catch(err => console.log(err))
+    }
+
+    signOutUser() {
+      // Sign out the user
+      signOutFunc()
+      .then(() => {
+        this.setState({user: null})
+      })
+      .catch((err) => console.log('error occured'))
     }
 
     getChildContext() {
-      return this.state;
+      return {
+        user: this.state.user,
+        signIn: this.signInUser,
+        signOut: this.signOutUser
+      }
     }
-
 
     componentDidMount() {
       auth.onAuthStateChanged(authUser => {
         if (authUser) {
-            console.log('logged in');
-            this.setState({user: authUser})
+            this.setState({user: authUser});
+            authUser.getIdToken()
+            .then(token => console.log(token))
         } else {
-          console.log('not logged in');
           this.setState({user: null})
         }
       });
     }
 
     render() {
-      const { authUser } = this.state;
-      return (
-        // <AuthUserContext.Provider value={authUser}>
-          <Component />
-        // </AuthUserContext.Provider>
-      );
-
-      // return (
-      //   <ContextLoggedIn.Provider value={this.state.user}>
-      //     <Component />
-      //   </ContextLoggedIn.Provider>
-      // )
+      return <Component />
     }
-
   }
-  AuthenticationHOC.childContextTypes = {
-    user: PropTypes.object
-  };
+  // AuthenticationHOC.childContextTypes = {
+  //   user: PropTypes.object,
+  //   signIn: PropTypes.object,
+  //   signOut: PropTypes.object
+  // };
   return AuthenticationHOC;
 }
 
