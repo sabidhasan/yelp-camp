@@ -8,7 +8,7 @@ const Footer = () => {
       <h3>YelpCamp was created as part of <a href="#">The Web Developer Bootcamp </a>.
        This website has no affiliation with Yelp, Inc. in any way</h3>
 
-      <h3>Made with <span className='footer__red'>❤</span> in Edmonton, Canada</h3>
+      <h3>Made with 💚 and ☕ in Edmonton, Canada</h3>
 
       <div className='social-media'>
         <a href='#'><i className="fab fa-twitter social-media__twitter"></i></a>

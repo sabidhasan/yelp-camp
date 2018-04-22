@@ -78,7 +78,6 @@ class SingleCampground extends React.Component {
   toggleReviewForm(event, show) {
     //show true = show form, false = hide form
     if (event) event.preventDefault();
-    console.log(this.context);
     if (!this.context.user || this.context.user.loading) {
       this.props.toggleLoginForm();
       return;

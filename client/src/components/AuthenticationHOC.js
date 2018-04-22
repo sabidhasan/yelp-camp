@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 // Import helper sign in/sign out functions
-import { signInFunc, signOutFunc, auth } from '../firebase/firebase'
+import { signInFunc, signOutFunc, auth } from '../helpers/firebase'
 
 const AuthenticationHOC = (Component) => {
   // Create a component that will render the passed in component

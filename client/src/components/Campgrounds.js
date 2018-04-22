@@ -39,9 +39,10 @@ class Campgrounds extends React.Component {
           </span>
         </h1>
         {this.state.campgrounds.map(val => {
+          const rating = val.comments.reduce((acc, val) => acc + val.rating, 0) / val.comments.length || 0
           return (
             <li key={val['_id']}>
-              <CampgroundTile id={val.id} name={val.name} image={val.image}/>
+              <CampgroundTile id={val.id} name={val.name} image={val.image} rating={rating} />
             </li>
           )})
         }

@@ -8,11 +8,12 @@ class NewReviewForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      campgroundID: props.campgroundID,
-      addNewComment: props.addNewComment,
       pickedRating: 0,
       reviewText: '',
-      errorMessage: null
+      // errorMessage is what is shown to user ('submitting', 'comment too short'...)
+      errorMessage: null,
+      // disableForm disables the submit button to prevent double submissions
+      disableForm: false
     }
     this.updatePickedRating = this.updatePickedRating.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -52,6 +53,7 @@ class NewReviewForm extends React.Component {
       this.setState({errorMessage: 'Sorry, your user ID is not valid. Try logging out and logging back in.'})
     }
 
+    this.setState({errorMessage: 'Posting comment...', disableForm: true})
     try {
       const response = await fetch('/comment', {
         method: 'post',
@@ -61,7 +63,7 @@ class NewReviewForm extends React.Component {
         },
         body: JSON.stringify({
           userID: userToken,
-          campgroundID: this.state.campgroundID,
+          campgroundID: this.props.campgroundID,
           displayName: this.context.user.displayName,
           photoURL: this.context.user.photoURL,
           uid: this.context.user.uid,
@@ -70,33 +72,21 @@ class NewReviewForm extends React.Component {
         })
       });
       const result = await response.json();
-      console.log(result);
+      // Update comments array locally
+      this.props.addNewComment(result);
+      // Reset UI
+      this.setState({
+        disableForm: false,
+        pickedRating: 0,
+        reviewText: '',
+        errorMessage: null,
+      });
     } catch (err) {
-      console.log(err);
-      this.setState({errorMessage: 'Could not post review at this time. Please try again later'})
+      this.setState({
+        errorMessage: 'Could not post review at this time. Please try again later',
+        disableForm: false
+      });
     }
-    // .then(response => response.json())
-    // const result =
-    // .then(result => {
-      // console.log(result)
-    // })
-    // .catch(err => )
-
-    return;
-    //     if (!res.ok) throw Error(res.statusText);
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     this.props.addNewComment(data);
-    //     //hide the form
-    //     this.setState({pickedRating: 0, reviewText: '', errorMessage: null})
-    //     this.props.toggleReviewForm(null, false);
-    //   })
-    //   .catch(err => {
-    //     this.setState({errorMessage: 'Could not post review at this time. Try again'});
-    //     console.log(err);
-    //   })
-    // }
   }
 
   handleChange(event) {
@@ -137,9 +127,14 @@ class NewReviewForm extends React.Component {
         />
         <span className='error'>{this.state.errorMessage}</span>
         <div className='review-form__buttons'>
-          <button className='review-link' onClick={this.postReview}>Post Your Review</button>
+          <button className='review-link'
+            onClick={this.postReview}
+            disabled={this.state.disableForm ? true : false}
+            >
+            Post Your Review
+          </button>
           <button onClick={(event) => {
-            this.setState({pickedRating: 0, reviewText: '', errorMessage: null});
+            this.setState({pickedRating: 0, reviewText: '', errorMessage: null, disableForm: false});
             this.props.toggleReviewForm(event, false)
           }}>Cancel</button>
           <CircularProgressbar styles={styles} percentage={fillPercentage} strokeWidth={15} />

@@ -1,12 +1,17 @@
 import React from 'react'
+import RatingBar from './RatingBar'
 
 const CampgroundTile = (props) => {
   return (
-    <span>
+    <React.Fragment>
       <img src={props.image} alt="" />
-      <h2>{props.name}</h2>
-      <a href={'campground/' + props.id}>More Info</a>
-    </span>
+      <a href={'campground/' + props.id}>
+        <h2>{props.name}</h2>
+      </a>
+      <div className='review__rating rating'>
+        <RatingBar rating={props.rating} />
+      </div>
+    </React.Fragment>
   )
 }
 
