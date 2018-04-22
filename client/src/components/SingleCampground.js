@@ -143,13 +143,14 @@ class SingleCampground extends React.Component {
           <span className='error'>
             You must be logged in to write a review
           </span>
-        : null}
-        <NewReviewForm
-          editable={this.state.editable}
-          campgroundID={this.requestedID}
-          toggleReviewForm={this.toggleReviewForm}
-          addNewComment={this.addNewComment}
-        />
+        : this.state.editable ?
+          <NewReviewForm
+            campgroundID={this.requestedID}
+            toggleReviewForm={this.toggleReviewForm}
+            addNewComment={this.addNewComment}
+          />
+        : null
+      }
         <Reviews comments={this.state.comments} />
       </div>
     )

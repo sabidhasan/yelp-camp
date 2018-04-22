@@ -1,85 +1,102 @@
 import React from 'react'
 import RatingBar from './RatingBar'
+import PropTypes from 'prop-types'
+
 import CircularProgressbar from 'react-circular-progressbar';
 
 class NewReviewForm extends React.Component {
   constructor(props) {
     super(props);
-    //editable is whether or not the form is shown
-    //editFormToggle is a parent function that toggles the editable
     this.state = {
-      editable: props.editable,
       campgroundID: props.campgroundID,
-      // toggleReviewForm: props.toggleReviewForm,
-      // addNewComment: props.addNewComment,
+      addNewComment: props.addNewComment,
       pickedRating: 0,
       reviewText: '',
       errorMessage: null
     }
-    // This function sets picked rating for new review
     this.updatePickedRating = this.updatePickedRating.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.postReview = this.postReview.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    // When state is updated in parent
-    this.setState({editable: nextProps.editable});
-  }
+  static contextTypes = {
+    user: PropTypes.object,
+  };
 
-  postReview(event) {
+  async postReview(event) {
+    // send stuff to server to see if it's OK. If so, update local state.
+    // Otherwise, set error to "couldn't post"
 
-    // authUser.getIdToken()
-    // .then(token => {
-    //   fetch('/verifyUser', {
-    //     method: 'post',
-    //     body: JSON.stringify({'userID': token}), //JSON.stringify(token.json),
-    //     headers: {
-    //       'Accept': 'application/json, text/plain, */*',
-    //       'Content-Type': 'application/json'
-    //     }
-    //   })
-    //   .then(response => response.json())
-    //   .then(result => console.log(result))
-    // })
-
-
-
+    // Check for not signed in user
     event.preventDefault();
-    //TO--DO: check for logged in user
-    if (!this.state.reviewText) {
-      this.setState({errorMessage: 'No review text entered!'});
-    } else if (this.state.reviewText.length < 10) {
-      this.setState({errorMessage: 'Review too short'})
-    } else if (this.state.pickedRating === 0) {
-      this.setState({errorMessage: 'Please pick a rating'})
-    } else {
-      //post to server
-      fetch('/comment', {
-        method: 'POST',
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          id: this.state.campgroundID,
-          author: 'Jane Doe',
-          pickedRating: this.state.pickedRating,
-          reviewText: this.state.reviewText})
-      })
-      .then(res => {
-        console.log('res');
-        if (!res.ok) throw Error(res.statusText);
-        return res.json();
-      })
-      .then(data => {
-        this.props.addNewComment(data);
-        //hide the form
-        this.setState({pickedRating: 0, reviewText: '', errorMessage: null})
-        this.props.toggleReviewForm(null, false);
-      })
-      .catch(err => {
-        this.setState({errorMessage: 'Could not post review at this time. Try again'});
-        console.log(err);
-      })
+    if (!this.context.user || this.context.user.loading) {
+      this.setState({errorMessage: 'Sorry, could not post review at this time. Try logging out and logging back in.'})
     }
+
+    // Check for review length, rating given and no-text
+    if (!this.state.reviewText) {
+      this.setState({errorMessage: 'No review text was entered!'});
+      return;
+    } else if (this.state.reviewText.length < 15) {
+      this.setState({errorMessage: 'Review is too short. To make reviews meaningful, we would like a little more text, please.'});
+      return;
+    } else if (this.state.pickedRating === 0) {
+      this.setState({errorMessage: 'Please pick a rating'});
+      return;
+    }
+
+    // Get user token first
+    try {
+      var userToken = await this.context.user.getIdToken();
+    } catch(err) {
+      this.setState({errorMessage: 'Sorry, your user ID is not valid. Try logging out and logging back in.'})
+    }
+
+    try {
+      const response = await fetch('/comment', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: userToken,
+          campgroundID: this.state.campgroundID,
+          displayName: this.context.user.displayName,
+          photoURL: this.context.user.photoURL,
+          uid: this.context.user.uid,
+          pickedRating: this.state.pickedRating,
+          reviewText: this.state.reviewText
+        })
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+      this.setState({errorMessage: 'Could not post review at this time. Please try again later'})
+    }
+    // .then(response => response.json())
+    // const result =
+    // .then(result => {
+      // console.log(result)
+    // })
+    // .catch(err => )
+
+    return;
+    //     if (!res.ok) throw Error(res.statusText);
+    //     return res.json();
+    //   })
+    //   .then(data => {
+    //     this.props.addNewComment(data);
+    //     //hide the form
+    //     this.setState({pickedRating: 0, reviewText: '', errorMessage: null})
+    //     this.props.toggleReviewForm(null, false);
+    //   })
+    //   .catch(err => {
+    //     this.setState({errorMessage: 'Could not post review at this time. Try again'});
+    //     console.log(err);
+    //   })
+    // }
   }
 
   handleChange(event) {
@@ -92,21 +109,22 @@ class NewReviewForm extends React.Component {
   }
 
   render() {
-    if (!this.state.editable) return null;
-
     const fillPercentage  = Math.round(this.state.reviewText.length / 1000 * 100)
+    var styles = {};
     if (fillPercentage === 100) {
       var styles = {path: {stroke: 'red'}};
     } else if (fillPercentage > 85) {
       var styles = {path: {stroke: 'orange'}};
-    } else {
-      var styles = {};
     }
 
     return (
       <form className='review-form'>
         <span className='review-form__picker rating'>
           <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
+        </span>
+        <span className='review-form__author'>
+          Posting publically as {this.context.user.displayName}
+          <img src={this.context.user.photoURL} className='nav__user-image' alt =' '/>
         </span>
         <textarea
           required
@@ -126,8 +144,6 @@ class NewReviewForm extends React.Component {
           }}>Cancel</button>
           <CircularProgressbar styles={styles} percentage={fillPercentage} strokeWidth={15} />
         </div>
-
-
       </form>
     )
   }

@@ -37,7 +37,7 @@ const Campground = mongoose.model("Campground", campgroundSchema);
 // Search Index - first get all campgrounds, then build index
 var search;
 const allCG = Campground.find({}, (err, res) => {
- search = new helpers.searcher(res.slice())
+ search = new helpers.Searcher(res.slice())
 })
 
 app.get('/quote', function(req, res) {
@@ -108,23 +108,31 @@ app.get('/campground', async function(req, res) {
 //   }
 // });
 
-app.post('/comment', function(req, res) {
+app.post('/comment', async function(req, res) {
+  //post new comment to given id. First verify the user
+  try {
+    const verification = await helpers.verifyUser(req.body.userID);
+  } catch (err) {
+    // Couldn't verify users JWT token
+    res.sendStatus(401)
+    return;
+  }
 
-  // async function(req, res) {
-  //   try {
-          //const a = await helpers.verifyUser(req.body.userID);
-      // } catch (err) {
-          //user id verification failed
-    //}
-  //   console.log(a);
-  // }
+  // validate campgroundID
+
+
+  // pickedRating, reviewText length, spam verification
+        // campgroundID: this.state.campgroundID,
+        // displayName: this.context.user.displayName,
+        // photoURL: this.context.user.photoURL,
+        // uid: this.context.user.uid,
+        // pickedRating: this.state.pickedRating,
+        // reviewText: this.state.reviewText
 
 
 
-  //post new comment to given id
-  //MONGO DB will handle this
-  //validate author, pickedRating, reviewText
-  console.log('new post request');
+  return;
+
   if (req.body.pickedRating > 5 || req.body.pickedRating < 0) {
     res.sendStatus(403);
   } else if (!req.body.reviewText || req.body.reviewText.length < 10) {
