@@ -63,11 +63,13 @@ app.get('/campground', async function(req, res) {
       // Handle errors
       if (!(results.length) || err) res.sendStatus(404);
 
-      // Add activities logos for every campground found
+      // Add activities logos for every campground found and reverse comments
       for (var result in results) {
         results[result].activities = results[result].activities.map(v => {
           return {name: v, logo: helpers.activitySymbols[v] || '*'}
         });
+        // Reverse the comments - they are chronologically backwards.
+        results[result].comments.reverse()
       }
 
       // If randoms requested, return results, otherwise we need to get weather
@@ -109,7 +111,8 @@ app.get('/campground', async function(req, res) {
 // });
 
 app.post('/comment', async function(req, res) {
-  //post new comment to given id. First verify the user
+  //post new comment to given id.
+  // Validate the user based on supplied credentials
   try {
     const verification = await helpers.verifyUser(req.body.userID);
   } catch (err) {
@@ -118,40 +121,44 @@ app.post('/comment', async function(req, res) {
     return;
   }
 
-  // validate campgroundID
-
-
-  // pickedRating, reviewText length, spam verification
-        // campgroundID: this.state.campgroundID,
-        // displayName: this.context.user.displayName,
-        // photoURL: this.context.user.photoURL,
-        // uid: this.context.user.uid,
-        // pickedRating: this.state.pickedRating,
-        // reviewText: this.state.reviewText
-
-
-
-  return;
-
+  // Ensure rating and text are valid
   if (req.body.pickedRating > 5 || req.body.pickedRating < 0) {
-    res.sendStatus(403);
-  } else if (!req.body.reviewText || req.body.reviewText.length < 10) {
-    res.sendStatus(403);
-  } else {
-    //add to db
-    const newComment = {
-      id: campgrounds[req.body.id].comments.length,
-      author: req.body.author,
-      rating: req.body.pickedRating,
-      time: new Date(),
-      text: req.body.reviewText
-    }
-
-    if (!campgrounds[req.body.id]) res.sendStatus(403);
-
-    campgrounds[req.body.id].comments.push(newComment);
-    res.json(newComment)
+    res.sendStatus(400);
+    return;
   }
+  if (!req.body.reviewText || req.body.reviewText.length < 15) {
+    res.sendStatus(400);
+    return;
+  }
+
+  // TO--DO check for spam
+
+  // validate campgroundID, inject into DB
+  const cgID = {'id': req.body.campgroundID};
+  Campground.find(cgID, (error, result) => {
+    // Check for how many campgrounds were found
+    if (result.length !== 1 || error) {
+      res.send(400);
+      return;
+    }
+    // Build new CG object
+    const newComment = {
+      id: result[0].comments[result[0].comments.length - 1] || 0,
+      displayName: req.body.displayName,
+      uid: req.body.uid,
+      photoURL: req.body.photoURL,
+      text: req.body.reviewText,
+      time: new Date(),
+      rating: req.body.pickedRating
+    }
+    Campground.update(cgID, {$push: {comments: newComment}}, (writeError, writeStatus) => {
+      if (writeStatus.ok !== 1) {
+        res.json(400);
+        return;
+      }
+      res.json(newComment);
+    })
+  });
 });
 
 app.get('/search', function(req, res) {
