@@ -585,26 +585,28 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .activities__list > li {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  position: relative;
+  text-align: center;
   overflow: hidden;
 }
 .activity__name {
-  /* display: none; */
-  position: absolute;
-  transform: translateX(200%);
-  transition: all 0.5s;
+  transform: translateY(100%);
+  transition: all 0.2s;
+  flex-basis: 100%;
+  text-transform: capitalize;
+  font-weight: bold;
 }
 .activity__logo {
   font-size: 3rem;
-  transition: all 0.5s;
-  padding: 0 15px 0 0;
+  padding: 0;
+  flex-basis: 100%;
+
 }
 .activities__list > li:hover .activity__name {
   /* show on hover */
-  transform: translateX(0);
-  position: initial;
+  transform: translateY(-45%);
 }
 
 .rating {
@@ -706,7 +708,9 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .review-form__buttons {
   grid-column: 1 / -1;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  justify-items: flex-end;
 }
 .review-form__buttons > * {
   margin-right: 5px;
@@ -830,4 +834,29 @@ footer > .social-media .social-media__linkedin:hover {
   100% {
     opacity: 0;
   }
+}
+
+
+
+/*
+ * react-circular-progressbar styles
+ * All of the styles in this file are optional and configurable!
+ */
+.CircularProgressbar {
+  width: 30px;
+  height: 30px;
+}
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: #3e98c7;
+  stroke-linecap: round;
+  transition: all 0.6s;
+}
+.CircularProgressbar .CircularProgressbar-trail {
+  stroke: #d6d6d6;
+}
+.CircularProgressbar .CircularProgressbar-text {
+  display: none;
+}
+.CircularProgressbar .CircularProgressbar-background {
+  fill: #d6d6d6;
 }

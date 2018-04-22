@@ -1,5 +1,6 @@
 import React from 'react'
 import RatingBar from './RatingBar'
+import CircularProgressbar from 'react-circular-progressbar';
 
 class NewReviewForm extends React.Component {
   constructor(props) {
@@ -92,6 +93,16 @@ class NewReviewForm extends React.Component {
 
   render() {
     if (!this.state.editable) return null;
+
+    const fillPercentage  = Math.round(this.state.reviewText.length / 1000 * 100)
+    if (fillPercentage === 100) {
+      var styles = {path: {stroke: 'red'}};
+    } else if (fillPercentage > 85) {
+      var styles = {path: {stroke: 'orange'}};
+    } else {
+      var styles = {};
+    }
+
     return (
       <form className='review-form'>
         <span className='review-form__picker rating'>
@@ -99,10 +110,11 @@ class NewReviewForm extends React.Component {
         </span>
         <textarea
           required
+          maxLength={1000}
           className='review-form__text'
           value={this.state.reviewText}
           onChange={this.handleChange}
-          placeholder='Add some review stuff here!'
+          placeholder='Write your honest review here!'
           name='reviewText'
         />
         <span className='error'>{this.state.errorMessage}</span>
@@ -112,7 +124,10 @@ class NewReviewForm extends React.Component {
             this.setState({pickedRating: 0, reviewText: '', errorMessage: null});
             this.props.toggleReviewForm(event, false)
           }}>Cancel</button>
+          <CircularProgressbar styles={styles} percentage={fillPercentage} strokeWidth={15} />
         </div>
+
+
       </form>
     )
   }
