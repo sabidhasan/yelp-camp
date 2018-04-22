@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+
 import CampMap from './CampMap'
 import WeatherBox from './WeatherBox'
 import InfoBox from './InfoBox'
@@ -14,40 +16,45 @@ class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
     this.requestedID = parseInt(this.props.match.params.id);
-    this.state = {};
+    this.state = {reviewLoginWarning: true};
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
     this.calculateRating = this.calculateRating.bind(this);
   }
 
+  static contextTypes = {
+    user: PropTypes.object,
+  };
+
   componentDidMount() {
     fetch(`/campground?id=${this.requestedID}`)
-      .then(res => res.json())
-      .then(campground => {
-        this.setState({
-          comments: campground.comments,
-          image: campground.image,
-          name: campground.name,
-          description: campground.description,
-          address: campground.address,
-          lat: campground.lat,
-          lon: campground.lon,
-          weather: campground.weather,
-          email: campground.email,
-          phone: campground.phone,
-          sites: campground.sites,
-          hours: campground.hours,
-          prices: campground.prices,
-          paymentMethods: campground.paymentMethods,
-          activities: campground.activities
-        });
-      })
-      // .catch(err => {
-      //   //TO--DO proper error handling for all fetch
-      //   console.log("there is an error");
-      //   window.location = `/not-found/${this.requestedID}`;
-      // });
+    .then(res => res.json())
+    .then(campground => {
+      this.setState({
+        comments: campground.comments,
+        image: campground.image,
+        name: campground.name,
+        description: campground.description,
+        address: campground.address,
+        lat: campground.lat,
+        lon: campground.lon,
+        weather: campground.weather,
+        email: campground.email,
+        phone: campground.phone,
+        sites: campground.sites,
+        hours: campground.hours,
+        prices: campground.prices,
+        paymentMethods: campground.paymentMethods,
+        activities: campground.activities,
+        reviewLoginWarning: true
+      });
+    })
+    .catch(err => {
+    //   //TO--DO proper error handling for all fetch
+      console.log("there is an error");
+    //   window.location = `/not-found/${this.requestedID}`;
+    });
   }
 
   shouldComponentUpdate(prevProps, prevState) {
@@ -71,6 +78,11 @@ class SingleCampground extends React.Component {
   toggleReviewForm(event, show) {
     //show true = show form, false = hide form
     if (event) event.preventDefault();
+    console.log(this.context);
+    if (!this.context.user || this.context.user.loading) {
+      this.props.toggleLoginForm();
+      return;
+    }
     this.setState({editable: show});
     if (show) {
       const form = ReactDOM.findDOMNode(this.refs.reviewForm);
@@ -127,6 +139,11 @@ class SingleCampground extends React.Component {
           Reviews
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
         </h1>
+        {!this.context.user || this.context.user.loading ?
+          <span className='error'>
+            You must be logged in to write a review
+          </span>
+        : null}
         <NewReviewForm
           editable={this.state.editable}
           campgroundID={this.requestedID}

@@ -12,13 +12,15 @@ class Header extends React.Component {
     signOut: PropTypes.func
   };
 
-  render(props) {
+  render() {
     // console.log(props);
     return (
       <nav>
         <a className='nav__title' href='/'>YelpCamp</a>
         <a href='#'>Discover</a>
-        {this.context.user ?
+        {this.context.user && this.context.user.loading ?
+          <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          : this.context.user ?
           <a href='#' onClick={this.context.signOut}>
             <img className='nav__user-image' src={this.context.user.providerData[0].photoURL} />
             Log Out

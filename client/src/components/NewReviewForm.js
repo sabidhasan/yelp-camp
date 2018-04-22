@@ -27,6 +27,23 @@ class NewReviewForm extends React.Component {
   }
 
   postReview(event) {
+
+    // authUser.getIdToken()
+    // .then(token => {
+    //   fetch('/verifyUser', {
+    //     method: 'post',
+    //     body: JSON.stringify({'userID': token}), //JSON.stringify(token.json),
+    //     headers: {
+    //       'Accept': 'application/json, text/plain, */*',
+    //       'Content-Type': 'application/json'
+    //     }
+    //   })
+    //   .then(response => response.json())
+    //   .then(result => console.log(result))
+    // })
+
+
+
     event.preventDefault();
     //TO--DO: check for logged in user
     if (!this.state.reviewText) {
@@ -93,7 +110,7 @@ class NewReviewForm extends React.Component {
           <button className='review-link' onClick={this.postReview}>Post Your Review</button>
           <button onClick={(event) => {
             this.setState({pickedRating: 0, reviewText: '', errorMessage: null});
-            this.state.toggleReviewForm(event, false)
+            this.props.toggleReviewForm(event, false)
           }}>Cancel</button>
         </div>
       </form>

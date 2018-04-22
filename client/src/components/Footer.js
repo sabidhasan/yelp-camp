@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer>
-      <h2>Copyright YelpCamp 2018</h2>
+      <h2>YelpCamp 2018</h2>
 
       <h3>YelpCamp was created as part of <a href="#">The Web Developer Bootcamp </a>.
        This website has no affiliation with Yelp, Inc. in any way</h3>

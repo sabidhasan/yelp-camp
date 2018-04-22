@@ -10,7 +10,7 @@ const AuthenticationHOC = (Component) => {
     constructor(props) {
       super(props);
       this.state = {
-        user: null
+        user: {loading: true}
       }
       this.signInUser = this.signInUser.bind(this)
       this.signOutUser = this.signOutUser.bind(this)
@@ -50,22 +50,10 @@ const AuthenticationHOC = (Component) => {
     componentDidMount() {
       auth.onAuthStateChanged(authUser => {
         if (authUser) {
+          // this.setState({user: {loading: true}})
             this.setState({user: authUser});
-            authUser.getIdToken()
-            .then(token => {
-              console.log(token);
-              fetch('/verifyUser', {
-                method: 'post',
-                body: JSON.stringify({'a': token}), //JSON.stringify(token.json),
-                headers: {
-                  'Accept': 'application/json, text/plain, */*',
-                  'Content-Type': 'application/json'
-                }
-              })
-              .then(response => response.json())
-              .then(result => console.log(result))
-            })
         } else {
+          // this.setState({user: {loading: true}})
           this.setState({user: null})
         }
       });
