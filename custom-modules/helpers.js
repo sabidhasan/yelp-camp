@@ -423,6 +423,6 @@ const verifyUser = (JWTToken) => {
 module.exports = {
   quotes: quotes,
   activitySymbols: activitySymbols,
-  searcher: Searcher,
+  Searcher: Searcher,
   verifyUser: verifyUser
 }

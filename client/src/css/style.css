@@ -164,7 +164,7 @@ nav > .nav__title {
   color: white;
   text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
-nav .nav__user-image {
+.nav__user-image {
   height: 28px;
   padding: 0 10px;
   border-radius: 50%;
@@ -546,7 +546,7 @@ footer > .social-media .social-media__linkedin:hover {
   color: black;
   font-size: 1.2rem
 }
-.review > .review__author {
+.review__author {
   font-weight: bold;
 }
 .review .review__rating .star:after {font-size: 1rem}
@@ -593,7 +593,7 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .activity__name {
   transform: translateY(100%);
-  transition: all 0.2s;
+  transition: all 0.1s;
   flex-basis: 100%;
   text-transform: capitalize;
   font-weight: bold;
@@ -705,6 +705,12 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .review-form__picker {
   margin: 0;
+}
+.review-form__author {
+  font-weight: bold;
+  justify-self: flex-end;
+  display: flex;
+  align-items: center;
 }
 .review-form__buttons {
   grid-column: 1 / -1;
