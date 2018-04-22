@@ -1,4 +1,11 @@
-var commonWords = require('common-words');
+var commonWords = require('common-words'),
+    admin       = require('firebase-admin'),
+    firebaseKey = require('./serverkey.json');
+
+// Initialize Firebase App (used for authentication of user credentials from front end)
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseKey)
+});
 
 quotes = [
   "Time camping isn’t time spent, it’s invested",
@@ -184,7 +191,6 @@ const provincesReversed = {
   'yukon territory' : 'yt',
   'northwest territories' : 'nt',
 }
-
 
 class Searcher {
   constructor(campgrounds) {
@@ -395,8 +401,28 @@ class Searcher {
   }
 }
 
+// Verify if JWT is valid
+const verifyUser = (JWTToken) => {
+  return new Promise(function(resolve, reject) {
+    // if nothing given
+    if (!JWTToken) reject(new Error());
+
+    // Get firebase to verify
+    admin.auth().verifyIdToken(JWTToken)
+    .then((decodedToken) => {
+      var uid = decodedToken.uid;
+      resolve(uid)
+    })
+    .catch(err => {
+      // credentials not valid
+      reject(err)
+    })
+  });
+}
+
 module.exports = {
   quotes: quotes,
   activitySymbols: activitySymbols,
-  searcher: Searcher
+  searcher: Searcher,
+  verifyUser: verifyUser
 }
