@@ -4,9 +4,7 @@ var express     = require('express'),
     weatherKey  = require('./custom-modules/weatherKey').apiKey,
     ForecastIo  = require('forecast.io'),
     mongoose    = require('mongoose'),
-    helpers     = require('./custom-modules/helpers'),
-    admin       = require('firebase-admin'),
-    firebaseKey = require('./custom-modules/serverkey.json')
+    helpers     = require('./custom-modules/helpers');
 
 // Allow parsing body from post requests
 app.use(bodyParser.json());
@@ -35,11 +33,6 @@ var campgroundSchema = new mongoose.Schema({
   prices: {seasonal: [Number], daily: [Number], weekly: [Number]}
 });
 const Campground = mongoose.model("Campground", campgroundSchema);
-
-// Initialize Firebase App (used for authentication of user credentials from front end)
-admin.initializeApp({
-  credential: admin.credential.cert(firebaseKey)
-});
 
 // Search Index - first get all campgrounds, then build index
 var search;
@@ -89,23 +82,14 @@ app.get('/campground', async function(req, res) {
       // Get weather for this campground
       ret.weather = {};
       await weatherEngine.asyncGetWeather(ret.lat, ret.lon)
-        .then(data => ret.weather = data.currently)
+        .then(data => {
+          ret.weather = data.currently;
+        })
         .catch(err => console.log("Error in obtaining weather data", err))
 
       // Send data
       res.json(ret);
   });
-});
-
-app.post('/verifyUser', function(req, res) {
-  admin.auth().verifyIdToken(req.body.a)
-  .then((decodedToken) => {
-    var uid = decodedToken.uid;
-    console.log(decodedToken);
-  })
-
-
-  // console.log(req.body);
 });
 
 // app.post('/campground', function(req, res) {
@@ -125,6 +109,18 @@ app.post('/verifyUser', function(req, res) {
 // });
 
 app.post('/comment', function(req, res) {
+
+  // async function(req, res) {
+  //   try {
+          //const a = await helpers.verifyUser(req.body.userID);
+      // } catch (err) {
+          //user id verification failed
+    //}
+  //   console.log(a);
+  // }
+
+
+
   //post new comment to given id
   //MONGO DB will handle this
   //validate author, pickedRating, reviewText

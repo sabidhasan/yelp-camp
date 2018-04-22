@@ -12,18 +12,16 @@
 					Loading spinners
 					Random photos for campgrounds (some variety)
 					All <a> should have proper href
+					aria stuff for all elements
 					Mocha testing?
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Add a logo
 					Nav bar should have stars behind it like Yelp
 					Random photo in the back of banner every time
-					Chevron in top to scroll down (see Skip the Dish)
-						this section needs to be added
-						THOUSANDS OF CAMPGROUNDS
-						DETAILED INFORMATION
-						TRUSTED REVIEWS
 					Search button styling
+					Login button styling for FB and Google
+					Facebook login API (Firebase backend and validation on my backend)
 					
 	/search			GOAL :	shows full search suggestions (rather than dropdown on /)
 					(param for short or long search. short collates matches
@@ -48,6 +46,9 @@
 					Time stamp formatting
 					Photo gallery (NPM?) for photos
 					NaN error for weather (e.g. 28)
+	
+	/discover		GOAL :	lists campgrounds close to you or something
+					shows a clickable SVG map like skip the dishes
 
 	/add-campground		GOAL :	form for adding new CG
 				TODO :	see Colt Steele for proper naming of this route

@@ -24,6 +24,12 @@ class App extends React.Component {
   toggleLoginForm() {
     const newLoginState = !this.state.showLoginOverlay
     this.setState({showLoginOverlay: newLoginState});
+    if (!newLoginState) {
+      document.body.classList.remove('body__lock')
+    } else {
+      document.body.classList.add('body__lock')
+      window.scrollTo(0, 0)
+    };
   }
 
   render() {
@@ -51,7 +57,7 @@ class App extends React.Component {
           }} />
 
           <Route exact path="/campground/:id" render={(routerProps) => {
-              return <SingleCampground {...routerProps} />
+              return <SingleCampground toggleLoginForm={this.toggleLoginForm} {...routerProps} />
           }} />
         </Switch>
 
