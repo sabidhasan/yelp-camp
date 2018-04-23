@@ -55,7 +55,7 @@ app.get('/campground', async function(req, res) {
     do {
       newNum = Math.floor(Math.random() * 1578);
       if (!requestedID.includes(newNum)) requestedID.push(newNum);
-    } while (requestedID.length !== 8)
+    } while (requestedID.length !== 4)
   }
 
   // Get campground data
