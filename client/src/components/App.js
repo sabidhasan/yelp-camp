@@ -1,6 +1,7 @@
 // Import React and router stuff
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Import components
 import Header from './Header'
@@ -11,39 +12,61 @@ import SingleCampground from './SingleCampground'
 import LandingText from './LandingText'
 import LoginForm from './LoginForm'
 import AuthenticationHOC from './AuthenticationHOC'
+import Cart from './Cart'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoginOverlay: false
+      showLoginOverlay: false,
+      cart: {show: false, items: []}
     }
     this.toggleLoginForm = this.toggleLoginForm.bind(this)
+    this.toggleCart = this.toggleCart.bind(this)
+    this.addtoCart = this.addtoCart.bind(this)
+  }
+
+  toggleCart(event, status) {
+    const newCartState = status ? status : !this.state.cart.show;
+    console.log(newCartState);
+    this.setState({
+      cart: {...this.state.cart, show: newCartState}
+    });
+  }
+
+  addtoCart(campgroundID) {
+    let cart = JSON.parse(localStorage.cart || "[]");
+    cart.push(campgroundID)
+    localStorage.cart = JSON.stringify(cart)
+    console.log(localStorage);
   }
 
   toggleLoginForm() {
-    const newLoginState = !this.state.showLoginOverlay
+    const newLoginState = !this.state.showLoginOverlay;
     this.setState({showLoginOverlay: newLoginState});
-    if (!newLoginState) {
-      document.body.classList.remove('body__lock')
-    } else {
-      document.body.classList.add('body__lock')
-      window.scrollTo(0, 0)
-    };
   }
 
   render() {
+    // this.addtoCart(new Date())
     return (
       <div className="container">
-        {/* <a href='#' onClick={this.signUp}>SIGN UP </a><span>------</span>
-        <a href='#' onClick={this.signIn}>SIGN IN </a><span>------</span>
-        <a href='#' onClick={this.signOut}>SIGNOUT </a> */}
-        <Header toggleLoginForm={this.toggleLoginForm} />
+        <Header toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} />
 
         {this.state.showLoginOverlay ?
           <LoginForm toggleLoginForm={this.toggleLoginForm} />
           : null
         }
+
+        <ReactCSSTransitionGroup
+            transitionName="cart"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+        >
+          {this.state.cart.show ?
+          <Cart close={this.toggleCart} />
+          : null
+          }
+        </ReactCSSTransitionGroup>
 
         <Switch>
           <Route exact path='/' render={(routerProps) => {
@@ -57,7 +80,7 @@ class App extends React.Component {
           }} />
 
           <Route exact path="/campground/:id" render={(routerProps) => {
-              return <SingleCampground toggleLoginForm={this.toggleLoginForm} {...routerProps} />
+              return <SingleCampground toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} {...routerProps} />
           }} />
         </Switch>
 

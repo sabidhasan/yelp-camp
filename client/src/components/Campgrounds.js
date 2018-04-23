@@ -1,5 +1,6 @@
 import React from 'react'
 import CampgroundTile from './CampgroundTile'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Campgrounds extends React.Component {
   constructor(props) {
@@ -41,8 +42,16 @@ class Campgrounds extends React.Component {
         {this.state.campgrounds.map(val => {
           const rating = val.comments.reduce((acc, val) => acc + val.rating, 0) / val.comments.length || 0
           return (
-            <li key={val['_id']}>
-              <CampgroundTile id={val.id} name={val.name} image={val.image} rating={rating} />
+            <li key={val['_id']} className='highlightedCampgrounds__tile'>
+              <CampgroundTile
+                id={val.id}
+                name={val.name}
+                image={val.image}
+                region={val.region}
+                province={val.province}
+                rating={rating}
+                ratingCount={val.comments.length}
+              />
             </li>
           )})
         }

@@ -8,9 +8,13 @@ const CampgroundTile = (props) => {
       <a href={'campground/' + props.id}>
         <h2>{props.name}</h2>
       </a>
-      <div className='review__rating rating'>
-        <RatingBar rating={props.rating} />
+      <span className='region'>{props.region}, {props.province}</span>
+      <div className='rating'>
+        <RatingBar rating={props.rating} small={true} />
       </div>
+      <span className='review-count'>
+        {props.ratingCount ? `${props.ratingCount} Reviews` : 'No reviews yet' }
+      </span>
     </React.Fragment>
   )
 }

@@ -92,9 +92,14 @@ class SingleCampground extends React.Component {
   render() {
     return (
       <div className='singleCampground'>
-        <h1 className='title'>{this.state.name}</h1>
+        <h1 className='singleCampground__title'>{this.state.name}</h1>
 
-        <ReviewButton toggleReviewForm={this.toggleReviewForm} />
+        <div className='review-link'>
+          <ReviewButton toggleReviewForm={this.toggleReviewForm} />
+          <button onClick={() => this.props.toggleCart(true)} className='singleCampground__add-to-cart'>
+            <i className='fas fa-shopping-cart nav__cart-icon'></i>Add to Cart
+          </button>
+        </div>
 
         <div className='rating'>
           <RatingBar rating={this.calculateRating()} />
@@ -111,7 +116,7 @@ class SingleCampground extends React.Component {
           lon={this.state.lon}
         />
 
-        <div className='infoBox'>
+        <div className='singleCampground__infoBox'>
           <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
           <WeatherBox weather={this.state.weather} />
         </div>
