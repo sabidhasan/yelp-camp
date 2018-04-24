@@ -23,22 +23,32 @@ class App extends React.Component {
     }
     this.toggleLoginForm = this.toggleLoginForm.bind(this)
     this.toggleCart = this.toggleCart.bind(this)
-    this.addtoCart = this.addtoCart.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
 
   toggleCart(event, status) {
     const newCartState = status ? status : !this.state.cart.show;
-    console.log(newCartState);
     this.setState({
       cart: {...this.state.cart, show: newCartState}
     });
   }
 
-  addtoCart(campgroundID) {
+  addToCart(campgroundObject) {
+    // Get existing array
     let cart = JSON.parse(localStorage.cart || "[]");
-    cart.push(campgroundID)
-    localStorage.cart = JSON.stringify(cart)
-    console.log(localStorage);
+    // Check if new object is already in array (cant use a Set, as object is mutable)
+    if (!cart.find(val => val.id === campgroundObject.id)) {
+      // Nothign found, so add it
+      cart.push({
+        id: campgroundObject.id,
+        name: campgroundObject.name,
+        region: campgroundObject.region,
+        province: campgroundObject.province
+      });
+      localStorage.cart = JSON.stringify(cart);
+    }
+    // Force show the cart
+    this.toggleCart(null, true);
   }
 
   toggleLoginForm() {
@@ -47,7 +57,6 @@ class App extends React.Component {
   }
 
   render() {
-    // this.addtoCart(new Date())
     return (
       <div className="container">
         <Header toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} />
@@ -57,16 +66,17 @@ class App extends React.Component {
           : null
         }
 
-        <ReactCSSTransitionGroup
+        {/* <ReactCSSTransitionGroup
             transitionName="cart"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
-        >
-          {this.state.cart.show ?
-          <Cart close={this.toggleCart} />
-          : null
-          }
-        </ReactCSSTransitionGroup>
+            transitionEnterTimeout={600}
+            transitionLeaveTimeout={600}
+        > */}
+          {/* <Cart toggleCart={this.toggleCart} /> */}
+          {/* {this.state.cart.show ? */}
+          <Cart show={this.state.cart.show} key={0} toggleCart={this.toggleCart} />
+          {/* null */}
+          {/* } */}
+        {/* </ReactCSSTransitionGroup> */}
 
         <Switch>
           <Route exact path='/' render={(routerProps) => {
@@ -80,7 +90,7 @@ class App extends React.Component {
           }} />
 
           <Route exact path="/campground/:id" render={(routerProps) => {
-              return <SingleCampground toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} {...routerProps} />
+              return <SingleCampground addToCart={this.addToCart} toggleLoginForm={this.toggleLoginForm} {...routerProps} />
           }} />
         </Switch>
 

@@ -10,11 +10,15 @@ html, body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-body.body__lock {
-  overflow: hidden;
-}
 a {
   text-decoration: none;
+}
+a:hover {
+  text-decoration: red underline;
+}
+/* Font-awesome element */
+i {
+  padding-right: 8px;
 }
 .bold {
   font-weight: bold;
@@ -28,16 +32,17 @@ a {
   padding: 8px 0 8px 4px;
 }
 h1, h2 {
-  margin-top: 50px;
-  font-weight: 700;
+  /* margin-top: 50px; */
   color: red;
 }
 h1 {
-  font-size: 2rem;
+  font-weight: 700;
+  font-size: 1.7rem;
   letter-spacing: 0.03rem;
 }
 h2 {
   font-size: 1.5rem;
+  font-weight: normal;
 }
 button {
   display: flex;
@@ -52,6 +57,9 @@ button {
   padding: 6px 16px;
   border: 1px solid black;
   box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+button[disabled]:hover {
+  cursor:not-allowed;
 }
 button > .button-large {
   font-size: 1.5rem;
@@ -76,7 +84,8 @@ body {
 /* LOGIN FORM */
 .login-background {
   /* Needed to bring overlay to the top */
-  position: absolute;
+  position: fixed;
+  z-index: 1001;
   top: 0;
   /* Make it stretch whole screen */
   width: 100vw;
@@ -138,12 +147,71 @@ body {
   width: 40%;
 }
 
+/* CART */
+.cart {
+  position: fixed;
+  top: 0;
+  max-width: 0px;
+  width: 40%;
+  height: 100vh;
+  background: white;
+  /* ENsure it is behind the overlay for login! */
+  z-index: 1000;
+  right: 0px;
+  display: grid;
+  grid-template-columns: 1fr 35px;
+  grid-template-rows: 45px repeat(auto-fit, minmax(110px, 1fr));
+  transition: all 400ms cubic-bezier(1,0,.41,1.24);
+}
+ .cart h1, .cart p {
+  margin: 0;
+}
+.cart__close {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: right;
+}
+.cart__close:hover {
+  cursor: pointer;
+}
+.cart .cart__item {
+  grid-column: span 2;
+}
+.cart-show {
+  max-width: 50%;
+  padding: 5px;
+}
+/* .cart__item h1 {
+  font-size: 1rem;
+} */
+/* .cart a {
+  color: red;
+} */
+/* .cart-enter {
+  right: -40%;
+}
+.cart-enter.cart-enter-active {
+  right: 0;
+  /* transition: right
+  transition: right 600ms linear;
+}
+.cart-leave {
+  right: 0;
+}
+.cart-leave.cart-leave-active {
+  right: -35%;
+  transition: right 600ms cubic-bezier(.5,.06,.58,1.47);
+} */
+
+
+
+
 /* TOP NAV */
 nav {
   padding: 10px;
   background: red;
   display: grid;
-  grid-template-columns: 1fr repeat(2, auto);
+  grid-template-columns: 1fr repeat(3, auto);
   grid-gap: 25px;
   align-items: stretch;
   max-height: 12vh;
@@ -156,6 +224,10 @@ nav > * {
   display: flex;
   align-items: center;
 }
+nav > a:hover {
+  text-decoration: none;
+}
+
 nav > .nav__title {
   font-size: 1.9rem;
   letter-spacing: .15rem;
@@ -171,11 +243,15 @@ nav > .nav__title {
 }
 nav > a:not(.nav__title) {
   background: maroon;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
 }
+nav a:not(.nav__title):hover {
+  background: darkred;
+}
+
 
 /* SPLASH SCREEN/SEARCH BANNER */
 .banner {
@@ -235,9 +311,10 @@ nav > a:not(.nav__title) {
   color: gray;
 }
 .searchbar > button {
-  background: skyblue;
-  border: 3px solid gray;
+  background: red;
+  border: 1px solid maroon;
   padding: 0 8px;
+  border-radius: 0;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   font-size: 2.1rem;
@@ -299,6 +376,11 @@ nav > a:not(.nav__title) {
   font-size: 3.5rem;
   color: white;
   opacity: 0.7;
+  animation: downarrowmove 3s infinite;
+}
+@keyframes downarrowmove {
+  from {transform: translateY(0);}
+  to {transform: translateY(20px);}
 }
 
 .landing-text {
@@ -311,14 +393,17 @@ nav > a:not(.nav__title) {
   flex: 1;
   padding: 0 20px;
   border-left: 2px solid #e6e6e6;
+  transition: all 0.1s;
 }
 .landing-text > section:first-child {
   border-left: none;
 }
+.landing-text > section:hover {
+  transform: scale(1.1);
+}
 .landing-text section > h1 {
   margin: 0;
   height: 70px;
-  font-size: 1.7rem;
   display: flex;
   align-items: center;
   font-weight: 100;
@@ -338,34 +423,45 @@ nav > a:not(.nav__title) {
 .highlightedCampgrounds h1 {
   display: flex;
   grid-column: 1 / -1;
-  font-size: 1.7rem;
-  font-weight: 200;
 }
 .highlightedCampgrounds h1 span:first-child {
   flex: 1;
 }
-.highlightedCampgrounds li {
+.highlightedCampgrounds__tile {
   border: 1px solid gray;
-  border-radius: 3px;
+  border-radius: 7px;
   text-align: center;
-  padding: 10px 0px;
+  padding: 0px;
   animation: item-fade-in 1s;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 3fr 2fr;
 }
-.highlightedCampgrounds li span {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-.highlightedCampgrounds li a {
-  flex-basis: 100%;
-}
-.highlightedCampgrounds li img {
-  max-width: 90%;
+.highlightedCampgrounds__tile img {
+  max-width: 100%;
+  grid-column: span 2;
   border-radius: 3px;
   max-height: 250px;
   flex-basis: 100%;
+}
+.highlightedCampgrounds__tile h2 {
+  font-size: 1.1rem;
+  text-align: left;
+  margin: 10px 0 5px 0;
+}
+.highlightedCampgrounds__tile a {
+  grid-column: span 2;
+  display: block;
+  margin: 0 0 0 3px;
+}
+.highlightedCampgrounds__tile .review-count {
+  text-align: left;
+  margin: 15px 0;
+}
+.highlightedCampgrounds__tile .region {
+  grid-column: span 2;
+  text-align: left;
+  margin: 0 0 0 3px;
 }
 
 footer {
@@ -382,10 +478,6 @@ footer > * {
   padding: 0;
   font-size: 1rem;
   font-weight: normal;
-}
-footer .footer__red {
-  color: red;
-  font-weight: bold;
 }
 footer > .social-media {
   margin: 15px 0;
@@ -448,22 +540,31 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .singleCampground > .review-link {
   grid-area: reviewlink;
-  justify-self: flex-end;
-  align-self: center;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 10px;
 }
-.singleCampground > .title {
+.singleCampground > .singleCampground__title {
   grid-area: title;
   margin: 0;
   color: black;
   font-size: 2.4rem;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
+.singleCampground__add-to-cart {
+  background: lightgray;
+  border: 1px solid gray;
+  font-size: 0.8rem;
+  color: black;
+  width: 60%;
+}
 .singleCampground > .rating {
   grid-area: rating;
   align-self: flex-start;
   margin: 5px 0;
 }
-.singleCampground > .infoBox {
+.singleCampground > .singleCampground__infoBox {
   align-self: flex-start;
   justify-self: flex-start;
   grid-area: basicinfo;
@@ -471,15 +572,15 @@ footer > .social-media .social-media__linkedin:hover {
   grid-template-columns: 1fr 150px;
   width: 100%;
 }
-.infoBox > .infoBox__info {
+.singleCampground__infoBox > .infoBox__info {
   display: grid;
   grid-template-columns: 40px 1fr;
   align-items: center;
 }
-.infoBox > .infoBox__icon {
+.singleCampground__infoBox > .infoBox__icon {
   justify-self: center;
 }
-.infoBox > .infoBox__weather {
+.singleCampground__infoBox > .infoBox__weather {
   display: grid;
   grid-row: span 2;
   text-align: center;
@@ -533,11 +634,15 @@ footer > .social-media .social-media__linkedin:hover {
 .singleCampground > .review {
   grid-column: 1;
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 130px 1fr;
   margin: 15px 0;
   padding: 10px 0;
-  border-bottom: 1px solid lightgray;
-  align-items: center;
+}
+.singleCampground > .review:last-child .review__rating:after {
+  content: '🏆 First to review';
+  display: flex;
+  /* width: 100%; */
+  align-items: stretch;
 }
 .review__first {
   grid-column: 1;
@@ -548,18 +653,39 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .review__author {
   font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+.review__author > * {
+  flex-basis: 100%;
+}
+.review__author > img {
+  flex-basis: 50%;
+  width: 50%;
+  border-radius: 4px;
+  border: 1px solid gray;
 }
 .review .review__rating .star:after {font-size: 1rem}
 .review .review__rating .star {height:20px; width: 20px;}
 .review .review__rating {
   grid-column: 2;
+  margin: 0;
+  align-self: flex-start;
 }
 .review .review__time {
   flex: 1;
-  text-align: right;
+  text-align: left;
+  flex-basis: 100%;
+  margin: 5px 0 0 3px;
+  font-size: 0.9rem;
 }
 .review .review__text {
-  grid-column: 2;
+  grid-column: span 2;
+  border-top: 1px solid lightgray;
+  margin: 5px 0 0 0;
 }
 
 .mapContainer {
@@ -652,6 +778,16 @@ footer > .social-media .social-media__linkedin:hover {
   background: green;
   opacity: 0.8;
 }
+/* In case the small star is requested */
+.star-small {
+  height: 20px;
+  width: 20px;
+  margin: 0 2px;
+}
+.star-small:after {
+  font-size: 0.95rem;
+}
+
 /* The following rules are for hovering for picking a rating */
 .review-form__picker:hover .star {
   /* Make all of them green if hovered anywhere */
@@ -756,7 +892,7 @@ footer > .social-media .social-media__linkedin:hover {
     padding: 60px 0 0 0; overflow: auto;}
   .landing-text section > h1 {height: auto;}
   .landing-text section > p {margin: 0;}
-
+  .cart {width: 100%;}
 
 }
 

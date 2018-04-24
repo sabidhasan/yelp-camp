@@ -15,8 +15,9 @@ import Activities from './Activities'
 class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
-    this.requestedID = parseInt(this.props.match.params.id);
-    this.state = {reviewLoginWarning: true};
+    // this.requestedID = parseInt(this.props.match.params.id);
+    this.state = {id: parseInt(this.props.match.params.id)};
+    // this.state = {reviewLoginWarning: true};
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
@@ -28,13 +29,15 @@ class SingleCampground extends React.Component {
   };
 
   componentDidMount() {
-    fetch(`/campground?id=${this.requestedID}`)
+    fetch(`/campground?id=${this.state.id}`)
     .then(res => res.json())
     .then(campground => {
+      console.log(campground);
       this.setState({
         comments: campground.comments,
         image: campground.image,
         name: campground.name,
+        region: campground.region,
         description: campground.description,
         address: campground.address,
         lat: campground.lat,
@@ -47,13 +50,14 @@ class SingleCampground extends React.Component {
         prices: campground.prices,
         paymentMethods: campground.paymentMethods,
         activities: campground.activities,
-        reviewLoginWarning: true
+        province: campground.province
+        // reviewLoginWarning: true
       });
     })
     .catch(err => {
     //   //TO--DO proper error handling for all fetch
       console.log("there is an error");
-    //   window.location = `/not-found/${this.requestedID}`;
+    //   window.location = `/not-found/${this.state.id}`;
     });
   }
 
@@ -96,7 +100,7 @@ class SingleCampground extends React.Component {
 
         <div className='review-link'>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
-          <button onClick={() => this.props.toggleCart(true)} className='singleCampground__add-to-cart'>
+          <button onClick={() => this.props.addToCart(this.state)} className='singleCampground__add-to-cart'>
             <i className='fas fa-shopping-cart nav__cart-icon'></i>Add to Cart
           </button>
         </div>
@@ -149,7 +153,7 @@ class SingleCampground extends React.Component {
           </span>
         : this.state.editable ?
           <NewReviewForm
-            campgroundID={this.requestedID}
+            campgroundID={this.state.id}
             toggleReviewForm={this.toggleReviewForm}
             addNewComment={this.addNewComment}
           />

@@ -27,7 +27,7 @@ class Header extends React.Component {
         :
           <a href='#' className='login' onClick={this.props.toggleLoginForm}>Sign In</a>
         }
-        <a href='#' onClick={this.props.toggleCart}><i className="fas fa-shopping-cart nav__cart-icon"></i>Cart</a>
+        <a href='#' onClick={this.props.toggleCart}><i className="fas fa-shopping-cart"></i>Cart</a>
       </nav>
     )
   }
