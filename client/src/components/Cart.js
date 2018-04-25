@@ -1,30 +1,51 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  static contextTypes = {
+    user: PropTypes.object,
+  };
+
   render() {
-    const currentItems = JSON.parse(localStorage.cart || "[]")
-    if (currentItems.length) {
-      var items = currentItems.map((item, idx) => {
+    var renderItems;
+    if (this.props.cart.items.length) {
+       renderItems = this.props.cart.items.map((item, idx) => {
         return (
-          <div key={item.id} className='cart__item'>
-            <h1><a href={`/campground/${item.id}`}>{item.name}</a></h1>
-            <p>{item.region}, {item.province}</p>
-          </div>
+
+            <div key={item.id} className='cart__item'>
+              <h1 className='cart__item-title'>
+                <a href={`/campground/${item.id}`}>{item.name}</a>
+              </h1>
+              <img src={item.image} alt='' />
+              <p className='cart__item-region'>{item.region}, {item.province}</p>
+              <span className='cart__item-delete' onClick={() => this.props.removeFromCart(idx)}>×</span>
+            </div>
         )
       });
-    } else {
-      var items = <h2>You haven't saved any campgrounds yet.
-        Add campgrounds to your 'cart' to save them for later.</h2>
     }
 
+    const userName = this.context.user ? this.context.user.displayName : "Guest";
+    const itemLength = this.props.cart.items.length
+
     return (
-      <div className={`cart${this.props.show ? ' cart-show' : ''}`}>
-        <h1>Cart</h1>
-        <span className='cart__close' onClick={() => this.props.toggleCart(null)}>X</span>
-        {items}
+      <div className='cart'>
+        <h1>{userName}'s Cart</h1>
+        <span className='cart__close' onClick={this.props.toggleCart}>×</span>
+        <p className='cart_message'>
+          You have {itemLength} campground{itemLength !== 1 ? 's' : ''} in your cart.
+          {itemLength ? '' : ' Add campgrounds to your cart to save them for later.'}
+        </p>
+        <ReactCSSTransitionGroup
+            transitionName="cart-item"
+            transitionLeaveTimeout={200}
+        >
+          {renderItems}
+      </ReactCSSTransitionGroup>
       </div>
     )
   }

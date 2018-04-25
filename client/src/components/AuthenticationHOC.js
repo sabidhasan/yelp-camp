@@ -10,7 +10,7 @@ const AuthenticationHOC = (Component) => {
     constructor(props) {
       super(props);
       this.state = {
-        user: {loading: true}
+        user: {loading: true, displayName: "Guest"}
       }
       this.signInUser = this.signInUser.bind(this)
       this.signOutUser = this.signOutUser.bind(this)

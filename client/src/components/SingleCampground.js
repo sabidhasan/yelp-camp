@@ -32,7 +32,6 @@ class SingleCampground extends React.Component {
     fetch(`/campground?id=${this.state.id}`)
     .then(res => res.json())
     .then(campground => {
-      console.log(campground);
       this.setState({
         comments: campground.comments,
         image: campground.image,
@@ -96,7 +95,10 @@ class SingleCampground extends React.Component {
   render() {
     return (
       <div className='singleCampground'>
-        <h1 className='singleCampground__title'>{this.state.name}</h1>
+        <h1 className='singleCampground__title'>
+          {this.state.name}
+          <span className='singleCampground__region'>{this.state.region}, {this.state.province} Region</span>
+        </h1>
 
         <div className='review-link'>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />

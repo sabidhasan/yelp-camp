@@ -17,48 +17,78 @@ import Cart from './Cart'
 class App extends React.Component {
   constructor(props) {
     super(props);
+    // Load the items from localStorage
+    let cartItems = JSON.parse(localStorage.cart || "[]");
     this.state = {
       showLoginOverlay: false,
-      cart: {show: false, items: []}
+      cart: {show: false, items: cartItems}
     }
     this.toggleLoginForm = this.toggleLoginForm.bind(this)
     this.toggleCart = this.toggleCart.bind(this)
     this.addToCart = this.addToCart.bind(this)
+    this.removeFromCart = this.removeFromCart.bind(this)
+    this.writeToLocalStorage = this.writeToLocalStorage.bind(this)
   }
 
-  toggleCart(event, status) {
-    const newCartState = status ? status : !this.state.cart.show;
-    this.setState({
-      cart: {...this.state.cart, show: newCartState}
-    });
+  toggleCart() {
+    // const newCartState = status ? status : !this.state.cart.show;
+    console.log(this.state.cart);
+    this.setState({cart: {...this.state.cart, show: !this.state.cart.show}});
   }
 
   addToCart(campgroundObject) {
-    // Get existing array
-    let cart = JSON.parse(localStorage.cart || "[]");
+    if (!campgroundObject.name || !campgroundObject.region || !campgroundObject.province || !campgroundObject.image) return;
+    // make a copy of the state
+    let cartItems = this.state.cart.items.slice();
     // Check if new object is already in array (cant use a Set, as object is mutable)
-    if (!cart.find(val => val.id === campgroundObject.id)) {
+    if (!cartItems.find(val => val.id === campgroundObject.id)) {
       // Nothign found, so add it
-      cart.push({
+      cartItems.push({
         id: campgroundObject.id,
         name: campgroundObject.name,
         region: campgroundObject.region,
-        province: campgroundObject.province
+        province: campgroundObject.province,
+        image: campgroundObject.image[0] || ''
       });
-      localStorage.cart = JSON.stringify(cart);
     }
-    // Force show the cart
-    this.toggleCart(null, true);
+    this.setState({cart: {...this.state.cart, items: cartItems}}, () => {
+      // Show the cart - should be closed so toggle will show it
+      this.toggleCart();
+      this.writeToLocalStorage();
+    });
+
+  }
+
+  removeFromCart(id) {
+    // remove index from cart if it exists
+    let currentItems = this.state.cart.items.slice()
+    currentItems.splice(id, 1);
+    this.setState({cart: {show: true, items: currentItems}}, () => {
+      this.writeToLocalStorage();
+    });
+  }
+
+  writeToLocalStorage() {
+    localStorage.cart = JSON.stringify(this.state.cart.items);
   }
 
   toggleLoginForm() {
-    const newLoginState = !this.state.showLoginOverlay;
-    this.setState({showLoginOverlay: newLoginState});
+    this.setState({showLoginOverlay: !this.state.showLoginOverlay});
   }
 
   render() {
     return (
       <div className="container">
+        <div className='app-loading'>
+          <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div><div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div><div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div><div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div><div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div><div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div><div class="sk-circle12 sk-child"></div>
+          </div>
+        </div>
         <Header toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} />
 
         {this.state.showLoginOverlay ?
@@ -66,18 +96,23 @@ class App extends React.Component {
           : null
         }
 
-        {/* <ReactCSSTransitionGroup
+        <ReactCSSTransitionGroup
             transitionName="cart"
-            transitionEnterTimeout={600}
-            transitionLeaveTimeout={600}
-        > */}
-          {/* <Cart toggleCart={this.toggleCart} /> */}
-          {/* {this.state.cart.show ? */}
-          <Cart show={this.state.cart.show} key={0} toggleCart={this.toggleCart} />
-          {/* null */}
-          {/* } */}
-        {/* </ReactCSSTransitionGroup> */}
+            transitionEnterTimeout={450}
+            transitionLeaveTimeout={450}
+        >
+          {this.state.cart.show ?
+          <Cart
+            key={0}
+            cart={this.state.cart}
+            toggleCart={this.toggleCart}
+            removeFromCart={this.removeFromCart}
+          />
+          : null
+          }
+        </ReactCSSTransitionGroup>
 
+        {/* <Cart show={this.state.cart.show} key={0} toggleCart={this.toggleCart} /> */}
         <Switch>
           <Route exact path='/' render={(routerProps) => {
             return (

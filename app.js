@@ -111,12 +111,12 @@ app.get('/campground', async function(req, res) {
 // });
 
 app.post('/comment', async function(req, res) {
-  //post new comment to given id.
+  //post new review to given id.
   // Validate the user based on supplied credentials
   try {
     const verification = await helpers.verifyUser(req.body.userID);
   } catch (err) {
-    // Couldn't verify users JWT token
+    // Couldn't verify users JWT token, or no token was given in req.body.userID
     res.sendStatus(401)
     return;
   }
@@ -131,7 +131,7 @@ app.post('/comment', async function(req, res) {
     return;
   }
 
-  // TO--DO check for spam
+  // TO--DO check for spam, check for same review twice
 
   // validate campgroundID, inject into DB
   const cgID = {'id': req.body.campgroundID};
@@ -142,7 +142,7 @@ app.post('/comment', async function(req, res) {
       return;
     }
     // Build new CG object
-    const newComment = {
+    const newReview = {
       id: result[0].comments[result[0].comments.length - 1] || 0,
       displayName: req.body.displayName,
       uid: req.body.uid,
@@ -151,18 +151,22 @@ app.post('/comment', async function(req, res) {
       time: new Date(),
       rating: req.body.pickedRating
     }
-    Campground.update(cgID, {$push: {comments: newComment}}, (writeError, writeStatus) => {
+    Campground.update(cgID, {$push: {comments: newReview}}, (writeError, writeStatus) => {
       if (writeStatus.ok !== 1) {
         res.json(400);
         return;
       }
-      res.json(newComment);
+      res.json(newReview);
     })
   });
 });
 
 app.get('/search', function(req, res) {
+  console.log(req.query);
+  const time = process.hrtime();
+
   res.json(search.doSearch(req.query.q))
+  console.log(process.hrtime(time)[1]/1000000 + ' millisec');
 });
 
 app.listen(3001, function() {
