@@ -243,16 +243,16 @@ class Searcher {
       return rawData.slice(startIndex, v + wordsToKeep).join(' ')
     }).join('...')
 
-    if (type == 'activities' && matches.length) {
-     console.log(
-        matches.filter((v, i) => {
-          return matches[i + 1] > v + 5 || matches[i + 1] == undefined;
-        }).map(v => {
-          const startIndex = Math.max(v - 5, 0);
-          return rawData.slice(startIndex, v + 5).join(' ');
-        }).join('...')
-     );
-    }
+    // if (type == 'activities' && matches.length) {
+    //  console.log(
+    //     matches.filter((v, i) => {
+    //       return matches[i + 1] > v + 5 || matches[i + 1] == undefined;
+    //     }).map(v => {
+    //       const startIndex = Math.max(v - 5, 0);
+    //       return rawData.slice(startIndex, v + 5).join(' ');
+    //     }).join('...')
+    //  );
+    // }
 
   }
 
@@ -352,6 +352,9 @@ class Searcher {
     ret = ret.sort((a, b) => a.percentMatch < b.percentMatch ? 1 : -1);
     // Remove campground duplicates (each CG should only have one search result at most)
     let alreadyIncluded = new Set([]);
+
+    return ret;
+
     return ret.filter(val => {
       // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
       if (!alreadyIncluded.has(val.id)) {

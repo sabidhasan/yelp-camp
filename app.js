@@ -110,6 +110,76 @@ app.get('/campground', async function(req, res) {
 //   }
 // });
 
+
+app.delete('/comment', async function(req, res) {
+  // Validate the user based on supplied credentials
+  try {
+    var verification = await helpers.verifyUser(req.body.userID);
+  } catch (err) {
+    // Couldn't verify users JWT token, or no token was given in req.body.userID
+    console.log(err);
+    res.sendStatus(401)
+    return;
+  }
+
+  console.log('verification passed   ', verification);
+
+  // verify comment is owned by user
+  var oldCommentsArray;
+  Campground.find({'id': req.body.campgroundID}, (error, result) => {
+    // Check for how many campgrounds were found
+    if (result.length !== 1 || error) {
+      console.log(error || 'Campground not valid');
+      res.send(400);
+      return;
+    }
+    oldCommentsArray = result[0].comments
+    var oldCommentIdx = result[0].comments.findIndex(val => req.body.commentID === val.id)
+    if (oldCommentIdx === -1 || result[0].comments[oldCommentIdx].uid !== verification) {
+      // couldn't find comment, or user verification doenst match - send error
+      console.log('error occuresd');
+      res.sendStatus(401);
+      return;
+    }
+    // Delete comment
+    result[0].comments.splice(oldCommentIdx, 1);
+    Campground.update({'id': req.body.campgroundID}, {$set: {'comments': result[0].comments}}, function(e) {
+      if (e) {
+        console.log(e);
+        res.sendStatus(401);
+        return;
+      }
+      console.log(result[0].comments);
+      res.json(result[0].comments.reverse());
+    });
+  });
+});
+
+  //   // Build new CG object
+  //   const newID = result[0].comments[result[0].comments.length - 1] ? result[0].comments[result[0].comments.length - 1].id + 1 : 0
+  //   const newReview = {
+  //     id: newID,
+  //     displayName: req.body.displayName,
+  //     uid: req.body.uid,
+  //     photoURL: req.body.photoURL,
+  //     text: req.body.reviewText,
+  //     time: new Date(),
+  //     rating: req.body.pickedRating
+  //   }
+  //   Campground.update(cgID, {$push: {comments: newReview}}, (writeError, writeStatus) => {
+  //     if (writeStatus.ok !== 1) {
+  //       res.json(400);
+  //       return;
+  //     }
+  //     res.json(newReview);
+  //   })
+  // });
+// });
+
+/* DO NOT TOUCH*/
+/* DO NOT TOUCH */
+/* DO NOT TOUCH */
+/* DO NOT TOUCH */
 app.post('/comment', async function(req, res) {
   //post new review to given id.
   // Validate the user based on supplied credentials
@@ -142,8 +212,9 @@ app.post('/comment', async function(req, res) {
       return;
     }
     // Build new CG object
+    const newID = result[0].comments[result[0].comments.length - 1] ? result[0].comments[result[0].comments.length - 1].id + 1 : 0
     const newReview = {
-      id: result[0].comments[result[0].comments.length - 1] || 0,
+      id: newID,
       displayName: req.body.displayName,
       uid: req.body.uid,
       photoURL: req.body.photoURL,
