@@ -7,13 +7,13 @@
 2. ## FRONT END TO DOS
 	OVERALL			TODO :	Mobile layout
 					Animations for stuff coming in (e.g. review form)
-					Firebase Verify ID JWT Token before comments/add CG
 					React PropTypes
 					Loading spinners
 					Random photos for campgrounds (some variety)
 					All <a> should have proper href
 					aria stuff for all elements
-					Mocha testing?
+					Jest testing - https://facebook.github.io/jest
+					All X buttons should be button, not <a>
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Add a logo
@@ -21,6 +21,7 @@
 					Random photo in the back of banner every time
 					Search button styling
 					Login button styling for FB and Google
+					It shouldn’t query the server on alt tab for search bar
 					Facebook login API (Firebase backend and validation on my backend)
 					
 	/search			GOAL :	shows full search suggestions (rather than dropdown on /)
@@ -31,6 +32,7 @@
 					type (public/private), distance from you
 					map of all results
 					ideally paginated
+					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
 	/campground/:id		GOAL :	Single campground page
 				TODO :	Unknown campground should 404
@@ -41,14 +43,19 @@
 					Missing basics should hide logo (#1723 email address)
 					Reviews add to MongoDB
 					Reviews check for spam
+					Delete reviews
 					Reviews pagination
+					Sanitize reviews before injecting into DB (HTML, etc.)
 					Only add review after signed in
 					Time stamp formatting
 					Photo gallery (NPM?) for photos
 					NaN error for weather (e.g. 28)
+					Delete review
 	
 	/discover		GOAL :	lists campgrounds close to you or something
 					shows a clickable SVG map like skip the dishes
+					shows campgrounds close to you on a map, allowing filtering
+					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
 	/add-campground		GOAL :	form for adding new CG
 				TODO :	see Colt Steele for proper naming of this route
@@ -58,15 +65,7 @@
 	/add-photo		GOAL :	add new photo for a campground
 				TODO : 	implement
 
-	/signup			GOAL :	signs you up in case you haven’t done so
-				TODO :	implement
-
-	/logout			GOAL :	logs you out
-				TODO : 	implement
-
-	/signin			GOAL : 	logs you in (use OAuth)
-
-		
+	
 
 3. ## BACK END ROUTES
 	/
@@ -77,3 +76,16 @@
 	search indexing for dates campground is open (“winter camping”, etc)
 	payment Methods not scraped
 	“submitted by” for each campground in Mongo/on page
+	comment route on backend should send back proper errors (and front end should display errors)
+
+
+Copy this layout
+	https://citybud.ca/
+
+	https://www.albertacampgroundguide.ca/
+
+
+
+
+full search results
+discover page
