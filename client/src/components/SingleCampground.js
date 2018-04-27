@@ -22,6 +22,7 @@ class SingleCampground extends React.Component {
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
     this.calculateRating = this.calculateRating.bind(this);
+    this.deleteReview = this.deleteReview.bind(this);
   }
 
   static contextTypes = {
@@ -74,7 +75,8 @@ class SingleCampground extends React.Component {
 
   addNewComment(comment) {
     //takes comment from NewReviewForm and adds to this components comments array
-    const newCommentArray = this.state.comments.concat([comment]);
+    let newCommentArray = this.state.comments.slice()
+    newCommentArray.unshift(comment);
     this.setState({comments: newCommentArray, editable: false });
   }
 
@@ -90,6 +92,50 @@ class SingleCampground extends React.Component {
       const form = ReactDOM.findDOMNode(this.refs.reviewForm);
       window.scrollTo(0, form.offsetTop);
     }
+  }
+
+  async deleteReview(reviewId) {
+    // send user, CG ID, comment ID to server to see if it's OK. If so, update local state.
+    // Check for not signed in user
+    if (!this.context.user || this.context.user.loading) return;
+
+    // Get user token first
+    try {
+      var userToken = await this.context.user.getIdToken();
+    } catch(err) {
+      console.log(err);
+      return;
+    }
+
+    try {
+      const response = await fetch('/comment', {
+        body: JSON.stringify({
+          userID: userToken,
+          campgroundID: this.state.id,
+          commentID: reviewId
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'DELETE'
+      });
+      const result = await response.json();
+      // Update comments array locally
+      this.setState({comments: result});
+
+    //     // Reset UI
+    //     this.setState({
+    //       disableForm: false,
+    //       pickedRating: 0,
+    //       reviewText: '',
+    //       errorMessage: null,
+    //     });
+    } catch (err) {
+      console.log('error occure in deleteing review');
+      return;
+    }
+
   }
 
   render() {
@@ -161,7 +207,7 @@ class SingleCampground extends React.Component {
           />
         : null
       }
-        <Reviews comments={this.state.comments} />
+        <Reviews comments={this.state.comments} deleteReview={this.deleteReview}/>
       </div>
     )
   }

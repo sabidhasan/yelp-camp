@@ -1,22 +1,25 @@
 import React from 'react'
 import RatingBar from './RatingBar'
 import { formatDate } from '../helpers/helpers'
+import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class Reviews extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {comments: props.comments};
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({comments: nextProps.comments});
-  // }
+  static contextTypes = {
+    user: PropTypes.object,
+  };
 
   render() {
     if (!this.props.comments || this.props.comments.length === 0) {
       return <h2 className='review__first'>Be the first to review this campground</h2>
     }
-    return this.props.comments.map(val => {
+
+    const allComments = this.props.comments.map(val => {
+      const showDeleteButton = this.context.user && this.context.user.uid === val.uid;
       return (
         <div className='review' key={val.id}>
           <span className='review__author'>
@@ -27,10 +30,24 @@ class Reviews extends React.Component {
             <RatingBar rating={val.rating} />
             <span className='review__time'>{formatDate(new Date(val.time))}</span>
           </div>
+          {showDeleteButton ?
+            <a className='review__delete' onClick={() => this.props.deleteReview(val.id)}>X</a>
+            : null
+          }
           <span className='review__text'>{val.text}</span>
         </div>
       )
     })
+
+    return (
+      <ReactCSSTransitionGroup
+          transitionName="review-delete"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+      >
+      {allComments}
+    </ReactCSSTransitionGroup>
+  )
   }
 }
 

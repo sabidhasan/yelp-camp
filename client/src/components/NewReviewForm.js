@@ -74,13 +74,6 @@ class NewReviewForm extends React.Component {
       const result = await response.json();
       // Update comments array locally
       this.props.addNewComment(result);
-      // Reset UI
-      this.setState({
-        disableForm: false,
-        pickedRating: 0,
-        reviewText: '',
-        errorMessage: null,
-      });
     } catch (err) {
       this.setState({
         errorMessage: 'Could not post review at this time. Please try again later',
