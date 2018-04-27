@@ -173,10 +173,13 @@ class SingleCampground extends React.Component {
           <WeatherBox weather={this.state.weather} />
         </div>
 
-        <div className="description">
-          <h1>Description</h1>
-          {this.state.description}
-        </div>
+        {this.state.description ?
+          <div className="description">
+            <h1>Description</h1>
+            {this.state.description}
+          </div>
+          : null
+        }
 
         <SideBarInfoBox hours={this.state.hours}
           campsites={this.state.sites}
@@ -186,10 +189,12 @@ class SingleCampground extends React.Component {
 
         <img className='campground-image' src={this.state.image} alt="" />
 
-        <h1>Activities at {this.state.name}</h1>
-        <ul className='activities__list'>
-          <Activities activitiesList={this.state.activities} />
-        </ul>
+        <div className='activities__list'>
+          <h1>Activities at {this.state.name}</h1>
+          <ul>
+            <Activities activitiesList={this.state.activities} />
+          </ul>
+        </div>
 
         <h1 className='reviews-header' ref='reviewForm'>
           Reviews

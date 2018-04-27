@@ -42,8 +42,8 @@ class Reviews extends React.Component {
     return (
       <ReactCSSTransitionGroup
           transitionName="review-delete"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}
       >
       {allComments}
     </ReactCSSTransitionGroup>
