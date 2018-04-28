@@ -12,3 +12,18 @@ export const formatDate = (date) => {
 
   return `${day} ${monthNames[monthIndex]} ${year}`;
 }
+
+export const provinces = {
+  'bc': 'british columbia',
+  'ab': 'alberta',
+  'sk': 'saskatchewan',
+  'mb': 'manitoba',
+  'on': 'ontario',
+  'qc': 'quebec',
+  'pe': 'prince edward island',
+  'nb': 'new brunswick',
+  'ns': 'nova scotia',
+  'nl': 'newfoundland',
+  'yt': 'yukon territory',
+  'nt': 'northwest territories'
+}

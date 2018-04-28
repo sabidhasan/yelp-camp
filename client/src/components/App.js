@@ -13,6 +13,8 @@ import LandingText from './LandingText'
 import LoginForm from './LoginForm'
 import AuthenticationHOC from './AuthenticationHOC'
 import Cart from './Cart'
+import DiscoverMap from './DiscoverMap'
+import Discover from './Discover'
 
 class App extends React.Component {
   constructor(props) {
@@ -81,42 +83,47 @@ class App extends React.Component {
       <div className="container">
         <Header toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} />
 
-        {this.state.showLoginOverlay ?
-          <LoginForm toggleLoginForm={this.toggleLoginForm} />
-          : null
-        }
+        {this.state.showLoginOverlay ? <LoginForm toggleLoginForm={this.toggleLoginForm} /> : null}
 
         <ReactCSSTransitionGroup
             transitionName="cart"
             transitionEnterTimeout={450}
-            transitionLeaveTimeout={450}
-        >
+            transitionLeaveTimeout={450}>
           {this.state.cart.show ?
           <Cart
             key={0}
             cart={this.state.cart}
             toggleCart={this.toggleCart}
             removeFromCart={this.removeFromCart}
-          />
-          : null
-          }
+          /> : null}
         </ReactCSSTransitionGroup>
 
-        {/* <Cart show={this.state.cart.show} key={0} toggleCart={this.toggleCart} /> */}
         <Switch>
-          <Route exact path='/' render={(routerProps) => {
-            return (
+          <Route exact path='/' render={(routerProps) => (
               <React.Fragment>
                 <Banner {...routerProps} />
                 <LandingText {...routerProps} />
                 <Campgrounds {...routerProps} />
               </React.Fragment>
-            );
-          }} />
+          )} />
 
-          <Route exact path="/campground/:id" render={(routerProps) => {
-              return <SingleCampground addToCart={this.addToCart} toggleLoginForm={this.toggleLoginForm} {...routerProps} />
-          }} />
+          <Route exact path='/campground/:id' render={(routerProps) => (
+              <SingleCampground
+                addToCart={this.addToCart}
+                toggleLoginForm={this.toggleLoginForm}
+                {...routerProps}
+              />
+          )} />
+
+          <Route exact path='/discover'>
+            <DiscoverMap />
+          </Route>
+
+          <Route exact path='/discover/:province' render={(routerProps) => (
+            // <h1>path provs</h1>
+            <Discover {...routerProps} />
+          )} />
+
         </Switch>
 
         <Footer />
