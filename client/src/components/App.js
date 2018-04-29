@@ -11,10 +11,10 @@ import Footer from './Footer'
 import SingleCampground from './SingleCampground'
 import LandingText from './LandingText'
 import LoginForm from './LoginForm'
-import AuthenticationHOC from './AuthenticationHOC'
+import withAuthentication from './withAuthentication'
 import Cart from './Cart'
-import DiscoverMap from './DiscoverMap'
-import Discover from './Discover'
+import DiscoverSVGMap from './DiscoverSVGMap'
+import DiscoverPage from './DiscoverPage'
 
 class App extends React.Component {
   constructor(props) {
@@ -116,12 +116,12 @@ class App extends React.Component {
           )} />
 
           <Route exact path='/discover'>
-            <DiscoverMap />
+            <DiscoverSVGMap />
           </Route>
 
           <Route exact path='/discover/:province' render={(routerProps) => (
             // <h1>path provs</h1>
-            <Discover {...routerProps} />
+            <DiscoverPage {...routerProps} />
           )} />
 
         </Switch>
@@ -133,4 +133,4 @@ class App extends React.Component {
   }
 }
 
-export default AuthenticationHOC(App);
+export default withAuthentication(App);

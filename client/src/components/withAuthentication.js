@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 // Import helper sign in/sign out functions
 import { signInFunc, signOutFunc, auth } from '../helpers/firebase'
 
-const AuthenticationHOC = (Component) => {
+const withAuthentication = (Component) => {
   // Create a component that will render the passed in component
-  class AuthenticationHOC extends React.Component {
+  class withAuthentication extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -63,12 +63,12 @@ const AuthenticationHOC = (Component) => {
       return <Component />
     }
   }
-  // AuthenticationHOC.childContextTypes = {
+  // withAuthentication.childContextTypes = {
   //   user: PropTypes.object,
   //   signIn: PropTypes.object,
   //   signOut: PropTypes.object
   // };
-  return AuthenticationHOC;
+  return withAuthentication;
 }
 
-export default AuthenticationHOC
+export default withAuthentication
