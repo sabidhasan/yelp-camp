@@ -16,7 +16,7 @@ class Header extends React.Component {
     return (
       <nav>
         <a className='nav__title' href='/'>YelpCamp</a>
-        <a href='#'>Discover</a>
+        <a href='/discover'>Discover</a>
         {this.context.user && this.context.user.loading ?
           <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
           : this.context.user ?
