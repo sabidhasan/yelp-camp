@@ -16,7 +16,9 @@
 					All X buttons should be button, not <a>
 
 	/			GOAL :	Welcome page (highlight some CGs)
-				TODO :	Add a logo
+				TODO :	Contact Us section
+					Numbers section - 1500 CGs / 1 easy to use soln / 13 prov+terr. / 1.09mil Cdns camp
+					Add a logo
 					Nav bar should have stars behind it like Yelp
 					Random photo in the back of banner every time
 					Search button styling
@@ -41,7 +43,6 @@
 					Write a review button should have a logo (like Yelp)
 					Distance for current campground from your location
 					Missing basics should hide logo (#1723 email address)
-					Reviews add to MongoDB
 					Reviews check for spam
 					Delete reviews
 					Reviews pagination
@@ -53,8 +54,9 @@
 					Delete review
 	
 	/discover		GOAL :	lists campgrounds close to you or something
-					shows a clickable SVG map like skip the dishes
 					shows campgrounds close to you on a map, allowing filtering
+					map on the right with picked province, highlighted cg on left. click marker to open CG
+						shows name, distance, pictures, etc.
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
 	/add-campground		GOAL :	form for adding new CG
