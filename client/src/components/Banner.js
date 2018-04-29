@@ -19,7 +19,7 @@ class Banner extends React.Component {
       <div className="banner">
         <div className="title">
           <h1>Welcome to YelpCamp!</h1>
-          <h2>Search for campgrounds ⛺ across Canada 🍁</h2>
+          <h2>Search for campgrounds across Canada</h2>
         </div>
         <SearchBar />
         <span>

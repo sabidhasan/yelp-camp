@@ -15,7 +15,7 @@ class Campgrounds extends React.Component {
 
   newRandoms() {
     // Reset the state, then add 10 new campgrounds to it
-    fetch('/campground')
+    fetch('/campground?random=true')
       .then(res => res.json())
       .then(cg => this.setState({ campgrounds: cg }))
   }
