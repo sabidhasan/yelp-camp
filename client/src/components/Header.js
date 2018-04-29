@@ -12,7 +12,6 @@ class Header extends React.Component {
   };
 
   render() {
-    // console.log(props);
     return (
       <nav>
         <a className='nav__title' href='/'>YelpCamp</a>

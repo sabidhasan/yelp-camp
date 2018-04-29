@@ -137,8 +137,6 @@ body {
   font-size: 2rem;
   font-weight: bold;
   grid-column: 2;
-}
-.login-form > .login-form__close:hover {
   cursor: pointer;
 }
 .login-form > p {
@@ -172,8 +170,6 @@ body {
   font-weight: bold;
   text-align: right;
   grid-column: 2;
-}
-.cart .cart__close:hover {
   cursor: pointer;
 }
 /* .cart .cart_message {
@@ -542,9 +538,9 @@ footer > .social-media {
 footer > .social-media > * {
   transition: all 0.2s;
   color: black;
+  cursor: pointer;
 }
 footer > .social-media > *:hover {
-  cursor: pointer;
   transform: scale(1.3);
 }
 footer a {
@@ -982,6 +978,9 @@ footer > .social-media .social-media__linkedin:hover {
   /* Fill all provinces gray */
   fill: #d3d3d3;
 }
+.map-prov-disabled > * {
+  fill: #f2f2f2;
+}
 .map-prov {
   /* Hover transition */
   transition: all 0.1s;
@@ -1005,7 +1004,6 @@ footer > .social-media .social-media__linkedin:hover {
   align-items: center;
   justify-content: center;
 }
-
 .map-text .scroll {
   /* This div holds province names - these scroll slowly showing diff provinces */
   height: 1.81rem;
