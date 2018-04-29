@@ -159,14 +159,16 @@ class SingleCampground extends React.Component {
         </div>
 
 
-        <CampMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
-          loadingElement={<div className='map' />}
-          containerElement={<div className='mapContainer' />}
-          mapElement={<div className='map' />}
-          lat={this.state.lat}
-          lon={this.state.lon}
-        />
+        <div className='singleCampground__map'>
+          <CampMap
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div className='map-container' />}
+            containerElement={<div className='map-container' />}
+            mapElement={<div className='map-container' />}
+            lat={this.state.lat}
+            lon={this.state.lon}
+          />
+        </div>
 
         <div className='singleCampground__infoBox'>
           <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />

@@ -618,6 +618,11 @@ footer > .social-media .social-media__linkedin:hover {
   color: black;
   width: 60%;
 }
+.singleCampground > .singleCampground__map {
+  grid-area: map;
+  border: 2px solid gray;
+  height: 250px;
+}
 .singleCampground > .rating {
   grid-area: rating;
   align-self: flex-start;
@@ -780,15 +785,10 @@ footer > .social-media .social-media__linkedin:hover {
   overflow-wrap: break-word;
 }
 
-.mapContainer {
-  height: 250px;
+/* GOOGLE MAP CONTAINER STYLES */
+.map-container {
+  height: 100%;
   width: 100%;
-  grid-area: map;
-}
-.map {
-  width: 100%;
-  height: 250px;
-  border: 2px solid gray;
 }
 .gmnoprint, .gm-style-cc {
   display: none;
