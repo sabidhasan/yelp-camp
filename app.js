@@ -60,7 +60,7 @@ app.get('/campground', async function(req, res) {
   } else if (req.query.province) {
     // some province's CGs requested
     let province = helpers.provinces[req.query.province]
-    province = province.charAt(0).toUpperCase() + province.slice(1);
+    province = province.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
     console.log({'province': province});
     Campground.find({'province': province}, (error, results) => {
       // send results
@@ -68,8 +68,8 @@ app.get('/campground', async function(req, res) {
         res.sendStatus(401);
         return;
       }
-      // console.log(res);
-      res.json(results)
+      res.json(results);
+      return;
     });
     return;
   } else {
@@ -77,7 +77,7 @@ app.get('/campground', async function(req, res) {
     return;
   }
 
-  // Get campground data
+  // Get campground data if random CG or one CG
   Campground.find({"id": {"$in": requestedID}}, async (err, results) => {
       // Handle errors
       if (!(results.length) || err) {

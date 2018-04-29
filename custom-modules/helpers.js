@@ -344,11 +344,19 @@ class Searcher {
         if (matchingIDAndType !== -1) {
           // update that old item
           ret[matchingIDAndType].percentMatch += singleWordResults[idx].percentMatch;
-          //ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
+          // Add the number of words that matched
+          ret[matchingIDAndType].wordsMatched += 1;
+          // ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
         } else {
           ret.push(singleWordResults[idx])
         }
       }
+    }
+
+    // Apply the words multiplier
+    for (let i in ret) {
+      ret[i].percentMatch *= ret[i].wordsMatched;
+      // delete ret[i].wordsMatched;
     }
 
     ret = ret.sort((a, b) => a.percentMatch < b.percentMatch ? 1 : -1);
@@ -395,7 +403,8 @@ class Searcher {
             campgroundName: match.name,
             keyword: searchIndexKeyword,
             excerpt: match.excerpt,
-            id: idx
+            id: idx,
+            wordsMatched: 1
           }
           // Add to results
           filteredResults.push(newResult);
