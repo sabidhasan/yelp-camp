@@ -175,7 +175,8 @@ const provinces = {
   'ns': 'nova scotia',
   'nl': 'newfoundland',
   'yt': 'yukon territory',
-  'nt': 'northwest territories'
+  'nt': 'northwest territories',
+  'nu': 'nunavut'
 }
 const provincesReversed = {
   'british columbia' : 'bc',
@@ -190,6 +191,7 @@ const provincesReversed = {
   'newfoundland' : 'nl',
   'yukon territory' : 'yt',
   'northwest territories' : 'nt',
+  'nunavut': 'nu'
 }
 
 class Searcher {
@@ -427,5 +429,6 @@ module.exports = {
   quotes: quotes,
   activitySymbols: activitySymbols,
   Searcher: Searcher,
-  verifyUser: verifyUser
+  verifyUser: verifyUser,
+  provinces: provinces
 }

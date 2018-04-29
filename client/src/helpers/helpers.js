@@ -25,5 +25,6 @@ export const provinces = {
   'ns': 'nova scotia',
   'nl': 'newfoundland',
   'yt': 'yukon territory',
-  'nt': 'northwest territories'
+  'nt': 'northwest territories',
+  'nu': 'nunavut'
 }
