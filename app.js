@@ -36,7 +36,7 @@ const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Search Index - first get all campgrounds, then build index
 var search;
-const allCG = Campground.find({}, (err, res) => {
+Campground.find({}, (err, res) => {
  search = new helpers.Searcher(res.slice())
 })
 
@@ -51,17 +51,39 @@ app.get('/campground', async function(req, res) {
   var requestedID = [];
   if (req.query.id) {
     requestedID.push(req.query.id);
-  } else {
+  } else if (req.query.random) {
     do {
+      // TO--DO this shouldnt be hard Condensed
       newNum = Math.floor(Math.random() * 1578);
       if (!requestedID.includes(newNum)) requestedID.push(newNum);
     } while (requestedID.length !== 4)
+  } else if (req.query.province) {
+    // some province's CGs requested
+    let province = helpers.provinces[req.query.province]
+    province = province.charAt(0).toUpperCase() + province.slice(1);
+    console.log({'province': province});
+    Campground.find({'province': province}, (error, results) => {
+      // send results
+      if (error) {
+        res.sendStatus(401);
+        return;
+      }
+      // console.log(res);
+      res.json(results)
+    });
+    return;
+  } else {
+    res.sendStatus(401);
+    return;
   }
 
   // Get campground data
   Campground.find({"id": {"$in": requestedID}}, async (err, results) => {
       // Handle errors
-      if (!(results.length) || err) res.sendStatus(404);
+      if (!(results.length) || err) {
+        res.sendStatus(404);
+        return;
+      };
 
       // Add activities logos for every campground found and reverse comments
       for (var result in results) {
@@ -122,8 +144,6 @@ app.delete('/comment', async function(req, res) {
     return;
   }
 
-  console.log('verification passed   ', verification);
-
   // verify comment is owned by user
   var oldCommentsArray;
   Campground.find({'id': req.body.campgroundID}, (error, result) => {
@@ -155,31 +175,6 @@ app.delete('/comment', async function(req, res) {
   });
 });
 
-  //   // Build new CG object
-  //   const newID = result[0].comments[result[0].comments.length - 1] ? result[0].comments[result[0].comments.length - 1].id + 1 : 0
-  //   const newReview = {
-  //     id: newID,
-  //     displayName: req.body.displayName,
-  //     uid: req.body.uid,
-  //     photoURL: req.body.photoURL,
-  //     text: req.body.reviewText,
-  //     time: new Date(),
-  //     rating: req.body.pickedRating
-  //   }
-  //   Campground.update(cgID, {$push: {comments: newReview}}, (writeError, writeStatus) => {
-  //     if (writeStatus.ok !== 1) {
-  //       res.json(400);
-  //       return;
-  //     }
-  //     res.json(newReview);
-  //   })
-  // });
-// });
-
-/* DO NOT TOUCH*/
-/* DO NOT TOUCH */
-/* DO NOT TOUCH */
-/* DO NOT TOUCH */
 app.post('/comment', async function(req, res) {
   //post new review to given id.
   // Validate the user based on supplied credentials
@@ -233,11 +228,7 @@ app.post('/comment', async function(req, res) {
 });
 
 app.get('/search', function(req, res) {
-  console.log(req.query);
-  const time = process.hrtime();
-
   res.json(search.doSearch(req.query.q))
-  console.log(process.hrtime(time)[1]/1000000 + ' millisec');
 });
 
 app.listen(3001, function() {
