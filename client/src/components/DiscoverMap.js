@@ -32,7 +32,6 @@ class DiscoverMap extends React.Component {
     const clickedProvince = this.getProvinceName(e);
     if (!clickedProvince) return;
     // Redirect
-    // console.log(`/discover/$`);
     window.location = `/discover/${clickedProvince.shortName}`;
   }
 

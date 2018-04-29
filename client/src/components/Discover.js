@@ -6,13 +6,23 @@ class Discover extends React.Component {
  constructor(props) {
    super(props)
    if (!provinces[this.props.match.params.province]) window.location = '/';
-   this.province = {
+   const province = {
      fullName: provinces[this.props.match.params.province],
      shortName: this.props.match.params.province
-  }
+   }
+   this.state = {province: province}
  }
+
+ componentDidMount() {
+   console.log('hel');
+   const test = 'ab'
+   fetch(`/campground?province=${test}`)
+   .then(res => res.json())
+   .then(c => console.log(c));
+ }
+
  render() {
-   return <h1>This is the single page for {this.province.fullName}</h1>
+   return <h1>This is the single page for {this.state.province.fullName}</h1>
  }
 }
 
