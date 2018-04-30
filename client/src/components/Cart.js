@@ -16,7 +16,6 @@ class Cart extends React.Component {
     if (this.props.cart.items.length) {
        renderItems = this.props.cart.items.map((item, idx) => {
         return (
-
             <div key={item.id} className='cart__item'>
               <h1 className='cart__item-title'>
                 <a href={`/campground/${item.id}`}>{item.name}</a>
@@ -43,6 +42,7 @@ class Cart extends React.Component {
         <ReactCSSTransitionGroup
             transitionName="cart-item"
             transitionLeaveTimeout={200}
+            transitionEnterTimeout={200}
         >
           {renderItems}
       </ReactCSSTransitionGroup>

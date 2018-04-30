@@ -39,7 +39,7 @@ class App extends React.Component {
   }
 
   addToCart(campgroundObject) {
-    if (!campgroundObject.name || !campgroundObject.region || !campgroundObject.province || !campgroundObject.image) return;
+    if (!campgroundObject.name) return;
     // make a copy of the state
     let cartItems = this.state.cart.items.slice();
     // Check if new object is already in array (cant use a Set, as object is mutable)
@@ -48,8 +48,8 @@ class App extends React.Component {
       cartItems.push({
         id: campgroundObject.id,
         name: campgroundObject.name,
-        region: campgroundObject.region,
-        province: campgroundObject.province,
+        region: campgroundObject.region || '',
+        province: campgroundObject.province || '',
         image: campgroundObject.image[0] || ''
       });
     }
