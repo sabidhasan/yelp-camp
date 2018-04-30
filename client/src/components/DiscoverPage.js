@@ -13,8 +13,14 @@ class Discover extends React.Component {
    }
    this.state = {
      province: province,
-     campgrounds: null
+     campgrounds: null,
+     infoWindowOpen: false
    }
+   this.infoWindowToggle = this.infoWindowToggle.bind(this);
+ }
+
+ infoWindowToggle() {
+   this.setState({infoWindowOpen: !this.state.infoWindowOpen})
  }
 
  componentDidMount() {
@@ -25,21 +31,28 @@ class Discover extends React.Component {
     });
  }
 
+ shouldComponentUpdate() {
+    // return this.state.campgrounds !== null;
+    return true;
+ }
+
  render() {
+   if (this.state.campgrounds == null) return null;
    return (
    <div className='discover'>
      <h1>This is the single page for {this.state.province.fullName}</h1>
 
-     <div>
+     {/* <div style={{height: '400px'}} onClick={(e) => console.log(e.target)}> */}
        <DiscoverGoogleMap
          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
          loadingElement={<div className='map-container' />}
          containerElement={<div className='map-container' />}
          mapElement={<div className='map-container' />}
-         lat={this.state.lat}
-         lon={this.state.lon}
+         coords={this.state.campgrounds.map(c => {return {lat: c.lat, lon: c.lon}})}
+         infoWindowOpen={this.state.infoWindowOpen}
+         infoWindowToggle={this.infoWindowToggle}
        />
-     </div>
+     {/* </div> */}
    </div>
 )
    // return

@@ -1,24 +1,42 @@
 import React from 'react'
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
 
 const CampMap = withScriptjs(withGoogleMap((props) => {
-    let lat = props.lat;
-    let lon = props.lon;
-    let marker;
+    let markers = props.coords
+        .filter(v => v.lat !== null && v.lon !== null)
+        .map((coords, idx) => {
+          return (
+            <Marker
+              key={idx}
+              position={{lat: coords.lat, lng: coords.lon }}
+              onMouseDown={() => console.log('hello')}
+            >
+              {/* {props.infoWindowOpen &&
+                <InfoWindow onCloseClick={props.infoWindowToggle}>
+                  <h1>hello</h1>
+                </InfoWindow>
+              } */}
+            </Marker>
+          )
+        });
 
-    if (!props.lat || !props.lon) {
-      return null
-    } else {
-      marker = <Marker position={{ lat: lat, lng: lon }} />
-    }
+    // Map with a MarkerClusterer
+    // A wrapper around google.maps.InfoWindow
 
-    return (<GoogleMap
-      defaultZoom={8}
-      defaultCenter={{ lat: lat, lng: lon }}
-      defaultOptions={{disableDefaultUI: true}}
-    >
-      { marker }
-    </GoogleMap>)
+
+
+    // console.log(markers);
+
+    return (
+      <GoogleMap
+        defaultZoom={3}
+        defaultCenter={{ lat: 0, lng: 0 }}
+        defaultOptions={{disableDefaultUI: true}}
+        // onClick={() => console.log('hello')}
+      >
+        <Marker position={{lat: 1, lng: 1 }} onClick={() => console.log('hello')} />
+        {/* { markers } */}
+      </GoogleMap>)
   }
 ))
 
