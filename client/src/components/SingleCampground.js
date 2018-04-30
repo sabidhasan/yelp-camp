@@ -143,7 +143,9 @@ class SingleCampground extends React.Component {
       <div className='singleCampground'>
         <h1 className='singleCampground__title'>
           {this.state.name}
-          <span className='singleCampground__region'>{this.state.region}, {this.state.province} Region</span>
+          <span className='singleCampground__region'>
+            {[this.state.region, this.state.province].filter(a => a).join(', ')} Region
+          </span>
         </h1>
 
         <div className='review-link'>
@@ -159,12 +161,8 @@ class SingleCampground extends React.Component {
         </div>
 
 
-        <div className='singleCampground__map'>
+        <div className='singleCampground__map google-map'>
           <CampMap
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
-            loadingElement={<div className='map-container' />}
-            containerElement={<div className='map-container' />}
-            mapElement={<div className='map-container' />}
             lat={this.state.lat}
             lon={this.state.lon}
           />
