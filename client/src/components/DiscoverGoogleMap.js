@@ -1,43 +1,48 @@
 import React from 'react'
-import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
+// import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-const CampMap = withScriptjs(withGoogleMap((props) => {
-    let markers = props.coords
-        .filter(v => v.lat !== null && v.lon !== null)
-        .map((coords, idx) => {
-          return (
+export class DiscoverGoogleMap extends React.Component {
+  constructor() {
+    super();
+  }
+
+  render() {
+    var lngs = [];
+    var lats = [];
+
+    const markers = this.props.coords.map(c => ({lat: c.lat, lon: c.lon, id: c.id}))
+      .filter(v => v.lat !== null && v.lon !== null)
+      .map((coords, idx) => {
+        const point = {lat: coords.lat, lng: coords.lon };
+        lngs.push(coords.lon);
+        lats.push(coords.lat);
+
+        return (
             <Marker
               key={idx}
-              position={{lat: coords.lat, lng: coords.lon }}
-              onMouseDown={() => console.log('hello')}
-            >
-              {/* {props.infoWindowOpen &&
-                <InfoWindow onCloseClick={props.infoWindowToggle}>
-                  <h1>hello</h1>
-                </InfoWindow>
-              } */}
+              position={point}
+              onClick={() => this.props.setSelected(coords.id)}>
             </Marker>
-          )
-        });
+        )
+    });
 
-    // Map with a MarkerClusterer
-    // A wrapper around google.maps.InfoWindow
-
-
-
-    // console.log(markers);
+    const averageLat = lats.reduce((a,v) => a+v, 0) / lats.length;
+    const averageLng = lngs.reduce((a,v) => a+v, 0) / lngs.length;
 
     return (
-      <GoogleMap
-        defaultZoom={3}
-        defaultCenter={{ lat: 0, lng: 0 }}
-        defaultOptions={{disableDefaultUI: true}}
-        // onClick={() => console.log('hello')}
+      <Map
+        google={this.props.google} zoom={14}
+        zoom={5}
+        initialCenter={{lat: averageLat, lng: averageLng}}
       >
-        <Marker position={{lat: 1, lng: 1 }} onClick={() => console.log('hello')} />
-        {/* { markers } */}
-      </GoogleMap>)
-  }
-))
+        { markers }
 
-export default CampMap
+      </Map>
+    );
+  }
+}
+
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg'
+})(DiscoverGoogleMap)

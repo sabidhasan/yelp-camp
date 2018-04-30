@@ -785,14 +785,17 @@ footer > .social-media .social-media__linkedin:hover {
   overflow-wrap: break-word;
 }
 
+
 /* GOOGLE MAP CONTAINER STYLES */
-.map-container {
-  height: 100%;
-  width: 100%;
-}
 .gmnoprint, .gm-style-cc {
   display: none;
 }
+.google-map > div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 
 .activities__list ul {
   list-style: none;
@@ -1034,6 +1037,30 @@ footer > .social-media .social-media__linkedin:hover {
   88%, 89% {transform: translateY(-1100%)}
   96%, 97% {transform: translateY(-1200%)}
   100% {transform: translateY(0%)}
+}
+
+.discover {
+  display: grid;
+  grid-template-areas: 'title title' 'details map';
+  grid-gap: 10px 25px;
+  grid-template-columns: 1fr 1fr;
+}
+.discover > .discover__title {
+  grid-area: title;
+}
+.discover > .discover__title span {
+  text-transform: capitalize;
+}
+.discover > .discover__details {
+  grid-area: details
+}
+.discover > .discover__map {
+  /* For the Google Map Container */
+  border: 2px solid gray;
+  height: 500px;
+  grid-area: map;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 /* MOBILE STYLES */

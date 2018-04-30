@@ -14,13 +14,13 @@ class Discover extends React.Component {
    this.state = {
      province: province,
      campgrounds: null,
-     infoWindowOpen: false
+     selectedCampgroundID: null
    }
-   this.infoWindowToggle = this.infoWindowToggle.bind(this);
+   this.setSelected = this.setSelected.bind(this);
  }
 
- infoWindowToggle() {
-   this.setState({infoWindowOpen: !this.state.infoWindowOpen})
+ setSelected(id) {
+    this.setState({selectedCampgroundID: id})
  }
 
  componentDidMount() {
@@ -29,30 +29,39 @@ class Discover extends React.Component {
     .then(provCG => {
       this.setState({campgrounds: provCG})
     });
- }
 
- shouldComponentUpdate() {
-    // return this.state.campgrounds !== null;
-    return true;
+    fetch('https://ipinfo.io/json')
+      .then(res => res.json())
+      .then(locData => {
+        this.setState({userLocation: locData.loc.split(',')})
+      })
+      .catch(err => console.log('error occrurred'))
  }
 
  render() {
    if (this.state.campgrounds == null) return null;
+   const selectedCampgroundObject = this.state.campgrounds.find(v => this.state.selectedCampgroundID === v.id);
+   // const name = this.state.campgrounds.length && this.state.selectedCampgroundID ? this.state.campgrounds[this.state.selectedCampgroundID].name : ''
    return (
    <div className='discover'>
-     <h1>This is the single page for {this.state.province.fullName}</h1>
+     <h1 className='discover__title'>
+       Discover campgrounds in <span>{this.state.province.fullName}</span>
+     </h1>
 
-     {/* <div style={{height: '400px'}} onClick={(e) => console.log(e.target)}> */}
-       <DiscoverGoogleMap
-         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
-         loadingElement={<div className='map-container' />}
-         containerElement={<div className='map-container' />}
-         mapElement={<div className='map-container' />}
-         coords={this.state.campgrounds.map(c => {return {lat: c.lat, lon: c.lon}})}
-         infoWindowOpen={this.state.infoWindowOpen}
-         infoWindowToggle={this.infoWindowToggle}
+     <div className='discover__details'>
+       <DiscoverCampgroundTile
+         cg={selectedCampgroundObject}
+
        />
-     {/* </div> */}
+     </div>
+
+     <div className='discover__map google-map'>
+       <DiscoverGoogleMap
+         coords={this.state.campgrounds}
+         setSelected={this.setSelected}
+         selected={this.state.selectedCampgroundID}
+       />
+     </div>
    </div>
 )
    // return
