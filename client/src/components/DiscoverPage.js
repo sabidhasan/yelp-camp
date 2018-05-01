@@ -29,6 +29,7 @@ class Discover extends React.Component {
     fetch(`/campground?province=${this.state.province.shortName}`)
       .then(res => res.json())
       .then(provCG => {
+        console.log(provCG);
         this.setState({campgrounds: provCG})
       });
 

@@ -31,8 +31,13 @@ class DiscoverMap extends React.Component {
   handleClick(e) {
     const clickedProvince = this.getProvinceName(e);
     if (!clickedProvince) return;
-    // Redirect
-    window.location = `/discover/${clickedProvince.shortName}`;
+
+    // if command or control is pressed Redirect in new window
+    if (e.ctrlKey || e.metaKey) {
+      window.open(`/discover/${clickedProvince.shortName}`) ;
+    } else {
+      window.location = `/discover/${clickedProvince.shortName}`;
+    }
   }
 
   handleHover(e) {
