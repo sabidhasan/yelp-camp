@@ -1,6 +1,8 @@
 import React from 'react'
 // import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import campIcon from '../images/camp-icon.png'
+import campIconRed from '../images/camp-icon-red.png'
 
 export class DiscoverGoogleMap extends React.Component {
   constructor() {
@@ -18,11 +20,18 @@ export class DiscoverGoogleMap extends React.Component {
         lngs.push(coords.lon);
         lats.push(coords.lat);
 
+        const url = (this.props.selected && this.props.selected.id === coords.id) ? campIconRed : campIcon;
+
         return (
             <Marker
               key={idx}
               position={point}
-              onClick={() => this.props.setSelected(coords.id)}>
+              onClick={() => this.props.setSelected(coords.id)}
+              icon={{
+                url: url,
+                scaledSize: new this.props.google.maps.Size(12,12)
+              }}>
+              {/* DO LOGIC FOR MARKER TYPE BASED ON  SELECTED ID... */}
             </Marker>
         )
     });
