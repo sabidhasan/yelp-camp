@@ -7,7 +7,7 @@ const Activities = (props) => {
     //make into li
     return (<li key={idx}>
       <span className='activity__logo'>{activity.logo}</span>
-      <span className='activity__name'>{activity.name}</span>
+      <span className='activity__name capitalize'>{activity.name}</span>
     </li>)
   });
 }
