@@ -39,6 +39,7 @@ class SearchBar extends React.Component {
         'address': '📍', 'description': '📛', 'province': '🌎',
         'region': '🗾'
       }
+      this.setState({highlightedIndex: -1});
       fetch(`/search?q=${e.target.value}`)
         .then(res => res.json())
         .then(search => {
@@ -63,8 +64,11 @@ class SearchBar extends React.Component {
 
   goToCampground() {
     // Redirects to currently selected campground
-    if (this.state.highlightedIndex === -1) return;
-    window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
+    if (this.state.highlightedIndex === -1) {
+      window.location = `/search/?q=${this.state.searchQuery}`
+    } else {
+      window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
+    }
   }
 
   handleChange(e) {
@@ -78,6 +82,8 @@ class SearchBar extends React.Component {
   }
 
   render() {
+    console.log(this.state.highlightedIndex);
+
     return (
       <form autoComplete='off' className='searchbar' onSubmit={(e) => e.preventDefault()}>
         <label htmlFor='search'>Find</label>
@@ -97,12 +103,13 @@ class SearchBar extends React.Component {
               return (
                 <li
                   key={i}
-                  className={i === this.state.highlightedIndex ? 'selected' : ''}
-                  onMouseOver={() => this.handleMouse(i)}
-                  onMouseDown={this.goToCampground}
+                  className={i === this.state.highlightedIndex ? 'selected' : undefined}
+                  onMouseMove={() => this.handleMouse(i)}
+                  onMouseOut={() => this.setState({highlightedIndex: -1})}
+                  onClick={this.goToCampground}
                 >
                   <i className='search-icon'>{v.icon}</i>
-                  <div className='searchtext'>
+                  <div className='searchtext capitalize'>
                     <h1>{v.name}</h1><h2>{v.text}</h2>
                   </div>
                 </li>
