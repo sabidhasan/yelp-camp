@@ -59,7 +59,7 @@ class DiscoverMap extends React.Component {
           onMouseOut={() => this.setState({hoveredProvince: null})}
         >
           <CanadaMapSVG />
-          <span className='map-text'>
+          <span className='map-text capitalize'>
             Discover
             {this.state.hoveredProvince
               ?

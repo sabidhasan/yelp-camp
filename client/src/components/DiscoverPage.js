@@ -29,7 +29,6 @@ class Discover extends React.Component {
     fetch(`/campground?province=${this.state.province.shortName}`)
       .then(res => res.json())
       .then(provCG => {
-        console.log(provCG);
         this.setState({campgrounds: provCG})
       });
 
@@ -49,9 +48,12 @@ class Discover extends React.Component {
     // const name = this.state.campgrounds.length && this.state.selectedCampgroundID ? this.state.campgrounds[this.state.selectedCampgroundID].name : ''
     return (
     <div className='discover'>
-     <h1 className='discover__title'>
-       Discover campgrounds in <span>{this.state.province.fullName}</span>
-     </h1>
+     <div className='discover__title'>
+       <h1>Discover campgrounds in <span>{this.state.province.fullName}</span></h1>
+       <p>We have {this.state.campgrounds.length} campgrounds in <span className='capitalize'>{this.state.province.fullName}</span>
+       , of which {this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length}
+       {' '} are shown on the map</p>
+     </div>
 
      <div className='discover__details'>
        <DiscoverCampgroundTile
