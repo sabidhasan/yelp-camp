@@ -21,7 +21,7 @@ class Cart extends React.Component {
                 <a href={`/campground/${item.id}`}>{item.name}</a>
               </h1>
               <img src={item.image} alt='' />
-              <p className='cart__item-region'>{item.region}, {item.province}</p>
+              <p className='cart__item-region'>{[item.region, item.province].filter(a=>!!a).join(', ')} Region</p>
               <span className='cart__item-delete' onClick={() => this.props.removeFromCart(idx)}>×</span>
             </div>
         )

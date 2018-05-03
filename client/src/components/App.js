@@ -15,6 +15,7 @@ import withAuthentication from './withAuthentication'
 import Cart from './Cart'
 import DiscoverSVGMap from './DiscoverSVGMap'
 import DiscoverPage from './DiscoverPage'
+import Search from './Search'
 
 class App extends React.Component {
   constructor(props) {
@@ -34,7 +35,6 @@ class App extends React.Component {
 
   toggleCart() {
     // const newCartState = status ? status : !this.state.cart.show;
-    console.log(this.state.cart);
     this.setState({cart: {...this.state.cart, show: !this.state.cart.show}});
   }
 
@@ -123,6 +123,10 @@ class App extends React.Component {
             // <h1>path provs</h1>
             <DiscoverPage {...routerProps} />
           )} />
+
+          <Route exact path='/search' render={(routerProps) => (
+            <Search {...routerProps}/>
+          )}/>
 
         </Switch>
 
