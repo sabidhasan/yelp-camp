@@ -14,6 +14,7 @@
 					aria stuff for all elements
 					Jest testing - https://facebook.github.io/jest
 					All X buttons should be button, not <a>
+					window.location should be replaced with proper routing
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Contact Us section
@@ -33,7 +34,13 @@
 					picture, name, reviews, address
 					type (public/private), distance from you
 					map of all results
-					ideally paginated
+					paginated
+					FILTER, PAGINATION and SEARCH BAR COMPONENT
+					Filter by:
+						AREA (region, province)
+						FEATURES (# of camp sites, price, now open, season)
+						ACTIVITIES (activities dropdown) 
+					Sort by: rating, number of reviews, best match (original)
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
 	/campground/:id		GOAL :	Single campground page
@@ -53,11 +60,14 @@
 					NaN error for weather (e.g. 28)
 					Delete review
 	
-	/discover		GOAL :	lists campgrounds close to you or something
-					shows campgrounds close to you on a map, allowing filtering
+	/discover		GOAL :	
 					map on the right with picked province, highlighted cg on left. click marker to open CG
 						shows name, distance, pictures, etc.
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
+				TODO :	show basic information for province if no CG selected.
+					Otherwise, show details for CG
+					Style CG data
+					Add basic info for province
 
 	/add-campground		GOAL :	form for adding new CG
 				TODO :	see Colt Steele for proper naming of this route
