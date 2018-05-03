@@ -27,7 +27,10 @@ const withAuthentication = (Component) => {
       .then(val => {
         this.setState({user: val})
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        this.setState({user: null})
+        console.log(err)
+      })
     }
 
     signOutUser() {
@@ -36,7 +39,10 @@ const withAuthentication = (Component) => {
       .then(() => {
         this.setState({user: null})
       })
-      .catch((err) => console.log('error occured'))
+      .catch((err) => {
+        this.setState({user: null})
+        console.log('error occured')
+      })
     }
 
     getChildContext() {
