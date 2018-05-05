@@ -174,7 +174,7 @@ const provinces = {
   'nb': 'new brunswick',
   'ns': 'nova scotia',
   'nl': 'newfoundland',
-  'yt': 'yukon territory',
+  'yt': 'yukon',
   'nt': 'northwest territories',
   'nu': 'nunavut'
 }
@@ -189,7 +189,7 @@ const provincesReversed = {
   'new brunswick' : 'nb',
   'nova scotia' : 'ns',
   'newfoundland' : 'nl',
-  'yukon territory' : 'yt',
+  'yukon' : 'yt',
   'northwest territories' : 'nt',
   'nunavut': 'nu'
 }
@@ -290,7 +290,7 @@ class Searcher {
         'description': {
           data: cg.description.split(' ').filter(val => val.length >= 4 && this.badWords.indexOf(val.toLowerCase()) === -1),
           originalData: cg.description.toLowerCase().split(' '),
-          func: function (val) {return Math.floor(val.length / this.data.length * 100)}
+          func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
         },
         'province': {
           data: [cg.province],
@@ -322,7 +322,14 @@ class Searcher {
               type: category,
               importance: importance,
               name: cg.name,
-              excerpt: this.makeExcerpt(categoryDict[category].originalData, val, category)
+              excerpt: this.makeExcerpt(categoryDict[category].originalData, val, category),
+              region: cg.region,
+              images: cg.image,
+              province: cg.province,
+              address: cg.address,
+              description: cg.description,
+              comments: cg.comments,
+              activities: cg.activities
             });
           }
         });
@@ -363,8 +370,6 @@ class Searcher {
     // Remove campground duplicates (each CG should only have one search result at most)
     let alreadyIncluded = new Set([]);
 
-    return ret;
-
     return ret.filter(val => {
       // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
       if (!alreadyIncluded.has(val.id)) {
@@ -404,7 +409,8 @@ class Searcher {
             keyword: searchIndexKeyword,
             excerpt: match.excerpt,
             id: idx,
-            wordsMatched: 1
+            wordsMatched: 1,
+            ...match
           }
           // Add to results
           filteredResults.push(newResult);
