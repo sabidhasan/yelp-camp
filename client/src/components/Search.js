@@ -4,6 +4,7 @@ import { provinces, activitySymbols } from '../helpers/helpers'
 import SearchResultTile from './SearchResultTile'
 import SearchBar from './SearchBar'
 import FilterSearch from './FilterSearch'
+import Pagination from './Pagination'
 
 class Search extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Search extends React.Component {
   }
 
   nextPage(e) {
-    e.preventDefault()
+    e.preventDefault();
     this.setState({page: this.state.page + 1})
   }
 
@@ -72,7 +73,7 @@ class Search extends React.Component {
   }
 
   render() {
-    if (!this.state.filteredResults.length) return null;
+    // if (!this.state.filteredResults.length) return null;
 
     const results = this.state.filteredResults
       .slice(this.state.page * 10, (this.state.page * 10) + 10)
@@ -94,22 +95,8 @@ class Search extends React.Component {
         )
       })
 
-    const origResultsLength = this.state.filteredResults.length
     const currentResultStartUserFriendly = (this.state.page * 10) + 1;
-    const currentPageUserFriendly = this.state.page + 1;
-    const currentResultEndUserFriendly = Math.min(((this.state.page * 10) + 10), origResultsLength)
-    const pageEndUserFriendly = Math.ceil(origResultsLength / 10);
-
-    // Generate pages counter with current page already in there
-    const allPages = [currentPageUserFriendly]
-    for (let i = 1; i <= 10; i++) {
-      // look current page +/- i
-      const newNums = [currentPageUserFriendly + i, currentPageUserFriendly - i]
-      // Add if allPages isnt too long and page number is not too small/big
-      newNums.forEach(v => {if (v > 0 && v <= pageEndUserFriendly && allPages.length < 7) allPages.push(v)})
-    }
-    // Sort because it is in no order
-    allPages.sort((a, b) => (a > b ? 1 : -1))
+    const currentResultEndUserFriendly = Math.min(((this.state.page * 10) + 10), this.state.filteredResults.length)
 
     // Create provinces object for select box
     const selectBoxProvinces = []
@@ -117,7 +104,6 @@ class Search extends React.Component {
       selectBoxProvinces.push({value: item, text: provinces[item]})
     }
 
-    // Create region
     // Create activities for dropdown
     const selectBoxRegions = []
     // let tmpSelectBoxActivities = []
@@ -125,21 +111,16 @@ class Search extends React.Component {
 
     for (let item in this.state.originalResults) {
       const _item = this.state.originalResults[item].region;
-      // tmpSelectBoxActivities = tmpSelectBoxActivities.concat(this.state.originalResults[item].activities);
       selectBoxActivities = selectBoxActivities.concat(this.state.originalResults[item].activities);
       if (!selectBoxRegions.includes(_item) && _item) selectBoxRegions.push(_item)
     }
-    // tmpSelectBoxActivities = Array.from(new Set(tmpSelectBoxActivities))
     selectBoxActivities = Array.from(new Set(selectBoxActivities))
-    // for (let i of tmpSelectBoxActivities) {
-    //     selectBoxActivities.push({text: `${activitySymbols[i]} ${i}`, value: i})
-    // }
 
     return (
       <div className='search-page-container'>
         <div className='filters'>
           <h2>Showing results {currentResultStartUserFriendly}-{currentResultEndUserFriendly}
-            {' '} of {origResultsLength}
+            {' '} of {this.state.filteredResults.length}
             {' '} for '<span className='bold'>{this.state.query}</span>'
           </h2>
 
@@ -155,26 +136,13 @@ class Search extends React.Component {
           />
         </div>
 
-        <div className='search-page-selector'>
-          <span className='page-count'>
-            Page {currentPageUserFriendly} of {pageEndUserFriendly}
-          </span>
-          {allPages.length > 1 ?
-            <div className='pages'>
-              {this.state.page > 0
-                ? <a href='' className='prev-link' onClick={this.prevPage}>« Previous</a>
-                : null
-              }
-              {allPages.map(v=> (
-                <a key={v} className={v===currentPageUserFriendly ? 'current' : undefined} onClick={(e) => this.goToPage(e, v - 1)} href='#'>{v}</a>)
-              )}
-              {this.state.page !== pageEndUserFriendly - 1
-                ? <a href='' className='next-link' onClick={this.nextPage}>Next »</a>
-                : null
-              }
-            </div>
-          : null }
-        </div>
+        <Pagination
+          currentPage={this.state.page + 1}
+          lastPage={Math.ceil(this.state.filteredResults.length / 10)}
+          prevHandler={this.prevPage}
+          nextHandler={this.nextPage}
+          goToPageHandler={this.goToPage}
+        />
 
         <ol>
           {results}
