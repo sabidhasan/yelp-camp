@@ -9,7 +9,7 @@ class SearchBar extends React.Component {
       highlightedIndex: -1,
       results: [],
       active: false,
-      searchQuery: ''
+      searchQuery: props.initialValue || ''
     }
 
     this.doSearch = this.doSearch.bind(this);
@@ -82,8 +82,6 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    console.log(this.state.highlightedIndex);
-
     return (
       <form autoComplete='off' className='searchbar' onSubmit={(e) => e.preventDefault()}>
         <label htmlFor='search'>Find</label>
