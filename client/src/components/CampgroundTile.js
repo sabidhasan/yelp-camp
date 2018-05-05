@@ -8,7 +8,7 @@ const CampgroundTile = (props) => {
       <a href={'campground/' + props.id}>
         <h2>{props.name}</h2>
       </a>
-      <span className='region'>{props.region}, {props.province}</span>
+      <span className='region'>{[props.region, props.province].filter(a=>!!a).join(', ')}</span>
       <div className='rating'>
         <RatingBar rating={props.rating} small={true} />
       </div>

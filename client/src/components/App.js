@@ -10,6 +10,7 @@ import Campgrounds from './Campgrounds'
 import Footer from './Footer'
 import SingleCampground from './SingleCampground'
 import LandingText from './LandingText'
+import LandingTiles from './LandingTiles'
 import LoginForm from './LoginForm'
 import withAuthentication from './withAuthentication'
 import Cart from './Cart'
@@ -103,6 +104,7 @@ class App extends React.Component {
               <React.Fragment>
                 <Banner {...routerProps} />
                 <LandingText {...routerProps} />
+                <LandingTiles {...routerProps} />
                 <Campgrounds {...routerProps} />
               </React.Fragment>
           )} />

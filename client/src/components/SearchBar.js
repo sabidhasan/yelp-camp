@@ -84,17 +84,18 @@ class SearchBar extends React.Component {
   render() {
     return (
       <form autoComplete='off' className='searchbar' onSubmit={(e) => e.preventDefault()}>
-        <label htmlFor='search'>Find</label>
         <input
           name='search'
           type='text'
           placeholder='Province, Region, City, Campground Name, etc.'
           onFocus={this.setFocus}
           onBlur={this.setFocus}
+          // onClick={this.setFocus}
           value={this.state.searchQuery}
           onKeyUp={this.doSearch}
           onChange={this.handleChange}
         />
+        <label htmlFor='search'>Find</label>
         <button type='submit'>🔎</button>
           <ul className={this.state.active ? 'results' : 'hidden'}>
               {this.state.results.map((v, i) => {
