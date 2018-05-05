@@ -15,10 +15,13 @@
 					Jest testing - https://facebook.github.io/jest
 					All X buttons should be button, not <a>
 					window.location should be replaced with proper routing
+					Search bar should say “No results found” if no results found
+					Search bar click doesn’t bring up results always
+					Debounce the search bar
+					Add HOCs for null props rendering
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Contact Us section
-					Numbers section - 1500 CGs / 1 easy to use soln / 13 prov+terr. / 1.09mil Cdns camp
 					Add a logo
 					Nav bar should have stars behind it like Yelp
 					Random photo in the back of banner every time
@@ -26,6 +29,7 @@
 					Login button styling for FB and Google
 					It shouldn’t query the server on alt tab for search bar
 					Facebook login API (Firebase backend and validation on my backend)
+					Landing tile Icons
 					
 	/search			GOAL :	shows full search suggestions (rather than dropdown on /)
 					(param for short or long search. short collates matches
@@ -35,11 +39,10 @@
 					type (public/private), distance from you
 					map of all results
 					paginated
+					don’t show page selector if only one page
 					FILTER, PAGINATION and SEARCH BAR COMPONENT
 					Filter by:
-						AREA (region, province)
-						FEATURES (# of camp sites, price, now open, season)
-						ACTIVITIES (activities dropdown) 
+					    AREA / FEATURES (# of camp sites, price, now open, season) / ACTIVITIES 
 					Sort by: rating, number of reviews, best match (original)
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
