@@ -13,6 +13,7 @@ import LandingText from './LandingText'
 import LandingTiles from './LandingTiles'
 import LoginForm from './LoginForm'
 import withAuthentication from './withAuthentication'
+import withLocation from './withLocation'
 import Cart from './Cart'
 import DiscoverSVGMap from './DiscoverSVGMap'
 import DiscoverPage from './DiscoverPage'
@@ -139,4 +140,4 @@ class App extends React.Component {
   }
 }
 
-export default withAuthentication(App);
+export default withAuthentication(withLocation(App));

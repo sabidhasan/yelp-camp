@@ -7,6 +7,7 @@ const SearchResultTile = (props) => {
       <a href={`/campground/${props.id}`}><h1>{`${props.number}. ${props.name}`}</h1></a>
       <h2>{props.regionAndProvince}</h2>
       <p className='address'>{props.address}</p>
+      <p className='distance'>{props.distance ? `${props.distance} km away` : null} </p>
       <p className='description'>{props.description}</p>
       <img src={props.images ? props.images[0] : null} alt='' />
 

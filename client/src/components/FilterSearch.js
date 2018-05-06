@@ -30,7 +30,7 @@ class FilterSearch extends React.Component {
           <h2>Area</h2>
           <Select
             items={this.props.provinces}
-            defaultText={'Select a Province'}
+            defaultText={'All Provinces'}
             onChange={val => this.handleChange(val, 'selectedProv')}
           />
           <MultiCheckBox

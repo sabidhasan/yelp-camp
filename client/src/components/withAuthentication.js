@@ -10,7 +10,7 @@ const withAuthentication = (Component) => {
     constructor(props) {
       super(props);
       this.state = {
-        user: {loading: true, displayName: "Guest"}
+        user: {loading: true, displayName: "Guest"},
       }
       this.signInUser = this.signInUser.bind(this)
       this.signOutUser = this.signOutUser.bind(this)
@@ -19,7 +19,7 @@ const withAuthentication = (Component) => {
     static childContextTypes = {
       user: PropTypes.object,
       signIn: PropTypes.func,
-      signOut: PropTypes.func
+      signOut: PropTypes.func,
     }
 
     signInUser() {
@@ -49,7 +49,7 @@ const withAuthentication = (Component) => {
       return {
         user: this.state.user,
         signIn: this.signInUser,
-        signOut: this.signOutUser
+        signOut: this.signOutUser,
       }
     }
 

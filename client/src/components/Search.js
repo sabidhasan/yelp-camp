@@ -1,5 +1,8 @@
 import React from 'react'
 import {parse} from 'query-string'
+import PropTypes from 'prop-types';
+import haversine from 'haversine'
+
 import { provinces, activitySymbols } from '../helpers/helpers'
 import SearchResultTile from './SearchResultTile'
 import SearchBar from './SearchBar'
@@ -23,10 +26,24 @@ class Search extends React.Component {
     this.goToPage = this.goToPage.bind(this)
   }
 
+  static contextTypes = {
+    userLocation: PropTypes.object,
+  }
+
   componentDidMount() {
     fetch(`/search?q=${this.state.query}`)
       .then(res => res.json())
-      .then(search => this.setState({originalResults: search, filteredResults: search}))
+      .then(search => {
+        search = search.map(v => {
+          const cgLoc = {latitude: v.lat, longitude: v.lon}
+          if (this.context.userLocation && this.context.userLocation.latitude && this.context.userLocation.longitude && v.lat && v.lon) {
+            v.distanceFromUser = Math.round(haversine(cgLoc, this.context.userLocation))
+          }
+          return v;
+        });
+        console.log(search);
+        this.setState({originalResults: search, filteredResults: search})
+      })
   }
 
   shortenDescription(desc) {
@@ -62,18 +79,25 @@ class Search extends React.Component {
       const currItem = this.state.originalResults[item];
 
       if ((!val.selectedProv || provinces[val.selectedProv].toLowerCase() === currItem.province.toLowerCase()) &&
-        val.selectedRegions.includes(currItem.region) &&
-        currItem.activities.some(v => val.selectedActivities.includes(v))
+        (val.selectedRegions.includes(currItem.region) || !currItem.region) &&
+        (!currItem.activities.length || currItem.activities.some(v => val.selectedActivities.includes(v)))
       ) {
         filteredResults.push(currItem)
       }
     }
     // console.log(filteredResults);
-    this.setState({filteredResults: filteredResults})
+    this.setState({filteredResults: filteredResults, page: 0})
   }
 
   render() {
-    // if (!this.state.filteredResults.length) return null;
+    if (!this.state.originalResults.length) return (
+      <div className='search-page-container'>
+        <div className='filters'>
+          <h1>No results found for {this.state.query}</h1>
+          <SearchBar initialValue={this.state.query} />
+        </div>
+      </div>
+    );
 
     const results = this.state.filteredResults
       .slice(this.state.page * 10, (this.state.page * 10) + 10)
@@ -90,6 +114,7 @@ class Search extends React.Component {
               comments={r.comments}
               images={r.images}
               id={r.id}
+              distance={r.distanceFromUser}
             />
           </li>
         )
@@ -106,7 +131,6 @@ class Search extends React.Component {
 
     // Create activities for dropdown
     const selectBoxRegions = []
-    // let tmpSelectBoxActivities = []
     let selectBoxActivities = []
 
     for (let item in this.state.originalResults) {
@@ -119,11 +143,6 @@ class Search extends React.Component {
     return (
       <div className='search-page-container'>
         <div className='filters'>
-          <h2>Showing results {currentResultStartUserFriendly}-{currentResultEndUserFriendly}
-            {' '} of {this.state.filteredResults.length}
-            {' '} for '<span className='bold'>{this.state.query}</span>'
-          </h2>
-
           <SearchBar initialValue={this.state.query} />
 
           <h2>Filters</h2>
@@ -139,10 +158,19 @@ class Search extends React.Component {
         <Pagination
           currentPage={this.state.page + 1}
           lastPage={Math.ceil(this.state.filteredResults.length / 10)}
+          totalResults={this.state.filteredResults.length}
           prevHandler={this.prevPage}
           nextHandler={this.nextPage}
           goToPageHandler={this.goToPage}
         />
+
+        {currentResultEndUserFriendly > 0
+          ? <h2>Showing results {currentResultStartUserFriendly}-{currentResultEndUserFriendly}
+              {' '} of {this.state.filteredResults.length}
+              {' '} for '<span className='bold'>{this.state.query}</span>'
+            </h2>
+          : null
+        }
 
         <ol>
           {results}
