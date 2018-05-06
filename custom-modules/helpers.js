@@ -329,7 +329,9 @@ class Searcher {
               address: cg.address,
               description: cg.description,
               comments: cg.comments,
-              activities: cg.activities
+              activities: cg.activities,
+              lat: cg.lat,
+              lon: cg.lon
             });
           }
         });

@@ -17,8 +17,9 @@
 					window.location should be replaced with proper routing
 					Search bar should say “No results found” if no results found
 					Search bar click doesn’t bring up results always
-					Debounce the search bar
+					Debounce the search bar (on input)
 					Add HOCs for null props rendering
+					Cart icon should be animated on hover in header nav bar
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Contact Us section
@@ -38,11 +39,12 @@
 					picture, name, reviews, address
 					type (public/private), distance from you
 					map of all results
+					no results not working
 					paginated
 					don’t show page selector if only one page
 					FILTER, PAGINATION and SEARCH BAR COMPONENT
 					Filter by:
-					    AREA / FEATURES (# of camp sites, price, now open, season) / ACTIVITIES 
+					    AREA / FEATURES (# of camp sites) / ACTIVITIES 
 					Sort by: rating, number of reviews, best match (original)
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
