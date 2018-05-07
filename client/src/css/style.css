@@ -259,6 +259,7 @@ body {
 
 /* TOP NAV */
 nav {
+  box-shadow: 0 3px 25px rgba(0, 0, 0, 0.5);
   padding: 10px;
   background: red;
   display: grid;
@@ -1083,13 +1084,15 @@ footer > .social-media .social-media__linkedin:hover {
 .discover > .discover__details {
   grid-area: details
 }
-.discover > .discover__map {
+.discover__map {
   /* For the Google Map Container */
   border: 2px solid gray;
   height: 500px;
   grid-area: map;
   border-radius: 5px;
   overflow: hidden;
+  position: relative;
+  padding: 0;
 }
 
 /* SEARCH PAGE */
@@ -1149,17 +1152,25 @@ footer > .social-media .social-media__linkedin:hover {
   user-select: none;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   border-radius: 4px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.filter__dropdown-container::after {
+  content: '<>';
+  display: flex;
+  padding-left: 6px;
+  transition: all 0.1s;
 }
 .filter__dropdown-container span {
   text-transform: capitalize;
   font-weight: bold;
+  border-right: 1px solid gray;
 }
 .dropdown-expanded ~ span  {
   background: red;
 }
 .filter__dropdown-container ul {
   max-height: 0;
-  display: none;
   position: absolute;
   right: 0;
   left: 0;
@@ -1167,12 +1178,13 @@ footer > .social-media .social-media__linkedin:hover {
   list-style: none;
   overflow: scroll;
   background: white;
-  margin: 8px 0;
+  margin-top: 36px;
   z-index: 1;
-  border: 1px solid black;
   border-radius: 5px;
+  transition: all 0.3s;
 }
 .filter__dropdown-container ul.dropdown-expanded {
+  border: 1px solid black;
   max-height: 200px;
   display: block;
 }
@@ -1194,8 +1206,22 @@ footer > .social-media .social-media__linkedin:hover {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .search-page-container p {
-  grid-column: 1 / -1;
+  grid-column: 1 / span 2;
   margin: 0;
+}
+.search-page-container .filter__tiles {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px 10px;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.4s linear;
+  overflow: hidden;
+}
+.search-page-container .filter__section-expanded {
+  max-height: 999px;
+  opacity: 1;
 }
 .search-page-container h2 {
   margin: 0;
@@ -1216,6 +1242,10 @@ footer > .social-media .social-media__linkedin:hover {
   position: relative;
   margin-top: 10px;
   min-height: 35px;
+}
+.search-page-selector:last-child {
+  /* Hide the bottom pagination (only for mobile) */
+  display: none;
 }
 .search-page-selector .page-count {
   position: absolute;
@@ -1249,6 +1279,25 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .search-page-selector .pages a.prev-link {
   border-right: 2px solid gray;
+}
+.search-page-results {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  grid-gap: 10px 20px;
+  position: relative;
+  padding: 20px 10px;
+}
+.search-page-results .discover__map {
+  margin: 20px 0 0 0;
+  grid-column: 2;
+}
+.search-page-results > h2 {
+  grid-column: 1 / -1;
+}
+.search-page-results ol{
+  grid-column: 1;
+  padding: 0;
+  margin: 0;
 }
 .search-result {
   display: grid;
@@ -1304,8 +1353,10 @@ footer > .social-media .social-media__linkedin:hover {
   h1, h2 {font-size: 1.3rem; height: auto}
   nav {grid-gap: 5px;}
   nav > .nav__title {font-size: 1.4rem;}
-  nav > a:not(.nav__title) {padding: 4px 8px;}
+  nav > a:not(.nav__title) {padding: 4px 8px; font-size: 0.8rem;}
   nav .nav__user-image {height: 20px; padding: 0 5px;}
+  .login-background > .login-form {width: 100%; grid-template-rows: 50px 200px repeat(auto-fit, 70px);}
+  .login-form > button {width: 60%;}
   .banner {height: 93vh; justify-content: flex-start;}
   .banner > .title {margin: 0 0 35px 0;}
   .banner h1 {font-size: 2.5rem; margin: 0 0 10px 0;}
@@ -1321,22 +1372,34 @@ footer > .social-media .social-media__linkedin:hover {
   .banner span {display: none;}
   .highlightedCampgrounds__tile img {justify-self: center;}
   .landing-text {display: grid; grid-template-columns: 100% 100% 100%;
-    padding: 60px 0 0 0; overflow: auto;}
+    padding: 0px 0 60px 0; overflow: auto;}
   /* .landing-text section > h1 {height: auto;} */
   .landing-text section > p {margin: 0;}
+  .landing-tile > section, .landing-tile > section:first-child {grid-template-columns: auto 1fr auto; padding: 0 5px; border: none;}
+  .landing-tile > section > * {grid-column: 2;}
+  .landing-tile > section:hover, .landing-text > section:hover {transform: none}
+  .landing-tile > section:not(:last-child)::before {content: '>'; grid-row: 2; grid-column: 3; font-size: 1.5rem; font-weight: bold}
+  .landing-tile > section:not(:first-child)::after {content: '<'; grid-row: 2; grid-column: 1; font-size: 1.5rem; font-weight: bold}
   .landing-tile {grid-template-columns: repeat(4, 100%)}
   .cart {width: 100%;}
-  .singleCampground {padding: 0; grid-gap: 20px 5px;
+  .singleCampground {padding: 0; grid-gap: 5px;
     grid-template-areas: "title title" "rating rating" "map map" "basicinfo basicinfo" "activities activities" "description description" "image image" "review review" "reviewForm reviewForm" "reviewLink reviewLink" "sidebar sidebar";
+    background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 350px, #fff 350px);
   }
   .singleCampground .review-link {display: none;}
-  .rating {grid-area: rating;}
+  .highlightedCampgrounds__tile .rating {grid-area: auto;}
+  .rating {grid-area: rating; display: flex; align-items: center;}
+  .rating h2 {flex-basis: auto;}
   .campground-image {grid-area: image;}
+  .singleCampground > .singleCampground__title {font-size: 1.7rem;}
   .singleCampground .sidebar {padding: 0; border-top: 2px solid gray; background: lightgray}
   .singleCampground .activities__list {grid-area: activities;}
-  .activities__list li {display: flex; align-items: center;}
+  .infoBox__weather > .infoBox__weather-summary {font-size: 2.5rem;}
+  .activities__list ul > li {display: flex; align-items: center;}
+  .activities__list ul > li:hover .activity__name {transform: none;}
   .activities__list li > * {flex-basis: 50%; text-align: center; transform: translate(0); font-weight: normal;}
   .activities__list .activity__name {text-align: left;}
+  .activities__list .error {grid-column: 1 / -1;}
   .review__first {grid-column: span 2;}
   .reviews-header {grid-area: review;}
   .review__first {grid-area: reviewLink;}
@@ -1346,9 +1409,14 @@ footer > .social-media .social-media__linkedin:hover {
   .discover {grid-template-areas: 'title title' 'map map' 'details details'}
   .results > li {padding: 5px 0;}
   .searchtext h1, .searchtext h2 {font-size: 1rem; margin: 0}
-  .search-page-container > * {padding: 0 5px;}
-  .search-page-container .filters {grid-template-columns: 1fr;}
+  .search-page-container > * {padding: 5px;}
+  .search-page-container h2 {display: none;}
+  .search-page-container .filters {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); padding: 5px;}
   .search-page-container .page-count {display: none;}
+  .search-page-results {grid-gap: 5px; grid-template-columns: 1fr;}
+  .search-page-results .discover__map {grid-column: 1; margin: 0;}
+  .search-result {padding: 5px 0; grid-gap: 8px 4px;}
+  .search-page-selector:last-child { display: block;}
   .search-page-selector .pages, .search-page-selector .pages > * {display: flex; align-items: center; justify-content: center; border: none;}
   .search-page-selector .pages a {padding: 5px 0; letter-spacing: 0px; width: 2.6rem; font-size: 0.8rem;}
   .search-page-selector .pages a.next-link, .search-page-selector .pages a.prev-link {width: 75px;}
