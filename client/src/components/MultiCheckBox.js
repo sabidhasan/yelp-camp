@@ -34,7 +34,6 @@ class MultiCheckBox extends React.Component {
   }
 
   updateValue(event, newValue) {
-
     // Copy old state
     const oldState = this.state.selectedIndices.slice();
     const oldId = oldState.findIndex(val => val === newValue);

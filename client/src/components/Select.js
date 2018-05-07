@@ -28,7 +28,6 @@ class Select extends React.Component {
   }
 
   render() {
-    const ulMaxHeight = this.state.expanded ? 'dropdown-expanded' : undefined;
     return (
       <div
         className='filter__dropdown-container'
@@ -36,7 +35,7 @@ class Select extends React.Component {
         <span>
           {this.state.value || this.props.defaultText}
         </span>
-        <ul className={ulMaxHeight}>
+        <ul className={this.state.expanded ? 'dropdown-expanded' : undefined}>
           <li
             onClick={()=> this.updateValue(null)}
             key={-1}>

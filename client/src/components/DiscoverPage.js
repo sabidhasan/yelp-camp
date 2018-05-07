@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { provinces } from '../helpers/helpers'
 import DiscoverGoogleMap from './DiscoverGoogleMap'
@@ -21,6 +22,10 @@ class Discover extends React.Component {
       this.setSelected = this.setSelected.bind(this);
   }
 
+  static contextTypes = {
+    userLocation: PropTypes.object
+  }
+
   setSelected(id) {
     const selectedCampgroundObject = this.state.campgrounds.find(v => id === v.id);
     this.setState({selectedCampgroundObject: selectedCampgroundObject})
@@ -35,10 +40,8 @@ class Discover extends React.Component {
   }
 
   render() {
-    console.log(this.context.userLocation);
     if (this.state.campgrounds == null) return null;
 
-    // const name = this.state.campgrounds.length && this.state.selectedCampgroundID ? this.state.campgrounds[this.state.selectedCampgroundID].name : ''
     return (
     <div className='discover'>
      <div className='discover__title'>
@@ -51,7 +54,7 @@ class Discover extends React.Component {
      <div className='discover__details'>
        <DiscoverCampgroundTile
          cg={this.state.selectedCampgroundObject}
-         userLocation={this.state.userLocation}
+         userLocation={this.context.userLocation}
        />
      </div>
 

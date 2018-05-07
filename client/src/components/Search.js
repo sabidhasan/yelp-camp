@@ -8,22 +8,28 @@ import SearchResultTile from './SearchResultTile'
 import SearchBar from './SearchBar'
 import FilterSearch from './FilterSearch'
 import Pagination from './Pagination'
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 class Search extends React.Component {
   constructor(props) {
     super(props)
-    const searchQuery = parse(this.props.location.search)['q'];
+
+    this.searchQuery = parse(this.props.location.search)['q'];
+    // Used to populate the select box
+    this.selectBoxProvinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}))
     this.state = {
-      query: searchQuery,
+      // query: searchQuery,
       originalResults: [],
       filteredResults: [],
-      page: 0
+      page: 0,
+      filterAreaExpanded: false
     };
     this.updateFilteredResults = this.updateFilteredResults.bind(this)
     this.shortenDescription = this.shortenDescription.bind(this)
     this.prevPage = this.prevPage.bind(this)
     this.nextPage = this.nextPage.bind(this)
     this.goToPage = this.goToPage.bind(this)
+    this.toggleExpanded = this.toggleExpanded.bind(this)
   }
 
   static contextTypes = {
@@ -31,7 +37,7 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/search?q=${this.state.query}`)
+    fetch(`/search?q=${this.searchQuery}`)
       .then(res => res.json())
       .then(search => {
         search = search.map(v => {
@@ -41,7 +47,6 @@ class Search extends React.Component {
           }
           return v;
         });
-        console.log(search);
         this.setState({originalResults: search, filteredResults: search})
       })
   }
@@ -71,6 +76,10 @@ class Search extends React.Component {
     this.setState({page: val})
   }
 
+  toggleExpanded() {
+      this.setState({filterAreaExpanded: !this.state.filterAreaExpanded})
+  }
+
   updateFilteredResults(val) {
     // Val contains info on whats selected, you apply the filter here.
     const filteredResults = [];
@@ -85,7 +94,6 @@ class Search extends React.Component {
         filteredResults.push(currItem)
       }
     }
-    // console.log(filteredResults);
     this.setState({filteredResults: filteredResults, page: 0})
   }
 
@@ -93,8 +101,8 @@ class Search extends React.Component {
     if (!this.state.originalResults.length) return (
       <div className='search-page-container'>
         <div className='filters'>
-          <h1>No results found for {this.state.query}</h1>
-          <SearchBar initialValue={this.state.query} />
+          <h1>No results found for {this.searchQuery}</h1>
+          <SearchBar initialValue={this.searchQuery} />
         </div>
       </div>
     );
@@ -123,12 +131,6 @@ class Search extends React.Component {
     const currentResultStartUserFriendly = (this.state.page * 10) + 1;
     const currentResultEndUserFriendly = Math.min(((this.state.page * 10) + 10), this.state.filteredResults.length)
 
-    // Create provinces object for select box
-    const selectBoxProvinces = []
-    for (let item in provinces) {
-      selectBoxProvinces.push({value: item, text: provinces[item]})
-    }
-
     // Create activities for dropdown
     const selectBoxRegions = []
     let selectBoxActivities = []
@@ -140,44 +142,83 @@ class Search extends React.Component {
     }
     selectBoxActivities = Array.from(new Set(selectBoxActivities))
 
+    // Markers for maps
+    const bounds = new this.props.google.maps.LatLngBounds();
+    const markers = this.state.filteredResults
+      .slice(this.state.page * 10, (this.state.page * 10) + 10)
+      .map((v, i) => {
+        if (v.lat && v.lon) {
+          bounds.extend({lat: v.lat, lng: v.lon});
+        }
+        const resultNum = (this.state.page * 10) + i + 1
+        return (<Marker
+           key={i}
+           icon={{
+             url: `http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FF0000|15|b|${resultNum}`,
+             scaledSize: new this.props.google.maps.Size(36,52)
+           }}
+           onClick={() => window.location = `/campground/${v.id}`}
+           position={{lat: v.lat, lng: v.lon }}>
+          </Marker>)
+        })
+    const pagination = (<Pagination currentPage={this.state.page + 1}
+              lastPage={Math.ceil(this.state.filteredResults.length / 10)}
+              totalResults={this.state.filteredResults.length} prevHandler={this.prevPage}
+              nextHandler={this.nextPage} goToPageHandler={this.goToPage} />)
+
+    const initialCenter = {lat: Math.round((bounds.f.b + bounds.f.f)/2), lng: Math.round((bounds.b.b + bounds.b.f)/2)}
     return (
       <div className='search-page-container'>
         <div className='filters'>
-          <SearchBar initialValue={this.state.query} />
+          <SearchBar initialValue={this.searchQuery} />
 
           <h2>Filters</h2>
           <p>Filter by...</p>
-          <FilterSearch
-            provinces={selectBoxProvinces}
-            regions={selectBoxRegions}
-            activities={selectBoxActivities}
-            onChange={(val) => this.updateFilteredResults(val)}
-          />
+          <button onClick={this.toggleExpanded}>{this.state.filterAreaExpanded ? 'Hide ' : 'Show '}Filters</button>
+            <FilterSearch
+              provinces={this.selectBoxProvinces}
+              regions={selectBoxRegions}
+              activities={selectBoxActivities}
+              onChange={(val) => this.updateFilteredResults(val)}
+              className={this.state.filterAreaExpanded ? 'filter__section-expanded' : ''}
+            />
         </div>
 
-        <Pagination
-          currentPage={this.state.page + 1}
-          lastPage={Math.ceil(this.state.filteredResults.length / 10)}
-          totalResults={this.state.filteredResults.length}
-          prevHandler={this.prevPage}
-          nextHandler={this.nextPage}
-          goToPageHandler={this.goToPage}
-        />
+        {pagination}
 
-        {currentResultEndUserFriendly > 0
-          ? <h2>Showing results {currentResultStartUserFriendly}-{currentResultEndUserFriendly}
-              {' '} of {this.state.filteredResults.length}
-              {' '} for '<span className='bold'>{this.state.query}</span>'
-            </h2>
-          : null
-        }
+        <div className='search-page-results'>
+            {markers.length > 0 ?
+            <div className='discover__map google-map'>
+              <Map
+                google={this.props.google}
+                zoom={5}
+                initialCenter={{lat: (bounds.f.b + bounds.f.f)/2, lng: (bounds.b.b + bounds.b.f)/2}}
+                bounds={bounds}
+              >
+                {markers}
+              </Map>
+            </div>
+            : null}
 
-        <ol>
-          {results}
-        </ol>
+          {currentResultEndUserFriendly > 0
+            ? <h2>Showing results {currentResultStartUserFriendly}-{currentResultEndUserFriendly}
+                {' '} of {this.state.filteredResults.length}
+                {' '} for '<span className='bold'>{this.searchQuery}</span>'
+              </h2>
+            : null
+          }
+
+          <ol>
+            {results}
+          </ol>
+
+          {pagination}
+        </div>
       </div>
     )
   }
 }
 
-export default Search
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg'
+})(Search)
