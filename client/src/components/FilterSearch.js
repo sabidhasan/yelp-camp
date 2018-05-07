@@ -25,7 +25,7 @@ class FilterSearch extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className={`filter__tiles ${this.props.className}`}>
         <div className='filter__section'>
           <h2>Area</h2>
           <Select
@@ -53,7 +53,7 @@ class FilterSearch extends React.Component {
           />
 
         </div>
-      </React.Fragment>
+      </div>
     )
 
   }

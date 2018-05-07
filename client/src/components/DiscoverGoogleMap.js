@@ -31,7 +31,7 @@ export class DiscoverGoogleMap extends React.Component {
                 url: url,
                 scaledSize: new this.props.google.maps.Size(12,12)
               }}>
-              {/* DO LOGIC FOR MARKER TYPE BASED ON  SELECTED ID... */}
+              {/* TO--DO LOGIC FOR MARKER TYPE BASED ON  SELECTED ID... */}
             </Marker>
         )
     });
@@ -41,7 +41,7 @@ export class DiscoverGoogleMap extends React.Component {
 
     return (
       <Map
-        google={this.props.google} zoom={14}
+        google={this.props.google}
         zoom={5}
         initialCenter={{lat: averageLat, lng: averageLng}}
       >
