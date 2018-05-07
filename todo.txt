@@ -6,6 +6,7 @@
 
 2. ## FRONT END TO DOS
 	OVERALL			TODO :	Mobile layout
+						Add to cart button not visible on mobile
 					Animations for stuff coming in (e.g. review form)
 					React PropTypes
 					Loading spinners
@@ -44,8 +45,8 @@
 					don’t show page selector if only one page
 					FILTER, PAGINATION and SEARCH BAR COMPONENT
 					Filter by:
-					    AREA / FEATURES (# of camp sites) / ACTIVITIES 
-					Sort by: rating, number of reviews, best match (original)
+					    AREA / FEATURES (# of camp sites, distance, rating) / ACTIVITIES 
+					Sort by: rating, best match (original) slug type selector
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
 	/campground/:id		GOAL :	Single campground page
