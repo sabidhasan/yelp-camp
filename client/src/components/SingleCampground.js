@@ -16,7 +16,7 @@ class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
     // this.requestedID = parseInt(this.props.match.params.id);
-    this.state = {id: parseInt(this.props.match.params.id)};
+    this.state = {id: parseInt(this.props.match.params.id), stickyClass: ''};
     // this.state = {reviewLoginWarning: true};
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
@@ -59,6 +59,11 @@ class SingleCampground extends React.Component {
       console.log("there is an error");
     //   window.location = `/not-found/${this.state.id}`;
     });
+
+    // window.addEventListener('scroll', (event) => {
+    //   let scrollClass = window.scrollY > 50 ? 'sticky' : '';
+    //   this.setState({stickyClass: scrollClass})
+    // })
   }
 
   shouldComponentUpdate(prevProps, prevState) {
@@ -141,7 +146,7 @@ class SingleCampground extends React.Component {
   render() {
     return (
       <div className='singleCampground'>
-        <h1 className='singleCampground__title'>
+        <h1 className={`singleCampground__title ${this.state.stickyClass}`}>
           {this.state.name}
           <span className='singleCampground__region'>
             {[this.state.region, this.state.province].filter(a => a).join(', ')} Region

@@ -3,7 +3,6 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class CampMap extends React.Component {
   render() {
-    console.log(this.props);
     let lat = this.props.lat;
     let lon = this.props.lon;
     let marker;

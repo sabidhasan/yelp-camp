@@ -76,7 +76,6 @@ button:active {
   background: linear-gradient(300deg, #E20D0D, #B02020);
   box-shadow: 0px 0px 8px #B02020;
 }
-
 /* BODY */
 body {
   min-height: 100vh;
@@ -1366,7 +1365,7 @@ footer > .social-media .social-media__linkedin:hover {
   .searchbar > label {display: none;}
   .searchbar > input {border: 2px solid gray; font-size: 0.9rem;
      border-top-left-radius: 8px; border-bottom-left-radius: 8px;}
-  .searchbar > button {border: 2px solid gray; padding: 2px; font-size: 1.4rem;}
+  .searchbar > button {border: 2px solid gray; padding: 2px; font-size: 15px;}
   /* .searchtext > h1, .searchtext > h2 {font-size: .9rem;} */
   .search-icon {padding: 0 5px; font-size: 1.4rem;}
   .banner span {display: none;}
@@ -1383,15 +1382,15 @@ footer > .social-media .social-media__linkedin:hover {
   .landing-tile {grid-template-columns: repeat(4, 100%)}
   .cart {width: 100%;}
   .singleCampground {padding: 0; grid-gap: 5px;
-    grid-template-areas: "title title" "rating rating" "map map" "basicinfo basicinfo" "activities activities" "description description" "image image" "review review" "reviewForm reviewForm" "reviewLink reviewLink" "sidebar sidebar";
+    grid-template-areas: "title title" "rating rating" "map map" "basicinfo basicinfo" "activities activities" "description description" "image image" "review review" "reviewForm reviewForm" "reviewlink reviewlink" "sidebar sidebar";
     background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 350px, #fff 350px);
   }
-  .singleCampground .review-link {display: none;}
+  .singleCampground .review-link {grid-template-columns: 1fr 1fr;}
   .highlightedCampgrounds__tile .rating {grid-area: auto;}
   .rating {grid-area: rating; display: flex; align-items: center;}
   .rating h2 {flex-basis: auto;}
   .campground-image {grid-area: image;}
-  .singleCampground > .singleCampground__title {font-size: 1.7rem;}
+  .singleCampground > .singleCampground__title {font-size: 1.7rem; transition: all 0.5s;}
   .singleCampground .sidebar {padding: 0; border-top: 2px solid gray; background: lightgray}
   .singleCampground .activities__list {grid-area: activities;}
   .infoBox__weather > .infoBox__weather-summary {font-size: 2.5rem;}
@@ -1400,8 +1399,9 @@ footer > .social-media .social-media__linkedin:hover {
   .activities__list li > * {flex-basis: 50%; text-align: center; transform: translate(0); font-weight: normal;}
   .activities__list .activity__name {text-align: left;}
   .activities__list .error {grid-column: 1 / -1;}
-  .review__first {grid-column: span 2;}
+  .review__first {display: none;}
   .reviews-header {grid-area: review;}
+  .reviews-header button {display: none;}
   .review__first {grid-area: reviewLink;}
   .review-form {grid-area: reviewForm;}
   .review-form .review-link {display: block;}
@@ -1409,7 +1409,7 @@ footer > .social-media .social-media__linkedin:hover {
   .discover {grid-template-areas: 'title title' 'map map' 'details details'}
   .results > li {padding: 5px 0;}
   .searchtext h1, .searchtext h2 {font-size: 1rem; margin: 0}
-  .search-page-container > * {padding: 5px;}
+  .search-page-container > * {padding: 5px; margin: 0;}
   .search-page-container h2 {display: none;}
   .search-page-container .filters {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); padding: 5px;}
   .search-page-container .page-count {display: none;}
@@ -1420,6 +1420,10 @@ footer > .social-media .social-media__linkedin:hover {
   .search-page-selector .pages, .search-page-selector .pages > * {display: flex; align-items: center; justify-content: center; border: none;}
   .search-page-selector .pages a {padding: 5px 0; letter-spacing: 0px; width: 2.6rem; font-size: 0.8rem;}
   .search-page-selector .pages a.next-link, .search-page-selector .pages a.prev-link {width: 75px;}
+  /* For mobile scrolling */
+  .sticky {position: fixed; top: 0; background: white; width: 100%; z-index: 1; box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); padding: 15px 5px;}
+  .sticky.singleCampground__title { font-size: 1.1rem; text-shadow: none; color: red;}
+  .sticky .singleCampground__region { font-size: .9rem; margin: 0;}
 }
 
 
