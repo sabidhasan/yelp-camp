@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
+import withStickyBar from './withStickyBar'
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -8,12 +10,13 @@ class Header extends React.Component {
 
   static contextTypes = {
     user: PropTypes.object,
-    signOut: PropTypes.func
+    signOut: PropTypes.func,
+    stickyClass: PropTypes.string
   };
 
   render() {
     return (
-      <nav>
+      <nav className={this.context.stickyClass}>
         <a className='nav__title' href='/'>YelpCamp</a>
         <a href='/discover'>Discover</a>
         {this.context.user && this.context.user.loading ?
@@ -33,4 +36,4 @@ class Header extends React.Component {
 }
 
 
-export default Header
+export default withStickyBar(Header)

@@ -1,26 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-class SingleCampgroundTitle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {stickyClass: ''}
-  }
+import withStickyBar from './withStickyBar'
 
-  componentDidMount() {
-    window.addEventListener('scroll', () => {
-      let scrollClass = window.scrollY > 50 ? 'sticky' : '';
-      this.setState({stickyClass: scrollClass})
-    })
-  }
-
-  render() {
-    return (<h1 className={`singleCampground__title ${this.state.stickyClass}`}>
-      {this.props.name}
+const SingleCampgroundTitle = (props, context) => {
+  return (
+    <h1 className={`singleCampground__title ${context.stickyClass}`}>
+      {props.name}
       <span className='singleCampground__region'>
-        {this.props.region} Region
+        {props.region} Region
       </span>
-    </h1>)
-  }
+    </h1>
+  )
 }
 
-export default SingleCampgroundTitle
+SingleCampgroundTitle.contextTypes = {
+  stickyClass: PropTypes.string,
+};
+
+export default withStickyBar(SingleCampgroundTitle)

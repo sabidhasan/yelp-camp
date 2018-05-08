@@ -1421,9 +1421,10 @@ footer > .social-media .social-media__linkedin:hover {
   .search-page-selector .pages a {padding: 5px 0; letter-spacing: 0px; width: 2.6rem; font-size: 0.8rem;}
   .search-page-selector .pages a.next-link, .search-page-selector .pages a.prev-link {width: 75px;}
   /* For mobile scrolling */
-  .sticky {position: fixed; top: 0; background: white; width: 100%; z-index: 1; box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); padding: 15px 5px;}
+  .sticky {position: fixed; top: 0; background: white; width: 100%; z-index: 1000; box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); padding: 15px 5px;}
   .sticky.singleCampground__title { font-size: 1.1rem; text-shadow: none; color: red;}
   .sticky .singleCampground__region { font-size: .9rem; margin: 0;}
+  .sticky .nav__title {color:red;}
 }
 
 
