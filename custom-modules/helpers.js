@@ -259,6 +259,7 @@ class Searcher {
   }
 
   buildSearchIndex(campgrounds, minimumKeyLength) {
+    const weights = {name: 100, region: 50, activities: 50, address: 50, description: 30, province: 80}
     campgrounds.forEach(cg => {
       //we build an index like this: {'keyword': [empty, empty, [{type: 'activity', importance: 50}, {type: 'description', importance: 4}], empty]}
       cg.description = cg.description || ''
@@ -270,32 +271,32 @@ class Searcher {
         'name': {
           data: cg.name.split(' '),
           originalData: cg.name.toLowerCase().split(' '),
-          func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
+          func: function (val) {return Math.floor(val.length / this.data.join('').length * weights.name)}
         },
         'region': {
           data: [cg.region],
           originalData: [cg.region.toLowerCase()],
-          func: function (val) {return 100}
+          func: function (val) {return weights.region}
         },
         'activities': {
           data: cg.activities,
           originalData: cg.activities.map(v => v.toLowerCase()),
-          func: function (val) {return Math.floor(1 / this.data.length * 100)}
+          func: function (val) {return Math.floor(1 / this.data.length * weights.activities)}
         },
         'address': {
           data: cg.address.split(' ').filter(val => (val.length > 3 || val in provinces) && (!val.match(/^\d*$/) || this.badWords.indexOf(val.toLowerCase()) !== -1)).map(val => val in provinces ? provinces[val] : val),
           originalData: cg.address.toLowerCase().split(' '),
-          func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
+          func: function (val) {return Math.floor(val.length / this.data.join('').length * weights.address)}
         },
         'description': {
           data: cg.description.split(' ').filter(val => val.length >= 4 && this.badWords.indexOf(val.toLowerCase()) === -1),
           originalData: cg.description.toLowerCase().split(' '),
-          func: function (val) {return Math.floor(val.length / this.data.join('').length * 100)}
+          func: function (val) {return Math.floor(val.length / this.data.join('').length * weights.description)}
         },
         'province': {
           data: [cg.province],
           originalData: [cg.province.toLowerCase()],
-          func: function (val) {return 100}
+          func: function (val) {return weights.province}
         }
       }
 
