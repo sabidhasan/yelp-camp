@@ -11,6 +11,7 @@ import RatingBar from './RatingBar'
 import NewReviewForm from './NewReviewForm'
 import ReviewButton from './ReviewButton'
 import Activities from './Activities'
+import SingleCampgroundTitle from './SingleCampgroundTitle'
 
 class SingleCampground extends React.Component {
   constructor(props) {
@@ -146,12 +147,7 @@ class SingleCampground extends React.Component {
   render() {
     return (
       <div className='singleCampground'>
-        <h1 className={`singleCampground__title ${this.state.stickyClass}`}>
-          {this.state.name}
-          <span className='singleCampground__region'>
-            {[this.state.region, this.state.province].filter(a => a).join(', ')} Region
-          </span>
-        </h1>
+        <SingleCampgroundTitle name={this.state.name} region={[this.state.region, this.state.province].filter(a => a).join(', ')} />
 
         <div className='review-link'>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
