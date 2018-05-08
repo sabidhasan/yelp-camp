@@ -345,7 +345,7 @@ class Searcher {
     let ret = []
     //TO--DO: remove duplicates from swearch query as that breaks it
 
-    for (let word of query.split(" ")) {
+    for (let word of Array.from(new Set(query.split(" ")))) {
       // Search for just this word
       const singleWordResults = this.searchOneWord(word);
       //  loop through results and add to ret
@@ -356,31 +356,37 @@ class Searcher {
           ret[matchingIDAndType].percentMatch += singleWordResults[idx].percentMatch;
           // Add the number of words that matched
           ret[matchingIDAndType].wordsMatched += 1;
-          // ret[matchingIDAndType].keyword += ' ' + singleWordResults[idx].keyword;
         } else {
           ret.push(singleWordResults[idx])
         }
       }
     }
 
+    // Holds result with highest percent match
+    let maxMatch = 0;
     // Apply the words multiplier
     for (let i in ret) {
       ret[i].percentMatch *= ret[i].wordsMatched;
-      // delete ret[i].wordsMatched;
+      maxMatch = Math.max(maxMatch, ret[i].percentMatch)
     }
 
     ret = ret.sort((a, b) => a.percentMatch < b.percentMatch ? 1 : -1);
     // Remove campground duplicates (each CG should only have one search result at most)
     let alreadyIncluded = new Set([]);
 
-    return ret.filter(val => {
-      // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
-      if (!alreadyIncluded.has(val.id)) {
-        alreadyIncluded.add(val.id);
-        return true;
-      }
-      return false;
-    });
+    return ret
+      .map(v => {
+        v.normalizedPercentMatch = parseInt(v.percentMatch / maxMatch * 100);
+        return v
+      })
+      .filter(val => {
+        // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
+        if (!alreadyIncluded.has(val.id)) {
+          alreadyIncluded.add(val.id);
+          return true;
+        }
+        return false;
+      })
   }
 
   searchOneWord(word) {
