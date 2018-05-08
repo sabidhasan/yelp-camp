@@ -60,11 +60,6 @@ class SingleCampground extends React.Component {
       console.log("there is an error");
     //   window.location = `/not-found/${this.state.id}`;
     });
-
-    // window.addEventListener('scroll', (event) => {
-    //   let scrollClass = window.scrollY > 50 ? 'sticky' : '';
-    //   this.setState({stickyClass: scrollClass})
-    // })
   }
 
   shouldComponentUpdate(prevProps, prevState) {
@@ -129,19 +124,9 @@ class SingleCampground extends React.Component {
       const result = await response.json();
       // Update comments array locally
       this.setState({comments: result});
-
-    //     // Reset UI
-    //     this.setState({
-    //       disableForm: false,
-    //       pickedRating: 0,
-    //       reviewText: '',
-    //       errorMessage: null,
-    //     });
     } catch (err) {
       console.log('error occure in deleteing review');
-      return;
     }
-
   }
 
   render() {
