@@ -305,6 +305,30 @@ nav a:not(.nav__title):hover {
   background: darkred;
 }
 
+/* DISCOVER TILE */
+.discover-tile {
+  height: 40vh;
+  font-size: 1.8rem;
+  margin: 10px 0 50px 0;
+  background: wheat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.discover-tile a {
+  margin: 40px 40px;
+  font-size: 1.3rem;
+  color: white;
+  background: green;
+  padding: 13px 30px;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
+
+}
+
 
 /* SPLASH SCREEN/SEARCH BANNER */
 .banner {
@@ -1300,7 +1324,7 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .search-result {
   display: grid;
-  grid-template-columns: 100px 1.2fr 1fr;
+  grid-template-columns: 100px 1.2fr .5fr;
   grid-template-rows: repeat(auto-fit, minmax(20px, 1fr));
   grid-template-areas: "image title address" "image region distance" "image rating distance" "description description description";
   margin: 0;

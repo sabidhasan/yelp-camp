@@ -3,21 +3,20 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-// Import components
-import Header from './Header'
-import Banner from './Banner'
-import Campgrounds from './Campgrounds'
-import Footer from './Footer'
-import SingleCampground from './SingleCampground'
-import LandingText from './LandingText'
-import LandingTiles from './LandingTiles'
-import LoginForm from './LoginForm'
+// Import HOCs
 import withAuthentication from './withAuthentication'
 import withLocation from './withLocation'
+
+// Import components
+import Header from './Header'
+import LoginForm from './LoginForm'
 import Cart from './Cart'
+import IndexPage from './IndexPage'
+import SingleCampground from './SingleCampground'
 import DiscoverSVGMap from './DiscoverSVGMap'
 import DiscoverPage from './DiscoverPage'
 import Search from './Search'
+import Footer from './Footer'
 
 class App extends React.Component {
   constructor(props) {
@@ -102,12 +101,7 @@ class App extends React.Component {
 
         <Switch>
           <Route exact path='/' render={(routerProps) => (
-              <React.Fragment>
-                <Banner {...routerProps} />
-                <LandingText {...routerProps} />
-                <LandingTiles {...routerProps} />
-                <Campgrounds {...routerProps} />
-              </React.Fragment>
+            <IndexPage {...routerProps} />
           )} />
 
           <Route exact path='/campground/:id' render={(routerProps) => (
@@ -123,7 +117,6 @@ class App extends React.Component {
           </Route>
 
           <Route exact path='/discover/:province' render={(routerProps) => (
-            // <h1>path provs</h1>
             <DiscoverPage {...routerProps} />
           )} />
 
