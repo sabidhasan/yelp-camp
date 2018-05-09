@@ -96,7 +96,7 @@ class SearchBar extends React.Component {
           onChange={this.handleChange}
         />
         <label htmlFor='search'>Find</label>
-        <button type='submit'>🔎</button>
+        <button type='submit' onClick={this.goToCampground}>🔎</button>
           <ul className={this.state.active ? 'results' : 'hidden'}>
               {this.state.results.map((v, i) => {
               return (
@@ -105,7 +105,7 @@ class SearchBar extends React.Component {
                   className={i === this.state.highlightedIndex ? 'selected' : undefined}
                   onMouseMove={() => this.handleMouse(i)}
                   onMouseOut={() => this.setState({highlightedIndex: -1})}
-                  onClick={this.goToCampground}
+                  onMouseDown={this.goToCampground}
                 >
                   <i className='search-icon'>{v.icon}</i>
                   <div className='searchtext capitalize'>
