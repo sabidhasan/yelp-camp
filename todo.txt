@@ -74,6 +74,7 @@
 					Otherwise, show details for CG
 					Style CG data
 					Add basic info for province
+					Discover should redirect if no campgrounds (e.g. Nunavut)
 
 	/add-campground		GOAL :	form for adding new CG
 				TODO :	see Colt Steele for proper naming of this route
