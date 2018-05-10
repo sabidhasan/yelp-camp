@@ -307,6 +307,8 @@ nav a:not(.nav__title):hover {
 
 /* DISCOVER TILE */
 .discover-tile {
+  text-align: center;
+  font-weight: 100;
   height: 40vh;
   font-size: 1.8rem;
   margin: 10px 0 50px 0;
@@ -316,15 +318,26 @@ nav a:not(.nav__title):hover {
   justify-content: center;
   flex-direction: column;
 }
+.discover-tile a:active {
+  background: linear-gradient(300deg, #E20D0D, #B02020);
+  box-shadow: 0px 0px 8px #B02020;
+}
+.discover-tile a:hover {
+  text-decoration: none;
+}
 .discover-tile a {
   margin: 40px 40px;
   font-size: 1.3rem;
   color: white;
-  background: green;
   padding: 13px 30px;
   border-radius: 5px;
   font-weight: bold;
   letter-spacing: 1px;
+  border: 1px solid black;
+  background: linear-gradient(#e20d0d, #B02020);
+
+  /* box-shadow: 1px 1px rgba(0, 0, 0, 0.2); */
+
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
 
 }
@@ -510,12 +523,26 @@ nav a:not(.nav__title):hover {
   /* first child pseudo slector used to override .landing-text > section:first-child above*/
   border: 1px solid gray;
   margin: 0 10px;
+  padding: 35px 0;
   border-radius: 5px;
   display: grid;
   align-items: center;
   justify-content: center;
   grid-gap: 10px 0;
   text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+.landing-tile p {
+  font-weight: 100;
+  margin: 0;
+}
+.landing-tile h2 {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+.landing-tile i {
+  font-size: 6.5rem;
+  padding: 15px 0;
 }
 
 .highlightedCampgrounds {
@@ -1395,14 +1422,14 @@ footer > .social-media .social-media__linkedin:hover {
   .banner span {display: none;}
   .highlightedCampgrounds__tile img {justify-self: center;}
   .landing-text {display: grid; grid-template-columns: 100% 100% 100%;
-    padding: 0px 0 60px 0; overflow: auto;}
+    padding: 5px 0 60px 0; overflow: auto;}
   /* .landing-text section > h1 {height: auto;} */
   .landing-text section > p {margin: 0;}
   .landing-tile > section, .landing-tile > section:first-child {grid-template-columns: auto 1fr auto; padding: 0 5px; border: none;}
   .landing-tile > section > * {grid-column: 2;}
   .landing-tile > section:hover, .landing-text > section:hover {transform: none}
-  .landing-tile > section:not(:last-child)::before {content: '>'; grid-row: 2; grid-column: 3; font-size: 1.5rem; font-weight: bold}
-  .landing-tile > section:not(:first-child)::after {content: '<'; grid-row: 2; grid-column: 1; font-size: 1.5rem; font-weight: bold}
+  .landing-tile > section:not(:last-child)::before {content: '>'; grid-row: 1 / span 3; grid-column: 3; color: gray; font-size: 4.5rem; font-weight: bold}
+  .landing-tile > section:not(:first-child)::after {content: '<'; grid-row: 1 / span 3; grid-column: 1; color: gray; font-size: 4.5rem; font-weight: bold}
   .landing-tile {grid-template-columns: repeat(4, 100%)}
   .cart {width: 100%;}
   .singleCampground {padding: 0; grid-gap: 5px;
@@ -1449,6 +1476,8 @@ footer > .social-media .social-media__linkedin:hover {
   .sticky.singleCampground__title { font-size: 1.1rem; text-shadow: none; color: red;}
   .sticky .singleCampground__region { font-size: .9rem; margin: 0;}
   .sticky .nav__title {color:red;}
+  .discover-tile {font-size: 1.5rem; height: 25vh;}
+  .discover-tile a {margin: 10px;}
 }
 
 
