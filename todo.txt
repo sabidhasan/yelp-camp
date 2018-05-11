@@ -47,6 +47,7 @@
 					Filter by:
 					    AREA / FEATURES (# of camp sites, distance, rating) / ACTIVITIES 
 					Sort by: rating, best match (original) slug type selector
+					Make map component into its own thing
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 
 	/campground/:id		GOAL :	Single campground page
