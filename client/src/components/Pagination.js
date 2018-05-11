@@ -27,7 +27,11 @@ const Pagination = (props) => {
               : null
             }
             {allPages.map(v=> (
-              <a key={v} className={v===props.currentPage ? 'current' : undefined} onClick={(e) => props.goToPageHandler(e, v - 1)} href='#'>{v}</a>)
+              <a
+                key={v}
+                className={v===props.currentPage ? 'current' : undefined}
+                onClick={(e) => props.goToPageHandler(e, v - 1)} href='#'>{v}
+              </a>)
             )}
             {props.currentPage !== props.lastPage
               ? <a href='' className='next-link' onClick={props.nextHandler}>Next »</a>
