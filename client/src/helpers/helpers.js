@@ -13,6 +13,15 @@ export const formatDate = (date) => {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 }
 
+export const shortenDescription = (desc) => {
+  let excerpt = desc.split(' ')
+  if (excerpt.length > 20) {
+    excerpt = excerpt.slice(0, 20)
+    excerpt.push('...')
+  }
+  return excerpt.join(' ')
+}
+
 export const provinces = {
   'bc': 'british columbia',
   'ab': 'alberta',

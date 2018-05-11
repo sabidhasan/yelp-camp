@@ -1,9 +1,9 @@
 import React from 'react'
-import {parse} from 'query-string'
+import { parse } from 'query-string'
 import PropTypes from 'prop-types';
 import haversine from 'haversine'
 
-import { provinces, activitySymbols } from '../helpers/helpers'
+import { provinces, activitySymbols, shortenDescription } from '../helpers/helpers'
 import SearchResultTile from './SearchResultTile'
 import SearchBar from './SearchBar'
 import FilterSearch from './FilterSearch'
@@ -18,22 +18,22 @@ class Search extends React.Component {
     // Used to populate the select box
     this.selectBoxProvinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}))
     this.state = {
-      // query: searchQuery,
       originalResults: [],
       filteredResults: [],
       page: 0,
       filterAreaExpanded: false,
       hovered: null,
-      mapScroll: ''
+//      mapScroll: ''
     };
     this.updateFilteredResults = this.updateFilteredResults.bind(this)
-    this.shortenDescription = this.shortenDescription.bind(this)
+//    this.shortenDescription = this.shortenDescription.bind(this)
     this.prevPage = this.prevPage.bind(this)
     this.nextPage = this.nextPage.bind(this)
     this.goToPage = this.goToPage.bind(this)
     this.toggleExpanded = this.toggleExpanded.bind(this)
   }
 
+  // Holds location of the user if available
   static contextTypes = {
     userLocation: PropTypes.object,
   }
@@ -65,16 +65,6 @@ class Search extends React.Component {
     // if (nextState.mapScroll === this.state.mapScroll) return false;
     console.log(nextState);
     return true;
-  }
-
-  shortenDescription(desc) {
-
-    let excerpt = desc.split(' ')
-    if (excerpt.length > 20) {
-      excerpt = excerpt.slice(0, 20)
-      excerpt.push('...')
-    }
-    return excerpt.join(' ')
   }
 
   prevPage(e) {
@@ -114,7 +104,6 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log('rerendering');
     if (!this.state.originalResults.length) return (
       <div className='search-page-container'>
         <div className='filters'>
@@ -138,8 +127,8 @@ class Search extends React.Component {
               number={(this.state.page * 10) + idx + 1}
               name={r.campgroundName}
               regionAndProvince={[r.region, r.province].filter(a=>!!a).join(', ')}
-              address={this.shortenDescription(r.address)}
-              description={this.shortenDescription(r.description)}
+              address={shortenDescription(r.address)}
+              description={shortenDescription(r.description)}
               rating={(r.comments && r.comments.reduce((acc, val) => acc + val.rating, 0) / r.comments.length) || 0}
               comments={r.comments}
               images={r.images}
