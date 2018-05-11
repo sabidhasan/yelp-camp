@@ -36,7 +36,7 @@ class Cart extends React.Component {
         <h1>{userName}'s Cart</h1>
         <span className='cart__close' onClick={this.props.toggleCart}>×</span>
         <p className='cart_message'>
-          You have {itemLength} campground{itemLength !== 1 ? 's' : ''} in your cart.
+          You have {itemLength || 'no'} campground{itemLength !== 1 ? 's' : ''} in your cart.
           {itemLength ? '' : ' Add campgrounds to your cart to save them for later.'}
         </p>
         <ReactCSSTransitionGroup
@@ -49,7 +49,6 @@ class Cart extends React.Component {
       </div>
     )
   }
-
 }
 
 export default Cart
