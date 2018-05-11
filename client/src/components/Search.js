@@ -22,7 +22,9 @@ class Search extends React.Component {
       originalResults: [],
       filteredResults: [],
       page: 0,
-      filterAreaExpanded: false
+      filterAreaExpanded: false,
+      hovered: null,
+      mapScroll: ''
     };
     this.updateFilteredResults = this.updateFilteredResults.bind(this)
     this.shortenDescription = this.shortenDescription.bind(this)
@@ -49,6 +51,20 @@ class Search extends React.Component {
         });
         this.setState({originalResults: search, filteredResults: search})
       })
+
+    // Add event listener for scroll for map
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300 && this.state.mapScroll) return;
+      if (window.scrollY <= 300 && this.state.mapScroll === '') return;
+      let mapScrollClass = window.scrollY > 300 ? 'map-scrolling-fixed' : '';
+      this.setState({mapScroll: mapScrollClass})
+    })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // if (nextState.mapScroll === this.state.mapScroll) return false;
+    console.log(nextState);
+    return true;
   }
 
   shortenDescription(desc) {
@@ -98,6 +114,7 @@ class Search extends React.Component {
   }
 
   render() {
+    console.log('rerendering');
     if (!this.state.originalResults.length) return (
       <div className='search-page-container'>
         <div className='filters'>
@@ -111,7 +128,12 @@ class Search extends React.Component {
       .slice(this.state.page * 10, (this.state.page * 10) + 10)
       .map((r, idx) => {
         return (
-          <li key={r.id} className='search-result'>
+          <li
+            key={r.id}
+            className='search-result'
+            // onMouseEnter={() => this.setState({hovered: r.id})}
+            // onMouseLeave={() => this.setState({hovered: null})}
+            >
             <SearchResultTile
               number={(this.state.page * 10) + idx + 1}
               name={r.campgroundName}
@@ -123,6 +145,7 @@ class Search extends React.Component {
               images={r.images}
               id={r.id}
               distance={r.distanceFromUser}
+              onTitleHover={(id) => this.setState({hovered: id})}
             />
           </li>
         )
@@ -143,30 +166,53 @@ class Search extends React.Component {
     selectBoxActivities = Array.from(new Set(selectBoxActivities))
 
     // Markers for maps
-    const bounds = new this.props.google.maps.LatLngBounds();
-    const markers = this.state.filteredResults
+    let markers;
+    let bounds = new this.props.google.maps.LatLngBounds();
+    // const hoveredCG = this.state.filteredResults.find(v => v.id === this.state.hovered)
+    // if (this.state.hovered && hoveredCG.lat !== null && hoveredCG.lon !== null) {
+      // Generate one marker for hovered CG
+      // markers = [hoveredCG]
+    // } else {
+    markers = this.state.filteredResults
       .slice(this.state.page * 10, (this.state.page * 10) + 10)
+    // }
       .map((v, i) => {
         if (v.lat && v.lon) {
           bounds.extend({lat: v.lat, lng: v.lon});
         }
-        const resultNum = (this.state.page * 10) + i + 1
+        const resultNum = (this.state.page * 10) + i + 1;
+        const color = v.id === this.state.hovered ? 'FFFFFF' : 'FF0000';
         return (<Marker
            key={i}
            icon={{
-             url: `http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|FF0000|15|b|${resultNum}`,
+             url: `http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|${color}|15|b|${resultNum}`,
              scaledSize: new this.props.google.maps.Size(36,52)
            }}
            onClick={() => window.location = `/campground/${v.id}`}
            position={{lat: v.lat, lng: v.lon }}>
           </Marker>)
-        })
+    })
+
+
+
     const pagination = (<Pagination currentPage={this.state.page + 1}
               lastPage={Math.ceil(this.state.filteredResults.length / 10)}
               totalResults={this.state.filteredResults.length} prevHandler={this.prevPage}
               nextHandler={this.nextPage} goToPageHandler={this.goToPage} />)
 
-    const initialCenter = {lat: Math.round((bounds.f.b + bounds.f.f)/2), lng: Math.round((bounds.b.b + bounds.b.f)/2)}
+    // Holds center of the map
+    const initialCenter = {lat: (bounds.f.b + bounds.f.f)/2, lng: (bounds.b.b + bounds.b.f)/2}
+    const center = initialCenter;
+    // var zoom = 5;
+    // if (this.state.hovered) {
+    //     const cg =
+    //     console.log(bounds);
+    //     if (cg.lat !== null && cg.lon !== null) {
+    //       center = {lat: cg.lat, lng: cg.lon};
+    //       zoom = 12;
+    //       bounds = {north: cg.lon + 0.1, south: cg.lon - 0.1, east: cg.lat + 0.1, west: cg.lat - 0.1}
+    //     }
+    // }
     return (
       <div className='search-page-container'>
         <div className='filters'>
@@ -188,11 +234,13 @@ class Search extends React.Component {
 
         <div className='search-page-results'>
             {markers.length > 0 ?
-            <div className='discover__map google-map'>
+            <div className={`discover__map google-map ${this.state.mapScroll}`}>
               <Map
                 google={this.props.google}
-                zoom={5}
-                initialCenter={{lat: (bounds.f.b + bounds.f.f)/2, lng: (bounds.b.b + bounds.b.f)/2}}
+                // zoom={2}
+                // initialBounds={bounds}
+                initialCenter={initialCenter}
+                // center={center}
                 bounds={bounds}
               >
                 {markers}

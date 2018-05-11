@@ -1138,11 +1138,18 @@ footer > .social-media .social-media__linkedin:hover {
   /* For the Google Map Container */
   border: 2px solid gray;
   height: 500px;
-  grid-area: map;
+  grid-column: 2;
+  grid-row: 2;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
   padding: 0;
+}
+.map-scrolling-fixed {
+  position: fixed;
+  width: 33%;
+  top: 110px;
+  right: 20px;
 }
 
 /* SEARCH PAGE */

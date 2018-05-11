@@ -4,7 +4,13 @@ import RatingBar from './RatingBar'
 const SearchResultTile = (props) => {
   return (
     <React.Fragment>
-      <a href={`/campground/${props.id}`}><h1>{`${props.number}. ${props.name}`}</h1></a>
+      <a
+        href={`/campground/${props.id}`}
+        onMouseEnter={() => props.onTitleHover(props.id)}
+        onMouseLeave={() => props.onTitleHover(null)}
+        >
+        <h1>{`${props.number}. ${props.name}`}</h1>
+      </a>
       <h2>{props.regionAndProvince}</h2>
       <p className='address'>{props.address}</p>
       <p className='distance'>{props.distance ? `${props.distance} km away` : null} </p>
