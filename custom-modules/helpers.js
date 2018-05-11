@@ -375,10 +375,6 @@ class Searcher {
     let alreadyIncluded = new Set([]);
 
     return ret
-      .map(v => {
-        v.normalizedPercentMatch = parseInt(v.percentMatch / maxMatch * 100);
-        return v
-      })
       .filter(val => {
         // if ID is not in alreadyIncluded, then add to alreadyIncluded + filter
         if (!alreadyIncluded.has(val.id)) {
@@ -386,6 +382,10 @@ class Searcher {
           return true;
         }
         return false;
+      })
+      .map(v => {
+        v.normalizedPercentMatch = parseInt(v.percentMatch / maxMatch * 100);
+        return v
       })
   }
 
