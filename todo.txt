@@ -9,7 +9,6 @@
 						Add to cart button not visible on mobile
 					Animations for stuff coming in (e.g. review form)
 					React PropTypes
-					Loading spinners
 					Random photos for campgrounds (some variety)
 					All <a> should have proper href
 					aria stuff for all elements
