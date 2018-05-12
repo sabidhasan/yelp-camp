@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import CampgroundTile from './CampgroundTile'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -13,11 +14,17 @@ class Campgrounds extends React.Component {
     this.newRandoms = this.newRandoms.bind(this);
   }
 
+  static contextTypes = {
+    startLoad: PropTypes.func,
+    finishLoad: PropTypes.func
+  }
+
   newRandoms() {
     // Reset the state, then add 10 new campgrounds to it
+    this.context.startLoad()
     fetch('/campground?random=true')
       .then(res => res.json())
-      .then(cg => this.setState({ campgrounds: cg }))
+      .then(cg => this.setState({ campgrounds: cg }, () => this.context.finishLoad()))
   }
 
   componentDidMount() {

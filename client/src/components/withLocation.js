@@ -12,19 +12,28 @@ const withLocation = (Component) => {
       userLocation: PropTypes.object,
     }
 
+    static contextTypes = {
+      startLoad: PropTypes.func,
+      finishLoad: PropTypes.func
+    }
+
     getChildContext() {
       return {userLocation: this.state.userLocation}
     }
 
     componentDidMount() {
+      this.context.startLoad();
       fetch('https://ipinfo.io/json')
         .then(res => res.json())
         .then(locData => {
           this.setState({
             userLocation: {latitude: locData.loc.split(',')[0], longitude: locData.loc.split(',')[1]}
-          })
+          }, () => this.context.finishLoad())
         })
-        .catch(err => console.log('Could not get location'))
+        .catch(err => {
+          console.log('Could not get location')
+          this.context.finishLoad();
+        })
     }
 
     render() {

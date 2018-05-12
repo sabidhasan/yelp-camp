@@ -34,9 +34,14 @@ class Search extends React.Component {
   }
 
   // Holds location of the user if available
-  static contextTypes = { userLocation: PropTypes.object };
+  static contextTypes = {
+    userLocation: PropTypes.object,
+    startLoad: PropTypes.func,
+    finishLoad: PropTypes.func
+  };
 
   componentDidMount() {
+    this.context.startLoad();
     fetch(`/search?q=${this.searchQuery}`)
       .then(res => res.json())
       .then(search => {
@@ -63,7 +68,7 @@ class Search extends React.Component {
           filteredResults: search,
           selectBoxRegions: selectBoxRegions,
           selectBoxActivities: Array.from(new Set(selectBoxActivities))
-        })
+        }, () => this.context.finishLoad())
       })
   }
 

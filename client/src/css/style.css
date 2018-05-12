@@ -1414,6 +1414,40 @@ footer > .social-media .social-media__linkedin:hover {
   margin: 5px 0;
 }
 
+.loading-container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: lightslategray;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.80;
+}
+.loading__spinner {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(to right, red, gray, lightgray);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: rotate-spinner 1.2s cubic-bezier(0.77, 0.93, 1, 1) infinite;
+}
+.loading__center {
+  width: 85%;
+  height: 85%;
+  background: lightslategray;
+  border-radius: 50%;
+}
+@keyframes rotate-spinner {
+  from {transform: rotate(0)}
+  to {transform: rotate(360deg)}
+}
+
 /* MOBILE STYLES */
 @media screen and (max-width: 767px) {
   h1, h2 {font-size: 1.3rem; height: auto}
@@ -1435,7 +1469,6 @@ footer > .social-media .social-media__linkedin:hover {
   .searchbar > button {border: 2px solid gray; padding: 2px; font-size: 15px;}
   /* .searchtext > h1, .searchtext > h2 {font-size: .9rem;} */
   .search-icon {padding: 0 5px; font-size: 1.4rem;}
-  .banner span {display: none;}
   .highlightedCampgrounds__tile img {justify-self: center;}
   .landing-text {display: grid; grid-template-columns: 100% 100% 100%;
     padding: 5px 0 60px 0; overflow: auto;}

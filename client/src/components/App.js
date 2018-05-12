@@ -6,6 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 // Import HOCs
 import withAuthentication from './withAuthentication'
 import withLocation from './withLocation'
+import withLoading from './withLoading'
 
 // Import components
 import Header from './Header'
@@ -133,4 +134,4 @@ class App extends React.Component {
   }
 }
 
-export default withAuthentication(withLocation(App));
+export default withLoading(withAuthentication(withLocation(App)));

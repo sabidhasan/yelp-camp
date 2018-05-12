@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import SearchBar from './SearchBar'
 
 class Banner extends React.Component {
@@ -7,11 +8,17 @@ class Banner extends React.Component {
     this.state = {quote: undefined};
   }
 
+  static contextTypes = {
+    startLoad: PropTypes.func,
+    finishLoad: PropTypes.func
+  }
+
   componentDidMount() {
     // Get quote
+    this.context.startLoad();
     fetch('/quote')
       .then(res => res.json())
-      .then(quote => this.setState({quote: quote[0]}));
+      .then(quote => this.setState({quote: quote[0]}, () => this.context.finishLoad()));
   }
 
   render(props) {

@@ -16,6 +16,11 @@ const withAuthentication = (Component) => {
       this.signOutUser = this.signOutUser.bind(this)
     }
 
+    static contextTypes = {
+      startLoad: PropTypes.func,
+      finishLoad: PropTypes.func
+    }
+
     static childContextTypes = {
       user: PropTypes.object,
       signIn: PropTypes.func,
@@ -23,12 +28,13 @@ const withAuthentication = (Component) => {
     }
 
     signInUser() {
+      this.context.startLoad();
       signInFunc()
       .then(val => {
-        this.setState({user: val})
+        this.setState({user: val}, () => this.context.finishLoad())
       })
       .catch(err => {
-        this.setState({user: null})
+        this.setState({user: null}, () => this.context.finishLoad())
         console.log(err)
       })
     }
@@ -54,13 +60,12 @@ const withAuthentication = (Component) => {
     }
 
     componentDidMount() {
+      this.context.startLoad();
       auth.onAuthStateChanged(authUser => {
         if (authUser) {
-          // this.setState({user: {loading: true}})
-            this.setState({user: authUser});
+          this.setState({user: authUser}, () => this.context.finishLoad());
         } else {
-          // this.setState({user: {loading: true}})
-          this.setState({user: null})
+          this.setState({user: null}, () => this.context.finishLoad())
         }
       });
     }
@@ -69,11 +74,6 @@ const withAuthentication = (Component) => {
       return <Component />
     }
   }
-  // withAuthentication.childContextTypes = {
-  //   user: PropTypes.object,
-  //   signIn: PropTypes.object,
-  //   signOut: PropTypes.object
-  // };
   return withAuthentication;
 }
 
