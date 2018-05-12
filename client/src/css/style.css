@@ -81,6 +81,14 @@ body {
   min-height: 100vh;
 }
 
+.cart__item-delete:hover, .cart__close:hover, .review__delete:hover {
+  animation: close-button-flip 0.2s linear;
+}
+@keyframes close-button-flip {
+  0%    {transform: rotate(0)}
+  to   {transform: rotateX(150deg)}
+}
+
 /* WHOLE APP CONTAINER */
 .container {
   padding: 0;
@@ -161,7 +169,7 @@ body {
   height: 100vh;
   background: white;
   /* ENsure it is behind the overlay for login! */
-  z-index: 1000;
+  z-index: 1001;
   right: 0px;
   display: grid;
   grid-gap: 10px 0;
@@ -178,10 +186,6 @@ body {
   grid-column: 2;
   cursor: pointer;
 }
-/* .cart .cart_message {
-  grid-column: span 2;
-  margin: 0;
-} */
 .cart span {
   grid-column: span 2;
 }
@@ -646,7 +650,6 @@ footer > .social-media .social-media__linkedin:hover {
   to {opacity: 1; background: white;}
 }
 
-
 .spin {
   animation: spinicon .5s;
   animation-iteration-count: 1;
@@ -777,13 +780,10 @@ footer > .social-media .social-media__linkedin:hover {
    display: flex;
    justify-content: space-between;
 }
-.singleCampground > span {
-  grid-column: 1;
-}
 .singleCampground .review {
   display: grid;
   grid-template-columns: 130px 1fr 20px;
-  padding: 15px 0;
+  padding: 15px;
   border-bottom: 1px solid lightgray;
   grid-gap: 5px 10px;
   max-height: 9999px;
@@ -821,12 +821,15 @@ footer > .social-media .social-media__linkedin:hover {
   opacity: 1;
 }
 .review__delete {
-  text-decoration: none;
   cursor: pointer;
+  align-self: flex-start;
   text-align: center;
   font-weight: bold;
   opacity: 0;
   transition: all 0.3s;
+}
+.review__delete:hover {
+  text-decoration: none;
 }
 .review__author {
   font-weight: bold;
@@ -851,6 +854,7 @@ footer > .social-media .social-media__linkedin:hover {
 .review .review__rating .star {height:20px; width: 20px;}
 .review .review__rating {
   grid-column: 2;
+  grid-row: 1;
   margin: 0;
   align-self: flex-start;
 }
@@ -866,7 +870,6 @@ footer > .social-media .social-media__linkedin:hover {
   margin: 5px 0 0 0;
   overflow-wrap: break-word;
 }
-
 
 /* GOOGLE MAP CONTAINER STYLES */
 .gmnoprint, .gm-style-cc, .gmnoprint + button {
@@ -1446,10 +1449,10 @@ footer > .social-media .social-media__linkedin:hover {
   .landing-tile {grid-template-columns: repeat(4, 100%)}
   .cart {width: 100%;}
   .singleCampground {padding: 0; grid-gap: 5px;
-    grid-template-areas: "title title" "rating rating" "map map" "basicinfo basicinfo" "activities activities" "description description" "image image" "review review" "reviewForm reviewForm" "reviewlink reviewlink" "sidebar sidebar";
+    grid-template-areas: "title title" "rating rating" "map map" "basicinfo basicinfo" "activities activities" "description description" "image image" "review-buttons review-buttons" "review-header review-header" "reviewForm reviewForm" "reviews reviews" "sidebar sidebar";
     background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 270px, #fff 270px);
   }
-  .singleCampground .review-link {grid-template-columns: 1fr 1fr;}
+  .singleCampground .review-link {grid-template-columns: 1fr 1fr; grid-area: review-buttons;}
   .highlightedCampgrounds__tile .rating {grid-area: auto;}
   .rating {grid-area: rating; display: flex; align-items: center;}
   .rating h2 {flex-basis: auto;}
@@ -1464,11 +1467,12 @@ footer > .social-media .social-media__linkedin:hover {
   .activities__list .activity__name {text-align: left;}
   .activities__list .error {grid-column: 1 / -1;}
   .review__first {display: none;}
-  .reviews-header {grid-area: review;}
+  .reviews-header {grid-area: review-header;}
   .reviews-header button {display: none;}
+  .reviews-container {grid-area: reviews;}
   .review__first {grid-area: reviewLink;}
   .review-form {grid-area: reviewForm;}
-  .review-form .review-link {display: block;}
+  .review-form .review-link {display: block; grid-column: 3; grid-row: 1;}
   .review-form__picker.rating {grid-area: auto;}
   .discover {grid-template-areas: 'title title' 'map map' 'details details'}
   .results > li {padding: 5px 0;}
