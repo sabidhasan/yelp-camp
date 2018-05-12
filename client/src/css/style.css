@@ -267,6 +267,7 @@ nav {
   align-items: stretch;
   max-height: 12vh;
   border-bottom: 2px solid black;
+  transition: all 0.3s;
 }
 nav > * {
   display: block;
@@ -703,6 +704,7 @@ footer > .social-media .social-media__linkedin:hover {
   grid-area: map;
   border: 2px solid gray;
   height: 250px;
+  position: relative;
 }
 .singleCampground > .rating {
   grid-area: rating;
@@ -1145,11 +1147,14 @@ footer > .social-media .social-media__linkedin:hover {
   position: relative;
   padding: 0;
 }
-.map-scrolling-fixed {
+.discover__map.map-scrolling {
   position: fixed;
-  width: 33%;
-  top: 110px;
-  right: 20px;
+  width: 34%;
+  top: 114px;
+  right: 10px;
+}
+.discover__map.map-stick-bottom {
+  align-self: flex-end;
 }
 
 /* SEARCH PAGE */
@@ -1371,6 +1376,7 @@ footer > .social-media .social-media__linkedin:hover {
 }
 .search-result h1 {
   grid-area: title;
+  word-break: break-word;
   font-size: 1.15rem;
   font-weight: normal;
 }
@@ -1441,7 +1447,7 @@ footer > .social-media .social-media__linkedin:hover {
   .cart {width: 100%;}
   .singleCampground {padding: 0; grid-gap: 5px;
     grid-template-areas: "title title" "rating rating" "map map" "basicinfo basicinfo" "activities activities" "description description" "image image" "review review" "reviewForm reviewForm" "reviewlink reviewlink" "sidebar sidebar";
-    background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 350px, #fff 350px);
+    background: linear-gradient(to bottom, #EAEAEA 0%, #EAEAEA 270px, #fff 270px);
   }
   .singleCampground .review-link {grid-template-columns: 1fr 1fr;}
   .highlightedCampgrounds__tile .rating {grid-area: auto;}
@@ -1473,7 +1479,7 @@ footer > .social-media .social-media__linkedin:hover {
   .search-page-container .page-count {display: none;}
   .search-page-results {grid-gap: 5px; grid-template-columns: 1fr;}
   .search-page-results .discover__map {grid-column: 1; margin: 0;}
-  .search-result {padding: 5px 0; grid-gap: 8px 4px;}
+  .search-result {padding: 5px 0; grid-gap: 8px 4px; grid-template-columns: 100px 1fr 1fr;}
   .search-page-selector:last-child { display: block;}
   .search-page-selector .pages, .search-page-selector .pages > * {display: flex; align-items: center; justify-content: center; border: none;}
   .search-page-selector .pages a {padding: 5px 0; letter-spacing: 0px; width: 2.6rem; font-size: 0.8rem;}
@@ -1485,6 +1491,7 @@ footer > .social-media .social-media__linkedin:hover {
   .sticky .nav__title {color:red;}
   .discover-tile {font-size: 1.5rem; height: 25vh;}
   .discover-tile a {margin: 10px;}
+  .discover__map.map-scrolling, .discover__map.map-scrolling {position: initial;}
 }
 
 
