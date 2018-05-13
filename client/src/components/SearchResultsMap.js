@@ -11,10 +11,13 @@ class SearchResultsMap extends React.Component {
     // Add event listener for scroll for map
     window.addEventListener('scroll', () => {
       let mapScrollClass = ''
-      if (window.scrollY > document.body.clientHeight - window.innerHeight - document.querySelector('footer').clientHeight) {
+      const searchPageRes = document.querySelector('.search-page-results ol').getBoundingClientRect();
+      const footer = document.querySelector('footer').getBoundingClientRect();
+      // if (window.scrollY > document.body.clientHeight - window.innerHeight - document.querySelector('footer').clientHeight + 90) {
+      if (window.scrollY > document.body.clientHeight - window.innerHeight - footer.height + 80) {
         mapScrollClass = 'map-stick-bottom';
-      } else if (window.scrollY > 300) {
-        mapScrollClass = 'map-scrolling'
+      } else if (window.scrollY > (searchPageRes.top + window.scrollY) - 50) {
+        mapScrollClass = 'map-scrolling';
       }
       this.setState({mapScroll: mapScrollClass})
     });

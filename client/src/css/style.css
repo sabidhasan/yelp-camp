@@ -287,6 +287,7 @@ nav > a:hover {
 
 nav > .nav__title {
   font-size: 1.9rem;
+  outline: none;
   transform: skew(-6deg) rotateZ(.3deg);
   letter-spacing: .15rem;
   font-weight: bold;
@@ -496,8 +497,11 @@ nav a:not(.nav__title):hover {
 .landing-text {
   display: flex;
   padding: 60px 40px;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: space-between;
+  margin: 30px 0;
+  padding: 30px 20px;
+  background: lightgray;
 }
 .landing-text > section {
   flex: 1;
@@ -522,7 +526,8 @@ nav a:not(.nav__title):hover {
   line-height: 1.5rem;
 }
 .landing-tile {
-  align-items: stretch;
+  background: none;
+  padding: 20px 50px;
 }
 .landing-tile > section, .landing-tile > section:first-child {
   /* first child pseudo slector used to override .landing-text > section:first-child above*/
@@ -1153,7 +1158,7 @@ footer > .social-media .social-media__linkedin:hover {
 .discover__map.map-scrolling {
   position: fixed;
   width: 34%;
-  top: 114px;
+  top: 50px;
   right: 10px;
 }
 .discover__map.map-stick-bottom {
@@ -1353,7 +1358,6 @@ footer > .social-media .social-media__linkedin:hover {
   padding: 20px 10px;
 }
 .search-page-results .discover__map {
-  margin: 20px 0 0 0;
   grid-column: 2;
 }
 .search-page-results > h2 {
