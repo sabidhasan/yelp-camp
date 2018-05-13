@@ -1273,6 +1273,19 @@ footer > .social-media .social-media__linkedin:hover {
   padding: 2px 5px;
   text-transform: capitalize;
 }
+.input-range__slider, .input-range__track--active {
+  background: red!important;
+  border: red!important;
+}
+.input-range {
+  margin: 30px auto;
+  width: 80%!important;
+}
+.input-range__label-container {
+  font-size: 1.2rem;
+  color: black;
+}
+
 .search-page-container .filter__section h2 {
   border-bottom: 1px solid white;
 }

@@ -99,11 +99,21 @@ class Search extends React.Component {
       const currItem = this.state.originalResults[item];
       if ((!val.selectedProv || provinces[val.selectedProv].toLowerCase() === currItem.province.toLowerCase()) &&
         (val.selectedRegions.includes(currItem.region) || !currItem.region) &&
-        (!currItem.activities.length || currItem.activities.some(v => val.selectedActivities.includes(v)))
+        (!currItem.activities.length || currItem.activities.some(v => val.selectedActivities.includes(v))) &&
+        (!currItem.distanceFromUser || (currItem.distanceFromUser > val.selectedDistances.min && currItem.distanceFromUser < val.selectedDistances.max))
       ) {
         filteredResults.push(currItem)
       }
     }
+    // Sort if needed
+    if (val.sortBy === 'Distance') {
+      filteredResults.sort((a, b) => {
+        if (!b.distanceFromUser) return -1;
+        if (!a.distanceFromUser) return 1;
+        return a.distanceFromUser > b.distanceFromUser ? 1 : -1
+      });
+    }
+
     this.setState({filteredResults: filteredResults, page: 0})
   }
 
@@ -116,6 +126,10 @@ class Search extends React.Component {
         </div>
       </div>
     );
+
+    const maxDistance = Math.max.apply(null, this.state.originalResults
+      .map(v => v.distanceFromUser)
+      .filter(v => !!v));
 
     const results = this.state.filteredResults
       .slice(this.state.page * 10, (this.state.page * 10) + 10)
@@ -157,6 +171,7 @@ class Search extends React.Component {
             provinces={this.selectBoxProvinces}
             regions={this.state.selectBoxRegions}
             activities={this.state.selectBoxActivities}
+            maxDistance={maxDistance}
             onChange={(val) => this.updateFilteredResults(val)}
             className={this.state.filterAreaExpanded ? 'filter__section-expanded' : ''}/>
         </div>
