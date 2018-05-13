@@ -30,7 +30,7 @@ class Select extends React.Component {
   render() {
     return (
       <div
-        className='filter__dropdown-container'
+        className={`filter__dropdown-container${this.state.expanded ? ' container-expanded' : ''}`}
         onClick={this.toggleExpanded}>
         <span>
           {this.state.value || this.props.defaultText}
