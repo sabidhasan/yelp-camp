@@ -53,6 +53,8 @@ class DiscoverMap extends React.Component {
     return (
       <React.Fragment>
         <h1>Discover Campgrounds in Canada</h1>
+        <p>Explore all the campgrounds have, from hiking the Rocky Mountains to
+          the fields of Prince Edward Island. Click a province to see its campgrounds.</p>
         <div className='discover__map-container'
           onClick={this.handleClick}
           onMouseOver={this.handleHover}
