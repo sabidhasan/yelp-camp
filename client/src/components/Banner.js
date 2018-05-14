@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchBar from './SearchBar'
+import backgroundImage from '../images/test.jpg';
 
 class Banner extends React.Component {
   constructor(props) {
@@ -24,15 +25,20 @@ class Banner extends React.Component {
   render(props) {
     return (
       <div className="banner">
-        <div className="title">
-          <h1>Welcome to YelpCamp!</h1>
-          <h2>Search for campgrounds across Canada</h2>
+        <div className='banner__image'>
+          <img src={backgroundImage} />
         </div>
-        <SearchBar />
-        <span>
-          { this.state.quote }
-        </span>
-        <i className="fas fa-chevron-down down-arrow"></i>
+        <div className='banner__content'>
+          <div className="title">
+            <h1>Welcome to YelpCamp!</h1>
+            <h2>Search for campgrounds across Canada</h2>
+          </div>
+          <SearchBar />
+          <span>
+            { this.state.quote }
+          </span>
+          <i className="fas fa-chevron-down down-arrow"></i>
+        </div>
       </div>
     )
   }

@@ -372,38 +372,44 @@ nav a:not(.nav__title):hover {
 /* SPLASH SCREEN/SEARCH BANNER */
 .banner {
   height: 91vh;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  z-index: 999;
+}
+.banner > * {
+  grid-column: 1;
+  grid-row: 1;
+}
+.banner > .banner__image img {
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+  opacity: 0.78;
+}
+.banner > .banner__content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   text-align: center;
-  position: relative;
-  z-index: 999;
+  z-index: 1;
 }
-.banner:before {
-  content: ' ';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-  display: block;
-  background: url('../images/test.jpg');
-  background-size: cover;
-  z-index: -1;
-}
-.banner h1 {
+.banner__content h1 {
   /* margin: 0; */
   color: black;
   font-weight: 400;
   font-size: 5.5rem;
   text-shadow: 0 3px 5px rgba(0,0,0,0.5);
 }
-.banner h2 {
+.banner__content h2 {
   color: maroon;
   font-weight: 200;
   font-size: 2rem;
 }
-.banner span {
+.banner__content span {
   font-weight: bold;
   flex-basis: 200px;
   display: flex;
@@ -510,8 +516,8 @@ nav a:not(.nav__title):hover {
   animation: downarrowmove 1.5s infinite;
 }
 @keyframes downarrowmove {
-  from {transform: translateY(-10px);}
-  to {transform: translateY(10px);}
+  from {transform: translateY(-40px);}
+  to {transform: translateY(-5px);}
 }
 
 .landing-text {
