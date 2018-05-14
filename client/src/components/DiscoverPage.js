@@ -51,19 +51,23 @@ class Discover extends React.Component {
        {' '} are shown on the map</p>
      </div>
 
-     <div className='discover__details'>
-       <DiscoverCampgroundTile
-         cg={this.state.selectedCampgroundObject}
-         userLocation={this.context.userLocation}
-       />
-     </div>
+     <div className='discover__content'>
+       {this.state.selectedCampgroundObject ?
+         <div className='discover__details'>
+             <DiscoverCampgroundTile
+               cg={this.state.selectedCampgroundObject}
+               userLocation={this.context.userLocation}
+             />
+         </div>
+       : null}
 
-     <div className='discover__map google-map'>
-       <DiscoverGoogleMap
-         coords={this.state.campgrounds}
-         setSelected={this.setSelected}
-         selected={this.state.selectedCampgroundObject}
-       />
+       <div className='discover__map google-map'>
+         <DiscoverGoogleMap
+           coords={this.state.campgrounds}
+           setSelected={this.setSelected}
+           selected={this.state.selectedCampgroundObject}
+         />
+       </div>
      </div>
    </div>
    )
