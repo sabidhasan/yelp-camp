@@ -53,8 +53,10 @@ class FilterSearch extends React.Component {
           <InputRange
             minValue={0}
             maxValue={this.props.maxDistance}
+            formatLabel={value => `${value}km`}
             value={this.state.selectedDistances}
-            onChange={val => this.handleChange(val, 'selectedDistances')}
+            onChange={val => this.setState({selectedDistances: val})}
+            onChangeComplete={val => this.handleChange(val, 'selectedDistances')}
             step={Math.max(Math.round(this.props.maxDistance / 100), 1)}
           />
           <hr />
