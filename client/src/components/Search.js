@@ -108,9 +108,10 @@ class Search extends React.Component {
     // Sort if needed
     if (val.sortBy === 'Distance') {
       filteredResults.sort((a, b) => {
+        // Force the missing distances to the bottom, and sort others
         if (!b.distanceFromUser) return -1;
         if (!a.distanceFromUser) return 1;
-        return a.distanceFromUser > b.distanceFromUser ? 1 : -1
+        return a.distanceFromUser > b.distanceFromUser ? 1 : -1;
       });
     }
 

@@ -20,6 +20,22 @@ a:hover {
 hr {
   border: 1px solid gray;
   width: 100%;
+  height: 0px;
+  overflow: visible;
+  position: relative;
+  margin: 15px 0;
+}
+hr::after {
+  content: ' ';
+  background: url('/static/media/favicon.0e3dcabe.ico') no-repeat center;
+  background-size: 20px;
+  background-color: lightgray;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  /* Center it based on height and width and absolute positioning */
+  top: calc(30px * -0.5);
+  left: calc(50% - (30px / 2));
 }
 i {
   padding-right: 8px;
@@ -619,6 +635,11 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+footer > h2 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 footer > * {
   margin: 5px 0;
@@ -1292,7 +1313,7 @@ footer > .social-media .social-media__linkedin:hover {
 .search-page-container .filter__section {
   display: flex;
   flex-direction: column;
-  max-height: 280px;
+  max-height: 320px;
   overflow: hidden;
   border-radius: 5px;
   border: 1px solid white;
