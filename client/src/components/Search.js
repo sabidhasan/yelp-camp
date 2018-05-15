@@ -122,7 +122,8 @@ class Search extends React.Component {
     if (!this.state.originalResults.length) return (
       <div className='search-page-container'>
         <div className='filters'>
-          <h1>No results found for {this.searchQuery}</h1>
+          {this.searchQuery ? <h1>No results found for {this.searchQuery}</h1>
+          : <h1>Search</h1>}
           <SearchBar initialValue={this.searchQuery} />
         </div>
       </div>

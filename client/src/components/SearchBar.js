@@ -82,6 +82,19 @@ class SearchBar extends React.Component {
   }
 
   render() {
+    const searchResults = this.state.results.map((v, i) => (
+      <li
+        key={i}
+        className={i === this.state.highlightedIndex ? 'selected' : undefined}
+        onMouseMove={() => this.handleMouse(i)}
+        onMouseOut={() => this.setState({highlightedIndex: -1})}
+        onMouseDown={this.goToCampground}>
+        <i className='search-icon'>{v.icon}</i>
+        <div className='searchtext capitalize'>
+          <h1>{v.name}</h1><h2>{v.text}</h2>
+        </div>
+      </li>
+    ))
     return (
       <form autoComplete='off' className='searchbar' onSubmit={(e) => e.preventDefault()}>
         <input
@@ -96,24 +109,12 @@ class SearchBar extends React.Component {
         />
         <label htmlFor='search'>Find</label>
         <button type='submit' onClick={this.goToCampground}>🔎</button>
-          <ul className={this.state.active ? 'results' : 'hidden'}>
-              {this.state.results.map((v, i) => {
-              return (
-                <li
-                  key={i}
-                  className={i === this.state.highlightedIndex ? 'selected' : undefined}
-                  onMouseMove={() => this.handleMouse(i)}
-                  onMouseOut={() => this.setState({highlightedIndex: -1})}
-                  onMouseDown={this.goToCampground}
-                >
-                  <i className='search-icon'>{v.icon}</i>
-                  <div className='searchtext capitalize'>
-                    <h1>{v.name}</h1><h2>{v.text}</h2>
-                  </div>
-                </li>
-            )
-            })}
-          </ul>
+        <ul className={this.state.active ? 'results' : 'hidden'}>
+          {(searchResults.length || !this.state.searchQuery) ?
+            searchResults
+            : <p>No results for '{this.state.searchQuery}'</p>
+          }
+        </ul>
       </form>
     )
   }
