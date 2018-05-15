@@ -21,7 +21,7 @@ class SearchResultsMap extends React.Component {
       }
       this.setState({mapScroll: mapScrollClass})
     });
-    // Needed to make the map actually render
+    // Needed to make the map actually re-render
     this.forceUpdate();
   }
 
@@ -34,10 +34,9 @@ class SearchResultsMap extends React.Component {
     // Markers for maps
     const markers = this.props.results
       .slice(this.props.page * 10, (this.props.page * 10) + 10)
+      .filter(v => v.lat && v.lon)
       .map((v, i) => {
-        if (v.lat && v.lon) {
-          bounds.extend({lat: v.lat, lng: v.lon});
-        }
+        bounds.extend({lat: v.lat, lng: v.lon});
         const resultNum = (this.props.page * 10) + i + 1;
         const color = v.id === this.props.hovered ? 'FFFFFF' : 'FF0000';
         return (
@@ -51,7 +50,9 @@ class SearchResultsMap extends React.Component {
            position={{lat: v.lat, lng: v.lon }}>
           </Marker>
         )
-    })
+    });
+
+    console.log(markers.length)
 
     // Holds center of the map
     const initialCenter = {lat: (bounds.f.b + bounds.f.f)/2, lng: (bounds.b.b + bounds.b.f)/2}
