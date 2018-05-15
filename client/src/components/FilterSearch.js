@@ -48,21 +48,25 @@ class FilterSearch extends React.Component {
           />
         </div>
         <div className='filter__section'>
-          <h2>Distance and Sort</h2>
-          <p>How far should the campgrounds be from you?</p>
-          <InputRange
-            minValue={0}
-            maxValue={this.props.maxDistance}
-            formatLabel={value => `${value}km`}
-            value={this.state.selectedDistances}
-            onChange={val => this.setState({selectedDistances: val})}
-            onChangeComplete={val => this.handleChange(val, 'selectedDistances')}
-            step={Math.max(Math.round(this.props.maxDistance / 100), 1)}
-          />
-          <hr />
+          {this.props.maxDistance > 0 ?
+            <React.Fragment>
+              <h2>Distance and Sort</h2>
+              <p>How far should the campgrounds be from you?</p>
+              <InputRange
+                minValue={0}
+                maxValue={this.props.maxDistance}
+                formatLabel={value => `${value}km`}
+                value={this.state.selectedDistances}
+                onChange={val => this.setState({selectedDistances: val})}
+                onChangeComplete={val => this.handleChange(val, 'selectedDistances')}
+                step={Math.max(Math.round(this.props.maxDistance / 100), 1)}
+              />
+              <hr />
+            </React.Fragment>
+          : null}
           <Select
             items={[{text: 'Distance', value: 'Distance'}]}
-            defaultText={'Default'}
+            defaultText={'Best Match'}
             onChange={val => this.handleChange(val, 'sortBy')}
           />
         </div>
