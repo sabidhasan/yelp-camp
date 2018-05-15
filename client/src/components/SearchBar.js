@@ -87,10 +87,9 @@ class SearchBar extends React.Component {
         <input
           name='search'
           type='text'
-          placeholder='Province, Region, City, Campground Name, etc.'
+          placeholder='Province, Region, City, Campground Name, Amenity, etc.'
           onFocus={this.setFocus}
           onBlur={this.setFocus}
-          // onClick={this.setFocus}
           value={this.state.searchQuery}
           onKeyUp={this.doSearch}
           onChange={this.handleChange}
