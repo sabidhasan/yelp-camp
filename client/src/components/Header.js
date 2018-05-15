@@ -18,7 +18,7 @@ class Header extends React.Component {
     return (
       <nav className={this.context.stickyClass}>
         <a className='nav__title' href='/'>YelpCamp</a>
-        <a href='/discover'>Discover</a>
+        <a href='/discover'><i class="fas fa-map"></i>Discover</a>
         {this.context.user && this.context.user.loading ?
           <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
           : this.context.user ?
@@ -29,7 +29,9 @@ class Header extends React.Component {
         :
           <a href='#' className='login' onClick={this.props.toggleLoginForm}>Sign In</a>
         }
-        <a href='#' onClick={this.props.toggleCart}><i className="fas fa-shopping-cart"></i>Cart</a>
+        <a href='#' onClick={this.props.toggleCart} className='nav__cart-icon'>
+          <i className="fas fa-shopping-cart"></i>Cart
+        </a>
       </nav>
     )
   }

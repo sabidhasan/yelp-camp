@@ -323,6 +323,12 @@ nav > .nav__title {
   padding: 0 10px;
   border-radius: 50%;
 }
+.nav__cart-icon i {
+  transition: all 0.3s ease-out;
+}
+.nav__cart-icon:hover i {
+  transform: rotateY(180deg) translateX(5px);
+}
 nav > a:not(.nav__title) {
   background: maroon;
   padding: 5px 10px;
@@ -586,6 +592,7 @@ nav a:not(.nav__title):hover {
 .landing-tile i {
   font-size: 6.5rem;
   padding: 15px 0;
+  border-bottom: 1px solid gray;
 }
 
 .highlightedCampgrounds {
@@ -1589,6 +1596,7 @@ footer > .social-media .social-media__linkedin:hover {
   .search-page-container > * {padding: 5px; margin: 0;}
   .search-page-container h2 {display: none;}
   .search-page-container .filters {grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); padding: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
+  .search-page-container .filters p {font-weight: bold; font-size: 1.3rem;}
   .search-page-container .page-count {display: none;}
   .search-page-results {grid-gap: 5px; grid-template-columns: 1fr;}
   .search-page-results .discover__map {grid-column: 1; margin: 0;}
@@ -1609,9 +1617,7 @@ footer > .social-media .social-media__linkedin:hover {
 
 
 
-/*
- * react-circular-progressbar styles
- */
+/* react-circular-progressbar styles */
 .CircularProgressbar {
   width: 30px;
   height: 30px;
@@ -1630,85 +1636,3 @@ footer > .social-media .social-media__linkedin:hover {
 .CircularProgressbar .CircularProgressbar-background {
   fill: #d6d6d6;
 }
-
-/*
-LDS SPINNER styles - this will be used for app loading screen
-.lds-spinner {
-  color: official;
-  display: inline-block;
-  position: relative;
-  width: 64px;
-  height: 64px;
-}
-.lds-spinner div {
-  transform-origin: 32px 32px;
-  animation: lds-spinner 1.2s linear infinite;
-}
-.lds-spinner div:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 29px;
-  width: 5px;
-  height: 14px;
-  border-radius: 20%;
-  background: #fff;
-}
-.lds-spinner div:nth-child(1) {
-  transform: rotate(0deg);
-  animation-delay: -1.1s;
-}
-.lds-spinner div:nth-child(2) {
-  transform: rotate(30deg);
-  animation-delay: -1s;
-}
-.lds-spinner div:nth-child(3) {
-  transform: rotate(60deg);
-  animation-delay: -0.9s;
-}
-.lds-spinner div:nth-child(4) {
-  transform: rotate(90deg);
-  animation-delay: -0.8s;
-}
-.lds-spinner div:nth-child(5) {
-  transform: rotate(120deg);
-  animation-delay: -0.7s;
-}
-.lds-spinner div:nth-child(6) {
-  transform: rotate(150deg);
-  animation-delay: -0.6s;
-}
-.lds-spinner div:nth-child(7) {
-  transform: rotate(180deg);
-  animation-delay: -0.5s;
-}
-.lds-spinner div:nth-child(8) {
-  transform: rotate(210deg);
-  animation-delay: -0.4s;
-}
-.lds-spinner div:nth-child(9) {
-  transform: rotate(240deg);
-  animation-delay: -0.3s;
-}
-.lds-spinner div:nth-child(10) {
-  transform: rotate(270deg);
-  animation-delay: -0.2s;
-}
-.lds-spinner div:nth-child(11) {
-  transform: rotate(300deg);
-  animation-delay: -0.1s;
-}
-.lds-spinner div:nth-child(12) {
-  transform: rotate(330deg);
-  animation-delay: 0s;
-}
-@keyframes lds-spinner {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
- */
