@@ -6,7 +6,6 @@
 
 2. ## FRONT END TO DOS
 	OVERALL			TODO :	Mobile layout
-						Add to cart button not visible on mobile
 					Animations for stuff coming in (e.g. review form)
 					React PropTypes
 					Random photos for campgrounds (some variety)
@@ -26,6 +25,7 @@
 					Add a logo
 					Nav bar should have stars behind it like Yelp
 					Random photo in the back of banner every time
+					Redo picture with grid rather than background ::after bs
 					Search button styling
 					Login button styling for FB and Google
 					It shouldn’t query the server on alt tab for search bar
@@ -48,6 +48,9 @@
 					Sort by: rating, best match (original) slug type selector
 					Make map component into its own thing
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
+					Yukon territory filter doesn’t actually work (shows no results)
+					If no address available for any CG (eg. search for “TES”, then hide map entirely)
+					Icons for activities in search
 
 	/campground/:id		GOAL :	Single campground page
 				TODO :	Unknown campground should 404
@@ -65,6 +68,7 @@
 					Photo gallery (NPM?) for photos
 					NaN error for weather (e.g. 28)
 					Delete review
+					Prices on sidebar have double dollar signs $$
 	
 	/discover		GOAL :	
 					map on the right with picked province, highlighted cg on left. click marker to open CG
