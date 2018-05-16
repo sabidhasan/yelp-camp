@@ -13,7 +13,7 @@ class SearchBar extends React.Component {
     }
 
     this.doSearch = this.doSearch.bind(this);
-    this.setFocus = this.setFocus.bind(this);
+    this.changeFocus = this.changeFocus.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleMouse = this.handleMouse.bind(this);
     this.goToCampground = this.goToCampground.bind(this);
@@ -32,8 +32,12 @@ class SearchBar extends React.Component {
     } else if (e.key === 'Enter') {
       // if something is selected then go to it
       this.goToCampground();
+    } else if (e.key === 'Escape') {
+      // Hide the search
+      this.changeFocus(false);
     } else {
-      // do search
+      // show the search, and do search
+      this.changeFocus(true);
       const icons = {
         'name': '⛺', 'paymentMethods': '💵', 'activities': '🚣',
         'address': '📍', 'description': '📛', 'province': '🌎',
@@ -76,9 +80,9 @@ class SearchBar extends React.Component {
     this.setState({searchQuery: e.target.value})
   }
 
-  setFocus() {
+  changeFocus(focus) {
     // Called when losing/gaining focus to input box
-    this.setState({active: !this.state.active});
+    this.setState({active: focus});
   }
 
   render() {
@@ -101,8 +105,9 @@ class SearchBar extends React.Component {
           name='search'
           type='text'
           placeholder='Province, Region, City, Campground Name, Amenity, etc.'
-          onFocus={this.setFocus}
-          onBlur={this.setFocus}
+          onFocus={() => this.changeFocus(true)}
+          onClick={() => this.changeFocus(true)}
+          onBlur={() => this.changeFocus(false)}
           value={this.state.searchQuery}
           onKeyUp={this.doSearch}
           onChange={this.handleChange}

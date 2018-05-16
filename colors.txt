@@ -1,0 +1,55 @@
+visme.co
+7
+22
+30
+
+https://www.canva.com/learn/website-color-schemes/
+16
+22
+38        use url(/static/media/nav-swirl.f60fb2fb.png),  linear-gradient(to right, #111155, #333a56, rgba(0, 0, 0, 0.1)) ; bg color some navy
+46
+
+https://learn.canva.com/learn/100-color-combinations/
+2
+5
+14
+46
+51
+91
+
+
+              LIGHT-MAIN      DARK-MAIN      LIGHT      ACCENT
+              494E6B          192231         98878F     985E6D
+              9F4636          6C2D2C         F1DCC9     42313A
+              2988BC          2F496E         F4EADE     ED8C72
+              336B87          2A3132         90AFC5     763626
+              
+
+
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/xv.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/washi.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/swirl.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/strange-bullseyes.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/starring.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/foggy-birds.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/dark-geometric.png");
+
+background-color: #4a0000;
+background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
