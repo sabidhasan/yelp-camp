@@ -1,18 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:200,400,600,700');
+/* @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:200,400,600,700'); */
 
-/* GENERAL STYLES */
-html, body {
-  font-family: 'IBM Plex Sans Condensed', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #fafafa;
-  background-image: url("../images/background.png");
-  background-image: url("https://www.nationalparks.org/sites/all/themes/custom/npf/images/build/npf-bg-paper-white.jpg");
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
 a {
   text-decoration: none;
   color: red;
@@ -99,23 +86,6 @@ button:active {
   background: linear-gradient(300deg, #E20D0D, #B02020);
   box-shadow: 0px 0px 8px #B02020;
 }
-/* BODY */
-body {
-  min-height: 100vh;
-}
-
-.cart__item-delete:hover, .cart__close:hover, .review__delete:hover {
-  animation: close-button-flip 0.2s linear;
-}
-@keyframes close-button-flip {
-  0%    {transform: rotate(0)}
-  to   {transform: rotateX(150deg)}
-}
-
-/* WHOLE APP CONTAINER */
-.container {
-  padding: 0;
-}
 
 /* LOGIN FORM */
 .login-background {
@@ -184,166 +154,6 @@ body {
   width: 40%;
 }
 
-/* CART */
-.cart {
-  position: fixed;
-  top: 0;
-  width: 40%;
-  height: 100vh;
-  background: white;
-  /* ENsure it is behind the overlay for login! */
-  z-index: 1001;
-  right: 0px;
-  display: grid;
-  grid-gap: 10px 0;
-  grid-template-columns: 1fr 35px;
-  grid-template-rows: 45px 45px repeat(auto-fit, 70px);
-  padding: 5px 15px;
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
-  overflow-y: scroll;
-}
- .cart .cart__close {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: right;
-  grid-column: 2;
-  cursor: pointer;
-}
-.cart span {
-  grid-column: span 2;
-}
-.cart .cart__item {
-  grid-column: span 2;
-  /* margin: 8px 0; */
-  display: grid;
-  grid-template-areas: "image title close" "image region close";
-  padding: 15px 0;
-  border-bottom: 1px solid lightgray;
-  grid-template-columns: 75px 1fr 15px;
-  grid-gap: 0 5px;
-}
-.cart .cart__item:last-child {
-  border-bottom: none;
-}
-.cart__item img {
-  max-width: 70px;
-  border: 1px solid black;
-  border-radius: 2px;
-  grid-area: image;
-  align-self: center;
-  justify-self: center;
-}
-.cart__item .cart__item-title {
-  margin: 0;
-  grid-area: title;
-  display: flex;
-  align-items: flex-end;
-}
-.cart__item .cart__item-title a {
-  font-size: 1.1rem;
-  margin: 0;
-}
-.cart__item .cart__item-region {
-  grid-area: region;
-  font-size: 0.88rem;
-  margin: 0;
-}
-.cart__item .cart__item-delete {
-  grid-area: close;
-  cursor: pointer;
-  align-self: center;
-  font-weight: bold;
-}
-
-/* ANIMATIONS FOR SHOPPING CART COMING IN  */
-.cart-enter {
-  max-width: 0;
-}
-.cart-enter.cart-enter-active {
-  max-width: 50%;
-  transition: all 450ms cubic-bezier(1,0,.41,1.24);
-}
-.cart-leave {
-  max-width: 50%;
-}
-.cart-leave.cart-leave-active {
-  max-width: 0;
-  transition: all 450ms cubic-bezier(.5,.06,.58,1.47);
-}
-/* ANIMATIONS FOR SHOPPING CART ITEMS LEAVING  */
-.cart-item-leave {
-  max-height: 100%;
-  /* padding: 0;
-  margin: 0;
-  overflow: hidden; */
-}
-.cart-item-leave.cart-item-leave-active {
-  max-height: 0%;
-  transition: all 200ms linear; /*cubic-bezier(1,0,.41,1.24);*/
-}
-
-
-/* TOP NAV */
-nav {
-  box-shadow: 0 3px 25px rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  background: red;
-  display: grid;
-  grid-template-columns: 1fr repeat(3, auto);
-  grid-gap: 25px;
-  align-items: stretch;
-  max-height: 12vh;
-  border-bottom: 2px solid black;
-  transition: all 0.3s;
-
-  background-image: url("../images/nav-swirl.png"),  linear-gradient(to right, #4a0000, red);
-  /* background-image: url("https://www.transparenttextures.com/patterns/swirl.png"),  linear-gradient(to right, #4a0000, red); */
-  /* background-repeat: no-repeat; */
-}
-nav > * {
-  display: block;
-  flex: 1;
-  text-align: center;
-  /* Ensure all items are vertically centered (it's for the login image in nav bar) */
-  display: flex;
-  align-items: center;
-}
-nav > a:hover {
-  text-decoration: none;
-}
-
-nav > .nav__title {
-  font-size: 1.9rem;
-  outline: none;
-  transform: skew(-6deg) rotateZ(.3deg);
-  letter-spacing: .15rem;
-  font-weight: bold;
-  text-align: left;
-  color: white;
-  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-}
-.nav__user-image {
-  height: 28px;
-  padding: 0 10px;
-  border-radius: 50%;
-}
-.nav__cart-icon i {
-  transition: all 0.3s ease-out;
-}
-.nav__cart-icon:hover i {
-  transform: rotateY(180deg) translateX(5px);
-}
-nav > a:not(.nav__title) {
-  background: maroon;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-}
-nav a:not(.nav__title):hover {
-  background: darkred;
-}
-
 /* DISCOVER TILE */
 .discover-tile {
   text-align: center;
@@ -386,51 +196,7 @@ nav a:not(.nav__title):hover {
 
 
 /* SPLASH SCREEN/SEARCH BANNER */
-.banner {
-  background: white;
-  height: 91vh;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr;
-  overflow: hidden;
-  z-index: 999;
-}
-.banner > * {
-  grid-column: 1;
-  grid-row: 1;
-}
-.banner > .banner__image img {
-  width: 100%;
-  height: 100%;
-  object-fit:cover;
-  opacity: 0.78;
-}
-.banner > .banner__content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  text-align: center;
-  z-index: 1;
-}
-.banner__content h1 {
-  color: black;
-  font-weight: 600;
-  font-size: 5.5rem;
-  text-shadow: 0 3px 5px rgba(0,0,0,0.5);
-}
-.banner__content h2 {
-  color: maroon;
-  font-weight: 400;
-  font-size: 2rem;
-}
-.banner__content span {
-  font-weight: bold;
-  flex-basis: 200px;
-  display: flex;
-  align-items: flex-end;
-}
+
 
 .searchbar {
   display: flex;
@@ -525,16 +291,6 @@ nav a:not(.nav__title):hover {
   color: white;
 }
 .selected > div > * {color: white!important;}
-.down-arrow {
-  font-size: 3.5rem;
-  color: white;
-  opacity: 0.7;
-  animation: downarrowmove 1.5s infinite;
-}
-@keyframes downarrowmove {
-  from {transform: translateY(-40px);}
-  to {transform: translateY(-5px);}
-}
 
 .landing-text {
   display: flex;
