@@ -16,20 +16,19 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav className={this.context.stickyClass}>
-        <a className='nav__title' href='/'>YelpCamp</a>
-        <a href='/discover'><i class="fas fa-map"></i>Discover</a>
-        {this.context.user && this.context.user.loading ?
-          <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-          : this.context.user ?
-          <a href='#' onClick={this.context.signOut}>
-            <img className='nav__user-image' src={this.context.user.providerData[0].photoURL} />
+      <nav className={`${this.context.stickyClass} Header`}>
+        <a className='Header__title' href='/'>YelpCamp</a>
+        <a className='btn btn--flat' href='/discover'>
+          <i class="fas fa-map"></i>Discover
+        </a>
+        {this.context.user && !this.context.user.loading ?
+          <a href='#' className='btn btn--flat' onClick={this.context.signOut}>
+            <img className='Header__user-image' src={this.context.user.providerData[0].photoURL} />
             Log Out
           </a>
-        :
-          <a href='#' className='login' onClick={this.props.toggleLoginForm}>Sign In</a>
+        : <a href='#' className='Header__login btn btn--flat' onClick={this.props.toggleLoginForm}>Sign In</a>
         }
-        <a href='#' onClick={this.props.toggleCart} className='nav__cart-icon'>
+        <a href='#' onClick={this.props.toggleCart} className='Header__cart-icon btn btn--flat'>
           <i className="fas fa-shopping-cart"></i>Cart
         </a>
       </nav>

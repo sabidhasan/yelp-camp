@@ -24,20 +24,20 @@ class Banner extends React.Component {
 
   render(props) {
     return (
-      <div className="banner">
-        <div className='banner__image'>
+      <div className="Banner">
+        <div className='Banner__image'>
           <img src={backgroundImage} />
         </div>
-        <div className='banner__content'>
-          <div className="title">
+        <div className='Banner__content'>
+          <div className="Banner__title">
             <h1>Welcome to YelpCamp!</h1>
             <h2>Search for campgrounds across Canada</h2>
           </div>
           <SearchBar />
-          <span>
+          <span className='Banner__quote bold'>
             { this.state.quote }
           </span>
-          <i className="fas fa-chevron-down down-arrow"></i>
+          <i className="fas fa-chevron-down Banner__chevron"></i>
         </div>
       </div>
     )

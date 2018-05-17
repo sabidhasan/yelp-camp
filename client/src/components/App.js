@@ -88,7 +88,7 @@ class App extends React.Component {
         {this.state.showLoginOverlay ? <LoginForm toggleLoginForm={this.toggleLoginForm} /> : null}
 
         <ReactCSSTransitionGroup
-            transitionName="cart"
+            transitionName="Cart"
             transitionEnterTimeout={450}
             transitionLeaveTimeout={450}>
           {this.state.cart.show ?
