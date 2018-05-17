@@ -25,7 +25,9 @@ a {
 h1, h2, p {
   margin: 0;
 }
-
+i {
+  padding-right: 8px;
+}
 /* GENERAL STYLES */
 .btn {
   font-weight: bold; text-align: center;
@@ -192,8 +194,11 @@ h1, h2, p {
 }
 
     /* Component <SearchBar /> */
-.Searchbar {
+
+    /* <SearchBar /> */
+.SearchBar {
   display: flex; flex-wrap: wrap; width: 85vw; position: relative;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
 }
 .SearchBar__input {
   order: 1; width: 50vw; flex: 1; font-size: 1.5rem; font-weight: 200; border-left: 0;
@@ -225,15 +230,60 @@ h1, h2, p {
 .SearchBar__result--selected:hover, .SearchBar__result--unselected:hover {
   cursor: pointer;
 }
+.SearchBar__result--selected {
+  background: var(--dark-main); color: var(--light);
+}
 .SearchBar__result-icon {
   font-size: 2rem; font-style: normal; padding: 0 20px;
 }
 .SearchBar__result-text {
-  flex: 1; text-align: left;
+  flex: 1; text-align: left; color: white;
 }
 .SearchBar__result-text > h1 {
-  color: var(--dark-main); font-size: 1rem; margin: 3px 0; text-shadow: none;
+  color: var(--accent); font-size: 1rem; margin: 3px 0; text-shadow: none; text-transform: capitalize;
 }
 .SearchBar__result-text > h2 {
-  margin: 0; padding: 0; color: var(--light-main); font-size: 0.9rem;
+  margin: 0; padding: 0; color: var(--very-light); font-size: 0.9rem; font-weight: 100;
+}
+
+    /* Component <LandingText /> */
+.LandingText {
+  display: flex; align-items: stretch; justify-content: space-between;
+  padding: 60px 40px; margin: 30px 0; padding: 30px 20px; background: var(--light);
+}
+.LandingText__section {
+  flex: 1; padding: 0 20px; border-left: 2px solid var(--light-main); transition: all 0.1s;
+}
+.LandingText__section:first-child {
+  border-left: 0;
+}
+.LandingText__section:hover {
+  transform: scale(1.1);
+}
+.LandingText__title {
+  height: 70px; font-weight: 800; align-items: flex-start; color: var(--light-main)
+}
+.LandingText__text {
+  line-height: 1.5rem;
+}
+
+    /* Component <LandingTiles /> */
+.LandingTiles {
+  background: none; padding: 20px 50px;
+}
+.LandingTiles__section, LandingTiles__section:first-child {
+  /* first child pseudo slector used to override .landing-text > section:first-child above*/
+  border: 1px solid var(--light-main); background: var(--very-light);
+  margin: 0 10px; padding: 35px 0; border-radius: 5px;
+  display: grid; align-items: center; justify-content: center; grid-gap: 10px 0;
+  text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+.LandingTiles__text {
+  font-weight: 100; margin: 0;
+}
+.LandingTiles__number {
+  font-size: 1.4rem;
+}
+.LandingTiles__icon {
+  font-size: 6.5rem; padding: 15px 0; border-bottom: 1px solid var(--light-main);
 }
