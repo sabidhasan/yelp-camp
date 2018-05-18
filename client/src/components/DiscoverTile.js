@@ -2,11 +2,14 @@ import React from 'react'
 
 const DiscoverTile = (props) => {
   return (
-    <div className='discover-tile'>
+    <div className='DiscoverTile flex-center'>
       Find campgrounds in your province, and across Canada
-      <a href='/discover' className='discover-button'>
+      <button
+        onClick={() => window.location = '/discover'}
+        className='DiscoverTile__button btn btn--large'
+      >
         DISCOVER
-      </a>
+      </button>
     </div>
   )
 }

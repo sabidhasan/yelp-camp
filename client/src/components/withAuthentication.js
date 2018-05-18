@@ -27,9 +27,9 @@ const withAuthentication = (Component) => {
       signOut: PropTypes.func,
     }
 
-    signInUser() {
+    signInUser(provider) {
       this.context.startLoad();
-      signInFunc()
+      signInFunc(provider)
       .then(val => {
         this.setState({user: val}, () => this.context.finishLoad())
       })

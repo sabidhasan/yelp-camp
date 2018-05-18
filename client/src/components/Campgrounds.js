@@ -35,21 +35,19 @@ class Campgrounds extends React.Component {
 
   render() {
     return (
-      <ul className="highlightedCampgrounds">
-        <h1>
-          <span>Some Awesome Campgrounds</span>
-          <span
+      <ul className='Campgrounds'>
+        <div className='Campgrounds__header flex-center'>
+          <h1 className='Campgrounds__header-title'>Some Awesome Campgrounds</h1>
+          <i
+            className={`Campgrounds__random fas fa-sync-alt ${this.state.spin ? 'Campgrounds__random--spin' : ''}`}
             onClick={this.newRandoms}
-            className={this.state.spin ? 'spin' : ''}
             ref={spinner => this.spinner = spinner}
-            >
-            🔃
-          </span>
-        </h1>
+            ></i>
+        </div>
         {this.state.campgrounds.map(val => {
           const rating = val.comments.reduce((acc, val) => acc + val.rating, 0) / val.comments.length || 0
           return (
-            <li key={val['_id']} className='highlightedCampgrounds__tile'>
+            <li key={val['_id']} className='CampgroundTile'>
               <CampgroundTile
                 id={val.id}
                 name={val.name}

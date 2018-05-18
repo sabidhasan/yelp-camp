@@ -3,19 +3,20 @@ import React from 'react'
 class RatingBar extends React.Component {
     constructor(props) {
       super(props)
-      this.state = {
-        rating: props.rating || 0,
-        // updateRating: props.updateRating || undefined
-      }
+      this.bs = 2;
+    //   this.state = {
+    //     rating: props.rating || 0,
+    //     // updateRating: props.updateRating || undefined
+    //   }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({rating: nextProps.rating})
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     this.setState({rating: nextProps.rating})
+    // }
 
     render() {
       // for rating of campgrounds
-      let initRating = this.state.rating;
+      let initRating = this.props.rating || 0;
       let rating = new Array(5);
 
       for (var i = 0; i < rating.length; i++) {
@@ -29,15 +30,18 @@ class RatingBar extends React.Component {
           initRating -= 1;
         }
       }
-      return rating.map((val, idx) => {
-        return (
+      rating = rating.map((val, idx) => (
           <span
             key={idx}
             onClick={() => {if (this.props.updateRating) this.props.updateRating(idx + 1)}}
-            className={'star star' + (Math.floor(val * 10) / 10 * 100) + ` ${this.props.small ? 'star-small' : null}`}></span>
-        );
-      });
+            className={'RatingBar__star star' + (Math.floor(val * 10) / 10 * 100) +
+                ` ${this.props.small ? 'RatingBar__star--small' : null}`
+            }
+          >
+          </span>
+        ));
+      return <div className='RatingBar'>{rating}</div>
     }
   }
-
+console.log(RatingBar.bs);
 export default RatingBar

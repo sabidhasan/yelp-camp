@@ -95,7 +95,7 @@ class SearchBar extends React.Component {
         onMouseDown={this.goToCampground}>
         <i className='SearchBar__result-icon'>{v.icon}</i>
         <div className='SearchBar__result-text capitalize'>
-          <h1 className='bold'>{v.name}</h1>
+          <h2 className='bold'>{v.name}</h2>
           <h2>{v.text}</h2>
         </div>
       </li>
@@ -119,7 +119,7 @@ class SearchBar extends React.Component {
         <ul className={`SearchBar__results${this.state.active ? '--active' : '--hidden'}`}>
           {(searchResults.length || !this.state.searchQuery) ?
             searchResults
-            : <p>No results for '{this.state.searchQuery}'</p>
+            : <p className='SearchBar__no-results bold'>No results found for '{this.state.searchQuery}'</p>
           }
         </ul>
       </form>

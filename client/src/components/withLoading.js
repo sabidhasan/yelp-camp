@@ -39,9 +39,9 @@ const withLoading = (Component) => {
 
     render() {
       const loadingDiv = (
-        <div className='loading-container'>
-          <div className='loading__spinner'>
-            <div className='loading__center'></div>
+        <div className='withLoading flex-center'>
+          <div className='withLoading__spinner flex-center'>
+            <div className='withLoading__spinner-center'></div>
           </div>
         </div>
       )
