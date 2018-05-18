@@ -15,12 +15,17 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
-const provider = new firebase.auth.GoogleAuthProvider();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
+const providers = {
+  facebook: facebookProvider,
+  google: googleProvider
+}
 export const auth = firebase.auth();
 
 
-export const signInFunc = () => {
-  return auth.signInWithRedirect(provider);
+export const signInFunc = (provider) => {
+  return auth.signInWithRedirect(providers[provider]);
 }
 
 export const signOutFunc = () => {
