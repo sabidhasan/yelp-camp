@@ -5,8 +5,7 @@
 
 
 2. ## FRONT END TO DOS
-	OVERALL			TODO :	Mobile layout
-					Animations for stuff coming in (e.g. review form)
+	OVERALL			TODO :	Animations for stuff coming in (e.g. review form)
 					React PropTypes
 					Random photos for campgrounds (some variety)
 					All <a> should have proper href
@@ -14,11 +13,17 @@
 					Jest testing - https://facebook.github.io/jest
 					All X buttons should be button, not <a>
 					window.location should be replaced with proper routing
-					Search bar should say “No results found” if no results found
 					Search bar click doesn’t bring up results always
 					Debounce the search bar (on input)
 					Add HOCs for null props rendering
-					Cart icon should be animated on hover in header nav bar
+					CSS			All things should be BEM (https://github.com/airbnb/css)
+								js hooked classes should be prefixed with JS (styles separate)
+								Use 0 instead of none for no border
+								Check all classNames to see if they conform to BEM
+					RatingBar component - doesn’t need to be wrapped by a div anymore
+					componentWillUnmount should have remove event listeners for everything that was added
+					All ‘key’s should be UNIQUE! (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
+					document.querySelector or document.querySelectorAll should be replaced with ‘ref’
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Contact Us section
@@ -32,21 +37,15 @@
 					Facebook login API (Firebase backend and validation on my backend)
 					Landing tile Icons
 					
-	/search			GOAL :	shows full search suggestions (rather than dropdown on /)
-					(param for short or long search. short collates matches
-					for one CG into only highest match as it is now)
-				TODO :	apply filters to search (activ., # campsites, hrs)
+	/search			TODO :	apply filters to search (activ., # campsites, hrs)
 					picture, name, reviews, address
-					type (public/private), distance from you
+					type (public/private)
 					map of all results
 					no results not working
-					paginated
-					don’t show page selector if only one page
 					FILTER, PAGINATION and SEARCH BAR COMPONENT
 					Filter by:
 					    AREA / FEATURES (# of camp sites, distance, rating) / ACTIVITIES 
 					Sort by: rating, best match (original) slug type selector
-					Make map component into its own thing
 					model this: https://www.albertacampgroundguide.ca/campgrounds/
 					Yukon territory filter doesn’t actually work (shows no results)
 					If no address available for any CG (eg. search for “TES”, then hide map entirely)
@@ -58,12 +57,10 @@
 					Get directions link - modal search
 					Write a review button should have a logo (like Yelp)
 					Distance for current campground from your location
-					Missing basics should hide logo (#1723 email address)
 					Reviews check for spam
 					Delete reviews
 					Reviews pagination
 					Sanitize reviews before injecting into DB (HTML, etc.)
-					Only add review after signed in
 					Time stamp formatting
 					Photo gallery (NPM?) for photos
 					NaN error for weather (e.g. 28)
