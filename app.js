@@ -29,7 +29,7 @@ var campgroundSchema = new mongoose.Schema({
   comments: [], paymentMethods: [], region: String, type: String,
   id: Number, description: String, phone: String,
   activities: [],
-  hours: {seasonal: String, daily: String},
+  hours: {seasonal: [String], daily: String},
   prices: {seasonal: [String], daily: [String], weekly: [String]}
 });
 const Campground = mongoose.model("Campground", campgroundSchema);
