@@ -36,6 +36,7 @@
 					It shouldn’t query the server on alt tab for search bar
 					Facebook login API (Firebase backend and validation on my backend)
 					Landing tile Icons
+					Remove american campgrounds
 					
 	/search			TODO :	apply filters to search (activ., # campsites, hrs)
 					picture, name, reviews, address
@@ -76,11 +77,6 @@
 					Style CG data
 					Add basic info for province
 					Discover should redirect if no campgrounds (e.g. Nunavut)
-
-	/add-campground		GOAL :	form for adding new CG
-				TODO :	see Colt Steele for proper naming of this route
-					adds new campground
-					only allow if logged in
 	
 	/add-photo		GOAL :	add new photo for a campground
 				TODO : 	implement
