@@ -6,7 +6,7 @@ const DiscoverCampgroundTile = (props, context) => {
   const cgLoc = {latitude: props.cg.lat, longitude: props.cg.lon}
 
   return (
-    <div>
+    <div className='DiscoverCampgroundTile'>
       <a href={`/campground/${props.cg.id}`}><h2>{props.cg.name}</h2></a>
       <p>{props.cg.region} Region</p>
       <p>{props.cg.address}</p>

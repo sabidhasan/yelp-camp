@@ -1,5 +1,4 @@
 import React from 'react'
-// import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import campIcon from '../images/camp-icon.png'
 import campIconRed from '../images/camp-icon-red.png'
@@ -26,7 +25,8 @@ export class DiscoverGoogleMap extends React.Component {
             <Marker
               key={idx}
               position={point}
-              onClick={() => this.props.setSelected(coords.id)}
+              onMouseDown={() => console.log('hello')}
+              // onClick={() => this.props.setSelected(coords.id)}
               icon={{
                 url: url,
                 scaledSize: new this.props.google.maps.Size(12,12)
@@ -44,6 +44,7 @@ export class DiscoverGoogleMap extends React.Component {
         google={this.props.google}
         zoom={5}
         initialCenter={{lat: averageLat, lng: averageLng}}
+        onClick={(a, b, c, d, e) => console.log(a, b, c, d, e)}
       >
         { markers }
 

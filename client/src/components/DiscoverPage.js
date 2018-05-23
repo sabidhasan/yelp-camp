@@ -27,6 +27,7 @@ class Discover extends React.Component {
   }
 
   setSelected(id) {
+    console.log('click');
     const selectedCampgroundObject = this.state.campgrounds.find(v => id === v.id);
     this.setState({selectedCampgroundObject: selectedCampgroundObject})
   }
@@ -41,37 +42,34 @@ class Discover extends React.Component {
 
   render() {
     if (this.state.campgrounds == null) return null;
-
     return (
-    <div className='discover'>
-     <div className='discover__title'>
-       <h1>Discover campgrounds in <span>{this.state.province.fullName}</span></h1>
-       <p>We have {this.state.campgrounds.length} campgrounds in <span className='capitalize'>{this.state.province.fullName}</span>
-       , of which {this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length}
-       {' '} are shown on the map</p>
-     </div>
-
-     <div className='discover__content'>
-       {this.state.selectedCampgroundObject ?
-         <div className='discover__details'>
-             <DiscoverCampgroundTile
-               cg={this.state.selectedCampgroundObject}
-               userLocation={this.context.userLocation}
-             />
-         </div>
-       : null}
-
-       <div className='discover__map google-map'>
-         <DiscoverGoogleMap
-           coords={this.state.campgrounds}
-           setSelected={this.setSelected}
-           selected={this.state.selectedCampgroundObject}
-         />
+      <div className='Discover'>
+       <div className='Discover__title'>
+         <h1 className='Discover__header'>Discover campgrounds in {this.state.province.fullName}</h1>
+         <p>We have {this.state.campgrounds.length} campgrounds in {this.state.province.fullName}
+         , of which {this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length}
+         {' '} are shown on the map</p>
        </div>
-     </div>
-   </div>
-   )
-   }
+
+       <div className='Discover__content'>
+         {this.state.selectedCampgroundObject ?
+           <DiscoverCampgroundTile
+             cg={this.state.selectedCampgroundObject}
+             userLocation={this.context.userLocation}
+           />
+         : null}
+
+         <div className='Discover__map google-map'>
+            <DiscoverGoogleMap
+             coords={this.state.campgrounds}
+             setSelected={this.setSelected}
+             selected={this.state.selectedCampgroundObject}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Discover

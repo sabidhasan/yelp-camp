@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Pagination = (props) => {
-  if (props.lastPage === 0) return <h2>No results found. Try applying a different filter</h2>;
+  if (props.lastPage === 0) return null;
 
   // Generate pages counter with current page already in there
   const allPages = [props.currentPage]
@@ -15,32 +15,32 @@ const Pagination = (props) => {
   allPages.sort((a, b) => (a > b ? 1 : -1))
 
   return(
-    <React.Fragment>
-      <div className='search-page-selector'>
-        <span className='page-count'>
-          Page {props.currentPage} of {props.lastPage}
-        </span>
-        {allPages.length > 1 ?
-          <div className='pages'>
-            {props.currentPage > 1
-              ? <a href='' className='prev-link' onClick={props.prevHandler}>« Previous</a>
-              : null
-            }
-            {allPages.map(v=> (
-              <a
-                key={v}
-                className={v===props.currentPage ? 'current' : undefined}
-                onClick={(e) => props.goToPageHandler(e, v - 1)} href='#'>{v}
-              </a>)
-            )}
-            {props.currentPage !== props.lastPage
-              ? <a href='' className='next-link' onClick={props.nextHandler}>Next »</a>
-              : null
-            }
-          </div>
-        : null }
-      </div>
-  </React.Fragment>
+    <div className='Pagination flex-center'>
+      <span className='Pagination__count'>
+        Page {props.currentPage} of {props.lastPage}
+      </span>
+      {allPages.length > 1 ?
+        <div className='Pagination__pages'>
+          {props.currentPage > 1
+            ? <button className='Pagination__link Pagination__prev-link'
+              onClick={(e) => props.goToPageHandler(e, props.currentPage - 2)}>« Previous</button>
+            : null
+          }
+          {allPages.map(v=> (
+            <button
+              key={v}
+              className={`Pagination__link ${v===props.currentPage ? 'Pagination__link--current' : ''}`}
+              onClick={(e) => props.goToPageHandler(e, v - 1)}>{v}
+            </button>)
+          )}
+          {props.currentPage !== props.lastPage
+            ? <button className='Pagination__link Pagination__next-link'
+              onClick={(e) => props.goToPageHandler(e, props.currentPage)}>Next »</button>
+            : null
+          }
+        </div>
+      : null }
+    </div>
   )
 }
 

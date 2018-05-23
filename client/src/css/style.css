@@ -19,7 +19,7 @@ body {
 a {
   text-decoration: none;
 }
-h1, h2, p {
+h1, h2, h3, p {
   margin: 0; font-weight: normal;
 }
 h1 {
@@ -28,15 +28,29 @@ h1 {
 }
 h1::after, h1::before {
   /* Decorative lines for header */
-  content: ' '; width: 20%; height: 50%; min-height: 0.25rem; margin: 0 0 0 10px;
+  content: ' '; width: 20%; height: 0.25rem; margin: 0 0 0 10px;
   border-top: 1px solid; border-bottom: 1px solid; display: inline-block;
 }
 h1::before { margin: 0 10px 0 0;}
 h2 {
   color: var(--light-main);
 }
+h3 {
+  color: var(--accent);
+}
 i {
   padding-right: 8px;
+}
+button[disabled]:hover {
+  cursor:not-allowed;
+}
+
+/* Google Map Related Stuff */
+.gmnoprint, .gm-style-cc, .gmnoprint + button {
+  display: none;
+}
+.google-map > div {
+  position: relative; height: 100%; width: 100%;
 }
 
 /* GENERAL STYLES */
@@ -62,7 +76,7 @@ i {
   color: var(--light);
 }
 .btn--flat:hover {
-  background: var(--light-main);
+  background: var(--accent); color: var(--very-light)
 }
 .flex-center {
   display: flex; align-items: center; justify-content: center;
@@ -118,6 +132,24 @@ i {
   from {transform: rotate(0)}
   to {transform: rotate(360deg)}
 }
+    /* <DiscoverSVGMap /> */
+@keyframes DiscoverSVGMap-scroll {
+  /* Show each province for a bit, then scroll */
+  0%, 1% {transform: translateY(-0%)}
+  8%, 9% {transform: translateY(-100%)}
+  16%, 17% {transform: translateY(-200%)}
+  24%, 25% {transform: translateY(-300%)}
+  32%, 33% {transform: translateY(-400%)}
+  40%, 41% {transform: translateY(-500%)}
+  48%, 49% {transform: translateY(-600%)}
+  56%, 57% {transform: translateY(-700%)}
+  64%, 65% {transform: translateY(-800%)}
+  72%, 73% {transform: translateY(-900%)}
+  80%, 81% {transform: translateY(-1000%)}
+  88%, 89% {transform: translateY(-1100%)}
+  96%, 97% {transform: translateY(-1200%)}
+  100% {transform: translateY(0%)}
+}
 
 /* COMPONENT SPECIFIC STYLES */
     /* Component: <App/> */
@@ -137,19 +169,28 @@ i {
 .Header > a:hover {
   text-decoration: none;
 }
+.Header > button {
+  font-size: .8rem;
+}
 .Header__title {
   font-size: 1.9rem; transform: skew(-6deg) rotateZ(.3deg);
   letter-spacing: .15rem; font-weight: bold; text-align: left;
-  color: var(--light); text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  color: var(--very-light); text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
-.Header__cart-icon i {
+.Header__discover-icon, .Header__login, .Header__cart-icon {
+  border: 1px solid;
+}
+.Header__cart-icon i, .Header__discover-icon i {
   transition: all 0.3s ease-out;
+}
+.Header__discover-icon:hover i {
+  transform: scaleX(-1) translateX(6px);
 }
 .Header__cart-icon:hover i {
   transform: rotateY(180deg) translateX(5px);
 }
 .Header__user-image {
-  height: 28px; padding: 0 10px; border-radius: 50%;
+  height: 28px; margin: 0 7px 0 0; border-radius: 50%;
 }
 
     /* Component <XButton /> */
@@ -163,11 +204,11 @@ i {
     /* Component <Cart/> */
 .Cart {
   /* Ensure it is always at right */
-  position: fixed; width: 40%; height: 100vh; top: 0; right: 0;
-  background: var(--light);
+  position: fixed; width: 45%; height: 100vh; top: 0; right: 0;
+  background: linear-gradient(to bottom, var(--light) 0px, var(--light) 80px, var(--accent) 80px);
   /* ENsure it is behind the overlay for login! */
   z-index: 2; display: grid; grid-gap: 10px 0; grid-template-columns: 1fr 35px;
-  grid-template-rows: 45px 45px repeat(auto-fit, 70px); padding: 5px 15px;
+  grid-template-rows: 65px 55px repeat(auto-fit, 70px); padding: 5px 15px;
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4); overflow-y: scroll;
 }
 .Cart__close {
@@ -214,12 +255,15 @@ i {
 .Banner__image img {
   width: 100%; height: 100%; object-fit: cover; opacity: 0.78;
 }
+.Banner__logo {
+  transform: translateY(-25px) scaleX(0.92); height: 4.2rem;
+}
 .Banner__content {
   display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
   text-align: center; width: 100%;
 }
 .Banner__quote {
-  flex-basis: 200px; display: flex; align-items: flex-end;
+  flex-basis: 200px; display: flex; align-items: flex-end; color: var(--very-light);
 }
 .Banner__title > h1 {
   color: var(--dark-main); font-weight: 600; font-size: 5.5rem;
@@ -335,7 +379,7 @@ i {
     /* Component <DiscoverTile /> */
 .DiscoverTile {
   text-align: center; font-weight: 100; height: 65vh; font-size: 1.8rem;
-  color: var(--light-main); box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.7);
+  color: var(--very-light); box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.7);
   margin: 10px 0 50px 0;
   background: url('../images/test2.jpg') bottom no-repeat; background-size: cover;
   flex-direction: column;
@@ -390,7 +434,7 @@ i {
 
     /* Component <RatingBar /> */
 .RatingBar {
-  display: flex; flex-wrap: wrap;
+  display: inline-flex; flex-wrap: wrap;
 }
 .RatingBar__star {
   /* background for star */
@@ -406,7 +450,7 @@ i {
   position: absolute; top: 0; left: 0;
 }
 .RatingBar__star:before {
-  display: block; content: ' '; height: 100%; background: var(--accent); opacity: 0.8;
+  display: block; content: ' '; height: 100%; background: var(--dark-main); opacity: 0.8;
 }
 .RatingBar__star--small {
   height: 20px; width: 20px; margin: 0 2px;
@@ -414,12 +458,53 @@ i {
 .RatingBar__star--small:after {
   font-size: 0.95rem;
 }
+.RatingBar--editable:hover .RatingBar__star {
+  /* Make all of them green if hovered anywhere */
+  background: var(--dark-main);
+}
+.RatingBar--editable .RatingBar__star:hover ~ .RatingBar__star {
+  /* Make all following the currently hovered one gray again for visual effect */
+  background: var(--light);
+}
+.star100:before {
+  transform: translateX(0%);
+}
+.star90:before {
+  transform: translateX(-10%);
+}
+.star80:before {
+  transform: translateX(-20%);
+}
+.star70:before {
+  transform: translateX(-30%);
+}
+.star60:before {
+  transform: translateX(-40%);
+}
+.star50:before {
+  transform: translateX(-50%);
+}
+.star40:before {
+  transform: translateX(-60%);
+}
+.star30:before {
+  transform: translateX(-70%);
+}
+.star20:before {
+  transform: translateX(-80%);
+}
+.star10:before {
+  transform: translateX(-90%);
+}
+.star0:before {
+  transform: translateX(-100%);
+}
 
     /* Component <Footer /> */
 .Footer {
   padding: 25px 10px 20px 10px; background: var(--light-main);
   border-top: 2px solid var(--accent); text-align: center; flex-direction: column;
-  color: var(--very-light); font-weight: 100;
+  color: var(--very-light); font-weight: 100; box-shadow: 0px -6px 20px rgba(50, 50, 60, 0.5);
 }
 .Footer__text {
   font-size: 1.3rem; color: var(--very-light); margin: 0 0 15px 0;
@@ -456,7 +541,7 @@ i {
     /* Component <LoginForm />  */
 .LoginForm {
   position: fixed; z-index: 3; top: 0; width: 100vw; height: 100vh; overflow: hidden;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.70);
 }
 .LoginForm__content {
   background: var(--very-light); width: 35%; min-width: 400px; height: 80%; border-radius: 8px;
@@ -480,6 +565,7 @@ i {
 .withLoading {
   position: fixed; top: 0px; left: 0px; width: 100vw; height: 100vh;
   background: var(--dark-main); opacity: 0.80;
+  /* Force it on top of everything! */
   z-index: 4;
 }
 .withLoading__spinner {
@@ -489,4 +575,494 @@ i {
 }
 .withLoading__spinner-center {
   width: 85%; height: 85%; background: var(--dark-main); border-radius: 50%;
+}
+
+    /* Component <Search /> */
+.Search__filter-container {
+  display: grid; grid-gap: 10px;
+}
+.Search__filter-container .SearchBar {
+  justify-self: center;
+}
+.Search__results {
+  display: grid; grid-template-columns: 1.2fr 1fr; grid-gap: 10px 20px;
+  position: relative; padding: 20px 10px;
+}
+.Search__results-list {
+  list-style: none; padding: 0; margin: 0;
+}
+.Search__summary {
+  grid-column: 1 / -1;
+}
+    /* Component <SearchResultTile /> */
+.SearchResultTile {
+  display: grid; grid-template-columns: 100px 2fr 1fr;
+  grid-template-rows: repeat(auto-fit, minmax(20px, 1fr));
+  grid-template-areas: "image title address" "image region distance" "image rating rating" "description description description";
+  margin: 0; padding: 10px 0; border-bottom: 3px double var(--accent); grid-gap: 8px 2px;
+}
+.SearchResultTile:last-child {
+  border-bottom: none;
+}
+.SearchResultTile__title {
+  grid-area: title; word-break: break-word; font-size: 1.15rem; font-weight: normal;
+}
+.SearchResultTile__region {
+  grid-area: region; font-size: 0.95rem;
+}
+.SearchResultTile__description {
+  margin: 0;
+  grid-area: description;
+}
+.SearchResultTile__address {
+  margin: 0; grid-area: address; text-align: right; font-size: 0.85rem;
+}
+.SearchResultTile__distance {
+  grid-area: distance; text-align: right; font-size: 0.85rem;
+}
+.SearchResultTile__image {
+  grid-area: image; max-width: 95px; border-radius: 5px; margin: 5px 0;
+}
+.SearchResultTile__rating {
+  justify-content: space-between; grid-area: rating;
+}
+.SearchResultTile__rating-count {
+  margin: 5px 0; display: inline-block;
+}
+
+    /* Component <FilterSearch/> */
+.FilterSearch {
+  background: var(--very-light); display: grid; grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px 10px; padding: 10px 15px;
+}
+.FilterSearch--hidden {
+  display: none;
+}
+.FilterSearch__tiles {
+  grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 5px 10px;
+  max-height: 0; opacity: 0; transition: all 0.4s linear; overflow: hidden;
+}
+.FilterSearch__tiles--expanded {
+  max-height: 999px; opacity: 1;
+}
+.FilterSearch__section {
+  max-height: 320px; overflow: hidden; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px; border: 1px solid var(--accent); padding: 5px; display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
+.FilterSearch__section .btn {
+  justify-self: flex-end;
+}
+
+    /* Component <MultiCheckBox /> */
+.MultiCheckBox__container {
+  display: grid; overflow-y: scroll;
+}
+.MultiCheckBox__label {
+  padding: 2px 0;
+}
+.MultiCheckBox__text {
+   display: flex; align-items: center; text-transform: capitalize;
+}
+.MultiCheckBox__text:hover {
+  cursor: pointer; font-weight: bold;
+}
+.MultiCheckBox__checkbox {
+  position: absolute; left: -9999px;
+}
+.MultiCheckBox__text::before {
+  content: ' '; width: 17px; height: 17px; border-radius: 3px; border: 1px solid var(--dark-main);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); background: var(--dark-main); margin-right: 15px;
+  display: flex; align-items: center; justify-content: center; font-size: .9rem;
+  font-weight: bold; color: var(--very-light);
+}
+.MultiCheckBox__checkbox:checked + .MultiCheckBox__text:before {
+  content: 'X'
+}
+
+    /* Component <Pagination /> */
+.Pagination {
+  position: relative; margin-top: 10px; min-height: 35px;
+}
+.Pagination__count {
+  position: absolute; left: 0;
+}
+.Pagination__pages {
+  border: 1px solid var(--dark-main); border-radius: 3px; overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+.Pagination__link {
+  padding: 6px 9px; color: var(--very-light); text-align: center; display: inline-block;
+  background: var(--accent); outline: none; border: 0; width: 3rem; transition: all 0.2s;
+}
+.Pagination__link:hover {
+  cursor: pointer;
+}
+.Pagination__link:hover:not(.Pagination__link--current) {
+  background: var(--light-main)
+}
+.Pagination__next-link {
+  border-left: 2px solid var(--dark-main); width: 100px; font-weight: bold;
+}
+.Pagination__prev-link {
+  border-right: 2px solid var(--dark-main); width: 100px; font-weight: bold;
+}
+.Pagination__link--current {
+  background: var(--dark-main);
+  font-weight: 900;
+}
+
+    /* Component <Select /> */
+.Select {
+  position: relative; width: 65%; padding: 6px; margin: 2px 0; user-select: none;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); border-radius: 4px; display: grid;
+  grid-template-columns: 1fr auto; transition: all 50ms; align-self: flex-start;
+}
+.Select::after {
+  content: '<>'; display: flex; margin-left: 6px; transition: all 50ms;
+}
+.Select--expanded {
+  background: var(--light-main);
+}
+.Select--expanded::after {
+  transform: rotate(270deg) translateX(-1px) translateY(-2px); color: var(--very-light);
+}
+.Select__current-value {
+  text-transform: capitalize; border-right: 1px solid var(--accent);
+}
+.Select__current-value--active {
+  color: var(--very-light);
+}
+.Select__items {
+  max-height: 0; position: absolute; right: 0; left: 0; padding: 0; list-style: none;
+  overflow: scroll; background: var(--very-light); margin-top: 32px; border-radius: 5px;
+  transition: all 50ms;
+}
+.Select__items--expanded {
+  border: 1px solid var(--dark-main); max-height: 200px; display: block;
+}
+.Select__item {
+  padding: 2px 5px; text-transform: capitalize;
+}
+.Select__item:hover {
+  cursor: pointer; background: var(--accent); color: var(--very-light);
+}
+
+    /* Component <InputRange /> . Overwriting default styles */
+.input-range {
+  margin: 30px auto; width: 80%!important;
+}
+.input-range__slider, .input-range__track--active {
+  background: var(--dark-main)!important; border: var(--accent)!important;
+}
+.input-range__label-container {
+  font-size: 0.9rem; color: var(--dark-main);
+}
+
+    /* Component <SearchResultsMap />  */
+.SearchResultsMap {
+  border: 2px solid var(--accent); height: 500px; border-radius: 4px; padding: 0; overflow: hidden;
+  /* This means after you scroll past 10px of the top of this element it'll be absolute
+  Otherwise, it'll be postiion: relative */
+  position: sticky; top: 10px;
+}
+
+    /* Component <DiscoverSVGMap /> */
+.DiscoverSVGMap {
+  margin: 0 auto; display: flex; flex-wrap: wrap;
+}
+.DiscoverSVGMap svg {
+  /* Give explicit height - SVG doesn't scale otherwise */
+  height: 470px;
+  flex-basis: 100%;
+}
+.DiscoverSVGMap #map-canada {
+  fill: var(--accent);
+}
+.DiscoverSVGMap__map-text {
+  flex-basis: 100%; font-size: 1.4rem; text-align: center; padding-bottom: 20px;
+  text-transform: capitalize;
+}
+.DiscoverSVGMap__scroll {
+  height: 1.81rem; overflow: hidden; display: inline-block; padding: 0 5px;
+}
+.DiscoverSVGMap__scroll-prov {
+  animation: DiscoverSVGMap-scroll 13s infinite; display: block; text-transform: uppercase;
+}
+
+    /* Component <CanadaMapSVG /> */
+.CanadaMapSVG__prov {
+  transition: all 50ms;
+}
+.CanadaMapSVG__prov--disabled, .CanadaMapSVG__prov--disabled > * {
+  fill: lightgray;
+}
+.CanadaMapSVG__prov:hover {
+  fill: var(--light-main); stroke: var(--dark-main); stroke-width: 5;
+}
+
+    /* Component <SingleCampground /> */
+.SingleCampground {
+  display: grid; grid-gap: 10px 25px; grid-template-columns: 3.5fr minmax(230px, 1fr);
+  padding: 20px;
+  background: linear-gradient(to bottom, rgba(60, 53, 56, 0.15) 0%, rgba(60, 53, 56, 0.15) 380px, #fff 380px);
+  grid-template-areas:
+      "title title"
+      "region reviewlink"
+      "rating reviewlink"
+      "map map"
+      "basicinfo sidebar"
+      "description sidebar"
+      "activities sidebar"
+      "image sidebar"
+      "review-header sidebar"
+      "NewReviewForm sidebar"
+      "Reviews sidebar"
+}
+.SingleCampground__review-link {
+  grid-area: reviewlink; display: grid; align-items: center; justify-items: center;
+  grid-gap: 10px; margin: 15px 0;
+}
+.SingleCampground__cart {
+  font-size: 0.8rem; width: 60%;
+}
+.SingleCampground__rating {
+  grid-area: rating; align-self: flex-start; margin: 5px 0; display: flex;
+}
+.SingleCampground__info-weather {
+  align-self: flex-start; justify-self: flex-start; grid-area: basicinfo;
+  display: grid; width: 100%; grid-template-columns: 2fr 1fr; grid-gap: 30px;
+}
+.SingleCampground__description {
+  grid-area: description;
+}
+.SingleCampground__image {
+  max-width: 100%;
+  grid-area: image;
+}
+.SingleCampground__activities {
+  grid-area: activities;
+}
+.SingleCampground__reviews-header {
+   display: flex; flex-direction: column; grid-area: review-header;
+}
+
+/* Component <SingleCampgroundTitle /> */
+.SingleCampgroundTitle {
+  grid-area: title; margin: 0; color: var(--dark-main); font-size: 2.4rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+.SingleCampgroundTitle__region {
+  display: block; font-size: 1.2rem; text-shadow: none; font-weight: normal; margin: 5px 0;
+  grid-area: region;
+}
+
+    /* Component <ReviewButton /> */
+.ReviewButton {
+  padding: 10px 12px; font-size: 1.3rem; align-self: flex-end;
+}
+.ReviewButton__icon {
+  font-size: 1.5rem; padding: 0 7px; margin: 0;
+}
+
+    /* Component <CampMap /> */
+.CampMap {
+  grid-area: map; border: 2px solid var(--accent); height: 250px; position: relative;
+  background: var(--light-main); display: grid;
+}
+.CampMap__error {
+  grid-row: 1; grid-column: 1; z-index: 1; text-align: center; display: grid;
+}
+.CampMap__error-header {
+  color: var(--very-light);
+}
+.CampMap svg {
+  height: 100%; grid-row: 1; grid-column: 1; filter: blur(4px); justify-self: center;
+}
+
+    /* Component <InfoBox /> */
+.InfoBox {
+  display: grid; grid-template-columns: 40px 1fr; align-items: stretch;
+  margin: 15px 0; border-radius: 3px;
+  /* border: 2px solid var(--dark-main); */
+  /* background: var(--accent); color: var(--very-light); */
+}
+.InfoBox__icon {
+  justify-self: center;
+}
+
+    /* Component <WeatherBox /> */
+.WeatherBox {
+  display: grid; grid-template-columns: auto 1fr; grid-gap: 0 10px;
+  grid-template-areas:
+    "header header"
+    "summary text"
+    "summary item"
+    "summary item"
+    "summary item";
+  grid-row: span 2; text-align: center; margin: 15px 0;
+}
+.WeatherBox__header {
+  grid-area: header; text-align: center; border-bottom: 1px solid var(--accent);
+}
+.WeatherBox__text {
+  font-size: 1.3rem;
+  grid-area: text;
+  font-weight: bold;
+  text-align: left;
+}
+.WeatherBox__summary {
+  font-size: 4rem;
+  grid-area: summary;
+}
+.WeatherBox__item {
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+    /* Component <Activities /> */
+.Activities {
+  list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+.Activities__logo {
+  font-size: 3rem;  padding: 0;  flex-basis: 100%;
+}
+.Activities__name {
+  transform: translateY(100%); transition: all 0.1s; flex-basis: 100%;
+  font-weight: bold; text-transform: capitalize;
+}
+.Activities__activity {
+  flex-wrap: wrap; text-align: center; overflow: hidden;
+}
+.Activities__activity:hover > .Activities__name {
+  transform: translateY(-45%);
+}
+
+    /* Component <NewReviewForm /> */
+.NewReviewForm {
+  border: 1px solid var(--accent); border-radius: 4px; margin: 5px 0;
+  padding: 5px; display: grid; grid-template-columns: 200px 1fr; grid-area: NewReviewForm;
+}
+.NewReviewForm__author {
+  justify-self: flex-end; display: flex; align-items: center;
+}
+.NewReviewForm__image {
+  height: 28px; margin: 0 7px 0 0; border-radius: 50%;
+}
+.NewReviewForm__text {
+  border: 0; width: 100%; min-height: 100px; font-size: 1.1rem; font-family: inherit;
+  grid-column: 1 / -1; resize: none; outline: none; line-height: 1.5rem;
+}
+.NewReviewForm__error {
+  grid-column: 1 / -1;
+}
+.NewReviewForm__controls {
+  display: grid; grid-template-columns: auto auto 1fr; justify-items: flex-end;
+  grid-gap: 15px; grid-column: 1 / -1;
+}
+
+    /* Component <CircularProgressBar /> */
+.CircularProgressbar {
+  width: 30px; height: 30px;
+}
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: var(--dark-main); stroke-linecap: round; transition: all 0.6s;
+}
+.CircularProgressbar .CircularProgressbar-trail {
+  stroke: var(--accent);
+}
+.CircularProgressbar .CircularProgressbar-text {
+  display: none;
+}
+
+    /* Component <Reviews /> */
+.Reviews {
+  padding: 15px; grid-area: Reviews; max-height: 9999px;
+}
+.Reviews-delete-leave {
+  opacity: 1;
+}
+.Reviews-delete-leave.Reviews-delete-leave-active {
+  opacity: 0; transform: translateX(-500px); transition: all 0.3s cubic-bezier(.5,.06,.58,1.47);
+}
+
+    /* Component <Review /> */
+.Review {
+  display: grid; grid-template-columns: 180px 1fr 25px; grid-gap: 15px;
+  border-bottom: 1px solid var(--accent); padding: 15px 0;
+  grid-template-areas: "Review__identity Review__rating Review__delete"
+                       "Review__identity Review__text Review__delete";
+}
+.Review:hover .Review__delete {
+  opacity: 1;
+}
+.Review:last-child {
+  border: 0;
+}
+.Review:last-child .Review__rating:after {
+  content: '🏆 First to review'; font-size: 0.9rem;
+}
+.Review__rating-bar {
+  flex-basis: 100%;
+}
+.Review__identity {
+  display: grid; grid-template-columns: 1fr 2fr; grid-gap: 0 10px; align-items: flex-start;
+  grid-area: Review__identity;
+}
+.Review__author {
+  overflow-wrap: break-word;
+}
+.Review__image {
+  width: 100%; border-radius: 4px; border: 2px solid var(--accent); margin-right: 5px;
+}
+.Review__rating {
+  display: flex; flex-wrap: wrap; grid-area: Review__rating;
+}
+.Review__time-stamp {
+  flex-basis: 100%;
+}
+.Review__delete {
+  grid-area: Review__delete; font-size: 2.2rem; opacity: 0; transition: all 0.5s;
+  color: var(--accent);
+}
+.Review__text {
+  grid-column: 1 / span 2; grid-area: Review__text;
+}
+
+    /* Component <Sidebar /> */
+.Sidebar {
+  grid-area: sidebar; border-left: 1px solid var(--accent); padding: 0 0 0 10px;
+  margin: 10px 0;
+}
+.Sidebar__section {
+  display: flex; flex-direction: column; margin: 0px 0;
+  border-bottom: 1px solid var(--light-main);  padding: 10px 0;
+}
+.Sidebar__section:last-child {
+  border-bottom: 0;
+}
+.Sidebar__heading {
+  font-weight: bold; font-size: 1.35rem;
+}
+.Sidebar__subheading {
+  font-size: 1.1rem;
+}
+.Sidebar__details {
+  margin-left: 5px;
+}
+.Sidebar__text {
+  font-size: 0.9rem; margin: 5px 0 5px 10px;
+}
+
+    /* Component <Discover /> */
+.Discover {
+  display: grid; grid-template-columns: 1fr; grid-gap: 10px 25px; margin: 10px 10px 35px 10px;
+}
+.Discover__header {
+  text-transform: capitalize;
+}
+.Discover__map {
+  border: 2px solid var(--accent); height: 500px; border-radius: 4px; padding: 0;
+  overflow: hidden; position: relative;
 }

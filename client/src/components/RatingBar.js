@@ -3,7 +3,6 @@ import React from 'react'
 class RatingBar extends React.Component {
     constructor(props) {
       super(props)
-      this.bs = 2;
     //   this.state = {
     //     rating: props.rating || 0,
     //     // updateRating: props.updateRating || undefined
@@ -40,8 +39,8 @@ class RatingBar extends React.Component {
           >
           </span>
         ));
-      return <div className='RatingBar'>{rating}</div>
+      return <div className={`RatingBar ${this.props.updateRating ? ' RatingBar--editable' : ''}`}>{rating}</div>
     }
   }
-console.log(RatingBar.bs);
+
 export default RatingBar

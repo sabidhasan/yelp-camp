@@ -95,38 +95,36 @@ class NewReviewForm extends React.Component {
     const fillPercentage  = Math.round(this.state.reviewText.length / 1000 * 100)
     var styles = {};
     if (fillPercentage === 100) {
-      var styles = {path: {stroke: 'red'}};
+      styles = {path: {stroke: 'red'}};
     } else if (fillPercentage > 85) {
-      var styles = {path: {stroke: 'orange'}};
+      styles = {path: {stroke: 'orange'}};
     }
 
     return (
-      <form className='review-form'>
-        <span className='review-form__picker rating'>
-          <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
-        </span>
-        <span className='review-form__author'>
+      <form className='NewReviewForm'>
+        <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
+        <span className='NewReviewForm__author bold'>
           Posting publically as {this.context.user.displayName}
-          <img src={this.context.user.photoURL} className='nav__user-image' alt =' '/>
+          <img src={this.context.user.photoURL} className='NewReviewForm__image' alt =' '/>
         </span>
         <textarea
           required
           maxLength={1000}
-          className='review-form__text'
+          className='NewReviewForm__text'
           value={this.state.reviewText}
           onChange={this.handleChange}
           placeholder='Write your honest review here!'
           name='reviewText'
         />
-        <span className='error'>{this.state.errorMessage}</span>
-        <div className='review-form__buttons'>
-          <button className='review-link'
+        <span className='NewReviewForm__error'>{this.state.errorMessage}</span>
+        <div className='NewReviewForm__controls'>
+          <button className='btn btn--small'
             onClick={this.postReview}
             disabled={this.state.disableForm ? true : false}
-            >
+          >
             Post Your Review
           </button>
-          <button onClick={(event) => {
+          <button className='btn btn--small' onClick={(event) => {
             this.setState({pickedRating: 0, reviewText: '', errorMessage: null, disableForm: false});
             this.props.toggleReviewForm(event, false)
           }}>Cancel</button>

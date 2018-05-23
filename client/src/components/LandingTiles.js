@@ -20,12 +20,6 @@ const LandingTiles = () => {
         <h2 className='LandingTiles__number bold'>12</h2>
         <p className='LandingTiles__text'>Provinces and Territories</p>
       </section>
-
-      <section className='LandingTiles__section LandingText__section'>
-        <i className="LandingTiles__icon fas fa-users"></i>
-        <h2 className='LandingTiles__number bold'>1.09</h2>
-        <p className='LandingTiles__text'>Million Canadians Camp Yearly</p>
-      </section>
     </div>
   )
 }

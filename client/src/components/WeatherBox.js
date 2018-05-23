@@ -17,20 +17,21 @@ const WeatherBox = (props) => {
   if (!props.weather) return null;
 
   return (
-    <div className='infoBox__weather'>
-      <span className='infoBox__weather-summary'>
+    <div className='WeatherBox'>
+      <h2 className='WeatherBox__header'>Current Conditions</h2>
+      <span className='WeatherBox__summary'>
         {weatherIcons[props.weather.icon]}
       </span>
-      <span className='infoBox__weather-text'>
+      <span className='WeatherBox__text'>
         {props.weather.summary}
       </span>
-      <span className='infoBox__weather-item'>
+      <span className='WeatherBox__item'>
         Temp {Math.round(props.weather.temperature)}℉
       </span>
-      <span className='infoBox__weather-item'>
+      <span className='WeatherBox__item'>
         Humidity {Math.round(props.weather.humidity * 100)}%
       </span>
-      <span className='infoBox__weather-item'>
+      <span className='WeatherBox__item'>
         Wind {Math.round(props.weather.windSpeed)} mph
       </span>
     </div>

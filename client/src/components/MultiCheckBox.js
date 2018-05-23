@@ -4,7 +4,8 @@ class MultiCheckBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedIndices: props.initialSelected,
+      // Select all items by default
+      selectedIndices: props.items.map((v, i) => i),
       // this variable determines wherther to do "selectAll" or selectNone
       selectAll: false
     }
@@ -55,19 +56,22 @@ class MultiCheckBox extends React.Component {
     return (
     <React.Fragment>
       <p className='bold'>{this.props.defaultText} ({this.props.items.length})</p>
-      <a href='#' onClick={this.toggleSelect}>Select {this.state.selectAll ? ' All' : ' None'}</a>
-      <div className='filter__checkbox-container'>
+      <button onClick={this.toggleSelect} className='btn btn--flat'>
+        {`Select ${this.state.selectAll ? 'All' : 'None'}`}
+      </button>
+      <div className='MultiCheckBox__container'>
         {this.props.items
           .map((v, i) => {
             const checked = this.state.selectedIndices.includes(i) ? 'checked' : ''
             return (
-              <label key={i}>
+              <label className='MultiCheckBox__label' key={i}>
                 <input
+                  className='MultiCheckBox__checkbox'
                   type='checkbox'
                   value={v}
                   checked={checked}
                   onChange={(event) => this.updateValue(event, i)} />
-                <span>{v}</span>
+                <span className='MultiCheckBox__text'>{v}</span>
               </label>
             )})
         }

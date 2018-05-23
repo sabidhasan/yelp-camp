@@ -30,13 +30,15 @@ class Select extends React.Component {
   render() {
     return (
       <div
-        className={`filter__dropdown-container${this.state.expanded ? ' container-expanded' : ''}`}
+        className={`Select${this.state.expanded ? ' Select--expanded' : ''}`}
         onClick={this.toggleExpanded}>
-        <span>
+        <span
+          className={`Select__current-value bold ${this.state.expanded ? 'Select__current-value--active' : ''}`}>
           {this.state.value || this.props.defaultText}
         </span>
-        <ul className={this.state.expanded ? 'dropdown-expanded' : undefined}>
+        <ul className={`Select__items ${this.state.expanded ? 'Select__items--expanded' : ''}`}>
           <li
+            className='Select__item'
             onClick={()=> this.updateValue(null)}
             key={-1}>
             {this.props.defaultText}
@@ -44,6 +46,7 @@ class Select extends React.Component {
           {this.props.items
             .map((v, i) => (
               <li
+                className='Select__item'
                 onClick={() => this.updateValue(v)}
                 key={i}>
                 {v.text}

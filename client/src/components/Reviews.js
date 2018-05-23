@@ -1,55 +1,46 @@
 import React from 'react'
 import RatingBar from './RatingBar'
-import { formatDate } from '../helpers/helpers'
-import PropTypes from 'prop-types'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Review from './Review'
 
 class Reviews extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  static contextTypes = {
-    user: PropTypes.object,
-  };
-
   render() {
-    if (!this.props.comments || this.props.comments.length === 0) {
-      return <h2 className='review__first'>Be the first to review this campground</h2>
-    }
-
-    const allComments = this.props.comments.map(val => {
-      const showDeleteButton = this.context.user && this.context.user.uid === val.uid;
+    if (!this.props.comments || !this.props.comments.length) {
       return (
-        <div className='review' key={val.id}>
-          <span className='review__author'>
-            <img src={val.photoURL} alt='' />
-            <span className='review__author-name'>{val.displayName}</span>
-          </span>
-          <div className='review__rating rating'>
-            <RatingBar rating={val.rating} />
-            <span className='review__time'>{formatDate(new Date(val.time))}</span>
-          </div>
-          {showDeleteButton ?
-            <a className='review__delete' onClick={() => this.props.deleteReview(val.id)}>X</a>
-            : null
-          }
-          <span className='review__text'>{val.text}</span>
+        <div className='Reviews'>
+          <h2 className='Reviews__first'>Be the first to review this campground</h2>
         </div>
       )
-    })
-
-    return (
-      <ReactCSSTransitionGroup
-          transitionName="review-delete"
+    } else {
+      console.log(this.props.comments);
+      return (
+        <ReactCSSTransitionGroup
+          transitionName="Reviews-delete"
           transitionEnterTimeout={300}
           transitionLeaveTimeout={300}
-          className={'reviews-container'}
+          className={'Reviews'}
           component='div'
-      >
-      {allComments}
-    </ReactCSSTransitionGroup>
-  )
+          >
+            {this.props.comments.map(val => (
+              <Review
+                key={val.id}
+                id={val.id}
+                photoURL={val.photoURL}
+                displayName={val.displayName}
+                rating={val.rating}
+                time={val.time}
+                deleteReview={this.props.deleteReview}
+                text={val.text}
+                uid={val.uid}
+               />
+            ))}
+        </ReactCSSTransitionGroup>
+      )
+    }
   }
 }
 

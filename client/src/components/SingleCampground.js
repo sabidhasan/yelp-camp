@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import CampMap from './CampMap'
 import WeatherBox from './WeatherBox'
 import InfoBox from './InfoBox'
-import SideBarInfoBox from './SideBarInfoBox'
+import Sidebar from './Sidebar'
 import Reviews from './Reviews'
 import RatingBar from './RatingBar'
 import NewReviewForm from './NewReviewForm'
@@ -17,8 +17,7 @@ class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
     // this.requestedID = parseInt(this.props.match.params.id);
-    this.state = {id: parseInt(this.props.match.params.id), stickyClass: ''};
-    // this.state = {reviewLoginWarning: true};
+    this.state = {id: parseInt(this.props.match.params.id)};
 
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
@@ -55,7 +54,6 @@ class SingleCampground extends React.Component {
         paymentMethods: campground.paymentMethods,
         activities: campground.activities,
         province: campground.province
-        // reviewLoginWarning: true
       }, () => this.context.finishLoad());
     })
     .catch(err => {
@@ -137,73 +135,61 @@ class SingleCampground extends React.Component {
 
   render() {
     return (
-      <div className='singleCampground'>
+      <div className='SingleCampground'>
         <SingleCampgroundTitle name={this.state.name} region={[this.state.region, this.state.province].filter(a => a).join(', ')} />
 
-        <div className='review-link'>
+        <div className='SingleCampground__review-link'>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
-          <button onClick={() => this.props.addToCart(this.state)} className='singleCampground__add-to-cart'>
-            <i className='fas fa-shopping-cart nav__cart-icon'></i>Add to Cart
+          <button
+            onClick={() => this.props.addToCart(this.state)}
+            className='SingleCampground__cart btn btn--flat'>
+            <i className='fas fa-shopping-cart'></i>Add to Cart
           </button>
         </div>
 
-        <div className='rating'>
+        <div className='SingleCampground__rating'>
           <RatingBar rating={this.calculateRating()} />
-          <h2>{this.state.comments ? this.state.comments.length : 0} Reviews</h2>
+          <h2>{this.state.comments ? this.state.comments.length : 0} Review{(this.state.comments && this.state.comments.length !== 1 && 's')}</h2>
         </div>
 
+        <CampMap lat={this.state.lat} lon={this.state.lon} />
 
-        <div className='singleCampground__map google-map'>
-          <CampMap
-            lat={this.state.lat}
-            lon={this.state.lon}
-          />
-        </div>
-
-        <div className='singleCampground__infoBox'>
+        <div className='SingleCampground__info-weather'>
           <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
           <WeatherBox weather={this.state.weather} />
         </div>
 
         {this.state.description ?
-          <div className="description">
-            <h1>Description</h1>
+          <div className="SingleCampground__description">
+            <h2>Description</h2>
             {this.state.description}
           </div>
-          : null
-        }
+        : null }
 
-        <SideBarInfoBox hours={this.state.hours}
+        <Sidebar hours={this.state.hours}
           campsites={this.state.sites}
           prices={this.state.prices}
           paymentMethods={this.state.paymentMethods}
         />
 
-        <img className='campground-image' src={this.state.image} alt="" />
+        <img className='SingleCampground__image' src={this.state.image} alt="" />
 
-        <div className='activities__list'>
+        <div className='SingleCampground__activities'>
           <h1>Activities at {this.state.name}</h1>
-          <ul>
-            <Activities activitiesList={this.state.activities} />
-          </ul>
+          <Activities activitiesList={this.state.activities} />
         </div>
 
-        <h1 className='reviews-header' ref='reviewForm'>
-          Reviews
+        <div className='SingleCampground__reviews-header' ref='reviewForm'>
+          <h1>Reviews</h1>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
-        </h1>
-        {!this.context.user || this.context.user.loading ?
-          <span className='error'>
-            You must be logged in to write a review
-          </span>
-        : this.state.editable ?
+        </div>
+        { this.state.editable ?
           <NewReviewForm
             campgroundID={this.state.id}
             toggleReviewForm={this.toggleReviewForm}
             addNewComment={this.addNewComment}
           />
-        : null
-      }
+        : null}
         <Reviews comments={this.state.comments} deleteReview={this.deleteReview}/>
       </div>
     )

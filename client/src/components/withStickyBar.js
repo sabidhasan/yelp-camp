@@ -17,7 +17,7 @@ const withStickyBar = (Component) => {
 
     componentDidMount() {
       window.addEventListener('scroll', () => {
-        let scrollClass = window.scrollY > 50 ? 'sticky' : '';
+        let scrollClass = window.scrollY > 50 ? 'Header--sticky' : '';
         this.setState({stickyClass: scrollClass})
       })
     }

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SearchBar from './SearchBar'
 import backgroundImage from '../images/test.jpg';
+import logo from '../images/logo.png'
 
 class Banner extends React.Component {
   constructor(props) {
@@ -30,7 +31,10 @@ class Banner extends React.Component {
         </div>
         <div className='Banner__content'>
           <div className="Banner__title">
-            <h1>Welcome to YelpCamp!</h1>
+            <h1>
+              YelpCamp
+              <img className='Banner__logo' src={logo} alt='Logo for YelpCamp' />
+            </h1>
             <h2>Search for campgrounds across Canada</h2>
           </div>
           <SearchBar />
