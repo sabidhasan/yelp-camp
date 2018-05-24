@@ -9,9 +9,9 @@
 					React PropTypes
 					Random photos for campgrounds (some variety)
 					All <a> should have proper href
+						Links in <InfoBox />, <Footer />
 					aria stuff for all elements
 					Jest testing - https://facebook.github.io/jest
-					All X buttons should be button, not <a>
 					window.location should be replaced with proper routing
 					Search bar click doesn’t bring up results always
 					Debounce the search bar (on input)
@@ -27,16 +27,14 @@
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Contact Us section
-					Add a logo
 					Nav bar should have stars behind it like Yelp
 					Random photo in the back of banner every time
-					Redo picture with grid rather than background ::after bs
 					Search button styling
 					Login button styling for FB and Google
 					It shouldn’t query the server on alt tab for search bar
 					Facebook login API (Firebase backend and validation on my backend)
 					Landing tile Icons
-					Remove american campgrounds
+					Remove American campgrounds or fix their address
 					
 	/search			TODO :	apply filters to search (activ., # campsites, hrs)
 					picture, name, reviews, address
@@ -51,6 +49,7 @@
 					Yukon territory filter doesn’t actually work (shows no results)
 					If no address available for any CG (eg. search for “TES”, then hide map entirely)
 					Icons for activities in search
+					Scroll bug for filters not working in some tiles
 
 	/campground/:id		GOAL :	Single campground page
 				TODO :	Unknown campground should 404
@@ -64,9 +63,6 @@
 					Sanitize reviews before injecting into DB (HTML, etc.)
 					Time stamp formatting
 					Photo gallery (NPM?) for photos
-					NaN error for weather (e.g. 28)
-					Delete review
-					Prices on sidebar have double dollar signs $$
 	
 	/discover		GOAL :	
 					map on the right with picked province, highlighted cg on left. click marker to open CG
@@ -77,10 +73,6 @@
 					Style CG data
 					Add basic info for province
 					Discover should redirect if no campgrounds (e.g. Nunavut)
-	
-	/add-photo		GOAL :	add new photo for a campground
-				TODO : 	implement
-
 	
 
 3. ## BACK END ROUTES
