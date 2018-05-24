@@ -18,9 +18,9 @@ class Cart extends React.Component {
        renderItems = this.props.cart.items.map((item, idx) => {
         return (
             <div key={item.id} className='Cart__item'>
-              <h1 className='Cart__item-title'>
-                <a href={`/campground/${item.id}`}>{item.name}</a>
-              </h1>
+              <h2 className='Cart__item-title'>
+                <a className='Cart__item-link bold' href={`/campground/${item.id}`}>{item.name}</a>
+              </h2>
               <img className='Cart__item-photo' src={item.image} alt='' />
               <p className='Cart__item-region'>
                 {[item.region, item.province].filter(a=>!!a).join(', ')} Region

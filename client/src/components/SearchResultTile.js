@@ -5,6 +5,7 @@ const SearchResultTile = (props) => {
   return (
     <li className='SearchResultTile'>
       <a
+        className='SearchResultTile__title-container'
         href={`/campground/${props.id}`}
         onMouseEnter={() => props.onTitleHover(props.id)}
         onMouseLeave={() => props.onTitleHover(null)}

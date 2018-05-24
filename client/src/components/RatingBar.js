@@ -34,7 +34,7 @@ class RatingBar extends React.Component {
             key={idx}
             onClick={() => {if (this.props.updateRating) this.props.updateRating(idx + 1)}}
             className={'RatingBar__star star' + (Math.floor(val * 10) / 10 * 100) +
-                ` ${this.props.small ? 'RatingBar__star--small' : null}`
+                ` ${this.props.small ? 'RatingBar__star--small' : ''}`
             }
           >
           </span>

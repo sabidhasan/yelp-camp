@@ -93,7 +93,7 @@ class SingleCampground extends React.Component {
     this.setState({editable: show});
     if (show) {
       const form = ReactDOM.findDOMNode(this.refs.reviewForm);
-      window.scrollTo(0, form.offsetTop);
+      window.scrollTo(0, form.offsetTop - 350);
     }
   }
 

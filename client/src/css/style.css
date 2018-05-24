@@ -24,7 +24,7 @@ h1, h2, h3, p {
 }
 h1 {
   text-align: center; display: flex; align-items: center; justify-content: center;
-  text-shadow: 2px 2px 25px rgba(255, 0, 0, 0.1); letter-spacing: 0.03rem; color: var(--light-main);
+  letter-spacing: 0.03rem; color: var(--light-main);
 }
 h1::after, h1::before {
   /* Decorative lines for header */
@@ -76,7 +76,7 @@ button[disabled]:hover {
   color: var(--light);
 }
 .btn--flat:hover {
-  background: var(--accent); color: var(--very-light)
+  background: var(--accent); color: var(--very-light); border: 1px solid var(--dark-main)
 }
 .flex-center {
   display: flex; align-items: center; justify-content: center;
@@ -166,10 +166,10 @@ button[disabled]:hover {
   max-height: 12vh; border-bottom: 2px solid var(--light-main); transition: all 0.3s;
   background-image: url("../images/nav-swirl.png"), linear-gradient(to right, var(--dark-main), var(--light-main));
 }
-.Header > a:hover {
+.Header__link:hover {
   text-decoration: none;
 }
-.Header > button {
+.Header > .btn {
   font-size: .8rem;
 }
 .Header__title {
@@ -235,6 +235,9 @@ button[disabled]:hover {
 .Cart__item-title {
   grid-area: title; display: flex; align-items: flex-end; font-size: 1.1rem;
 }
+.Cart__item-link {
+  color: var(--dark-main);
+}
 .Cart__item-region {
   grid-area: region; font-size: 0.88rem; margin: 0;
 }
@@ -248,11 +251,11 @@ button[disabled]:hover {
   display: grid; grid-template-rows: 1fr; grid-template-columns: 1fr;
   overflow: hidden;
 }
-.Banner__image, .Banner__content {
+.Banner__image-container, .Banner__content {
   /* Render both on same grid box (image is background). Move to front */
   grid-column: 1; grid-row: 1; z-index: 1
 }
-.Banner__image img {
+.Banner__image {
   width: 100%; height: 100%; object-fit: cover; opacity: 0.78;
 }
 .Banner__logo {
@@ -265,14 +268,14 @@ button[disabled]:hover {
 .Banner__quote {
   flex-basis: 200px; display: flex; align-items: flex-end; color: var(--very-light);
 }
-.Banner__title > h1 {
+.Banner__title {
   color: var(--dark-main); font-weight: 600; font-size: 5.5rem;
   text-shadow: 0 3px 5px rgba(0,0,0,0.5);
 }
-.Banner__title > h1::after, .Banner__title > h1::before {
+.Banner__title::after, .Banner__title::before {
   display: none;
 }
-.Banner__title > h2 {
+.Banner__subtitle {
   color: var(--very-light); font-weight: 400; font-size: 2rem;
 }
 .Banner__chevron {
@@ -284,7 +287,7 @@ button[disabled]:hover {
 
     /* <SearchBar /> */
 .SearchBar {
-  display: flex; flex-wrap: wrap; width: 85vw; position: relative;
+  display: flex; flex-wrap: wrap; width: 85vw; position: relative; z-index: 1;
 }
 .SearchBar__input {
   order: 1; width: 50vw; flex: 1; font-size: 1.5rem; font-weight: 200; border-left: 0;
@@ -299,7 +302,7 @@ button[disabled]:hover {
   font-size: 1.3rem; background: var(--very-light); color: var(--light-main);
 }
 .SearchBar__button {
-  order: 2; background: var(--dark-main); border: 1px solid maroon; padding: 0 8px;
+  order: 2; background: var(--dark-main); border: 1px solid var(--accent); padding: 0 8px;
   border-radius: 0; border-top-right-radius: 8px; border-bottom-right-radius: 8px;
   font-size: 2.1rem;
 }
@@ -323,7 +326,7 @@ button[disabled]:hover {
   font-size: 2rem; font-style: normal; padding: 0 20px;
 }
 .SearchBar__result-text {
-  flex: 1; text-align: left; color: white;
+  flex: 1; text-align: left; color: var(--very-light);
 }
 .SearchBar__result-text > h1 {
   color: var(--accent); font-size: 1rem; margin: 3px 0; text-shadow: none; text-transform: capitalize;
@@ -413,23 +416,31 @@ button[disabled]:hover {
 .CampgroundTile {
   background: var(--very-light); border: 1px solid var(--accent); padding: 0 0 10px 0;
   border-radius: 7px; animation: CampgroundTile-fade-in .5s; overflow: hidden;
-  display: grid; grid-template-rows: 1fr; grid-template-columns: 3fr 2fr; grid-gap: 5px 0;
+  display: grid; grid-template-columns: 3fr 2fr; grid-gap: 5px 0;
+  grid-template-areas:
+     "image image"
+     "link link"
+     "region region"
+     "rating reviews"
 }
 .CampgroundTile__img {
   max-width: 100%; grid-column: span 2; max-height: 250px; flex-basis: 100%;
-  border-top-left-radius: 3px; border-top-right-radius: 3px;
+  border-top-left-radius: 3px; border-top-right-radius: 3px; grid-area: image;
 }
 .CampgroundTile__name {
   font-size: 1.1rem;
 }
 .CampgroundTile__link {
-  grid-column: span 2; display: block; margin: 0 0 0 3px;
+  grid-column: span 2; display: block; margin: 0 0 0 3px; grid-area: link;
 }
 .CampgroundTile__region {
-  grid-column: span 2; margin: 0 0 0 3px; font-weight: 100;
+  grid-column: span 2; margin: 0 0 0 3px; font-weight: 100; grid-area: region;
 }
 .CampgroundTile > .RatingBar {
-  margin-left: 3px;
+  margin-left: 3px; grid-area: rating;
+}
+.CampgroundTile__review-count {
+  grid-area: reviews;
 }
 
     /* Component <RatingBar /> */
@@ -604,8 +615,11 @@ button[disabled]:hover {
 .SearchResultTile:last-child {
   border-bottom: none;
 }
+.SearchResultTile__title-container {
+  grid-area: title;
+}
 .SearchResultTile__title {
-  grid-area: title; word-break: break-word; font-size: 1.15rem; font-weight: normal;
+  word-break: break-word; font-size: 1.15rem; font-weight: normal;
 }
 .SearchResultTile__region {
   grid-area: region; font-size: 0.95rem;
@@ -689,11 +703,11 @@ button[disabled]:hover {
 }
 .Pagination__pages {
   border: 1px solid var(--dark-main); border-radius: 3px; overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  box-shadow: 0 0 10px rgba(0,0,0,0.6); display: flex;
 }
 .Pagination__link {
   padding: 6px 9px; color: var(--very-light); text-align: center; display: inline-block;
-  background: var(--accent); outline: none; border: 0; width: 3rem; transition: all 0.2s;
+  background: var(--accent); outline: none; border: 0; width: 3.3rem; transition: all 0.2s;
 }
 .Pagination__link:hover {
   cursor: pointer;
@@ -702,10 +716,10 @@ button[disabled]:hover {
   background: var(--light-main)
 }
 .Pagination__next-link {
-  border-left: 2px solid var(--dark-main); width: 100px; font-weight: bold;
+  border-left: 2px solid var(--dark-main); font-weight: bold; flex: 1;
 }
 .Pagination__prev-link {
-  border-right: 2px solid var(--dark-main); width: 100px; font-weight: bold;
+  border-right: 2px solid var(--dark-main); font-weight: bold; flex: 1;
 }
 .Pagination__link--current {
   background: var(--dark-main);
@@ -876,7 +890,7 @@ button[disabled]:hover {
 .CampMap__error-header {
   color: var(--very-light);
 }
-.CampMap svg {
+.CampMap--error svg {
   height: 100%; grid-row: 1; grid-column: 1; filter: blur(4px); justify-self: center;
 }
 
@@ -1051,6 +1065,9 @@ button[disabled]:hover {
 .Sidebar__details {
   margin-left: 5px;
 }
+.Sidebar__details h3 {
+  text-transform: capitalize;
+}
 .Sidebar__text {
   font-size: 0.9rem; margin: 5px 0 5px 10px;
 }
@@ -1065,4 +1082,313 @@ button[disabled]:hover {
 .Discover__map {
   border: 2px solid var(--accent); height: 500px; border-radius: 4px; padding: 0;
   overflow: hidden; position: relative;
+}
+
+
+
+
+
+@media screen and (max-width: 767px) {
+  /* OVERVIEW STYLES */
+  h1::after, h1::before {
+    content: none;
+  }
+  /* GENERAL STYLES */
+  .btn--large {
+    font-size: 1.2rem; padding: 6px 12px; font-weight: bold;
+  }
+  /* Component <Header /> */
+  .Header {
+    padding: 5px; grid-gap: 5px;
+  }
+  .Header > .btn {
+    font-size: .7rem;
+  }
+  .Header__title {
+    font-size: 1.4rem;
+  }
+  .Header__user-image {
+    height: 20px; padding: 0 5px;
+  }
+  .Header__discover-icon, .Header__login, .Header__cart-icon {
+    padding: 4px 8px; font-size: 0.8rem;
+  }
+  .Header--sticky {
+    position: fixed; top: 0; background: var(--very-light);
+    width: 100%; height: 10vh; z-index: 2; padding: 15px 5px;
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); border-bottom: 4px solid var(--dark-main)
+  }
+  .Header--sticky.SingleCampgroundTitle {
+    color: var(--light-main); font-size: 1.1rem; font-weight: bold;
+  }
+  .Header--sticky .Header__title {
+    color: var(--dark-main); text-shadow: none;
+  }
+  /* Component <XButton /> */
+  .XButton:hover {
+    animation: none;
+  }
+  /* Component <Cart/> */
+  .Cart {
+    width: 100%; background: var(--accent); grid-gap: 5px 0;
+    grid-template-rows: 40px 20px repeat(auto-fit, 70px); padding: 5px;
+  }
+  .Cart__header {
+    color: var(--very-light); font-size: 1.5rem;
+  }
+  .Cart__close {
+    font-size: 1.6rem;
+  }
+  .Cart__item {
+    padding: 5px 0;
+  }
+  /* Component <Banner /> */
+  .Banner {
+    height: 55vh; overflow: visible;
+  }
+  .Banner__title {
+    font-size: 2.5rem; margin-bottom: 35px;
+  }
+  .Banner__logo {
+    transform: scaleX(0.92); height: 2.5rem;
+  }
+  .Banner__content {
+    justify-content: flex-start;
+  }
+  .Banner__subtitle {
+    font-size: 1.3rem;
+  }
+  .Banner__quote {
+    flex: 1;
+  }
+  .Banner__chevron {
+    display: none;
+  }
+  /* Component <SearchBar /> */
+  .SearchBar {
+    width: 95vw; max-height: 40px;
+  }
+  .SearchBar__label {
+    display: none;
+  }
+  .SearchBar__input {
+    border: 2px solid var(--accent); font-size: 0.9rem;
+    border-top-left-radius: 8px; border-bottom-left-radius: 8px;
+  }
+  .SearchBar__button {
+    padding: 5px; font-size: 1.8rem;
+  }
+  .SearchBar__result-icon {
+    font-size: 1.4rem;
+  }
+  /* Component <LandingText /> */
+  .LandingText {
+    display: grid; grid-template-columns: 100% 100% 100%; padding: 0; overflow: auto;
+  }
+  .LandingText__section:hover {
+    transform: none;
+  }
+  .LandingText__section {
+    padding: 10px; margin: 20px 0;
+  }
+  /* Component <LandingTiles /> */
+  .LandingTiles {
+    margin: 0; display: flex; flex-direction: column; padding: 0 10px;
+  }
+  .LandingTiles__section, .LandingTiles__section:first-child {
+    grid-template-columns: 1fr 1fr 1fr; padding: 0 5px;  margin: 5px 0; box-shadow: none;
+  }
+  .LandingTiles__number {
+    margin: 15px;
+  }
+  .LandingTiles__icon {
+    border-bottom: 0;
+  }
+  /* Component <DiscoverTile /> */
+  .DiscoverTile {
+    margin: 10px 0;
+  }
+  .DiscoverTile__button {
+    padding: 12px 30px;
+  }
+  /* Component <Campgrounds /> */
+  .Campgrounds {
+    margin: 0 10px 10px 10px;
+  }
+  /* Component <CampgroundTile /> */
+  .CampgroundTile {
+    grid-template-areas:
+       "image image"
+       "link rating"
+       "region reviews"
+  }
+  .CampgroundTile > .RatingBar {
+    margin: 0; justify-self: flex-end;
+  }
+  .CampgroundTile__review-count {
+    text-align: right;
+  }
+  /* Component <Footer /> */
+  .Footer {
+    box-shadow: none; margin-top: 10px; padding:0;
+  }
+  .Footer__text {
+    margin: 0 0 10px 0; font-weight: bold;
+  }
+  .Footer p, .Footer__about {
+    font-size: 0.8rem; margin: 0;
+  }
+  .Footer__social {
+    font-size: 1.7rem; margin: 0;
+  }
+  /* Component <Search /> */
+  .Search__filter-container {
+    grid-gap: 5px;
+  }
+  .Search__results {
+    grid-template-columns: 1fr; grid-gap: 5px 10px; padding: 5px;
+  }
+  .Search__summary {
+    text-align: center; font-size: 1rem;
+  }
+  /* Component <SearchResultTile /> */
+  .SearchResultTile {
+    grid-template-columns: 1fr 1fr 1fr; grid-gap: 0; grid-template-areas:
+      "title title title"
+      "address address address"
+      "region region distance"
+      "rating rating rating"
+      "description description description";
+  }
+  .SearchResultTile__address {
+    text-align: left;
+  }
+  .SearchResultTile__image {
+    display: none;
+  }
+  /* Component <FilterSearch/> */
+  .FilterSearch > button {
+    grid-column: 3;
+  }
+  .FilterSearch__tiles {
+    grid-template-columns: 1fr;
+  }
+  /* Component <Pagination /> */
+  .Pagination__count {
+    display: none;
+  }
+  .Pagination__pages {
+    box-shadow: none; width: 100%;
+  }
+
+  /* Component <DiscoverSVGMap /> */
+.DiscoverSVGMap {
+margin: 0 auto; display: flex; flex-wrap: wrap;
+}
+.DiscoverSVGMap svg {
+/* Give explicit height - SVG doesn't scale otherwise */
+height: 470px;
+flex-basis: 100%;
+}
+.DiscoverSVGMap #map-canada {
+fill: var(--accent);
+}
+.DiscoverSVGMap__map-text {
+flex-basis: 100%; font-size: 1.4rem; text-align: center; padding-bottom: 20px;
+text-transform: capitalize;
+}
+.DiscoverSVGMap__scroll {
+height: 1.81rem; overflow: hidden; display: inline-block; padding: 0 5px;
+}
+.DiscoverSVGMap__scroll-prov {
+animation: DiscoverSVGMap-scroll 13s infinite; display: block; text-transform: uppercase;
+}
+
+  /* Component <SingleCampground /> */
+  .SingleCampground {
+    grid-gap: 5px; grid-template-columns: 3.5fr minmax(230px, 1fr); padding: 5px; background: var(--very-light);
+    grid-template-areas:
+      "title title"
+      "region region"
+      "rating rating"
+      "reviewlink reviewlink"
+      "map map"
+      "basicinfo basicinfo"
+      "description description"
+      "activities activities"
+      "image image"
+      "review-header review-header"
+      "NewReviewForm NewReviewForm"
+      "Reviews Reviews"
+      "sidebar sidebar"
+  }
+  .SingleCampground__review-link {
+    justify-items: flex-start; grid-template-columns: 1fr 1fr; margin: 0;
+  }
+  .SingleCampground__rating {
+    justify-content: space-between;
+  }
+  .SingleCampground__info-weather {
+    grid-template-columns: 1fr; grid-gap: 0;
+  }
+  .SingleCampground__reviews-header {
+    flex-direction: row; justify-content: space-between;
+  }
+  /* Component <SingleCampgroundTitle /> */
+  .SingleCampgroundTitle {
+    text-shadow: none; font-size: 1.8rem; font-weight: bold;
+  }
+  /* Component <ReviewButton /> */
+  .ReviewButton {
+    padding: 4px 8px; font-size: 1.1rem;
+  }
+  /* Component <CampMap /> */
+  .CampMap {
+    height: 220px;
+  }
+  /* Component <InfoBox /> */
+  .InfoBox {
+    margin: 0;
+  }
+  /* Component <WeatherBox /> */
+  .WeatherBox {
+    grid-gap: 0 5px; margin: 0;
+  }
+  .WeatherBox__header {
+    visibility: hidden; font-size: 0;
+  }
+  /* Component <Activities /> */
+  .Activities {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+  .Activities__logo {
+    font-size: 2.2rem;
+  }
+  .Activities__name {
+    transform: translateY(110%);
+  }
+  /* Component <Reviews /> */
+  .Reviews {
+    padding: 5px;
+  }
+  /* Component <Review /> */
+  .Review {
+    grid-gap: 5px; grid-template-areas:
+      "Review__identity Review__rating Review__delete"
+      "Review__text Review__text Review__delete";
+  }
+  .Review__delete {
+    opacity: 1;
+  }
+  /* Component <Sidebar /> */
+  .Sidebar {
+    border: 0; padding: 0; margin: 10px 0;
+  }
+  .Sidebar::before {
+    content: ' '; display: block; height: 5px; border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
+  .Sidebar__text {
+    font-size: 1rem;
+  }
 }

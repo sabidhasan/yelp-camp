@@ -6,6 +6,7 @@ const withLoading = (Component) => {
     constructor(props) {
       super(props);
       this.loading = 0;
+      this.state = {callers: []}
 
       this.startLoad = this.startLoad.bind(this);
       this.finishLoad = this.finishLoad.bind(this);
@@ -21,15 +22,16 @@ const withLoading = (Component) => {
       return {startLoad: this.startLoad, finishLoad: this.finishLoad}
     }
 
-    startLoad() {
-      this.updateLoading(1);
+    startLoad(caller) {
+      console.log('starting');
+      this.updateLoading(1, caller);
     }
 
-    finishLoad() {
-      this.updateLoading(-1);
+    finishLoad(caller) {
+      this.updateLoading(-1, caller);
     }
 
-    updateLoading(num) {
+    updateLoading(num, caller) {
       this.loading += num;
       // Using forceUpdate since this is not a state controlled component
       if ((num == -1 && this.loading == 0) || (num == 1 && this.loading == 1)) {

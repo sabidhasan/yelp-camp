@@ -10,7 +10,7 @@ export class CampMap extends React.Component {
 
     if (!lat || !lon) {
       return (
-        <div className='CampMap google-map'>
+        <div className='CampMap CampMap--error google-map'>
           <CanadaMapSVG />
           <div className='CampMap__error'>
             <h1 className='CampMap__error-header'>Map Not Available</h1>

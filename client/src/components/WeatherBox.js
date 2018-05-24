@@ -14,7 +14,11 @@ const weatherIcons = {
 }
 
 const WeatherBox = (props) => {
-  if (!props.weather) return null;
+  if (!props.weather || !Object.keys(props.weather).length) return (
+    <div className='WeatherBox'>
+      <h2>No weather available</h2>
+    </div>
+  )
 
   return (
     <div className='WeatherBox'>

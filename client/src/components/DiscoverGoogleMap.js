@@ -12,7 +12,8 @@ export class DiscoverGoogleMap extends React.Component {
     var lngs = [];
     var lats = [];
 
-    const markers = this.props.coords.map(c => ({lat: c.lat, lon: c.lon, id: c.id}))
+    const markers = this.props.coords
+      .map(c => ({lat: c.lat, lon: c.lon, id: c.id}))
       .filter(v => v.lat !== null && v.lon !== null)
       .map((coords, idx) => {
         const point = {lat: coords.lat, lng: coords.lon };
@@ -25,7 +26,7 @@ export class DiscoverGoogleMap extends React.Component {
             <Marker
               key={idx}
               position={point}
-              onMouseDown={() => console.log('hello')}
+              onMouseover={() => console.log('hello')}
               // onClick={() => this.props.setSelected(coords.id)}
               icon={{
                 url: url,
@@ -44,7 +45,6 @@ export class DiscoverGoogleMap extends React.Component {
         google={this.props.google}
         zoom={5}
         initialCenter={{lat: averageLat, lng: averageLng}}
-        onClick={(a, b, c, d, e) => console.log(a, b, c, d, e)}
       >
         { markers }
 

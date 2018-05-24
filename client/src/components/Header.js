@@ -17,8 +17,8 @@ class Header extends React.Component {
   render() {
     return (
       <nav className={`${this.context.stickyClass} Header`}>
-        <a className='Header__title' href='/'>YelpCamp</a>
-        <a className='Header__discover-icon btn bold btn--flat' href='/discover'>
+        <a className='Header__title Header__link' href='/'>YelpCamp</a>
+        <a className='Header__discover-icon Header__link btn bold btn--flat' href='/discover'>
           <i className="fas fa-map"></i>Discover
         </a>
         {this.context.user && !this.context.user.loading ?

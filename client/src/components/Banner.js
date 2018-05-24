@@ -26,16 +26,16 @@ class Banner extends React.Component {
   render(props) {
     return (
       <div className="Banner">
-        <div className='Banner__image'>
-          <img src={backgroundImage} />
+        <div className='Banner__image-container'>
+          <img src={backgroundImage} className='Banner__image' />
         </div>
         <div className='Banner__content'>
-          <div className="Banner__title">
-            <h1>
+          <div className="Banner__title-container">
+            <h1 className='Banner__title'>
               YelpCamp
               <img className='Banner__logo' src={logo} alt='Logo for YelpCamp' />
             </h1>
-            <h2>Search for campgrounds across Canada</h2>
+            <h2 className='Banner__subtitle'>Search for campgrounds across Canada</h2>
           </div>
           <SearchBar />
           <span className='Banner__quote bold'>
