@@ -50,6 +50,7 @@
 					If no address available for any CG (eg. search for “TES”, then hide map entirely)
 					Icons for activities in search
 					Scroll bug for filters not working in some tiles
+					If no mappable CGs (like “tes”), then no map and results 100% width
 
 	/campground/:id		GOAL :	Single campground page
 				TODO :	Unknown campground should 404
