@@ -21,19 +21,32 @@ const withLocation = (Component) => {
       return {userLocation: this.state.userLocation}
     }
 
-    componentDidMount() {
+    async componentDidMount() {
       this.context.startLoad(this.constructor.name);
-      fetch('https://ipinfo.io/json')
-        .then(res => res.json())
-        .then(locData => {
-          this.setState({
-            userLocation: {latitude: locData.loc.split(',')[0], longitude: locData.loc.split(',')[1]}
-          }, () => this.context.finishLoad(this.constructor.name))
-        })
-        .catch(err => {
-          console.log('Could not get location')
-          this.context.finishLoad(this.constructor.name);
-        })
+      // See if data is in localStorage
+      var location = localStorage.location && JSON.parse(localStorage.location);
+
+      if ((!location) || (!location.loc) || ((Date.now() - location.time) > 8e7)) {
+        //Fetch location
+        try {
+          const ipData = await fetch('https://ipinfo.io/json');
+          location = await ipData.json();
+          location.time = Date.now();
+        } catch(e) {
+          console.log('Could not get location...');
+          return;
+        }
+        // Write data
+        localStorage.location = JSON.stringify(location);
+      }
+
+      const lat = location.loc.split(',')[0];
+      const lon = location.loc.split(',')[1];
+
+      this.setState({
+          userLocation: {latitude: lat, longitude: lon}
+        }, () => this.context.finishLoad(this.constructor.name)
+      );
     }
 
     render() {
