@@ -28,13 +28,13 @@ const withAuthentication = (Component) => {
     }
 
     signInUser(provider) {
-      this.context.startLoad();
+      this.context.startLoad(this.constructor.name);
       signInFunc(provider)
       .then(val => {
-        this.setState({user: val}, () => this.context.finishLoad())
+        this.setState({user: val}, () => this.context.finishLoad(this.constructor.name))
       })
       .catch(err => {
-        this.setState({user: null}, () => this.context.finishLoad())
+        this.setState({user: null}, () => this.context.finishLoad(this.constructor.name))
         console.log(err)
       })
     }
@@ -60,12 +60,12 @@ const withAuthentication = (Component) => {
     }
 
     componentDidMount() {
-      this.context.startLoad();
+      this.context.startLoad(this.constructor.name);
       auth.onAuthStateChanged(authUser => {
         if (authUser) {
-          this.setState({user: authUser}, () => this.context.finishLoad());
+          this.setState({user: authUser}, () => this.context.finishLoad(this.constructor.name));
         } else {
-          this.setState({user: null}, () => this.context.finishLoad())
+          this.setState({user: null}, () => this.context.finishLoad(this.constructor.name))
         }
       });
     }

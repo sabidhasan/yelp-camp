@@ -17,10 +17,13 @@ class Banner extends React.Component {
 
   componentDidMount() {
     // Get quote
-    this.context.startLoad();
+    // this.context.startLoad(this.constructor.name);
+    // this.setState({quote: 'this is some uote'});
+    // this.context.finishLoad(this.constructor.name);
     fetch('/quote')
       .then(res => res.json())
-      .then(quote => this.setState({quote: quote[0]}, () => this.context.finishLoad()));
+      .then(quote => this.setState({quote: quote[0]}));
+      // .then(quote => this.setState({quote: quote[0]}, () => this.context.finishLoad(this.constructor.name)));
   }
 
   render(props) {

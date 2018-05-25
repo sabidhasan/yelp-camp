@@ -6,7 +6,7 @@ const withLoading = (Component) => {
     constructor(props) {
       super(props);
       this.loading = 0;
-      this.state = {callers: []}
+      this.times = {};
 
       this.startLoad = this.startLoad.bind(this);
       this.finishLoad = this.finishLoad.bind(this);
@@ -23,11 +23,13 @@ const withLoading = (Component) => {
     }
 
     startLoad(caller) {
-      console.log('starting');
+      console.log('starting', caller);
+      this.times[caller] = Date.now();
       this.updateLoading(1, caller);
     }
 
     finishLoad(caller) {
+      console.log('ending one', caller, ' took ', Date.now() - this.times[caller]);
       this.updateLoading(-1, caller);
     }
 

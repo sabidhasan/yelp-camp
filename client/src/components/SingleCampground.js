@@ -32,7 +32,7 @@ class SingleCampground extends React.Component {
   };
 
   componentDidMount() {
-    this.context.startLoad();
+    this.context.startLoad(this.constructor.name);
     fetch(`/campground?id=${this.state.id}`)
     .then(res => res.json())
     .then(campground => {
@@ -54,12 +54,12 @@ class SingleCampground extends React.Component {
         paymentMethods: campground.paymentMethods,
         activities: campground.activities,
         province: campground.province
-      }, () => this.context.finishLoad());
+      }, () => this.context.finishLoad(this.constructor.name));
     })
     .catch(err => {
     //   //TO--DO proper error handling for all fetch
       console.log("there is an error");
-      this.context.finishLoad();
+      this.context.finishLoad(this.constructor.name);
     //   window.location = `/not-found/${this.state.id}`;
     });
   }
@@ -111,7 +111,7 @@ class SingleCampground extends React.Component {
     }
 
     try {
-      this.context.startLoad();
+      this.context.startLoad(this.constructor.name);
       const response = await fetch('/comment', {
         body: JSON.stringify({
           userID: userToken,
@@ -126,10 +126,10 @@ class SingleCampground extends React.Component {
       });
       const result = await response.json();
       // Update comments array locally
-      this.setState({comments: result}, () => this.context.finishLoad());
+      this.setState({comments: result}, () => this.context.finishLoad(this.constructor.name));
     } catch (err) {
       console.log('error occure in deleteing review');
-      this.context.finishLoad();
+      this.context.finishLoad(this.constructor.name);
     }
   }
 

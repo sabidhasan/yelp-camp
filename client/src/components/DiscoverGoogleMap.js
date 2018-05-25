@@ -24,12 +24,12 @@ export class DiscoverGoogleMap extends React.Component {
 
         return (
             <Marker
-              key={idx}
+              key={idx+(Math.random()*1000)}
               position={point}
-              onMouseover={() => console.log('hello')}
+              onClick={() => alert('hello')}
               // onClick={() => this.props.setSelected(coords.id)}
               icon={{
-                url: url,
+                url: campIconRed,
                 scaledSize: new this.props.google.maps.Size(12,12)
               }}>
               {/* TO--DO LOGIC FOR MARKER TYPE BASED ON  SELECTED ID... */}
@@ -45,9 +45,19 @@ export class DiscoverGoogleMap extends React.Component {
         google={this.props.google}
         zoom={5}
         initialCenter={{lat: averageLat, lng: averageLng}}
+        onClick={(a,b,c) => console.log(c)}
       >
-        { markers }
-
+        {/* { markers } */}
+        <Marker
+          // key={(Math.random()*1000)}
+          position={{lat: 0, lng: 0 }}
+          onClick={() => alert('hello')}
+          // icon={{
+          //   url: campIcon,
+          //   scaledSize: new this.props.google.maps.Size(12,12)
+          // }}
+          >
+        </Marker>
       </Map>
     );
   }

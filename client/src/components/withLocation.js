@@ -22,17 +22,17 @@ const withLocation = (Component) => {
     }
 
     componentDidMount() {
-      this.context.startLoad();
+      this.context.startLoad(this.constructor.name);
       fetch('https://ipinfo.io/json')
         .then(res => res.json())
         .then(locData => {
           this.setState({
             userLocation: {latitude: locData.loc.split(',')[0], longitude: locData.loc.split(',')[1]}
-          }, () => this.context.finishLoad())
+          }, () => this.context.finishLoad(this.constructor.name))
         })
         .catch(err => {
           console.log('Could not get location')
-          this.context.finishLoad();
+          this.context.finishLoad(this.constructor.name);
         })
     }
 

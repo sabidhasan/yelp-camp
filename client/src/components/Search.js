@@ -39,7 +39,7 @@ class Search extends React.Component {
   };
 
   componentDidMount() {
-    this.context.startLoad();
+    this.context.startLoad(this.constructor.name);
     fetch(`/search?q=${this.searchQuery}`)
       .then(res => res.json())
       .then(search => {
@@ -53,7 +53,7 @@ class Search extends React.Component {
         // Update original results variable and generate select box variables from that
         this.originalResults = search;
         this.makeFilterVariables();
-        this.setState({filteredResults: search, page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)}, () => this.context.finishLoad())
+        this.setState({filteredResults: search, page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)}, () => this.context.finishLoad(this.constructor.name))
       })
   }
 
@@ -154,7 +154,9 @@ class Search extends React.Component {
           <ol className='Search__results-list'>
             {results}
           </ol>
-          <SearchResultsMap results={this.state.filteredResults} page={this.state.page}
+          <SearchResultsMap
+            results={this.state.filteredResults}
+            page={this.state.page}
             hovered={this.state.hovered} />
         </div>
       </div>
