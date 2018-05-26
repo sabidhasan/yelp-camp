@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import haversine from 'haversine'
 
 const DiscoverCampgroundTile = (props, context) => {
@@ -7,7 +8,10 @@ const DiscoverCampgroundTile = (props, context) => {
 
   return (
     <div className='DiscoverCampgroundTile'>
-      <a href={`/campground/${props.cg.id}`}><h2>{props.cg.name}</h2></a>
+      {/* <a href={`/campground/${props.cg.id}`}><h2>{props.cg.name}</h2></a> */}
+      <Link to={`/campground/${props.cg.id}`}>
+        <h2>{props.cg.name}</h2>
+      </Link>
       <p>{props.cg.region} Region</p>
       <p>{props.cg.address}</p>
       <p>~{Math.round(haversine(cgLoc, props.userLocation))} km away</p>

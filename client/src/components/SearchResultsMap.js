@@ -24,7 +24,6 @@ class SearchResultsMap extends React.Component {
              url: `http://chart.apis.google.com/chart?chst=d_map_spin&chld=1|0|${color}|15|b|${resultNum}`,
              scaledSize: new this.props.google.maps.Size(36,52)
            }}
-           onClick={() => window.location = `/campground/${v.id}`}
            position={{lat: v.lat, lng: v.lon }}>
           </Marker>
         )

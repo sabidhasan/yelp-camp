@@ -113,9 +113,9 @@ class App extends React.Component {
               />
           )} />
 
-          <Route exact path='/discover'>
-            <DiscoverSVGMap />
-          </Route>
+          <Route exact path='/discover' render={(routerProps) => (
+            <DiscoverSVGMap {...routerProps} />
+          )} />
 
           <Route exact path='/discover/:province' render={(routerProps) => (
             <DiscoverPage {...routerProps} />

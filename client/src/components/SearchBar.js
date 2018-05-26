@@ -69,9 +69,12 @@ class SearchBar extends React.Component {
   goToCampground() {
     // Redirects to currently selected campground
     if (this.state.highlightedIndex === -1) {
+      // This is done to ensure search page is freshly loaded each time
+      // (otherwise there are problems with pagination, etc.)
       window.location = `/search/?q=${this.state.searchQuery}`
     } else {
-      window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
+      // window.location = `/campground/${this.state.results[this.state.highlightedIndex].id}`
+      this.props.history.push(`/campground/${this.state.results[this.state.highlightedIndex].id}`);
     }
   }
 

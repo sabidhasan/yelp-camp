@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
 import withStickyBar from './withStickyBar'
@@ -15,12 +16,17 @@ class Header extends React.Component {
   };
 
   render() {
+    // console.log(this.props);
     return (
       <nav className={`${this.context.stickyClass} Header`}>
-        <a className='Header__title Header__link' href='/'>YelpCamp</a>
-        <a className='Header__discover-icon Header__link btn bold btn--flat' href='/discover'>
+        <Link className='Header__title Header__link' to='/'>
+          YelpCamp
+        </Link>
+        {/* <a className='Header__title Header__link' href='/'>YelpCamp</a> */}
+        {/* <a className='Header__discover-icon Header__link btn bold btn--flat' href='/discover'> */}
+        <Link className='Header__discover-icon Header__link btn bold btn--flat' to='/discover'>
           <i className="fas fa-map"></i>Discover
-        </a>
+        </Link>
         {this.context.user && !this.context.user.loading ?
           <button className='btn bold btn--flat Header__login' onClick={this.context.signOut}>
             <img className='Header__user-image' src={this.context.user.providerData[0].photoURL} />

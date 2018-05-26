@@ -36,7 +36,8 @@ class DiscoverMap extends React.Component {
     if (e.ctrlKey || e.metaKey) {
       window.open(`/discover/${clickedProvince.shortName}`) ;
     } else {
-      window.location = `/discover/${clickedProvince.shortName}`;
+      this.props.history.push(`/discover/${clickedProvince.shortName}`)
+      // window.location = `/discover/${clickedProvince.shortName}`;
     }
   }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { parse } from 'query-string'
 import haversine from 'haversine'
@@ -38,7 +39,11 @@ class Search extends React.Component {
     finishLoad: PropTypes.func
   };
 
-  componentDidMount() {
+    componentDidMount() {
+    this.getSearchResults();
+  }
+
+  getSearchResults() {
     this.context.startLoad(this.constructor.name);
     fetch(`/search?q=${this.searchQuery}`)
       .then(res => res.json())
@@ -55,6 +60,7 @@ class Search extends React.Component {
         this.makeFilterVariables();
         this.setState({filteredResults: search, page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)}, () => this.context.finishLoad(this.constructor.name))
       })
+
   }
 
   makeFilterVariables() {
@@ -130,7 +136,11 @@ class Search extends React.Component {
           {!this.originalResults.length && this.searchQuery ?
             <h1>No results found for {this.searchQuery}</h1> : <h1>Search</h1>
           }
-          <SearchBar initialValue={this.searchQuery} />
+          <Route
+            path="/"
+            render={(props) => <SearchBar {...props} />}
+          />
+          {/* <SearchBar initialValue={this.searchQuery} /> */}
           <FilterSearch
             filterCriteria={this.filterCriteria}
             className={`${!this.originalResults.length ? ' FilterSearch--hidden' : ''}`}

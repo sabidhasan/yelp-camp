@@ -9,17 +9,21 @@ import DiscoverCampgroundTile from './DiscoverCampgroundTile'
 class Discover extends React.Component {
   constructor(props) {
     super(props)
-      if (!provinces[this.props.match.params.province]) window.location = '/';
+    console.log(props);
+    if (!provinces[this.props.match.params.province]) {
+      // window.location = '/'
+      props.history.push('/');
+    };
       const province = {
         fullName: provinces[this.props.match.params.province],
         shortName: this.props.match.params.province
-      }
-      this.state = {
+    }
+    this.state = {
         province: province,
         campgrounds: null,
         selectedCampgroundObject: null
-      }
-      this.setSelected = this.setSelected.bind(this);
+    }
+    this.setSelected = this.setSelected.bind(this);
   }
 
   static contextTypes = {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import XButton from './XButton'
@@ -19,7 +20,10 @@ class Cart extends React.Component {
         return (
             <div key={item.id} className='Cart__item'>
               <h2 className='Cart__item-title'>
-                <a className='Cart__item-link bold' href={`/campground/${item.id}`}>{item.name}</a>
+                {/* <a className='Cart__item-link bold' href={`/campground/${item.id}`}>{item.name}</a> */}
+                <Link className='Cart__item-link bold' to={`/campground/${item.id}`}>
+                  {item.name}
+                </Link>
               </h2>
               <img className='Cart__item-photo' src={item.image} alt='' />
               <p className='Cart__item-region'>

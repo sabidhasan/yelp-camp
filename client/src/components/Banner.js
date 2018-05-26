@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import SearchBar from './SearchBar'
 import backgroundImage from '../images/test.jpg';
@@ -40,7 +41,10 @@ class Banner extends React.Component {
             </h1>
             <h2 className='Banner__subtitle'>Search for campgrounds across Canada</h2>
           </div>
-          <SearchBar />
+          <Route
+            path="/"
+            render={(props) => <SearchBar {...props} />}
+          />
           <span className='Banner__quote bold'>
             { this.state.quote }
           </span>
