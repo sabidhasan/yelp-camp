@@ -9,7 +9,6 @@ import DiscoverCampgroundTile from './DiscoverCampgroundTile'
 class Discover extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props);
     if (!provinces[this.props.match.params.province]) {
       // window.location = '/'
       props.history.push('/');
@@ -31,7 +30,6 @@ class Discover extends React.Component {
   }
 
   setSelected(id) {
-    console.log('click');
     const selectedCampgroundObject = this.state.campgrounds.find(v => id === v.id);
     this.setState({selectedCampgroundObject: selectedCampgroundObject})
   }
@@ -65,9 +63,9 @@ class Discover extends React.Component {
 
          <div className='Discover__map google-map'>
             <DiscoverGoogleMap
-             coords={this.state.campgrounds}
+             campgrounds={this.state.campgrounds}
              setSelected={this.setSelected}
-             selected={this.state.selectedCampgroundObject}
+             // selectedId={this.state.selectedCampgroundObject.id}
             />
           </div>
         </div>

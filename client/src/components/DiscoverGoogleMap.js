@@ -4,15 +4,40 @@ import campIcon from '../images/camp-icon.png'
 import campIconRed from '../images/camp-icon-red.png'
 
 export class DiscoverGoogleMap extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {selectedId: null}
+    this.handleClick = this.handleClick.bind(this);
   }
+
+  handleClick(reactObject, mapObject, event) {
+    // See if any CGs match
+    const clickRange = 2.5 * (0.0001314318 + (0.8191036682/(1 + Math.pow((mapObject.zoom/2.974602), 4.536466))))
+
+    const nearestCG = this.props.campgrounds.find((cg, idx) => (
+      cg.lat && cg.lon && Math.abs(cg.lat - event.latLng.lat()) < clickRange && Math.abs(cg.lon - event.latLng.lng()) < clickRange
+    ));
+
+    if (nearestCG) {
+      this.props.setSelected(nearestCG.id);
+      this.setState({selectedId: nearestCG.id})
+      // console.log('\n\n\n\n----------');
+      // console.log(nearestCG.lat, nearestCG.lon, nearestCG.name, nearestCG.id, nearestCG.address);
+    } else if (this.state.selectedId !== null) {
+      this.props.setSelected(null);
+      this.setState({selectedId: null})
+    }
+  }
+  // shouldComponentUpdate(np, ns) {
+  //   // Only update if click event is
+  //   return ns.selectedId !== this.state.selectedId;
+  // }
 
   render() {
     var lngs = [];
     var lats = [];
 
-    const markers = this.props.coords
+    const markers = this.props.campgrounds
       .map(c => ({lat: c.lat, lon: c.lon, id: c.id}))
       .filter(v => v.lat !== null && v.lon !== null)
       .map((coords, idx) => {
@@ -20,19 +45,16 @@ export class DiscoverGoogleMap extends React.Component {
         lngs.push(coords.lon);
         lats.push(coords.lat);
 
-        const url = (this.props.selected && this.props.selected.id === coords.id) ? campIconRed : campIcon;
+        const url = (this.state.selectedId && this.state.selectedId === coords.id) ? campIconRed : campIcon;
 
         return (
             <Marker
               key={idx+(Math.random()*1000)}
               position={point}
-              onClick={() => alert('hello')}
-              // onClick={() => this.props.setSelected(coords.id)}
               icon={{
-                url: campIconRed,
+                url: url,
                 scaledSize: new this.props.google.maps.Size(12,12)
               }}>
-              {/* TO--DO LOGIC FOR MARKER TYPE BASED ON  SELECTED ID... */}
             </Marker>
         )
     });
@@ -45,19 +67,9 @@ export class DiscoverGoogleMap extends React.Component {
         google={this.props.google}
         zoom={5}
         initialCenter={{lat: averageLat, lng: averageLng}}
-        onClick={(a,b,c) => console.log(c)}
+        onClick={this.handleClick}
       >
-        {/* { markers } */}
-        <Marker
-          // key={(Math.random()*1000)}
-          position={{lat: 0, lng: 0 }}
-          onClick={() => alert('hello')}
-          // icon={{
-          //   url: campIcon,
-          //   scaledSize: new this.props.google.maps.Size(12,12)
-          // }}
-          >
-        </Marker>
+        { markers }
       </Map>
     );
   }
