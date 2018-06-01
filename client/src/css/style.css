@@ -4,6 +4,15 @@
 :root {
   --light-main: #494E6B;  --dark-main: #192231;  --light: #98878F;
   --very-light: #fafafa;  --accent: #985E6D;
+
+  --light-main: #9F4636;  --dark-main: #6C2D2C;  --light: #F1DCC9;
+  --very-light: #fafafa;  --accent: #42313A;
+
+  /* --light-main: #2988BC;  --dark-main: #2F496E;  --light: #F4EADE;
+  --very-light: #fafafa;  --accent: #ED8C72; */
+
+  /* --light-main: #336B87;  --dark-main: #2A3132;  --light: #90AFC5;
+  --very-light: #fafafa;  --accent: #763626; */
 }
 html, body {
   font-family: 'IBM Plex Sans Condensed', sans-serif; font-size: 100%; margin: 0;
@@ -73,10 +82,14 @@ button[disabled]:hover {
 }
 .btn--flat {
   background: var(--dark-main); padding: 5px 10px; border-radius: 5px;
-  color: var(--light);
+  color: var(--very-light); border: 2px solid var(--accent);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
 .btn--flat:hover {
-  background: var(--accent); color: var(--very-light); border: 1px solid var(--dark-main)
+  background: var(--accent); color: var(--very-light); border: 2px solid var(--dark-main)
+}
+.btn:hover, .btn--small:hover, .btn--large:hover, .btn--flat:hover {
+  cursor: pointer;
 }
 .flex-center {
   display: flex; align-items: center; justify-content: center;
@@ -177,9 +190,6 @@ button[disabled]:hover {
   letter-spacing: .15rem; font-weight: bold; text-align: left;
   color: var(--very-light); text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
-.Header__discover-icon, .Header__login, .Header__cart-icon {
-  border: 1px solid;
-}
 .Header__cart-icon i, .Header__discover-icon i {
   transition: all 0.3s ease-out;
 }
@@ -205,14 +215,18 @@ button[disabled]:hover {
 .Cart {
   /* Ensure it is always at right */
   position: fixed; width: 45%; height: 100vh; top: 0; right: 0;
-  background: linear-gradient(to bottom, var(--light) 0px, var(--light) 80px, var(--accent) 80px);
+  background: linear-gradient(to bottom, var(--light) 0px, var(--light) 80px, var(--dark-main) 80px);
   /* ENsure it is behind the overlay for login! */
-  z-index: 2; display: grid; grid-gap: 10px 0; grid-template-columns: 1fr 35px;
+  z-index: 3; display: grid; grid-gap: 10px 0; grid-template-columns: 1fr 35px;
   grid-template-rows: 65px 55px repeat(auto-fit, 70px); padding: 5px 15px;
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4); overflow-y: scroll;
 }
+.Cart__message {
+  color: var(--very-light)
+}
 .Cart__close {
-  font-size: 2rem; text-align: right; grid-column: 2;
+  font-size: 2rem; text-align: right; grid-column: 2; color: var(--light-main);
+  padding: 0; align-self: flex-start;
 }
 .Cart__items {
   grid-column: span 2;
@@ -221,7 +235,7 @@ button[disabled]:hover {
   grid-column: span 2;
   grid-template-areas: "image title close"
                        "image region close";
-  padding: 15px 0; border-bottom: 1px solid var(--dark-main);
+  padding: 15px 0; border-bottom: 1px solid var(--accent);
   display: grid; grid-template-columns: 75px 1fr 15px; grid-gap: 0 5px;
 }
 .Cart__item:last-child {
@@ -236,13 +250,13 @@ button[disabled]:hover {
   grid-area: title; display: flex; align-items: flex-end; font-size: 1.1rem;
 }
 .Cart__item-link {
-  color: var(--dark-main);
+  color: var(--very-light);
 }
 .Cart__item-region {
-  grid-area: region; font-size: 0.88rem; margin: 0;
+  grid-area: region; font-size: 0.88rem; margin: 0; color: var(--light);
 }
 .Cart__item-delete {
-  grid-area: close; align-self: center; font-size: 1rem;
+  grid-area: close; align-self: center; font-size: 1rem; color: var(--light)
 }
 
     /* Component <Banner /> */
@@ -270,13 +284,13 @@ button[disabled]:hover {
 }
 .Banner__title {
   color: var(--dark-main); font-weight: 600; font-size: 5.5rem;
-  text-shadow: 0 3px 5px rgba(0,0,0,0.5);
+  text-shadow: 0 3px 10px rgba(73,78,107,0.5);
 }
 .Banner__title::after, .Banner__title::before {
   display: none;
 }
 .Banner__subtitle {
-  color: var(--very-light); font-weight: 400; font-size: 2rem;
+  color: var(--accent); font-weight: 400; font-size: 2rem;
 }
 .Banner__chevron {
   font-size: 3.5rem; color: var(--very-light); opacity: 0.7;
@@ -287,11 +301,11 @@ button[disabled]:hover {
 
     /* <SearchBar /> */
 .SearchBar {
-  display: flex; flex-wrap: wrap; width: 85vw; position: relative; z-index: 1;
+  display: flex; flex-wrap: wrap; width: 85vw; position: relative; z-index: 1; min-height: 50px;
 }
 .SearchBar__input {
   order: 1; width: 50vw; flex: 1; font-size: 1.5rem; font-weight: 200; border-left: 0;
-  padding: 5px 10px; line-height: 1.5rem; outline: 0; border: 1px solid var(--light-main);
+  padding: 5px 10px; line-height: 1.5rem; outline: 0; border: 1px solid var(--dark-main);
 }
 .SearchBar__input:focus + .SearchBar__label {
   border-bottom-left-radius: 0;
@@ -305,6 +319,10 @@ button[disabled]:hover {
   order: 2; background: var(--dark-main); border: 1px solid var(--accent); padding: 0 8px;
   border-radius: 0; border-top-right-radius: 8px; border-bottom-right-radius: 8px;
   font-size: 2.1rem;
+}
+.SearchBar__button-icon {
+  transform: scaleX(-1); padding: 1px 5px; color: var(--very-light);
+  text-shadow: 0px 0px 15px var(--accent);
 }
 .SearchBar__results--active {
   position: absolute; top: 100%; width: 100%; max-height: 16rem; margin: 0;
@@ -340,19 +358,17 @@ button[disabled]:hover {
     /* Component <LandingText /> */
 .LandingText {
   display: flex; align-items: stretch; justify-content: space-between;
-  padding: 60px 40px; margin: 30px 0; padding: 30px 20px; background: var(--light);
+  padding: 60px 40px; margin: 30px 0; background: var(--light);
 }
 .LandingText__section {
-  flex: 1; padding: 0 20px; border-left: 2px solid var(--light-main); transition: all 0.1s;
-}
-.LandingText__section:first-child {
-  border-left: 0;
-}
-.LandingText__section:hover {
-  transform: scale(1.1);
+  flex: 1; padding: 0 20px; transition: all 0.1s; border-radius: 10px;
+  display: grid; grid-template-rows: 2.5rem 1fr;
 }
 .LandingText__title {
-  height: 70px; font-weight: 800; align-items: flex-start; color: var(--light-main)
+  font-weight: 800; align-items: flex-start; color: var(--light-main)
+}
+.LandingText__title i {
+  padding: 4px 4px 4px 10px;
 }
 .LandingText__text {
   line-height: 1.5rem;
@@ -367,7 +383,10 @@ button[disabled]:hover {
   border: 1px solid var(--light-main); background: var(--very-light);
   margin: 0 10px; padding: 35px 0; border-radius: 5px;
   display: grid; align-items: center; justify-content: center; grid-gap: 10px 0;
-  text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  grid-template-rows: auto; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+.LandingTiles__section:hover {
+  transform: scale(1.05);
 }
 .LandingTiles__text {
   font-weight: 100; margin: 0;
@@ -437,10 +456,10 @@ button[disabled]:hover {
   grid-column: span 2; margin: 0 0 0 3px; font-weight: 100; grid-area: region;
 }
 .CampgroundTile > .RatingBar {
-  margin-left: 3px; grid-area: rating;
+  margin: 0 1px 0 0; grid-area: rating;
 }
 .CampgroundTile__review-count {
-  grid-area: reviews;
+  margin: 0 1px 0 0; grid-area: reviews;
 }
 
     /* Component <RatingBar /> */
@@ -453,6 +472,12 @@ button[disabled]:hover {
   background: var(--light); margin: 0 3px; overflow: hidden;
   /* To force ::before/::after divs to be positioned */
   position: relative;
+}
+.RatingBar__star:first-child {
+  margin-left: 0;
+}
+.RatingBar__star:last-child {
+  margin-right: 0;
 }
 .RatingBar__star:after {
   /* star text content */
@@ -472,10 +497,14 @@ button[disabled]:hover {
 .RatingBar--editable:hover .RatingBar__star {
   /* Make all of them green if hovered anywhere */
   background: var(--dark-main);
+  opacity: 1;
 }
 .RatingBar--editable .RatingBar__star:hover ~ .RatingBar__star {
   /* Make all following the currently hovered one gray again for visual effect */
   background: var(--light);
+}
+.star0 {
+  opacity: 0.4;
 }
 .star100:before {
   transform: translateX(0%);
@@ -514,7 +543,7 @@ button[disabled]:hover {
     /* Component <Footer /> */
 .Footer {
   padding: 25px 10px 20px 10px; background: var(--light-main);
-  border-top: 2px solid var(--accent); text-align: center; flex-direction: column;
+  border-top: 15px solid var(--accent); text-align: center; flex-direction: column;
   color: var(--very-light); font-weight: 100; box-shadow: 0px -6px 20px rgba(50, 50, 60, 0.5);
 }
 .Footer__text {
@@ -524,7 +553,7 @@ button[disabled]:hover {
   font-size: 1rem; font-weight: normal; margin: 10px 0; color: var(--very-light);
 }
 .Footer__link {
-  color: var(--accent)
+  color: var(--light); font-weight: bold;
 }
 .Footer__social {
   margin: 15px 0; font-size: 2.3rem; display: flex; justify-content: space-evenly;
@@ -575,17 +604,17 @@ button[disabled]:hover {
     /* Component <withLoading /> */
 .withLoading {
   position: fixed; top: 0px; left: 0px; width: 100vw; height: 100vh;
-  background: var(--dark-main); opacity: 0.80;
+  background: var(--accent); opacity: 0.85;
   /* Force it on top of everything! */
   z-index: 4;
 }
 .withLoading__spinner {
   width: 100px; height: 100px; border-radius: 50%;
-  background: linear-gradient(to right, var(--dark-main), var(--light-main), var(--accent));
+  background: linear-gradient(to right, var(--dark-main), var(--light-main), var(--light));
   animation: rotate-loading-spinner 1.2s cubic-bezier(0.77, 0.93, 1, 1) infinite;
 }
 .withLoading__spinner-center {
-  width: 85%; height: 85%; background: var(--dark-main); border-radius: 50%;
+  width: 85%; height: 85%; background: var(--accent); border-radius: 50%;
 }
 
     /* Component <Search /> */
@@ -652,6 +681,15 @@ button[disabled]:hover {
 .FilterSearch--hidden {
   display: none;
 }
+.FilterSearch__button {
+  font-size: 1.15rem; width: 60%;
+}
+.FilterSearch__button i {
+  transition: all 0.3s ease-out;
+}
+.FilterSearch__button:hover i {
+  transform: scaleX(-1) translateX(6px);
+}
 .FilterSearch__tiles {
   grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 5px 10px;
   max-height: 0; opacity: 0; transition: all 0.4s linear; overflow: hidden;
@@ -666,6 +704,9 @@ button[disabled]:hover {
 }
 .FilterSearch__section .btn {
   justify-self: flex-end;
+}
+.FilterSearch__distance {
+  grid-template-rows: repeat(5, auto) 1fr
 }
 
     /* Component <MultiCheckBox /> */
@@ -686,7 +727,7 @@ button[disabled]:hover {
 }
 .MultiCheckBox__text::before {
   content: ' '; width: 17px; height: 17px; border-radius: 3px; border: 1px solid var(--dark-main);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); background: var(--dark-main); margin-right: 15px;
+  background: var(--dark-main); margin-right: 15px;
   display: flex; align-items: center; justify-content: center; font-size: .9rem;
   font-weight: bold; color: var(--very-light);
 }
@@ -707,7 +748,7 @@ button[disabled]:hover {
 }
 .Pagination__link {
   padding: 6px 9px; color: var(--very-light); text-align: center; display: inline-block;
-  background: var(--accent); outline: none; border: 0; width: 3.3rem; transition: all 0.2s;
+  background: var(--accent); outline: none; border: 0; width: 4.8rem; transition: all 0.2s;
 }
 .Pagination__link:hover {
   cursor: pointer;
@@ -753,7 +794,8 @@ button[disabled]:hover {
   transition: all 50ms;
 }
 .Select__items--expanded {
-  border: 1px solid var(--dark-main); max-height: 200px; display: block;
+  border: 1px solid var(--dark-main); max-height: 125px; display: block;
+  background: var(--very-light); z-index: 1;
 }
 .Select__item {
   padding: 2px 5px; text-transform: capitalize;
@@ -819,7 +861,7 @@ button[disabled]:hover {
 .SingleCampground {
   display: grid; grid-gap: 10px 25px; grid-template-columns: 3.5fr minmax(230px, 1fr);
   padding: 20px;
-  background: linear-gradient(to bottom, rgba(60, 53, 56, 0.15) 0%, rgba(60, 53, 56, 0.15) 380px, #fff 380px);
+  background: linear-gradient(to bottom, var(--light) 0%, var(--light) 380px, #fff 380px);
   grid-template-areas:
       "title title"
       "region reviewlink"
@@ -833,6 +875,9 @@ button[disabled]:hover {
       "NewReviewForm sidebar"
       "Reviews sidebar"
 }
+.SingleCampground .RatingBar__star {
+  background: var(--light-main);
+}
 .SingleCampground__review-link {
   grid-area: reviewlink; display: grid; align-items: center; justify-items: center;
   grid-gap: 10px; margin: 15px 0;
@@ -841,7 +886,7 @@ button[disabled]:hover {
   font-size: 0.8rem; width: 60%;
 }
 .SingleCampground__rating {
-  grid-area: rating; align-self: flex-start; margin: 5px 0; display: flex;
+  grid-area: rating; align-self: flex-start; margin: 5px 0; display: flex; justify-content: space-between;
 }
 .SingleCampground__info-weather {
   align-self: flex-start; justify-self: flex-start; grid-area: basicinfo;
@@ -1102,27 +1147,30 @@ button[disabled]:hover {
     padding: 5px; grid-gap: 5px;
   }
   .Header > .btn {
-    font-size: .7rem;
+    font-size: .7rem; background: var(--light-main); box-shadow: none;
+  }
+  .Header__cart-icon i, .Header__discover-icon i {
+    display: none;
   }
   .Header__title {
     font-size: 1.4rem;
   }
   .Header__user-image {
-    height: 20px; padding: 0 5px;
+    display: none;
   }
   .Header__discover-icon, .Header__login, .Header__cart-icon {
     padding: 4px 8px; font-size: 0.8rem;
   }
   .Header--sticky {
-    position: fixed; top: 0; background: var(--very-light);
+    position: fixed; top: 0; background: linear-gradient(to right, var(--light-main) 0%, var(--dark-main) 85%);
     width: 100%; height: 10vh; z-index: 2; padding: 15px 5px;
-    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); border-bottom: 4px solid var(--dark-main)
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); border-bottom: 4px solid var(--dark-main);
   }
   .Header--sticky.SingleCampgroundTitle {
-    color: var(--light-main); font-size: 1.1rem; font-weight: bold;
+    color: var(--light); font-size: 1.1rem; font-weight: bold;
   }
   .Header--sticky .Header__title {
-    color: var(--dark-main); text-shadow: none;
+    color: var(--light); text-shadow: none;
   }
   /* Component <XButton /> */
   .XButton:hover {
@@ -1185,11 +1233,11 @@ button[disabled]:hover {
   .LandingText {
     display: grid; grid-template-columns: 100% 100% 100%; padding: 0; overflow: auto;
   }
-  .LandingText__section:hover {
-    transform: none;
-  }
   .LandingText__section {
     padding: 10px; margin: 20px 0;
+  }
+  .LandingText__section:hover {
+    transform: none;
   }
   /* Component <LandingTiles /> */
   .LandingTiles {
@@ -1223,7 +1271,7 @@ button[disabled]:hover {
        "region reviews"
   }
   .CampgroundTile > .RatingBar {
-    margin: 0; justify-self: flex-end;
+    justify-self: flex-end;
   }
   .CampgroundTile__review-count {
     text-align: right;
@@ -1247,6 +1295,9 @@ button[disabled]:hover {
   }
   .Search__results {
     grid-template-columns: 1fr; grid-gap: 5px 10px; padding: 5px;
+  }
+  .Search__results-list {
+    background: var(--very-light);
   }
   .Search__summary {
     text-align: center; font-size: 1rem;
@@ -1324,6 +1375,9 @@ animation: DiscoverSVGMap-scroll 13s infinite; display: block; text-transform: u
   }
   .SingleCampground__review-link {
     justify-items: flex-start; grid-template-columns: 1fr 1fr; margin: 0;
+  }
+  .SingleCampground__cart {
+    justify-self: flex-end;
   }
   .SingleCampground__rating {
     justify-content: space-between;
