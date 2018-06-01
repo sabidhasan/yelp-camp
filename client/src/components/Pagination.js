@@ -22,19 +22,19 @@ const Pagination = (props) => {
       {allPages.length > 1 ?
         <div className='Pagination__pages'>
           {props.currentPage > 1
-            ? <button className='Pagination__link Pagination__prev-link'
+            ? <button className='Pagination__link Pagination__prev-link bold'
               onClick={(e) => props.goToPageHandler(e, props.currentPage - 2)}>« Previous</button>
             : null
           }
           {allPages.map(v=> (
             <button
               key={v}
-              className={`Pagination__link ${v===props.currentPage ? 'Pagination__link--current' : ''}`}
+              className={`Pagination__link bold ${v===props.currentPage ? 'Pagination__link--current' : ''}`}
               onClick={(e) => props.goToPageHandler(e, v - 1)}>{v}
             </button>)
           )}
           {props.currentPage !== props.lastPage
-            ? <button className='Pagination__link Pagination__next-link'
+            ? <button className='Pagination__link Pagination__next-link bold'
               onClick={(e) => props.goToPageHandler(e, props.currentPage)}>Next »</button>
             : null
           }

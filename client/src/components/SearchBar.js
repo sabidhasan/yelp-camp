@@ -118,7 +118,9 @@ class SearchBar extends React.Component {
           className='SearchBar__input'
         />
         <label htmlFor='search' className='SearchBar__label bold flex-center'>Find</label>
-        <button type='submit' className='SearchBar__button' onClick={this.goToCampground}>🔎</button>
+        <button type='submit' className='SearchBar__button flex-center' onClick={this.goToCampground}>
+          <i className="SearchBar__button-icon fas fa-search"></i>
+        </button>
         <ul className={`SearchBar__results${this.state.active ? '--active' : '--hidden'}`}>
           {(searchResults.length || !this.state.searchQuery) ?
             searchResults
