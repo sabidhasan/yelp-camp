@@ -5,6 +5,7 @@ var express     = require('express'),
     ForecastIo  = require('forecast.io'),
     mongoose    = require('mongoose'),
     helpers     = require('./custom-modules/helpers');
+    Campground   = require('./custom-modules/db_models')
 
 // Allow parsing body from post requests
 app.use(bodyParser.json());
@@ -19,20 +20,10 @@ ForecastIo.prototype.asyncGetWeather = function(lat, lon) {
     });
   });
 }
-var weatherEngine = new ForecastIo({APIKey: weatherKey, timeout: 1000});
+var weatherEngine = new ForecastIo({APIKey: weatherKey, timeout: 500});
 
 // Connect to MONGODB, and define schemas
 mongoose.connect('mongodb://localhost/yelp_camp')
-var campgroundSchema = new mongoose.Schema({
-  name: String, province: String, lat: Number, lon: Number,
-  sites: Number, image: [String], email: String, address: String,
-  comments: [], paymentMethods: [], region: String, type: String,
-  id: Number, description: String, phone: String,
-  activities: [],
-  hours: {seasonal: [String], daily: String},
-  prices: {seasonal: [String], daily: [String], weekly: [String]}
-});
-const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Search Index - first get all campgrounds, then build index
 var search;
@@ -61,14 +52,13 @@ app.get('/campground', async function(req, res) {
     // some province's CGs requested
     let province = helpers.provinces[req.query.province]
     province = province.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
-    console.log({'province': province});
     Campground.find({'province': province}, (error, results) => {
       // send results
       if (error) {
         res.sendStatus(401);
-        return;
+      } else {
+        res.json(results);
       }
-      res.json(results);
       return;
     });
     return;
@@ -115,23 +105,6 @@ app.get('/campground', async function(req, res) {
       res.json(ret);
   });
 });
-
-// app.post('/campground', function(req, res) {
-//   //add to campgrounds array... basic validation
-//   try {
-//     if (req.body.name.length > 10 || req.body.image.length > 20) throw new Error();
-//     console.log("ADDING TO DB");
-//     //add to array
-//     // campgrounds.push({id: campgrounds.length, name: req.body.name, comments: [], image: req.body.image});
-//     // res.json(campgrounds);
-//     return;
-//   } catch (err) {
-//     //send error
-//     console.log("SENDING ERROR", err);
-//     res.sendStatus(403);
-//   }
-// });
-
 
 app.delete('/comment', async function(req, res) {
   // Validate the user based on supplied credentials
@@ -231,6 +204,9 @@ app.get('/search', function(req, res) {
   res.json(search.doSearch(req.query.q))
 });
 
+app.use(function(req, res) {
+  res.sendStatus(404);
+})
 app.listen(3001, function() {
   console.log("Server running on port 3001 (http://localhost:3001).");
 });
