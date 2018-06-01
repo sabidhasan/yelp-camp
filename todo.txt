@@ -1,7 +1,7 @@
 # TO DO LIST
 
 1. Scrape Data
-	Address to Lat/Lon for missing addresses or deal with them somehow (~500)
+	Address to Lat/Lon for missing addresses or deal with them somehow (~500 campgrounds)
 
 
 2. ## FRONT END TO DOS
@@ -14,6 +14,7 @@
 					Jest testing - https://facebook.github.io/jest
 					window.location should be replaced with proper routing
 					Search bar click doesn’t bring up results always
+					All google maps should be styled properly (theme colors, eg.)
 					Debounce the search bar (on input)
 					Add HOCs for null props rendering
 					CSS			All things should be BEM (https://github.com/airbnb/css)
@@ -24,6 +25,7 @@
 					componentWillUnmount should have remove event listeners for everything that was added
 					All ‘key’s should be UNIQUE! (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
 					document.querySelector or document.querySelectorAll should be replaced with ‘ref’
+					componentWillUnmount() in all things that call eventListeners
 
 	/			GOAL :	Welcome page (highlight some CGs)
 				TODO :	Contact Us section
@@ -84,7 +86,6 @@
 
 	search indexing for dates campground is open (“winter camping”, etc)
 	payment Methods not scraped
-	“submitted by” for each campground in Mongo/on page
 	comment route on backend should send back proper errors (and front end should display errors)
 
 
@@ -92,9 +93,3 @@ Copy this layout
 	https://citybud.ca/
 
 	https://www.albertacampgroundguide.ca/
-
-
-
-
-full search results
-discover page
