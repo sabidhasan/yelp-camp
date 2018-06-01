@@ -17,19 +17,17 @@ class Search extends React.Component {
     // Static variables (well, originalResults is not static!)
     this.searchQuery = parse(this.props.location.search)['q'];
     this.originalResults = [];
-    // This stores all the regions, activities, privinces, and furtherst distance
-    this.filterCriteria = {regions: [], activities: [], provinces: [], maxDistance: 0};
 
     this.state = {
       filteredResults: [],
       page: Math.max(0, parseInt(parse(this.props.location.search)['start'])) || 0,
       hovered: null,
+      filterCriteria: null
     };
 
     // Function bindings
     this.updateFilteredResults = this.updateFilteredResults.bind(this)
     this.goToPage = this.goToPage.bind(this)
-    this.makeFilterVariables = this.makeFilterVariables.bind(this)
   }
 
   // Holds location of the user if available, register and deregister withLoading
@@ -39,11 +37,7 @@ class Search extends React.Component {
     finishLoad: PropTypes.func
   };
 
-    componentDidMount() {
-    this.getSearchResults();
-  }
-
-  getSearchResults() {
+  componentDidMount() {
     this.context.startLoad(this.constructor.name);
     fetch(`/search?q=${this.searchQuery}`)
       .then(res => res.json())
@@ -57,21 +51,23 @@ class Search extends React.Component {
         });
         // Update original results variable and generate select box variables from that
         this.originalResults = search;
-        this.makeFilterVariables();
-        this.setState({filteredResults: search, page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)}, () => this.context.finishLoad(this.constructor.name))
+        // this.makeFilterVariables();
+
+        // Update maxDistance, activities and regions, provinces
+        const _fc = {regions: [], activities: [], provinces: [], maxDistance: 0};
+        _fc.provinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}));
+        search.forEach(r => {
+          _fc.maxDistance = Math.max(_fc.maxDistance, r.distanceFromUser || 0);
+          r.activities.forEach(v => {if (!_fc.activities.includes(v) && v) _fc.activities.push(v)});
+          if (!_fc.regions.includes(r.region) && r.region) _fc.regions.push(r.region)
+        });
+
+        this.setState({
+          filterCriteria: _fc,
+          filteredResults: search,
+          page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)}, () => this.context.finishLoad(this.constructor.name)
+        );
       })
-
-  }
-
-  makeFilterVariables() {
-    // Update maxDistance, activities and regions, provinces
-    const _fc = this.filterCriteria;
-    _fc.provinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}));
-    this.originalResults.forEach(r => {
-      _fc.maxDistance = Math.max(_fc.maxDistance, r.distanceFromUser || 0);
-      r.activities.forEach(v => {if (!_fc.activities.includes(v) && v) _fc.activities.push(v)});
-      if (!_fc.regions.includes(r.region) && r.region) _fc.regions.push(r.region)
-    });
   }
 
   goToPage(e, page) {
@@ -80,6 +76,7 @@ class Search extends React.Component {
   }
 
   updateFilteredResults(val) {
+    // console.log(val);
     // Val contains info on whats selected, you apply the filter here.
     const filteredResults = [];
     for (let item in this.originalResults) {
@@ -87,8 +84,8 @@ class Search extends React.Component {
       const _cI = this.originalResults[item];
       if (
         (!val.selectedProv || provinces[val.selectedProv].toLowerCase() === _cI.province.toLowerCase()) &&
-        (val.selectedRegions.includes(_cI.region) || (!_cI.region && this.filterCriteria.regions.length === val.selectedRegions.length)) &&
-        (_cI.activities.some(v => val.selectedActivities.includes(v)) || (!_cI.activities.length && this.filterCriteria.activities.length === val.selectedActivities.length)) &&
+        (val.selectedRegions.includes(_cI.region) || (!_cI.region && this.state.filterCriteria.regions.length === val.selectedRegions.length)) &&
+        (_cI.activities.some(v => val.selectedActivities.includes(v)) || (!_cI.activities.length && this.state.filterCriteria.activities.length === val.selectedActivities.length)) &&
         (!_cI.distanceFromUser || (_cI.distanceFromUser >= val.selectedDistances.min && _cI.distanceFromUser <= val.selectedDistances.max))
         ) {
           filteredResults.push(_cI)
@@ -129,22 +126,27 @@ class Search extends React.Component {
       })
 
     const currentResultEndUserFriendly = Math.min((this.state.page * 10) + 10, this.state.filteredResults.length)
-
     return (
       <div className='Search'>
         <div className='Search__filter-container'>
           {!this.originalResults.length && this.searchQuery ?
-            <h1>No results found for {this.searchQuery}</h1> : <h1>Search</h1>
+            <h1>No results found for {this.searchQuery}</h1>
+            : !this.originalResults.length && !this.searchQuery ?
+              <h1>Search</h1>
+              : <h1>{`Search for ${this.searchQuery}`}</h1>
           }
           <Route
             path="/"
             render={(props) => <SearchBar {...props} />}
           />
-          {/* <SearchBar initialValue={this.searchQuery} /> */}
-          <FilterSearch
-            filterCriteria={this.filterCriteria}
-            className={`${!this.originalResults.length ? ' FilterSearch--hidden' : ''}`}
-            onChange={val => this.updateFilteredResults(val)}/>
+          {this.state.filterCriteria ?
+            <FilterSearch
+              filterCriteria={this.state.filterCriteria}
+              className={`${!this.originalResults.length ? ' FilterSearch--hidden' : ''}`}
+              onChange={val => this.updateFilteredResults(val)}
+            />
+          : null
+          }
         </div>
         <Pagination
           currentPage={this.state.page + 1}  goToPageHandler={this.goToPage}
@@ -159,7 +161,10 @@ class Search extends React.Component {
                   {' '} of {this.state.filteredResults.length}
                   {' '} for <span className='bold'>{this.searchQuery}</span>
                 </React.Fragment>
-              : <React.Fragment>No campgrounds found with the applied filter(s)</React.Fragment>}
+              : this.searchQuery ?
+                <React.Fragment>No campgrounds found with the applied filter(s)</React.Fragment>
+                : null
+              }
           </h2>
           <ol className='Search__results-list'>
             {results}

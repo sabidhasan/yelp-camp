@@ -28,6 +28,7 @@ class Select extends React.Component {
   }
 
   render() {
+    const items = this.props.items || []
     return (
       <div
         className={`Select${this.state.expanded ? ' Select--expanded' : ''}`}
@@ -43,7 +44,7 @@ class Select extends React.Component {
             key={-1}>
             {this.props.defaultText}
           </li>
-          {this.props.items
+          {items
             .map((v, i) => (
               <li
                 className='Select__item'

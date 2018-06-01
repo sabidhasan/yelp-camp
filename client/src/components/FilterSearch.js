@@ -7,11 +7,12 @@ import 'react-input-range/lib/css/index.css';
 class FilterSearch extends React.Component {
   constructor(props) {
     super(props);
+    // console.log(props);
     this.state = {
       selectedProv: null,
       selectedActivities: props.filterCriteria.activities,
       selectedRegions: props.filterCriteria.regions,
-      selectedDistances: { min: 0, max: props.filterCriteria.maxDistance },
+      selectedDistances: {min: 0, max: props.filterCriteria.maxDistance},
       sortBy: null,
       filterAreaExpanded: false,
     }
@@ -26,29 +27,22 @@ class FilterSearch extends React.Component {
   handleChange(newValue, property) {
     // Apply filter
     this.setState({[property]: newValue}, () => {
-      if (this.props.onChange) {
-        this.props.onChange(this.state)
-      }
+      if (this.props.onChange) this.props.onChange(this.state)
     });
   }
 
   render() {
     return (
       <div className={`FilterSearch ${this.props.className}`}>
-        <h2>Filters</h2>
+        {/* <h2>Filters</h2> */}
         <button
-          className='btn bold btn--small'
-          onClick={this.toggleExpanded}>{this.state.filterAreaExpanded ? 'Hide ' : 'Show '}
-          Filters
+          className='FilterSearch__button btn bold btn--flat'
+          onClick={this.toggleExpanded}>
+          <i class="fas fa-sliders-h"></i>
+          {this.state.filterAreaExpanded ? 'Hide ' : 'Show '} Filters
         </button>
         <div className={`FilterSearch__tiles ${this.state.filterAreaExpanded ? 'FilterSearch__tiles--expanded' : ''}`}>
           <div className='FilterSearch__section'>
-            <h2>Province</h2>
-            <Select
-              items={this.props.filterCriteria.provinces}
-              defaultText={'All Provinces'}
-              onChange={val => this.handleChange(val, 'selectedProv')}
-            />
             <h2>Region</h2>
             {this.props.filterCriteria.regions.length ?
               <MultiCheckBox
@@ -58,27 +52,38 @@ class FilterSearch extends React.Component {
               />
             : null }
           </div>
-          <div className='FilterSearch__section'>
+          <div className='FilterSearch__section FilterSearch__distance'>
             {this.props.filterCriteria.maxDistance > 0 ?
               <React.Fragment>
                 <h2>Distance</h2>
-                <p>How far should the campgrounds be from you?</p>
                 <InputRange
                   minValue={0}
                   maxValue={this.props.filterCriteria.maxDistance}
                   formatLabel={value => `${value}km`}
                   value={this.state.selectedDistances}
-                  onChange={val => this.setState({selectedDistances: val})}
+                  onChange={val => {
+                    console.log(val);
+                    this.setState({selectedDistances: val})
+
+                  }}
                   onChangeComplete={val => this.handleChange(val, 'selectedDistances')}
                 />
               </React.Fragment>
             : null}
+            <h2>Province</h2>
+            <Select
+              items={this.props.filterCriteria.provinces}
+              defaultText={'All Provinces'}
+              onChange={val => this.handleChange(val, 'selectedProv')}
+            />
+
             <h2>Sort</h2>
             <Select
               items={[{text: 'Distance', value: 'Distance'}]}
               defaultText={'Best Match'}
               onChange={val => this.handleChange(val, 'sortBy')}
             />
+
           </div>
           <div className='FilterSearch__section'>
             <h2>Activities</h2>
