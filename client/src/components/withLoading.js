@@ -22,14 +22,14 @@ const withLoading = (Component) => {
       return {startLoad: this.startLoad, finishLoad: this.finishLoad}
     }
 
-    startLoad(caller) {
-      // console.log('starting', caller);
+    startLoad(caller, method) {
+      console.log('starting', caller, "'s ", method);
       this.times[caller] = Date.now();
       this.updateLoading(1, caller);
     }
 
-    finishLoad(caller) {
-      // console.log('ending one', caller, ' took ', Date.now() - this.times[caller]);
+    finishLoad(caller, method) {
+      console.log('ending', caller, '\'s', method, ' took ', Date.now() - this.times[caller]);
       this.updateLoading(-1, caller);
     }
 

@@ -35,6 +35,8 @@ const withLocation = (Component) => {
         } catch(e) {
           console.log('Could not get location...');
           return;
+        } finally {
+          this.context.finishLoad(this.constructor.name);
         }
         // Write data
         localStorage.location = JSON.stringify(location);
