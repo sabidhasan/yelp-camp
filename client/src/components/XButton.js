@@ -2,7 +2,14 @@ import React from 'react'
 
 const XButton = (props) => {
   return (
-    <button className={`XButton ${props.className}`} onClick={props.onClick}>×</button>
+    <button
+      role='button'
+      aria-label='Close'
+      className={`XButton ${props.className}`}
+      onClick={props.onClick}
+    >
+      ×
+    </button>
   )
 }
 

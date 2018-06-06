@@ -5,91 +5,50 @@
 
 
 2. ## FRONT END TO DOS
-	OVERALL			TODO :	Animations for stuff coming in (e.g. review form)
-					React PropTypes
-					Random photos for campgrounds (some variety)
-					All <a> should have proper href
+	MODULE		TIME REQ (5)	TODO
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	ALL		5		Look at Audit in ChromeDevTools and pass everything there
+	ALL		2		React PropTypes
+	ALL				Random photos for campgrounds (some variety)
+	ALL				All <a> should have proper href
 						Links in <InfoBox />, <Footer />
-					aria stuff for all elements
-					Jest testing - https://facebook.github.io/jest
-					window.location should be replaced with proper routing
-					Search bar click doesn’t bring up results always
-					All google maps should be styled properly (theme colors, eg.)
-					Debounce the search bar (on input)
-					Add HOCs for null props rendering
-					CSS			All things should be BEM (https://github.com/airbnb/css)
+	ALL		4		ARIA for all elements
+	ALL		5		Jest testing - https://facebook.github.io/jest
+	ALL		1		All google maps should be styled properly (theme colors, eg.)
+	ALL		4		Debounce the search bar (on input)
+	ALL		2		Proper image sizing (use the new image sizing stuff) - Use JPEG2000 rather than JPG for size savings
+					Image Lazy Loading (don’t load until in view) - https://developers.google.com/web/updates/2016/04/intersectionobserver
+	ALL		4		CSS			All things should be BEM (https://github.com/airbnb/css)
 								js hooked classes should be prefixed with JS (styles separate)
-								Use 0 instead of none for no border
 								Check all classNames to see if they conform to BEM
-					RatingBar component - doesn’t need to be wrapped by a div anymore
-					componentWillUnmount should have remove event listeners for everything that was added
-					All ‘key’s should be UNIQUE! (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
-					document.querySelector or document.querySelectorAll should be replaced with ‘ref’
-					componentWillUnmount() in all things that call eventListeners
-
-	/			GOAL :	Welcome page (highlight some CGs)
-				TODO :	Contact Us section
-					Nav bar should have stars behind it like Yelp
-					Random photo in the back of banner every time
-					Search button styling
-					Login button styling for FB and Google
-					It shouldn’t query the server on alt tab for search bar
-					Facebook login API (Firebase backend and validation on my backend)
-					Landing tile Icons
-					Remove American campgrounds or fix their address
-					
-	/search			TODO :	apply filters to search (activ., # campsites, hrs)
-					picture, name, reviews, address
-					type (public/private)
-					map of all results
-					no results not working
-					FILTER, PAGINATION and SEARCH BAR COMPONENT
-					Filter by:
-					    AREA / FEATURES (# of camp sites, distance, rating) / ACTIVITIES 
-					Sort by: rating, best match (original) slug type selector
-					model this: https://www.albertacampgroundguide.ca/campgrounds/
-					Yukon territory filter doesn’t actually work (shows no results)
-					If no address available for any CG (eg. search for “TES”, then hide map entirely)
-					Icons for activities in search
-					Scroll bug for filters not working in some tiles
+	ALL		2		componentWillUnmount should have remove event listeners for everything that was added
+	ALL		3		Keys are UNIQUE! (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
+	ALL		2		Refactor to move CSS for each component - reduce CSS size
+	ALL		3		document.querySelector or document.querySelectorAll should be replaced with ‘ref’
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	/		1		Random photo in the back of banner every time
+	/		1		It shouldn’t query the server on alt tab for search bar
+	/		3		Remove American campgrounds or fix their address				
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	/search		1		Show type (public/private)
+	/search		2		Sort by rating
+	/search		3		Yukon territory filtering does not work
+	/search		4		If no address available for any CG (eg. search for “TES”, then hide map entirely)
+	/search		3		Icons for activities in search
 					If no mappable CGs (like “tes”), then no map and results 100% width
-
-	/campground/:id		GOAL :	Single campground page
-				TODO :	Unknown campground should 404
-					Show distance from your location
-					Get directions link - modal search
-					Write a review button should have a logo (like Yelp)
-					Distance for current campground from your location
-					Reviews check for spam
-					Delete reviews
-					Reviews pagination
-					Sanitize reviews before injecting into DB (HTML, etc.)
-					Time stamp formatting
-					Photo gallery (NPM?) for photos
-	
-	/discover		GOAL :	
-					map on the right with picked province, highlighted cg on left. click marker to open CG
-						shows name, distance, pictures, etc.
-					model this: https://www.albertacampgroundguide.ca/campgrounds/
-				TODO :	show basic information for province if no CG selected.
-					Otherwise, show details for CG
-					Style CG data
-					Add basic info for province
-					Discover should redirect if no campgrounds (e.g. Nunavut)
-	
-
-3. ## BACK END ROUTES
-	/
-	/campgrounds
-	/quote
-	/search			returns search suggestions
-
-	search indexing for dates campground is open (“winter camping”, etc)
-	payment Methods not scraped
-	comment route on backend should send back proper errors (and front end should display errors)
-
-
-Copy this layout
-	https://citybud.ca/
-
-	https://www.albertacampgroundguide.ca/
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	/campground/id			Get directions link
+	/campground/id			Distance for current campground from your location
+	/campground/id			Reviews check for spam
+	/campground/id			Reviews pagination
+	/campground/id			Sanitize reviews before injecting into DB (HTML, etc.)
+	/campground/id			Time stamp formatting
+	/campground/id			Photo gallery (NPM?) for photos
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————	
+	/discover			Model this: https://www.albertacampgroundguide.ca/campgrounds/
+	/discover	3		Show basic information for province if no CG selected
+	/discover	1		Style CG data
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————	
+	Backend		4		Promisify everything in backend to allow multiple threads
+					Read https://expressjs.com/en/advanced/best-practice-performance.html
+			2		Backend crashes on search page, if mongod was not started
