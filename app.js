@@ -22,9 +22,6 @@ ForecastIo.prototype.asyncGetWeather = function(lat, lon) {
 }
 var weatherEngine = new ForecastIo({APIKey: weatherKey, timeout: 500});
 
-// Connect to MONGODB, and define schemas
-mongoose.connect('mongodb://localhost/yelp_camp')
-
 // Search Index - first get all campgrounds, then build index
 var search;
 Campground.find({}, (err, res) => {
@@ -118,7 +115,7 @@ app.delete('/comment', async function(req, res) {
   }
 
   // verify comment is owned by user
-  var oldCommentsArray;
+  // var oldCommentsArray;
   Campground.find({'id': req.body.campgroundID}, (error, result) => {
     // Check for how many campgrounds were found
     if (result.length !== 1 || error) {
@@ -126,11 +123,11 @@ app.delete('/comment', async function(req, res) {
       res.send(400);
       return;
     }
-    oldCommentsArray = result[0].comments
+    // oldCommentsArray = result[0].comments
     var oldCommentIdx = result[0].comments.findIndex(val => req.body.commentID === val.id)
     if (oldCommentIdx === -1 || result[0].comments[oldCommentIdx].uid !== verification) {
       // couldn't find comment, or user verification doenst match - send error
-      console.log('error occuresd');
+      console.log('error occurred');
       res.sendStatus(401);
       return;
     }
