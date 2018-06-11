@@ -13,6 +13,24 @@ export const formatDate = (date) => {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 }
 
+export const searchIcons = {
+  'name': '⛺', 'paymentMethods': '💵', 'activities': '🚣', 'address': '📍',
+  'description': '📛', 'province': '🌎', 'region': '🗾'
+}
+
+export const weatherIcons = {
+  'clear-day' : '☀️',
+  'clear-night' : '☀️',
+  'rain' : '☔️',
+  'snow' : '⛄',
+  'sleet' : '⛄',
+  'wind' : '💨',
+  'fog' : '🌁',
+  'cloudy' : '☁️',
+  'partly-cloudy-day' : '⛅',
+  'partly-cloudy-night' : '⛅'
+}
+
 export const shortenDescription = (desc) => {
   let excerpt = desc.split(' ')
   if (excerpt.length > 20) {

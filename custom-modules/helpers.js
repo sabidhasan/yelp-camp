@@ -449,10 +449,20 @@ const verifyUser = (JWTToken) => {
   });
 }
 
+const generateRandomCampgroundIds = (quantity) => {
+  if (!quantity || quantity < 1) quantity = 4;
+  const ret = [];
+  do {
+    newNum = Math.floor(Math.random() * 1578);
+    if (!ret.includes(newNum)) ret.push(newNum);
+  } while (ret.length !== quantity);
+}
+
 module.exports = {
   quotes: quotes,
   activitySymbols: activitySymbols,
   Searcher: Searcher,
   verifyUser: verifyUser,
-  provinces: provinces
+  provinces: provinces,
+  generateRandomCampgroundIds: generateRandomCampgroundIds
 }
