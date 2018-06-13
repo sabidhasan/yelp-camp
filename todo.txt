@@ -1,11 +1,7 @@
 # TO DO LIST
-
-1. Scrape Data
-	Address to Lat/Lon for missing addresses or deal with them somehow (~500 campgrounds)
-
-
-2. ## FRONT END TO DOS
 	MODULE		TIME REQ (5)	TODO
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+	Scrape		3		Address to Lat/Lon for missing addresses or deal with them somehow (~500 campgrounds)
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 	ALL		5		Look at Audit in ChromeDevTools and pass everything there
 	ALL		2		React PropTypes
@@ -25,6 +21,7 @@
 	ALL		3		Keys are UNIQUE! (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
 	ALL		2		Refactor to move CSS for each component - reduce CSS size
 	ALL		3		document.querySelector or document.querySelectorAll should be replaced with ‘ref’
+	ALL		2		managing focus (give tab index of -1 to headers, and set focus when component loaded)
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 	/		1		Random photo in the back of banner every time
 	/		1		It shouldn’t query the server on alt tab for search bar
