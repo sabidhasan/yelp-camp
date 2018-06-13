@@ -3,17 +3,19 @@ var router     = express.Router();
 var Campground = require('./db_models');
 var helpers    = require('./helpers');
 
-router.delete('/comment', async function(req, res) {
+const validateUser = async (res, req, next) => {
   // Validate the user based on supplied credentials
   try {
     var verification = await helpers.verifyUser(req.body.userID);
+    next();
   } catch (err) {
     // Couldn't verify users JWT token, or no token was given in req.body.userID
     console.log(err);
-    res.sendStatus(401)
-    return;
+    res.sendStatus(401);
   }
+}
 
+router.delete('/comment', validateUser, async function(req, res) {
   // verify comment is owned by user
   Campground.find({'id': req.body.campgroundID}, (error, result) => {
     // Check for how many campgrounds were found
@@ -44,17 +46,7 @@ router.delete('/comment', async function(req, res) {
   });
 });
 
-router.post('/comment', async function(req, res) {
-  //post new review to given id.
-  // Validate the user based on supplied credentials
-  try {
-    const verification = await helpers.verifyUser(req.body.userID);
-  } catch (err) {
-    // Couldn't verify users JWT token, or no token was given in req.body.userID
-    res.sendStatus(401)
-    return;
-  }
-
+router.post('/comment', validateUser, async function(req, res) {
   // Ensure rating and text are valid
   if (req.body.pickedRating > 5 || req.body.pickedRating < 0) {
     res.sendStatus(400);
