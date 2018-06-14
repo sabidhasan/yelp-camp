@@ -1,9 +1,6 @@
 var express         = require('express'),
     app             = express(),
-    bodyParser      = require('body-parser'),
-    mongoose        = require('mongoose'),
-    helpers         = require('./custom-modules/helpers');
-    Campground      = require('./custom-modules/db_models')
+    bodyParser      = require('body-parser');
 
 var commentsRoutes  = require('./custom-modules/routes_comments'),
     otherRoutes     = require('./custom-modules/routes_other')
@@ -15,9 +12,12 @@ app.use(bodyParser.json());
 app.use(commentsRoutes);
 app.use(otherRoutes);
 
+// Fallback route (404)
 app.use(function(req, res) {
   res.sendStatus(404);
-})
+});
+
+// Start backend server
 app.listen(3001, function() {
   console.log("Server running on port 3001 (http://localhost:3001).");
 });
