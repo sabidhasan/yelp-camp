@@ -2,17 +2,17 @@
 
 /* OVERVIEW STYLES */
 :root {
-  --light-main: #494E6B;  --dark-main: #192231;  --light: #98878F;
+  /* --light-main: #494E6B;  --dark-main: #192231;  --light: #98878F;
   --very-light: #fafafa;  --accent: #985E6D;
-
-  --light-main: #9F4636;  --dark-main: #6C2D2C;  --light: #F1DCC9;
-  --very-light: #fafafa;  --accent: #42313A;
+ */
 
   /* --light-main: #2988BC;  --dark-main: #2F496E;  --light: #F4EADE;
   --very-light: #fafafa;  --accent: #ED8C72; */
 
   /* --light-main: #336B87;  --dark-main: #2A3132;  --light: #90AFC5;
   --very-light: #fafafa;  --accent: #763626; */
+  --light-main: #9F4636;  --dark-main: #6C2D2C;  --light: #F1DCC9;
+  --very-light: #fafafa;  --accent: #42313A;
 }
 html, body {
   font-family: 'IBM Plex Sans Condensed', sans-serif; font-size: 100%; margin: 0;
@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
 }
 *, *:before, *:after {
-  box-sizing: inherit; outline: none;
+  box-sizing: inherit;
 }
 a {
   text-decoration: none;
@@ -49,6 +49,9 @@ h3 {
 }
 i {
   padding-right: 8px;
+}
+button[disabled] {
+  opacity: 0.5;
 }
 button[disabled]:hover {
   cursor:not-allowed;
@@ -82,11 +85,11 @@ button[disabled]:hover {
 }
 .btn--flat {
   background: var(--dark-main); padding: 5px 10px; border-radius: 5px;
-  color: var(--very-light); border: 2px solid var(--accent);
+  color: var(--very-light); border: 2px solid var(--light);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
 .btn--flat:hover {
-  background: var(--accent); color: var(--very-light); border: 2px solid var(--dark-main)
+  background: var(--accent); color: var(--very-light);
 }
 .btn:hover, .btn--small:hover, .btn--large:hover, .btn--flat:hover {
   cursor: pointer;
@@ -128,6 +131,13 @@ button[disabled]:hover {
 @keyframes down-arrow-move {
   from {transform: translateY(-40px);}
   to {transform: translateY(-5px);}
+}
+@keyframes banner-images-fadein {
+  0% {opacity: 0; transform: scale(0.92); animation-timing-function: ease-in;}
+  5% {transform: scale(1);}
+  10% {opacity: 1; transform: scale(1); animation-timing-function: ease-out;}
+  20% {opacity: 1;}
+  40% {opacity: 0;}
 }
     /* <Campgrounds /> */
 @keyframes random-icon-spin {
@@ -214,7 +224,7 @@ button[disabled]:hover {
     /* Component <Cart/> */
 .Cart {
   /* Ensure it is always at right */
-  position: fixed; width: 45%; height: 100vh; top: 0; right: 0;
+  position: fixed; width: 45%; height: 100vh; top: 0; right: 0; border-left: 3px solid var(--accent);
   background: linear-gradient(to bottom, var(--light) 0px, var(--light) 80px, var(--dark-main) 80px);
   /* ENsure it is behind the overlay for login! */
   z-index: 3; display: grid; grid-gap: 10px 0; grid-template-columns: 1fr 35px;
@@ -269,8 +279,28 @@ button[disabled]:hover {
   /* Render both on same grid box (image is background). Move to front */
   grid-column: 1; grid-row: 1; z-index: 1
 }
+.Banner__image-container {
+  display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr; opacity: 0.78;
+  /* filter: blur(1px); */
+}
 .Banner__image {
-  width: 100%; height: 100%; object-fit: cover; opacity: 0.78;
+  width: 100%; height: 100%; object-fit: cover; opacity: 0; grid-column: 1;
+  grid-row: 1; animation: banner-images-fadein 27s infinite;
+}
+.Banner__image:nth-child(2) {
+  animation-delay: 4.5s;
+}
+.Banner__image:nth-child(3) {
+  animation-delay: 9s;
+}
+.Banner__image:nth-child(4) {
+  animation-delay: 13.5s;
+}
+.Banner__image:nth-child(5) {
+  animation-delay: 18s;
+}
+.Banner__image:nth-child(6) {
+  animation-delay: 21.5s;
 }
 .Banner__logo {
   transform: translateY(-25px) scaleX(0.92); height: 4.2rem;
@@ -305,7 +335,7 @@ button[disabled]:hover {
 }
 .SearchBar__input {
   order: 1; width: 50vw; flex: 1; font-size: 1.5rem; font-weight: 200; border-left: 0;
-  padding: 5px 10px; line-height: 1.5rem; outline: 0; border: 1px solid var(--dark-main);
+  padding: 5px 10px; line-height: 1.5rem; border: 1px solid var(--dark-main);
 }
 .SearchBar__input:focus + .SearchBar__label {
   border-bottom-left-radius: 0;
@@ -600,6 +630,12 @@ button[disabled]:hover {
 .LoginForm__login-button {
   grid-column: 1 / -1; width: 55%;
 }
+.LoginForm__google {
+  background: #db3236;
+}
+.LoginForm__facebook {
+  background: #3B5998;
+}
 
     /* Component <withLoading /> */
 .withLoading {
@@ -607,6 +643,9 @@ button[disabled]:hover {
   background: var(--accent); opacity: 0.85;
   /* Force it on top of everything! */
   z-index: 4;
+}
+.withLoading__accessibility-text {
+  position: absolute; left: -10000px;
 }
 .withLoading__spinner {
   width: 100px; height: 100px; border-radius: 50%;
@@ -626,7 +665,7 @@ button[disabled]:hover {
 }
 .Search__results {
   display: grid; grid-template-columns: 1.2fr 1fr; grid-gap: 10px 20px;
-  position: relative; padding: 20px 10px;
+  position: relative; padding: 20px 10px; background: var(--very-light);
 }
 .Search__results-list {
   list-style: none; padding: 0; margin: 0;
@@ -682,7 +721,7 @@ button[disabled]:hover {
   display: none;
 }
 .FilterSearch__button {
-  font-size: 1.15rem; width: 60%;
+  font-size: 1.15rem; width: 60%; min-width: 170px;
 }
 .FilterSearch__button i {
   transition: all 0.3s ease-out;
@@ -714,7 +753,7 @@ button[disabled]:hover {
   display: grid; overflow-y: scroll;
 }
 .MultiCheckBox__label {
-  padding: 2px 0;
+  padding: 1px 0;
 }
 .MultiCheckBox__text {
    display: flex; align-items: center; text-transform: capitalize;
@@ -737,7 +776,7 @@ button[disabled]:hover {
 
     /* Component <Pagination /> */
 .Pagination {
-  position: relative; margin-top: 10px; min-height: 35px;
+  position: relative; min-height: 35px; background: var(--very-light);
 }
 .Pagination__count {
   position: absolute; left: 0;
@@ -748,7 +787,7 @@ button[disabled]:hover {
 }
 .Pagination__link {
   padding: 6px 9px; color: var(--very-light); text-align: center; display: inline-block;
-  background: var(--accent); outline: none; border: 0; width: 4.8rem; transition: all 0.2s;
+  background: var(--accent); border: 0; width: 4.8rem; transition: all 0.2s;
 }
 .Pagination__link:hover {
   cursor: pointer;
@@ -988,14 +1027,10 @@ button[disabled]:hover {
   font-size: 3rem;  padding: 0;  flex-basis: 100%;
 }
 .Activities__name {
-  transform: translateY(100%); transition: all 0.1s; flex-basis: 100%;
-  font-weight: bold; text-transform: capitalize;
+  font-weight: bold; text-transform: capitalize; flex-basis: 100%;
 }
 .Activities__activity {
-  flex-wrap: wrap; text-align: center; overflow: hidden;
-}
-.Activities__activity:hover > .Activities__name {
-  transform: translateY(-45%);
+  flex-wrap: wrap; text-align: center; overflow: hidden; margin: 20px 0;
 }
 
     /* Component <NewReviewForm /> */
@@ -1011,7 +1046,7 @@ button[disabled]:hover {
 }
 .NewReviewForm__text {
   border: 0; width: 100%; min-height: 100px; font-size: 1.1rem; font-family: inherit;
-  grid-column: 1 / -1; resize: none; outline: none; line-height: 1.5rem;
+  grid-column: 1 / -1; resize: none; line-height: 1.5rem;
 }
 .NewReviewForm__error {
   grid-column: 1 / -1;
@@ -1037,7 +1072,7 @@ button[disabled]:hover {
 
     /* Component <Reviews /> */
 .Reviews {
-  padding: 15px; grid-area: Reviews; max-height: 9999px;
+  padding: 15px; grid-area: Reviews; max-height: 9999px; display: block; list-style: none;
 }
 .Reviews-delete-leave {
   opacity: 1;
@@ -1052,9 +1087,6 @@ button[disabled]:hover {
   border-bottom: 1px solid var(--accent); padding: 15px 0;
   grid-template-areas: "Review__identity Review__rating Review__delete"
                        "Review__identity Review__text Review__delete";
-}
-.Review:hover .Review__delete {
-  opacity: 1;
 }
 .Review:last-child {
   border: 0;
@@ -1082,8 +1114,7 @@ button[disabled]:hover {
   flex-basis: 100%;
 }
 .Review__delete {
-  grid-area: Review__delete; font-size: 2.2rem; opacity: 0; transition: all 0.5s;
-  color: var(--accent);
+  grid-area: Review__delete; font-size: 2.2rem; color: var(--accent);
 }
 .Review__text {
   grid-column: 1 / span 2; grid-area: Review__text;
@@ -1130,6 +1161,13 @@ button[disabled]:hover {
 }
 
 
+    /* FourOhFour */
+.FourOhFour {
+  padding: 10px 5px; margin: 15px 0; text-align: center; font-size: 1.4rem;
+}
+.FourOhFour__link {
+  color: var(--light-main);
+}
 
 
 
@@ -1296,9 +1334,6 @@ button[disabled]:hover {
   .Search__results {
     grid-template-columns: 1fr; grid-gap: 5px 10px; padding: 5px;
   }
-  .Search__results-list {
-    background: var(--very-light);
-  }
   .Search__summary {
     text-align: center; font-size: 1rem;
   }
@@ -1417,9 +1452,6 @@ animation: DiscoverSVGMap-scroll 13s infinite; display: block; text-transform: u
   }
   .Activities__logo {
     font-size: 2.2rem;
-  }
-  .Activities__name {
-    transform: translateY(110%);
   }
   /* Component <Reviews /> */
   .Reviews {

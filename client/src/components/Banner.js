@@ -29,9 +29,14 @@ class Banner extends React.Component {
 
   render(props) {
     return (
-      <div className="Banner">
+      <div className="Banner" role='banner'>
         <div className='Banner__image-container'>
-          <img src={backgroundImage} className='Banner__image' />
+          <img src={backgroundImage} className='Banner__image' alt=''/>
+          <img src='https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg' className='Banner__image' alt=''/>
+          <img src='https://images.pexels.com/photos/965153/pexels-photo-965153.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' className='Banner__image' alt=''/>
+          <img src='https://images.pexels.com/photos/213807/pexels-photo-213807.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' className='Banner__image' alt=''/>
+          <img src='https://images.pexels.com/photos/93858/pexels-photo-93858.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' className='Banner__image' alt=''/>
+          <img src='https://images.pexels.com/photos/730426/pexels-photo-730426.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' className='Banner__image' alt=''/>
         </div>
         <div className='Banner__content'>
           <div className="Banner__title-container">
