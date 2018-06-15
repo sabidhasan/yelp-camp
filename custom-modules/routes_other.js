@@ -28,29 +28,29 @@ router.get('/campground', async function(req, res) {
     console.log(requestedID);
   } else if (req.query.province) {
     // some province's CGs requested
-    let province = helpers.provinces[req.query.province]
+    let province = helpers.provinces[req.query.province] || ''
     province = province.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
     Campground.find({'province': province}, (error, results) => {
       // send results
-      if (error) {
-        res.sendStatus(401);
+      if (error || !results.length) {
+        return res.sendStatus(400);
       } else {
-        res.json(results);
+        return res.json(results);
       }
-      return;
+      // return;
     });
     return;
   } else {
-    res.sendStatus(401);
-    return;
+    return res.sendStatus(401);
+    // return;
   }
 
   // Get campground data if random CG or one CG
   Campground.find({"id": {"$in": requestedID}}, async (err, results) => {
       // Handle errors
       if (!(results.length) || err) {
-        res.sendStatus(404);
-        return;
+        return res.sendStatus(404);
+        // return;
       };
 
       // Add activities logos for every campground found and reverse comments
@@ -64,8 +64,8 @@ router.get('/campground', async function(req, res) {
 
       // If randoms requested, return results, otherwise we need to get weather
       if (!req.query.id) {
-        res.json(results);
-        return;
+        return res.json(results);
+        // return;
       };
 
       // First result must be the one requested...
