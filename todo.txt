@@ -1,51 +1,52 @@
 # TO DO LIST
-	MODULE		TIME REQ (5)	TODO
+CATEGORY		MODULE		TIME REQ (5)	TODO
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-	Scrape		3		Address to Lat/Lon for missing addresses or deal with them somehow (~500 campgrounds)
+Data		Scrape		3		Address to Lat/Lon for missing addresses or deal with them somehow (~500 campgrounds)
+Data		Clean DB	2		Remove all BS
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-	ALL		5		Look at Audit in ChromeDevTools and pass everything there
-	ALL		2		React PropTypes
-	ALL				Random photos for campgrounds (some variety)
-	ALL				All <a> should have proper href
-						Links in <InfoBox />, <Footer />
-	ALL		4		ARIA for all elements
-	ALL		5		Jest testing - https://facebook.github.io/jest
-	ALL		1		All google maps should be styled properly (theme colors, eg.)
-	ALL		4		Debounce the search bar (on input)
-	ALL		2		Proper image sizing (use the new image sizing stuff) - Use JPEG2000 rather than JPG for size savings
-					Image Lazy Loading (don’t load until in view) - https://developers.google.com/web/updates/2016/04/intersectionobserver
-	ALL		4		CSS			All things should be BEM (https://github.com/airbnb/css)
-								js hooked classes should be prefixed with JS (styles separate)
-								Check all classNames to see if they conform to BEM
-	ALL		2		componentWillUnmount should have remove event listeners for everything that was added
-	ALL		3		Keys are UNIQUE! (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
-	ALL		2		Refactor to move CSS for each component - reduce CSS size
-	ALL		3		document.querySelector or document.querySelectorAll should be replaced with ‘ref’
-	ALL		2		managing focus (give tab index of -1 to headers, and set focus when component loaded)
+Validation	ALL		5		Look at Audit in ChromeDevTools and pass everything there
+Testing		ALL		2		React PropTypes
+Visual		ALL				Random photos for campgrounds (some variety)
+Validation	ALL				All <a> should have proper href
+							Links in <InfoBox />, <Footer />
+Testing		ALL		5		Jest testing - https://facebook.github.io/jest
+Visual		ALL		1		All google maps should be styled properly (theme colors, eg.)
+Performance	ALL		4		Debounce the search bar (on input)
+Performance	ALL		2		Proper image sizing (use the new image sizing stuff) - Use JPEG2000 rather than JPG for size savings
+						Image Lazy Load (don’t load until view) - https://developers.google.com/web/updates/2016/04/intersectionobserver
+Performance	ALL		2		Refactor to move CSS for each component - reduce CSS size
+Validation	ALL		4		CSS			All things should be BEM (https://github.com/airbnb/css)
+									js hooked classes should be prefixed with JS (styles separate)
+									Check all classNames to see if they conform to BEM
+Performance	ALL		2		componentWillUnmount should have remove event listeners for everything that was added
+Testing		ALL		3		UNIQUE Key (https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js)
+Performance	ALL		3		document.querySelector or document.querySelectorAll should be replaced with ‘ref’
+Accessibility	ALL		2		managing focus (give tab index of -1 to headers, and set focus when component loaded)
+Accessibility	ALL		4		ARIA for all elements
+Accessibility	ALL		1		Cart escape key press hides it
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-	/		1		Random photo in the back of banner every time
-	/		1		It shouldn’t query the server on alt tab for search bar
-	/		3		Remove American campgrounds or fix their address				
+Visual		/		1		Random photo in the back of banner every time
+Performance	/		1		It shouldn’t query the server on alt tab for search bar
+Data		/		3		Remove American campgrounds or fix their address				
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-	/search		1		Show type (public/private)
-	/search		2		Sort by rating
-	/search		3		Yukon territory filtering does not work
-	/search		4		If no address available for any CG (eg. search for “TES”, then hide map entirely)
-	/search		3		Icons for activities in search
-					If no mappable CGs (like “tes”), then no map and results 100% width
+Visual		/search		1		Show type (public/private)
+Visual		/search		2		Sort by rating
+Bug fix		/search		3		Yukon territory filtering does not work
+Performance	/search		4		If no address available for any CG (eg. search for “TES”, then hide map entirely)
+Visual		/search		3		Icons for activities in search
+						If no mappable CGs (like “tes”), then no map and results 100% width
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-	/campground/id			Get directions link
-	/campground/id			Distance for current campground from your location
-	/campground/id			Reviews check for spam
-	/campground/id			Reviews pagination
-	/campground/id			Sanitize reviews before injecting into DB (HTML, etc.)
-	/campground/id			Time stamp formatting
-	/campground/id			Photo gallery (NPM?) for photos
+Visual		/campground/id			Get directions link
+Visual		/campground/id			Distance for current campground from your location
+Visual		/campground/id			Reviews check for spam
+Visual		/campground/id			Reviews pagination
+Visual		/campground/id			Reviews ellipses for long reviews
+Data		/campground/id			Sanitize reviews before injecting into DB (HTML, etc.)
+Visual		/campground/id			Time stamp formatting
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————	
-	/discover			Model this: https://www.albertacampgroundguide.ca/campgrounds/
-	/discover	3		Show basic information for province if no CG selected
-	/discover	1		Style CG data
+Visual		/discover	3		Show basic information for province if no CG selected
+Visual		/discover	1		Style CG data
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————	
-	Backend		4		Promisify everything in backend to allow multiple threads
-					Read https://expressjs.com/en/advanced/best-practice-performance.html
-			2		Backend crashes on search page, if mongod was not started
+Performance	Backend		4		Promisify everything in backend to allow multiple threads
+						Read https://expressjs.com/en/advanced/best-practice-performance.html
+Bug fix				2		Backend crashes on search page, if mongod was not started
