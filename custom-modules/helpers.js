@@ -456,6 +456,7 @@ const generateRandomCampgroundIds = (quantity) => {
     newNum = Math.floor(Math.random() * 1578);
     if (!ret.includes(newNum)) ret.push(newNum);
   } while (ret.length !== quantity);
+  return ret;
 }
 
 module.exports = {
