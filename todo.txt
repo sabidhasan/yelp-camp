@@ -24,6 +24,8 @@ Performance	ALL		3		document.querySelector or document.querySelectorAll should b
 Accessibility	ALL		2		managing focus (give tab index of -1 to headers, and set focus when component loaded)
 Accessibility	ALL		4		ARIA for all elements
 Accessibility	ALL		1		Cart escape key press hides it
+		ALL		5		Deploy on Heroku
+		ALL		2		Error redirection (check console.log and .err in code)
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Visual		/		1		Random photo in the back of banner every time
 Performance	/		1		It shouldn’t query the server on alt tab for search bar
@@ -50,3 +52,11 @@ Visual		/discover	1		Style CG data
 Performance	Backend		4		Promisify everything in backend to allow multiple threads
 						Read https://expressjs.com/en/advanced/best-practice-performance.html
 Bug fix				2		Backend crashes on search page, if mongod was not started
+
+
+Random notes
+============
+remove loading from context types for all but App.js
+user.loading crap should be fixed
+
+what the hell is onSuccess it is reference only once
