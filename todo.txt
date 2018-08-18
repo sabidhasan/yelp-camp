@@ -12,9 +12,6 @@ Validation	ALL				All <a> should have proper href
 Testing		ALL		5		Jest testing - https://facebook.github.io/jest
 Visual		ALL		1		All google maps should be styled properly (theme colors, eg.)
 Performance	ALL		4		Debounce the search bar (on input)
-Performance	ALL		2		Proper image sizing (use the new image sizing stuff) - Use JPEG2000 rather than JPG for size savings
-						up to 800 px width		/ 	1400 px width		/	other
-
 						Image Lazy Load (don’t load until view) - https://developers.google.com/web/updates/2016/04/intersectionobserver
 Performance	ALL		2		Refactor to move CSS for each component - reduce CSS size
 Validation	ALL		4		CSS			All things should be BEM (https://github.com/airbnb/css)

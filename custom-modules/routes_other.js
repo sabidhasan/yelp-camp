@@ -48,7 +48,7 @@ router.get('/campground', async function(req, res) {
   // Get campground data if random CG or one CG
   Campground.find({"id": {"$in": requestedID}}, async (err, results) => {
       // Handle errors
-      if (!(results.length) || err) {
+      if (err || !(results.length)) {
         return res.sendStatus(404);
         // return;
       };

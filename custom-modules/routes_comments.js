@@ -7,15 +7,19 @@ const validateUser = async (res, req, next) => {
   // Validate the user based on supplied credentials
   try {
     var verification = await helpers.verifyUser(req.body.userID);
-    next();
+    return verification;
   } catch (err) {
     // Couldn't verify users JWT token, or no token was given in req.body.userID
-    console.log(err);
-    res.sendStatus(401);
+    return false;
   }
 }
 
-router.delete('/comment', validateUser, async function(req, res) {
+router.delete('/comment', async function(req, res) {
+  const verification = await validateUser(res, req);
+  if (!verification) {
+    return res.sendStatus(400);
+  }
+
   // verify comment is owned by user
   Campground.find({'id': req.body.campgroundID}, (error, result) => {
     // Check for how many campgrounds were found
@@ -46,7 +50,10 @@ router.delete('/comment', validateUser, async function(req, res) {
   });
 });
 
-router.post('/comment', validateUser, async function(req, res) {
+router.post('/comment', async function(req, res) {
+  if (!await validateUser(res, req)) {
+    return res.sendStatus(400);
+  }
   // Ensure rating and text are valid
   if (req.body.pickedRating > 5 || req.body.pickedRating < 0) {
     return res.sendStatus(400);

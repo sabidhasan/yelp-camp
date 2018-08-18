@@ -133,11 +133,10 @@ button[disabled]:hover {
   to {transform: translateY(-5px);}
 }
 @keyframes banner-images-fadein {
-  0% {opacity: 0; animation-timing-function: ease-in;}
-  /* 5% {transform: scale(1);} */
-  10% {opacity: 1; animation-timing-function: ease-out;}
+  /* 0% {opacity: 0;}
+  10% {opacity: 1;}
   20% {opacity: 1;}
-  40% {opacity: 0;}
+  40% {opacity: 0;} */
 }
     /* <Campgrounds /> */
 @keyframes random-icon-spin {
@@ -280,7 +279,7 @@ button[disabled]:hover {
   grid-column: 1; grid-row: 1; z-index: 1
 }
 .Banner__image-container {
-  display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr; opacity: 0.78;
+  display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr; opacity: 0.50;
 }
 .Banner__image {
   width: 100%; height: 100%; object-fit: cover; opacity: 0; grid-column: 1;
@@ -309,7 +308,7 @@ button[disabled]:hover {
   text-align: center; width: 100%;
 }
 .Banner__quote {
-  flex-basis: 200px; display: flex; align-items: flex-end; color: var(--very-light);
+  flex-basis: 200px; display: flex; align-items: flex-end; color: var(--dark-main);
 }
 .Banner__title {
   color: var(--dark-main); font-weight: 600; font-size: 5.5rem;
@@ -429,6 +428,7 @@ button[disabled]:hover {
 
     /* Component <DiscoverTile /> */
 .DiscoverTile {
+  background-color: var(--dark-main);
   text-align: center; font-weight: 100; height: 65vh; font-size: 1.8rem;
   color: var(--very-light); box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.7);
   margin: 10px 0 50px 0;
@@ -763,9 +763,12 @@ button[disabled]:hover {
 .MultiCheckBox__checkbox {
   position: absolute; left: -9999px;
 }
+.MultiCheckBox__checkbox:focus + .MultiCheckBox__text::before {
+  outline: 2px solid ActiveBorder;
+}
 .MultiCheckBox__text::before {
   content: ' '; width: 17px; height: 17px; border-radius: 3px; border: 1px solid var(--dark-main);
-  background: var(--dark-main); margin-right: 15px;
+  background: var(--dark-main); margin: 0 15px 0 5px; padding: 4px;
   display: flex; align-items: center; justify-content: center; font-size: .9rem;
   font-weight: bold; color: var(--very-light);
 }
@@ -1048,16 +1051,19 @@ button[disabled]:hover {
   grid-column: 1 / -1; resize: none; line-height: 1.5rem;
 }
 .NewReviewForm__error {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; color: var(--dark-main)
 }
 .NewReviewForm__controls {
   display: grid; grid-template-columns: auto auto 1fr; justify-items: flex-end;
   grid-gap: 15px; grid-column: 1 / -1;
 }
+.NewReviewForm__progress {
+  color: var(--dark-main);
+}
 
     /* Component <CircularProgressBar /> */
 .CircularProgressbar {
-  width: 30px; height: 30px;
+  width: 30px; height: 30px; margin-left: 20px;
 }
 .CircularProgressbar .CircularProgressbar-path {
   stroke: var(--dark-main); stroke-linecap: round; transition: all 0.6s;
@@ -1181,7 +1187,7 @@ button[disabled]:hover {
   }
   /* Component <Header /> */
   .Header {
-    padding: 5px; grid-gap: 5px;
+    padding: 5px; grid-gap: 5px; height: 60px;
   }
   .Header > .btn {
     font-size: .7rem; background: var(--light-main); box-shadow: none;
@@ -1190,17 +1196,17 @@ button[disabled]:hover {
     display: none;
   }
   .Header__title {
-    font-size: 1.4rem;
+    font-size: 1.4rem; align-self: center;
   }
   .Header__user-image {
     display: none;
   }
   .Header__discover-icon, .Header__login, .Header__cart-icon {
-    padding: 4px 8px; font-size: 0.8rem;
+    padding: 4px 8px; font-size: 0.8rem; margin: 0 8px; width: 80%;
   }
   .Header--sticky {
     position: fixed; top: 0; background: linear-gradient(to right, var(--light-main) 0%, var(--dark-main) 85%);
-    width: 100%; height: 10vh; z-index: 2; padding: 15px 5px;
+    width: 100%; max-height: 20vh; z-index: 2; padding: 15px 5px;
     box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.7); border-bottom: 4px solid var(--dark-main);
   }
   .Header--sticky.SingleCampgroundTitle {
@@ -1244,7 +1250,7 @@ button[disabled]:hover {
     font-size: 1.3rem;
   }
   .Banner__quote {
-    flex: 1;
+    display: none;
   }
   .Banner__chevron {
     display: none;
@@ -1408,10 +1414,10 @@ animation: DiscoverSVGMap-scroll 13s infinite; display: block; text-transform: u
       "sidebar sidebar"
   }
   .SingleCampground__review-link {
-    justify-items: flex-start; grid-template-columns: 1fr 1fr; margin: 0;
+    justify-items: flex-start; grid-template-columns: 1fr 1fr; margin: 0; height: 55px;
   }
   .SingleCampground__cart {
-    justify-self: flex-end;
+    justify-self: flex-end; height: 80%; width: 80%;
   }
   .SingleCampground__rating {
     justify-content: space-between;
@@ -1428,7 +1434,7 @@ animation: DiscoverSVGMap-scroll 13s infinite; display: block; text-transform: u
   }
   /* Component <ReviewButton /> */
   .ReviewButton {
-    padding: 4px 8px; font-size: 1.1rem;
+    padding: 4px 8px; font-size: 1.1rem; height: 100%;
   }
   /* Component <CampMap /> */
   .CampMap {
