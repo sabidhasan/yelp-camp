@@ -22,6 +22,10 @@ const withStickyBar = (Component) => {
       })
     }
 
+    componentWillUnmount() {
+      // remove event listener TO--DO
+    }
+
     render() {
       return <Component {...this.props} />
     }
