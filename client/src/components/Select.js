@@ -31,6 +31,7 @@ class Select extends React.Component {
     const items = this.props.items || []
     return (
       <div
+        tabindex='0'
         className={`Select${this.state.expanded ? ' Select--expanded' : ''}`}
         onClick={this.toggleExpanded}>
         <span
@@ -49,7 +50,10 @@ class Select extends React.Component {
               <li
                 className='Select__item'
                 onClick={() => this.updateValue(v)}
-                key={i}>
+                key={i}
+                aria-setsize={items.length}
+                aria-posinset={i + 1}
+                >
                 {v.text}
               </li>
             ))

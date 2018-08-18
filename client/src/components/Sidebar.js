@@ -4,7 +4,9 @@ import PricingTile from './PricingTile'
 const Sidebar = (props) => {
   const paymentLogos = {'interac': '💳', cash: '💵'};
   return (
-    <div className='Sidebar'>
+    <aside
+      className='Sidebar'
+    >
       <section className='Sidebar__section'>
         <h2 className='Sidebar__heading'>Hours</h2>
         <div className='Sidebar__details'>
@@ -55,7 +57,7 @@ const Sidebar = (props) => {
           : 'No payment method information found'}
         </div>
       </section>
-    </div>
+    </aside>
   )
 }
 

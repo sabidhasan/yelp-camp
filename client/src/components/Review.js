@@ -4,12 +4,10 @@ import XButton from './XButton'
 import RatingBar from './RatingBar'
 import { formatDate } from '../helpers/helpers'
 
-const Review = (props, context) => {
-  console.log(props);
-  return (
-    <div className='Review'>
+const Review = (props, context) => (
+    <li className='Review'>
       <span className='Review__identity bold flex-center'>
-        <img className='Review__image' src={props.photoURL} alt='User image icon' />
+        <img className='Review__image' src={props.photoURL} alt='User' />
         <span className='Review__author'>{props.displayName}</span>
       </span>
       <div className='Review__rating'>
@@ -20,9 +18,8 @@ const Review = (props, context) => {
         <XButton className='Review__delete bold' onClick={() => props.deleteReview(props.id)} />
       : null}
       <span className='Review__text'>{props.text}</span>
-    </div>
+    </li>
   )
-}
 
 Review.contextTypes = {
   user: PropTypes.object

@@ -3,8 +3,7 @@ import React from 'react'
 const XButton = (props) => {
   return (
     <button
-      role='button'
-      aria-label='Close'
+      aria-label='Remove'
       className={`XButton ${props.className}`}
       onClick={props.onClick}
     >

@@ -1,17 +1,5 @@
 import React from 'react'
-
-const weatherIcons = {
-  'clear-day' : '☀️',
-  'clear-night' : '☀️',
-  'rain' : '☔️',
-  'snow' : '⛄',
-  'sleet' : '⛄',
-  'wind' : '💨',
-  'fog' : '🌁',
-  'cloudy' : '☁️',
-  'partly-cloudy-day' : '⛅',
-  'partly-cloudy-night' : '⛅'
-}
+import { weatherIcons } from '../helpers/helpers'
 
 const WeatherBox = (props) => {
   if (!props.weather || !Object.keys(props.weather).length) return (
@@ -23,7 +11,7 @@ const WeatherBox = (props) => {
   return (
     <div className='WeatherBox'>
       <h2 className='WeatherBox__header'>Current Conditions</h2>
-      <span className='WeatherBox__summary'>
+      <span aria-hidden='true' className='WeatherBox__summary'>
         {weatherIcons[props.weather.icon]}
       </span>
       <span className='WeatherBox__text'>

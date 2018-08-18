@@ -1,4 +1,5 @@
 import React from 'react'
+import { searchIcons } from '../helpers/helpers'
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -38,11 +39,7 @@ class SearchBar extends React.Component {
     } else {
       // show the search, and do search
       this.changeFocus(true);
-      const icons = {
-        'name': '⛺', 'paymentMethods': '💵', 'activities': '🚣',
-        'address': '📍', 'description': '📛', 'province': '🌎',
-        'region': '🗾'
-      }
+
       this.setState({highlightedIndex: -1});
       fetch(`/search?q=${e.target.value}`)
         .then(res => res.json())
@@ -50,7 +47,7 @@ class SearchBar extends React.Component {
           const stateSearch = search.map(v => {
             return {
               id: v.id,
-              icon: icons[v.type],
+              icon: searchIcons[v.type],
               name: v.campgroundName,
               text: `${v.type}: ${v.excerpt}`}
           })
@@ -91,22 +88,26 @@ class SearchBar extends React.Component {
   render() {
     const searchResults = this.state.results.map((v, i) => (
       <li
-        key={i}
+        role='option'
+        aria-selected={i === this.state.highlightedIndex ? 'true' : 'false'}
+        key={i.id}
         className={`SearchBar__result${i === this.state.highlightedIndex ? '--selected' : '--unselected'}`}
         onMouseMove={() => this.handleMouse(i)}
         onMouseOut={() => this.setState({highlightedIndex: -1})}
         onMouseDown={this.goToCampground}>
-        <i className='SearchBar__result-icon'>{v.icon}</i>
+        <i className='SearchBar__result-icon' aria-hidden='true'>{v.icon}</i>
         <div className='SearchBar__result-text capitalize'>
-          <h2 className='bold'>{v.name}</h2>
-          <h2>{v.text}</h2>
+          <h2 className='bold' aria-label='Campground Name'>{v.name}</h2>
+          <h2 aria-label='Matched text'>{v.text}</h2>
         </div>
       </li>
     ))
     return (
-      <form autoComplete='off' className='SearchBar' onSubmit={(e) => e.preventDefault()}>
+      <form role='search' autoComplete='off' className='SearchBar' onSubmit={(e) => e.preventDefault()}>
         <input
+          aria-labelledby='SearchBar__label'
           name='search'
+          id='search'
           type='text'
           placeholder='Province, Region, City, Campground Name, Amenity, etc.'
           onFocus={() => this.changeFocus(true)}
@@ -117,14 +118,30 @@ class SearchBar extends React.Component {
           onChange={this.handleChange}
           className='SearchBar__input'
         />
-        <label htmlFor='search' className='SearchBar__label bold flex-center'>Find</label>
-        <button type='submit' className='SearchBar__button flex-center' onClick={this.goToCampground}>
+        <label id='SearchBar__label' htmlFor='search' className='SearchBar__label bold flex-center'>
+          Find
+        </label>
+        <button
+          type='submit'
+          className='SearchBar__button flex-center'
+          onClick={this.goToCampground}
+          aria-label='Search'
+        >
           <i className="SearchBar__button-icon fas fa-search"></i>
         </button>
-        <ul className={`SearchBar__results${this.state.active ? '--active' : '--hidden'}`}>
+        <ul
+          role='listbox'
+          aria-label='Search results'
+          // These ensure that updates to this element are read out by screenreader
+          aria-live='assertive' aria-atomic='true'
+          aria-hidden={this.state.active ? 'false' : 'true'}
+          className={`SearchBar__results${this.state.active ? '--active' : '--hidden'}`}
+        >
           {(searchResults.length || !this.state.searchQuery) ?
             searchResults
-            : <p className='SearchBar__no-results bold'>No results found for '{this.state.searchQuery}'</p>
+            : <p
+                className='SearchBar__no-results bold'>No results found for '{this.state.searchQuery}'
+              </p>
           }
         </ul>
       </form>

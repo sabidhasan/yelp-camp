@@ -35,7 +35,7 @@ const withAuthentication = (Component) => {
       })
       .catch(err => {
         this.setState({user: null}, () => this.context.finishLoad(this.constructor.name))
-        console.log(err)
+        // console.log(err)
       })
     }
 
@@ -47,7 +47,7 @@ const withAuthentication = (Component) => {
       })
       .catch((err) => {
         this.setState({user: null})
-        console.log('error occured')
+        // console.log('error occured')
       })
     }
 
