@@ -1,5 +1,5 @@
 import React from 'react'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import campIcon from '../images/camp-icon.png'
 import campIconRed from '../images/camp-icon-red.png'
 
@@ -12,7 +12,7 @@ export class DiscoverGoogleMap extends React.Component {
 
   handleClick(reactObject, mapObject, event) {
     // See if any CGs match
-    const clickRange = 2.5 * (0.0001314318 + (0.8191036682/(1 + Math.pow((mapObject.zoom/2.974602), 4.536466))))
+    const clickRange = 2.5 * (0.0001314 + (0.8191/(1 + Math.pow((mapObject.zoom/2.975), 4.537))))
 
     const nearestCG = this.props.campgrounds.find((cg, idx) => (
       cg.lat && cg.lon && Math.abs(cg.lat - event.latLng.lat()) < clickRange && Math.abs(cg.lon - event.latLng.lng()) < clickRange
@@ -28,10 +28,6 @@ export class DiscoverGoogleMap extends React.Component {
       this.setState({selectedId: null})
     }
   }
-  // shouldComponentUpdate(np, ns) {
-  //   // Only update if click event is
-  //   return ns.selectedId !== this.state.selectedId;
-  // }
 
   render() {
     var lngs = [];
@@ -51,6 +47,10 @@ export class DiscoverGoogleMap extends React.Component {
             <Marker
               key={idx+(Math.random()*1000)}
               position={point}
+              onClick={() => {
+                this.props.setSelected(coords.id);
+                this.setState({selectedId: coords.id})
+              }}
               icon={{
                 url: url,
                 scaledSize: new this.props.google.maps.Size(12,12)
