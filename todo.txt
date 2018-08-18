@@ -1,8 +1,8 @@
 # TO DO LIST
-CATEGORY		MODULE		TIME REQ (5)	TODO
+CATEGORY	MODULE		TIME REQ (5)	TODO
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Data		Scrape		3		Address to Lat/Lon for missing addresses or deal with them somehow (~500 campgrounds)
-Data		Clean DB	2		Remove all BS
+Data		Clean DB	2		Remove all BS - extra comments/ratings
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Validation	ALL		5		Look at Audit in ChromeDevTools and pass everything there
 Testing		ALL		2		React PropTypes
@@ -13,6 +13,8 @@ Testing		ALL		5		Jest testing - https://facebook.github.io/jest
 Visual		ALL		1		All google maps should be styled properly (theme colors, eg.)
 Performance	ALL		4		Debounce the search bar (on input)
 Performance	ALL		2		Proper image sizing (use the new image sizing stuff) - Use JPEG2000 rather than JPG for size savings
+						up to 800 px width		/ 	1400 px width		/	other
+
 						Image Lazy Load (don’t load until view) - https://developers.google.com/web/updates/2016/04/intersectionobserver
 Performance	ALL		2		Refactor to move CSS for each component - reduce CSS size
 Validation	ALL		4		CSS			All things should be BEM (https://github.com/airbnb/css)
@@ -26,6 +28,7 @@ Accessibility	ALL		4		ARIA for all elements
 Accessibility	ALL		1		Cart escape key press hides it
 		ALL		5		Deploy on Heroku
 		ALL		2		Error redirection (check console.log and .err in code)
+Performance	ALL		1		Components should be better organized in directories
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Visual		/		1		Random photo in the back of banner every time
 Performance	/		1		It shouldn’t query the server on alt tab for search bar
@@ -37,6 +40,7 @@ Bug fix		/search		3		Yukon territory filtering does not work
 Performance	/search		4		If no address available for any CG (eg. search for “TES”, then hide map entirely)
 Visual		/search		3		Icons for activities in search
 						If no mappable CGs (like “tes”), then no map and results 100% width
+Accessibility	/search		2		Keyboard handler for Multicheckbox and Select box
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Visual		/campground/id			Get directions link
 Visual		/campground/id			Distance for current campground from your location
@@ -51,8 +55,10 @@ Visual		/discover	1		Style CG data
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————	
 Performance	Backend		4		Promisify everything in backend to allow multiple threads
 						Read https://expressjs.com/en/advanced/best-practice-performance.html
+Performance	Backend		2		Create an index in MongoDB on columns in which queries are run
+Performance	Backend		2		Use projections to reduce bandwidth
 Bug fix				2		Backend crashes on search page, if mongod was not started
-
+Server		Backend		4		Use this package - connect-history-api-fallback
 
 Random notes
 ============
