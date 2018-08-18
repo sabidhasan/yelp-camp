@@ -2,16 +2,31 @@ import React from 'react'
 
 class RatingBar extends React.Component {
     constructor(props) {
-      super(props)
-    //   this.state = {
-    //     rating: props.rating || 0,
-    //     // updateRating: props.updateRating || undefined
-    //   }
+      super(props);
+      this.handleKeyboard = this.handleKeyboard.bind(this);
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({rating: nextProps.rating})
-    // }
+    handleKeyboard(e) {
+      if (!this.props.updateRating) return;
+      if (e.key === 'ArrowRight' && this.props.rating < 5) {
+        this.props.updateRating(this.props.rating + 1);
+      } else if (e.key === 'ArrowLeft' && this.props.rating > 0) {
+        this.props.updateRating(this.props.rating - 1);
+      }
+    }
+
+    componentDidMount() {
+      const elem = document.querySelector('.RatingBar--editable');
+      if (!elem) return;
+      elem.addEventListener('keydown', this.handleKeyboard);
+    }
+
+    componentWillUnmount() {
+      console.log('unmounting');
+      const elem = document.querySelector('.RatingBar--editable');
+      if (!elem) return;
+      elem.removeEventListener('keydown', this.handleKeyboard);
+    }
 
     render() {
       // for rating of campgrounds
@@ -31,6 +46,9 @@ class RatingBar extends React.Component {
       }
       rating = rating.map((val, idx) => (
           <span
+            aria-label={`${idx+1} Star`}
+            aria-checked={(Math.floor(val * 10) / 10 * 100) !== 0 ? 'true' : 'false'}
+            role='radio'
             key={idx}
             onClick={() => {if (this.props.updateRating) this.props.updateRating(idx + 1)}}
             className={'RatingBar__star star' + (Math.floor(val * 10) / 10 * 100) +
@@ -39,7 +57,17 @@ class RatingBar extends React.Component {
           >
           </span>
         ));
-      return <div className={`RatingBar ${this.props.updateRating ? ' RatingBar--editable' : ''}`}>{rating}</div>
+      const role = this.props.updateRating ? 'radiogroup' : ''
+      return (
+        <div
+          className={`RatingBar ${this.props.updateRating ? ' RatingBar--editable' : ''}`}
+          aria-label={`Rating: ${this.props.rating} stars out of 5. ${this.props.updateRating ? 'Rating selectable with arrow keys' : ''} `}
+          role={role}
+          tabIndex={this.props.updateRating ? '0' : null}
+        >
+          {rating}
+        </div>
+      )
     }
   }
 
