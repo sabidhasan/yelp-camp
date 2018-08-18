@@ -6,10 +6,10 @@ import withStickyBar from './withStickyBar'
 const SingleCampgroundTitle = (props, context) => {
   return (
     <React.Fragment>
-      <h1 className={`SingleCampgroundTitle ${context.stickyClass}`}>
+      <h1 aria-label='Campground name' className={`SingleCampgroundTitle ${context.stickyClass}`}>
         {props.name}
       </h1>
-      <h2 className='SingleCampgroundTitle__region'>
+      <h2 aria-label='Campground region' className='SingleCampgroundTitle__region'>
         {props.region} Region
       </h2>
     </React.Fragment>

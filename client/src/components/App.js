@@ -18,6 +18,7 @@ import DiscoverSVGMap from './DiscoverSVGMap'
 import DiscoverPage from './DiscoverPage'
 import Search from './Search'
 import Footer from './Footer'
+import FourOhFour from './FourOhFour'
 
 class App extends React.Component {
   constructor(props) {
@@ -37,7 +38,11 @@ class App extends React.Component {
 
   toggleCart() {
     // const newCartState = status ? status : !this.state.cart.show;
-    this.setState({cart: {...this.state.cart, show: !this.state.cart.show}});
+    this.setState({cart: {...this.state.cart, show: !this.state.cart.show}}, () => {
+      if (this.state.cart.show) {
+        document.querySelector(".Cart__close").focus();
+      }
+    });
   }
 
   addToCart(campgroundObject) {
@@ -82,7 +87,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className='container' role='main'>
         <Header toggleCart={this.toggleCart} toggleLoginForm={this.toggleLoginForm} />
 
         {this.state.showLoginOverlay ? <LoginForm toggleLoginForm={this.toggleLoginForm} /> : null}
@@ -122,13 +127,15 @@ class App extends React.Component {
           )} />
 
           <Route exact path='/search' render={(routerProps) => (
-            <Search {...routerProps}/>
+            <Search {...routerProps} />
           )}/>
 
+          <Route path='/' render={(routerProps) => (
+            <FourOhFour {...routerProps} />
+          )} />
         </Switch>
 
         <Footer />
-
       </div>
     );
   }

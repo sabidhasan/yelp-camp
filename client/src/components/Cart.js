@@ -5,10 +5,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import XButton from './XButton'
 
 class Cart extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   static contextTypes = {
     user: PropTypes.object,
   };
@@ -20,12 +16,11 @@ class Cart extends React.Component {
         return (
             <div key={item.id} className='Cart__item'>
               <h2 className='Cart__item-title'>
-                {/* <a className='Cart__item-link bold' href={`/campground/${item.id}`}>{item.name}</a> */}
                 <Link className='Cart__item-link bold' to={`/campground/${item.id}`}>
                   {item.name}
                 </Link>
               </h2>
-              <img className='Cart__item-photo' src={item.image} alt='' />
+              <img className='Cart__item-photo' src={item.image} alt='Campground' />
               <p className='Cart__item-region'>
                 {[item.region, item.province].filter(a=>!!a).join(', ')} Region
               </p>
@@ -42,11 +37,16 @@ class Cart extends React.Component {
     const itemLength = this.props.cart.items.length
 
     return (
-      <div className='Cart'>
-        <h1 className='Cart__header'>{userName}'s Cart</h1>
+      <div
+        role='dialog'
+        className='Cart'
+        aria-labelledby='Cart__header'
+        aria-describedby='Cart__message'
+      >
+        <h1 className='Cart__header' id='Cart__header'>{userName}'s Cart</h1>
         <XButton className='Cart__close bold' onClick={this.props.toggleCart} />
 
-        <p className='Cart__message'>
+        <p className='Cart__message' id='Cart__message'>
           You have {itemLength || 'no'} campground{itemLength !== 1 ? 's' : ''} in your cart.
           {itemLength ? '' : ' Add campgrounds to your cart to save them for later.'}
         </p>
@@ -58,7 +58,7 @@ class Cart extends React.Component {
         >
           {renderItems}
       </ReactCSSTransitionGroup>
-      </div>
+    </div>
     )
   }
 }

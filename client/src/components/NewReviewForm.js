@@ -24,6 +24,11 @@ class NewReviewForm extends React.Component {
     user: PropTypes.object,
   };
 
+  componentDidMount() {
+    // Set focus on form when mounted
+    this.form.querySelector('textarea').focus();
+  }
+
   async postReview(event) {
     // send stuff to server to see if it's OK. If so, update local state.
     // Otherwise, set error to "couldn't post"
@@ -93,22 +98,27 @@ class NewReviewForm extends React.Component {
 
   render() {
     const fillPercentage  = Math.round(this.state.reviewText.length / 1000 * 100)
-    var styles = {};
+    var styles = {path: {stroke: null}};
     if (fillPercentage === 100) {
-      styles = {path: {stroke: 'red'}};
+      styles.path.stroke = 'red';
     } else if (fillPercentage > 85) {
-      styles = {path: {stroke: 'orange'}};
+      styles.path.stroke = 'orange';
     }
 
     return (
-      <form className='NewReviewForm'>
+      <form
+        ref={(r) => this.form = r}
+        role='textbox'
+        className='NewReviewForm'
+      >
         <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
         <span className='NewReviewForm__author bold'>
           Posting publically as {this.context.user.displayName}
-          <img src={this.context.user.photoURL} className='NewReviewForm__image' alt =' '/>
+          <img src={this.context.user.photoURL} className='NewReviewForm__image' alt ='User icon'/>
         </span>
         <textarea
           required
+          aria-required='true'
           maxLength={1000}
           className='NewReviewForm__text'
           value={this.state.reviewText}
@@ -116,11 +126,19 @@ class NewReviewForm extends React.Component {
           placeholder='Write your honest review here!'
           name='reviewText'
         />
-        <span className='NewReviewForm__error'>{this.state.errorMessage}</span>
+        <span
+          className='NewReviewForm__error bold'
+          // Make sure updates are read out
+          role='alert' aria-relevant='all'
+          aria-errormessage={this.state.errorMessage}
+        >
+          {this.state.errorMessage}
+        </span>
         <div className='NewReviewForm__controls'>
           <button className='btn btn--small'
             onClick={this.postReview}
             disabled={this.state.disableForm ? true : false}
+            aria-disabled={this.state.disableForm ? 'true' : 'false'}
           >
             Post Your Review
           </button>
@@ -128,7 +146,13 @@ class NewReviewForm extends React.Component {
             this.setState({pickedRating: 0, reviewText: '', errorMessage: null, disableForm: false});
             this.props.toggleReviewForm(event, false)
           }}>Cancel</button>
-          <CircularProgressbar styles={styles} percentage={fillPercentage} strokeWidth={15} />
+          <div className='NewReviewForm__progress flex-center bold'>
+            {fillPercentage > 85
+              ? <span>{1000-this.state.reviewText.length} characters left</span>
+              : null
+            }
+            <CircularProgressbar styles={styles} percentage={fillPercentage} strokeWidth={15} />
+          </div>
         </div>
       </form>
     )

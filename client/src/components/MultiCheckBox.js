@@ -64,14 +64,19 @@ class MultiCheckBox extends React.Component {
           .map((v, i) => {
             const checked = this.state.selectedIndices.includes(i) ? 'checked' : ''
             return (
-              <label className='MultiCheckBox__label' key={i}>
+              <label
+                className='MultiCheckBox__label'
+                key={i}
+              >
                 <input
                   className='MultiCheckBox__checkbox'
                   type='checkbox'
                   value={v}
+                  aria-describedby="MultiCheckBox__text"
+                  aria-checked={checked}
                   checked={checked}
                   onChange={(event) => this.updateValue(event, i)} />
-                <span className='MultiCheckBox__text'>{v}</span>
+                <span className='MultiCheckBox__text' id='MultiCheckBox__text'>{v}</span>
               </label>
             )})
         }

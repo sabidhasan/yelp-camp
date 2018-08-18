@@ -6,7 +6,6 @@ const CampgroundTile = (props) => {
   return (
     <React.Fragment>
       <img className='CampgroundTile__img' src={props.image} alt="" />
-      {/* <a className='CampgroundTile__link' href={'campground/' + props.id}> */}
       <Link className='CampgroundTile__link' to={'campground/' + props.id}>
         <h2 className='CampgroundTile__name bold'>{props.name}</h2>
       </Link>

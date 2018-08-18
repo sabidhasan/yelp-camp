@@ -7,7 +7,6 @@ import 'react-input-range/lib/css/index.css';
 class FilterSearch extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(props);
     this.state = {
       selectedProv: null,
       selectedActivities: props.filterCriteria.activities,
@@ -34,15 +33,14 @@ class FilterSearch extends React.Component {
   render() {
     return (
       <div className={`FilterSearch ${this.props.className}`}>
-        {/* <h2>Filters</h2> */}
         <button
           className='FilterSearch__button btn bold btn--flat'
           onClick={this.toggleExpanded}>
-          <i class="fas fa-sliders-h"></i>
+          <i className="fas fa-sliders-h"></i>
           {this.state.filterAreaExpanded ? 'Hide ' : 'Show '} Filters
         </button>
         <div className={`FilterSearch__tiles ${this.state.filterAreaExpanded ? 'FilterSearch__tiles--expanded' : ''}`}>
-          <div className='FilterSearch__section'>
+          <div className='FilterSearch__section' tabIndex='0'>
             <h2>Region</h2>
             {this.props.filterCriteria.regions.length ?
               <MultiCheckBox
