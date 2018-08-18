@@ -1,5 +1,5 @@
 import React from 'react'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import CanadaMapSVG from '../helpers/CanadaMapSVG'
 
 export class CampMap extends React.Component {
@@ -26,7 +26,6 @@ export class CampMap extends React.Component {
       <div className='CampMap google-map'>
         <Map
           google={this.props.google}
-          zoom={14}
           initialCenter={{ lat: lat, lng: lon }}
           zoom={8}>
           { marker }

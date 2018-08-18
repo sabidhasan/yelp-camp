@@ -1,29 +1,24 @@
 import React from 'react'
-import RatingBar from './RatingBar'
+// import RatingBar from './RatingBar'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Review from './Review'
 
 class Reviews extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (!this.props.comments || !this.props.comments.length) {
       return (
-        <div className='Reviews'>
-          <h2 className='Reviews__first'>Be the first to review this campground</h2>
-        </div>
+        <ul className='Reviews'>
+          <li><h2 className='Reviews__first'>Be the first to review this campground</h2></li>
+        </ul>
       )
     } else {
-      console.log(this.props.comments);
       return (
         <ReactCSSTransitionGroup
           transitionName="Reviews-delete"
           transitionEnterTimeout={300}
           transitionLeaveTimeout={300}
           className={'Reviews'}
-          component='div'
+          component='ul'
           >
             {this.props.comments.map(val => (
               <Review

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { parse } from 'query-string'
 import haversine from 'haversine'
 
-import { provinces, activitySymbols, shortenDescription } from '../helpers/helpers'
+import { provinces, shortenDescription } from '../helpers/helpers'
 import SearchResultTile from './SearchResultTile'
 import SearchBar from './SearchBar'
 import FilterSearch from './FilterSearch'
@@ -20,7 +20,7 @@ class Search extends React.Component {
 
     this.state = {
       filteredResults: [],
-      page: Math.max(0, parseInt(parse(this.props.location.search)['start'])) || 0,
+      page: Math.max(0, parseInt(parse(this.props.location.search)['start'], 10)) || 0,
       hovered: null,
       filterCriteria: null
     };
@@ -161,7 +161,7 @@ class Search extends React.Component {
                   {' '} of {this.state.filteredResults.length}
                   {' '} for <span className='bold'>{this.searchQuery}</span>
                 </React.Fragment>
-              : this.searchQuery ?
+              : this.searchQuery && this.searchResults && this.searchResults.length ?
                 <React.Fragment>No campgrounds found with the applied filter(s)</React.Fragment>
                 : null
               }

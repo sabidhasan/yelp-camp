@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 
 import CampMap from './CampMap'
 import WeatherBox from './WeatherBox'
@@ -17,8 +18,8 @@ class SingleCampground extends React.Component {
   constructor(props) {
     super(props);
     // this.requestedID = parseInt(this.props.match.params.id);
-    this.state = {id: parseInt(this.props.match.params.id)};
-
+    this.state = {id: parseInt(this.props.match.params.id, 10)};
+    // proper routing with error state, for redirecting
     this.toggleReviewForm = this.toggleReviewForm.bind(this);
     this.addNewComment = this.addNewComment.bind(this);
     this.calculateRating = this.calculateRating.bind(this);
@@ -32,7 +33,7 @@ class SingleCampground extends React.Component {
   };
 
   componentDidMount() {
-    this.context.startLoad(this.constructor.name);
+    this.context.startLoad(this.constructor.name, 'campground data');
     fetch(`/campground?id=${this.state.id}`)
     .then(res => res.json())
     .then(campground => {
@@ -54,12 +55,13 @@ class SingleCampground extends React.Component {
         paymentMethods: campground.paymentMethods,
         activities: campground.activities,
         province: campground.province
-      }, () => this.context.finishLoad(this.constructor.name));
+      }, () => this.context.finishLoad(this.constructor.name, 'campground data'));
     })
     .catch(err => {
     //   //TO--DO proper error handling for all fetch
       console.log("there is an error");
-      this.context.finishLoad(this.constructor.name);
+      this.context.finishLoad(this.constructor.name, 'campground data');
+      // this.setState({e: true}, console.log(this.state));
     //   window.location = `/not-found/${this.state.id}`;
     });
   }
@@ -111,7 +113,7 @@ class SingleCampground extends React.Component {
     }
 
     try {
-      this.context.startLoad(this.constructor.name);
+      this.context.startLoad(this.constructor.name, 'comments');
       const response = await fetch('/comment', {
         body: JSON.stringify({
           userID: userToken,
@@ -126,44 +128,50 @@ class SingleCampground extends React.Component {
       });
       const result = await response.json();
       // Update comments array locally
-      this.setState({comments: result}, () => this.context.finishLoad(this.constructor.name));
+      this.setState({comments: result}, () => this.context.finishLoad(this.constructor.name, 'comments'));
     } catch (err) {
       console.log('error occure in deleteing review');
-      this.context.finishLoad(this.constructor.name);
+      this.context.finishLoad(this.constructor.name, 'comments');
     }
   }
 
   render() {
+    if (this.state.redirect) return <Redirect to='/discover'/>
+
     return (
       <div className='SingleCampground'>
-        <SingleCampgroundTitle name={this.state.name} region={[this.state.region, this.state.province].filter(a => a).join(', ')} />
+        <SingleCampgroundTitle
+          name={this.state.name}
+          region={[this.state.region, this.state.province].filter(a => a).join(', ')}
+        />
 
-        <div className='SingleCampground__review-link'>
+        <section className='SingleCampground__review-link'>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
           <button
+            aria-label='Add to Shopping Cart'
             onClick={() => this.props.addToCart(this.state)}
             className='SingleCampground__cart btn btn--flat'>
             <i className='fas fa-shopping-cart'></i>Add to Cart
           </button>
-        </div>
+        </section>
 
-        <div className='SingleCampground__rating'>
+        <section className='SingleCampground__rating'>
           <RatingBar rating={this.calculateRating()} />
-          <h2>{this.state.comments ? this.state.comments.length : 0} Review{(this.state.comments && this.state.comments.length !== 1 && 's')}</h2>
-        </div>
+          <h2>{this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review{(this.state.comments && this.state.comments.length !== 1 && 's')}</h2>
+        </section>
 
         <CampMap lat={this.state.lat} lon={this.state.lon} />
 
-        <div className='SingleCampground__info-weather'>
+        <section className='SingleCampground__info-weather'>
           <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
           <WeatherBox weather={this.state.weather} />
-        </div>
+        </section>
 
         {this.state.description ?
-          <div className="SingleCampground__description">
+          <section className="SingleCampground__description">
             <h2>Description</h2>
             {this.state.description}
-          </div>
+          </section>
         : null }
 
         <Sidebar hours={this.state.hours}
@@ -172,17 +180,17 @@ class SingleCampground extends React.Component {
           paymentMethods={this.state.paymentMethods}
         />
 
-        <img className='SingleCampground__image' src={this.state.image} alt="" />
+        <img className='SingleCampground__image' src={this.state.image} alt='Campground' />
 
-        <div className='SingleCampground__activities'>
+        <section className='SingleCampground__activities'>
           <h1>Activities at {this.state.name}</h1>
           <Activities activitiesList={this.state.activities} />
-        </div>
+        </section>
 
-        <div className='SingleCampground__reviews-header' ref='reviewForm'>
+        <section className='SingleCampground__reviews-header' ref='reviewForm'>
           <h1>Reviews</h1>
           <ReviewButton toggleReviewForm={this.toggleReviewForm} />
-        </div>
+        </section>
         { this.state.editable ?
           <NewReviewForm
             campgroundID={this.state.id}

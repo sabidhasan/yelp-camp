@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CampgroundTile from './CampgroundTile'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Campgrounds extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 class SearchResultsMap extends React.Component {
   constructor(props) {
@@ -8,6 +8,7 @@ class SearchResultsMap extends React.Component {
   }
 
   render() {
+
     let bounds = new this.props.google.maps.LatLngBounds();
     // Markers for maps
     const markers = this.props.results
