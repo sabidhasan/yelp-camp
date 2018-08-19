@@ -9,6 +9,14 @@ class Cart extends React.Component {
     user: PropTypes.object,
   };
 
+  componentDidMount() {
+    document.onkeydown = (e) => {if (e.key === 'Escape') this.props.toggleCart()}
+  }
+
+  componentWillUnmount() {
+    document.onkeydown = null;
+  }
+
   render() {
     let renderItems;
     if (this.props.cart.items.length) {
@@ -61,6 +69,12 @@ class Cart extends React.Component {
     </div>
     )
   }
+}
+
+Cart.propTypes = {
+  cart: PropTypes.object,
+  removeFromCart: PropTypes.func,
+  toggleCart: PropTypes.func
 }
 
 export default Cart
