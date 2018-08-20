@@ -6,6 +6,7 @@ const withStickyBar = (Component) => {
     constructor(props) {
       super(props);
       this.state = {stickyClass: ''}
+      this.scrollListener = this.scrollListener.bind(this)
     }
 
     static childContextTypes = {
@@ -15,15 +16,17 @@ const withStickyBar = (Component) => {
       return {stickyClass: this.state.stickyClass}
     }
 
+    scrollListener() {
+      let scrollClass = window.scrollY > 50 ? 'Header--sticky' : '';
+      this.setState({stickyClass: scrollClass})
+    }
+
     componentDidMount() {
-      window.addEventListener('scroll', () => {
-        let scrollClass = window.scrollY > 50 ? 'Header--sticky' : '';
-        this.setState({stickyClass: scrollClass})
-      })
+      window.addEventListener('scroll', scrollListener)
     }
 
     componentWillUnmount() {
-      // remove event listener TO--DO
+      window.removeEventListener('scroll', scrollListener)
     }
 
     render() {
