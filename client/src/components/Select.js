@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Select extends React.Component {
   constructor() {
@@ -31,7 +32,7 @@ class Select extends React.Component {
     const items = this.props.items || []
     return (
       <div
-        tabindex='0'
+        tabIndex='0'
         className={`Select${this.state.expanded ? ' Select--expanded' : ''}`}
         onClick={this.toggleExpanded}>
         <span
@@ -61,6 +62,12 @@ class Select extends React.Component {
         </ul>
     </div>
   )}
+}
+
+Select.propTypes = {
+  onChange: PropTypes.func,
+  items: PropTypes.array,
+  defaultText: PropTypes.string
 }
 
 export default Select

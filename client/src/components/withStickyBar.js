@@ -22,11 +22,11 @@ const withStickyBar = (Component) => {
     }
 
     componentDidMount() {
-      window.addEventListener('scroll', scrollListener)
+      window.addEventListener('scroll', this.scrollListener)
     }
 
     componentWillUnmount() {
-      window.removeEventListener('scroll', scrollListener)
+      window.removeEventListener('scroll', this.scrollListener)
     }
 
     render() {
