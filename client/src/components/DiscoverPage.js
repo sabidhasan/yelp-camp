@@ -13,7 +13,7 @@ class Discover extends React.Component {
       // window.location = '/'
       props.history.push('/');
     };
-      const province = {
+    const province = {
         fullName: provinces[this.props.match.params.province],
         shortName: this.props.match.params.province
     }
@@ -72,6 +72,10 @@ class Discover extends React.Component {
       </div>
     )
   }
+}
+
+Discover.propTypes = {
+  match: PropTypes.object
 }
 
 export default Discover

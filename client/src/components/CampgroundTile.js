@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import RatingBar from './RatingBar'
+import PropTypes from 'prop-types'
 
 const CampgroundTile = (props) => {
   return (
@@ -16,6 +17,16 @@ const CampgroundTile = (props) => {
       </span>
     </React.Fragment>
   )
+}
+
+CampgroundTile.propTypes = {
+  image: PropTypes.array,
+  id: PropTypes.number,
+  name: PropTypes.string,
+  region: PropTypes.string,
+  province: PropTypes.string,
+  rating: PropTypes.number,
+  ratingCount: PropTypes.number
 }
 
 export default CampgroundTile

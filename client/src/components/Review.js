@@ -25,4 +25,14 @@ Review.contextTypes = {
   user: PropTypes.object
 };
 
+Review.propTypes = {
+  photoURL: PropTypes.string,
+  displayName: PropTypes.string,
+  rating: PropTypes.number,
+  time: PropTypes.string,
+  uid: PropTypes.number,
+  deleteReview: PropTypes.func,
+  text: PropTypes.string
+};
+
 export default Review;

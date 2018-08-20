@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const ReviewButton = (props) => {
   return (
@@ -16,6 +17,10 @@ const ReviewButton = (props) => {
       Write a Review
     </button>
   )
+}
+
+ReviewButton.propTypes = {
+  toggleReviewForm: PropTypes.func
 }
 
 export default ReviewButton

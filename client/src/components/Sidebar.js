@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PricingTile from './PricingTile'
 
 const Sidebar = (props) => {
@@ -59,6 +60,13 @@ const Sidebar = (props) => {
       </section>
     </aside>
   )
+}
+
+Sidebar.propTypes = {
+    hours: PropTypes.object,
+    campsites: PropTypes.number,
+    prices: PropTypes.object,
+    paymentMethods: PropTypes.array
 }
 
 export default Sidebar

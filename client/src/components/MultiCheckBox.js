@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class MultiCheckBox extends React.Component {
   constructor(props) {
@@ -83,6 +84,12 @@ class MultiCheckBox extends React.Component {
       </div>
     </React.Fragment>
   )}
+}
+
+MultiCheckBox.propTypes = {
+  items: PropTypes.array,
+  onChange: PropTypes.func,
+  defaultText: PropTypes.string
 }
 
 export default MultiCheckBox

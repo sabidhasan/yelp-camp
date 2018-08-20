@@ -47,4 +47,8 @@ class LoginForm extends React.Component {
   }
 }
 
+LoginForm.propTypes = {
+  toggleLoginForm: PropTypes.func
+}
+
 export default LoginForm

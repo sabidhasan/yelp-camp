@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 class SearchResultsMap extends React.Component {
@@ -44,6 +45,13 @@ class SearchResultsMap extends React.Component {
       </div>
     )
   }
+}
+
+SearchResultsMap.propTypes = {
+  google: PropTypes.object,
+  results: PropTypes.array,
+  page: PropTypes.number,
+  hovered: PropTypes.bool
 }
 
 export default GoogleApiWrapper({

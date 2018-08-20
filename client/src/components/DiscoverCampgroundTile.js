@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import haversine from 'haversine'
 
@@ -17,6 +18,11 @@ const DiscoverCampgroundTile = (props, context) => {
       <p>~{Math.round(haversine(cgLoc, props.userLocation))} km away</p>
     </div>
   )
+}
+
+DiscoverCampgroundTile.propTypes = {
+  userLocation: PropTypes.object,
+  cg: PropTypes.object
 }
 
 export default DiscoverCampgroundTile

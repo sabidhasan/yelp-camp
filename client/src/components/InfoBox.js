@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const InfoBox = (props) => {
   return (
@@ -42,4 +43,9 @@ const InfoBox = (props) => {
   )
 }
 
+InfoBox.propTypes = {
+  address: PropTypes.string,
+  phone: PropTypes.string,
+  email: PropTypes.string
+}
 export default InfoBox

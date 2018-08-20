@@ -44,7 +44,7 @@ class Banner extends React.Component {
       // .then(quote => this.setState({quote: quote[0]}, () => this.context.finishLoad(this.constructor.name)));
   }
 
-  render(props) {
+  render() {
     return (
       <div className="Banner" role='banner'>
         <div className='Banner__image-container'>

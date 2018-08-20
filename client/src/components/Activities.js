@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const Activities = (props) => {
   if (!(props.activitiesList)) return null;
@@ -13,6 +14,10 @@ const Activities = (props) => {
       ))}
     </ul>
   )
+}
+
+Activities.propTypes = {
+  activitiesList: PropTypes.array
 }
 
 export default Activities

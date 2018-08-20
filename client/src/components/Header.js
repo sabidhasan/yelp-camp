@@ -44,5 +44,9 @@ class Header extends React.Component {
   }
 }
 
+Header.propTypes = {
+  toggleLoginForm: PropTypes.func,
+  toggleCart:  PropTypes.func
+}
 
 export default withStickyBar(Header)

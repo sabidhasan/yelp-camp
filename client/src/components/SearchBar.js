@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { searchIcons } from '../helpers/helpers'
 
 class SearchBar extends React.Component {
@@ -90,7 +91,7 @@ class SearchBar extends React.Component {
       <li
         role='option'
         aria-selected={i === this.state.highlightedIndex ? 'true' : 'false'}
-        key={i.id}
+        key={i}
         className={`SearchBar__result${i === this.state.highlightedIndex ? '--selected' : '--unselected'}`}
         onMouseMove={() => this.handleMouse(i)}
         onMouseOut={() => this.setState({highlightedIndex: -1})}
@@ -147,6 +148,10 @@ class SearchBar extends React.Component {
       </form>
     )
   }
+}
+
+SearchBar.propTypes = {
+  initialValue: PropTypes.string
 }
 
 export default SearchBar

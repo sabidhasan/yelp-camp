@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import campIcon from '../images/camp-icon.png'
 import campIconRed from '../images/camp-icon-red.png'
@@ -73,6 +74,12 @@ export class DiscoverGoogleMap extends React.Component {
       </Map>
     );
   }
+}
+
+DiscoverGoogleMap.propTypes = {
+  campgrounds: PropTypes.array,
+  setSelected: PropTypes.func,
+  google: PropTypes.object
 }
 
 export default GoogleApiWrapper({

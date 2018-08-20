@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Select from './Select'
 import InputRange from 'react-input-range';
 import MultiCheckBox from './MultiCheckBox'
@@ -97,6 +98,12 @@ class FilterSearch extends React.Component {
       </div>
     )
   }
+}
+
+FilterSearch.propTypes = {
+  filterCriteria: PropTypes.object,
+  onChange: PropTypes.func,
+  className: PropTypes.string
 }
 
 export default FilterSearch

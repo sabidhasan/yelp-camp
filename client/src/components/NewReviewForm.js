@@ -1,6 +1,6 @@
 import React from 'react'
-import RatingBar from './RatingBar'
 import PropTypes from 'prop-types'
+import RatingBar from './RatingBar'
 
 import CircularProgressbar from 'react-circular-progressbar';
 
@@ -157,6 +157,12 @@ class NewReviewForm extends React.Component {
       </form>
     )
   }
+}
+
+NewReviewForm.propTypes = {
+  campgroundID: PropTypes.number,
+  addNewComment: PropTypes.func,
+  toggleReviewForm: PropTypes.func
 }
 
 export default NewReviewForm;

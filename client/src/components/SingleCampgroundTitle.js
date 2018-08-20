@@ -20,4 +20,9 @@ SingleCampgroundTitle.contextTypes = {
   stickyClass: PropTypes.string,
 };
 
+SingleCampgroundTitle.propTypes = {
+  name: PropTypes.string,
+  region: PropTypes.string
+}
+
 export default withStickyBar(SingleCampgroundTitle)

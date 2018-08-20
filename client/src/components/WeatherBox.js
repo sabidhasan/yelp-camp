@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { weatherIcons } from '../helpers/helpers'
 
 const WeatherBox = (props) => {
@@ -30,5 +31,8 @@ const WeatherBox = (props) => {
   )
 }
 
+WeatherBox.propTypes = {
+  weather: PropTypes.object
+}
 
 export default WeatherBox

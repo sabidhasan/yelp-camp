@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const PricingTile = (props) => (
   <React.Fragment>
@@ -9,5 +10,10 @@ const PricingTile = (props) => (
     </div>
   </React.Fragment>
 )
+
+PricingTile.propTypes = {
+  data: PropTypes.object,
+  type: PropTypes.string
+}
 
 export default PricingTile

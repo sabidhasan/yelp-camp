@@ -204,4 +204,9 @@ class SingleCampground extends React.Component {
   }
 }
 
+SingleCampground.propTypes = {
+  toggleLoginForm: PropTypes.func,
+  addToCart: PropTypes.func
+}
+
 export default SingleCampground;

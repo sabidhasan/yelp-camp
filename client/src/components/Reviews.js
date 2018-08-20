@@ -1,5 +1,5 @@
 import React from 'react'
-// import RatingBar from './RatingBar'
+import PropTypes from 'prop-types'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Review from './Review'
 
@@ -37,6 +37,11 @@ class Reviews extends React.Component {
       )
     }
   }
+}
+
+Reviews.propTypes = {
+  comments: PropTypes.array,
+  deleteReview: PropTypes.func
 }
 
 export default Reviews

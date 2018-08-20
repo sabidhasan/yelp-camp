@@ -1,6 +1,7 @@
 import React from 'react'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import CanadaMapSVG from '../helpers/CanadaMapSVG'
+import PropTypes from 'prop-types'
 
 export class CampMap extends React.Component {
   render() {
@@ -33,6 +34,12 @@ export class CampMap extends React.Component {
       </div>
     );
   }
+}
+
+CampMap.propTypes = {
+  lat: PropTypes.number,
+  lon: PropTypes.number,
+  google: PropTypes.object
 }
 
 export default GoogleApiWrapper({

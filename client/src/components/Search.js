@@ -179,4 +179,8 @@ class Search extends React.Component {
   }
 }
 
+Search.propTypes = {
+  location: PropTypes.object
+}
+
 export default Search

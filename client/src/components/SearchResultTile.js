@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import RatingBar from './RatingBar'
 
-const SearchResultTile = (props) => {
-  return (
+const SearchResultTile = (props) => (
     <li className='SearchResultTile'>
       <a
         className='SearchResultTile__title-container'
@@ -25,7 +25,20 @@ const SearchResultTile = (props) => {
         </p>
       </div>
     </li>
-  )
+)
+
+SearchResultTile.propTypes = {
+  id: PropTypes.number,
+  onTitleHover: PropTypes.func,
+  number: PropTypes.number,
+  name: PropTypes.string,
+  regionAndProvince: PropTypes.string,
+  address: PropTypes.string,
+  distance: PropTypes.number,
+  description: PropTypes.string,
+  images: PropTypes.array,
+  rating: PropTypes.number,
+  comments: PropTypes.array,
 }
 
 export default SearchResultTile

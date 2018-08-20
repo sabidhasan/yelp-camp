@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Pagination = (props) => {
   if (props.lastPage === 0) return null;
@@ -42,6 +43,12 @@ const Pagination = (props) => {
       : null }
     </div>
   )
+}
+
+Pagination.propTypes = {
+  lastPage: PropTypes.number,
+  currentPage: PropTypes.number,
+  goToPageHandler: PropTypes.func
 }
 
 export default Pagination
