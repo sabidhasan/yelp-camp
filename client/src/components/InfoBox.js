@@ -16,7 +16,7 @@ const InfoBox = (props) => {
             <span role='img' aria-label='Get directions' id='InfoBox__directions'>🚗</span>
           </span>
           <span className='InfoBox__data' aria-labelledby='InfoBox__directions'>
-            <a href="#">Get Directions</a>
+            <a href={`https://www.google.com/maps/dir/${props.address}`}>Get Directions</a>
           </span>
         </React.Fragment>
       : null}

@@ -10,9 +10,7 @@ const Footer = () => {
         <br /><span className='bold' aria-label='Email Address'>Email</span>: contact@yelpcamp.com
       </p>
 
-      <h2 className='Footer__about'>YelpCamp was created as part of <a className='Footer__link' href="https://www.udemy.com/the-web-developer-bootcamp/">
-       The Web Developer Bootcamp</a>. This website has no affiliation with Yelp, Inc. in any way.
-     </h2>
+      <h2 className='Footer__about'>This website has no affiliation with Yelp, Inc. in any way.</h2>
 
       <h2 className='Footer__about'>Made with <span role='img' aria-label='love'>💚</span>
       and <span role='img' aria-label='coffee'>☕</span> in Edmonton, Canada</h2>
@@ -27,7 +25,7 @@ const Footer = () => {
         <a id='Footer__social-stack' className='Footer__social-link' href='https://stackoverflow.com/users/7509481/abid-hasan' aria-label='Stack Overflow Link'>
           <i className="fab fa-stack-overflow Footer__stackoverflow" aria-labelledby='Footer__social-stack'></i>
         </a>
-        <a id='Footer__social-linkedin' className='Footer__social-link' href='https://www.linkedin.com/' aria-label='LinkedIn Link'>
+        <a id='Footer__social-linkedin' className='Footer__social-link' href='https://www.linkedin.com/in/abidhasan/' aria-label='LinkedIn Link'>
           <i className="fab fa-linkedin Footer__linkedin" aria-labelledby='Footer__social-linkedin'></i>
         </a>
       </div>
