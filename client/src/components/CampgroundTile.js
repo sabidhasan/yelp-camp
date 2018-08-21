@@ -1,4 +1,5 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload';
 import { Link } from 'react-router-dom'
 import RatingBar from './RatingBar'
 import PropTypes from 'prop-types'
@@ -6,7 +7,9 @@ import PropTypes from 'prop-types'
 const CampgroundTile = (props) => {
   return (
     <React.Fragment>
-      <img className='CampgroundTile__img' src={props.image} alt="" />
+      <LazyLoad once>
+        <img className='CampgroundTile__img' src={props.image} alt="" />
+      </LazyLoad>
       <Link className='CampgroundTile__link' to={'campground/' + props.id}>
         <h2 className='CampgroundTile__name bold'>{props.name}</h2>
       </Link>

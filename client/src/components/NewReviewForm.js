@@ -1,4 +1,5 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types'
 import RatingBar from './RatingBar'
 
@@ -114,7 +115,9 @@ class NewReviewForm extends React.Component {
         <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
         <span className='NewReviewForm__author bold'>
           Posting publically as {this.context.user.displayName}
-          <img src={this.context.user.photoURL} className='NewReviewForm__image' alt ='User icon'/>
+          <LazyLoad once>
+            <img src={this.context.user.photoURL} className='NewReviewForm__image' alt ='User icon'/>
+          </LazyLoad>
         </span>
         <textarea
           required
