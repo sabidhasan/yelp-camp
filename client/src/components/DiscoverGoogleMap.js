@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { GoogleMapsAPIKey } from '../helpers/APIKeys.js'
 import campIcon from '../images/camp-icon.png'
 import campIconRed from '../images/camp-icon-red.png'
 
@@ -83,5 +84,5 @@ DiscoverGoogleMap.propTypes = {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg'
+  apiKey: GoogleMapsAPIKey
 })(DiscoverGoogleMap)

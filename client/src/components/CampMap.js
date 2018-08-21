@@ -1,5 +1,6 @@
 import React from 'react'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { GoogleMapsAPIKey } from '../helpers/APIKeys.js'
 import CanadaMapSVG from '../helpers/CanadaMapSVG'
 import PropTypes from 'prop-types'
 
@@ -43,5 +44,5 @@ CampMap.propTypes = {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg'
+  apiKey: GoogleMapsAPIKey
 })(CampMap)

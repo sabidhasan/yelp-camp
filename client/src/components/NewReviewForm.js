@@ -128,12 +128,12 @@ class NewReviewForm extends React.Component {
           onChange={this.handleChange}
           placeholder='Write your honest review here!'
           name='reviewText'
+          aria-invalid={this.state.errorMessage ? true : false}
         />
         <span
           className='NewReviewForm__error bold'
           // Make sure updates are read out
           role='alert' aria-relevant='all'
-          aria-errormessage={this.state.errorMessage}
         >
           {this.state.errorMessage}
         </span>
