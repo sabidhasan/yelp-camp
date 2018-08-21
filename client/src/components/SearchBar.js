@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { debounce } from 'lodash'
 import { searchIcons } from '../helpers/helpers'
 
 class SearchBar extends React.Component {
@@ -19,9 +20,11 @@ class SearchBar extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleMouse = this.handleMouse.bind(this);
     this.goToCampground = this.goToCampground.bind(this);
+    this.doAsyncSearch = debounce(this.doAsyncSearch.bind(this), 150);
   }
 
   doSearch(e) {
+    e.persist()
     // handle arrow key input
     if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -42,21 +45,25 @@ class SearchBar extends React.Component {
       this.changeFocus(true);
 
       this.setState({highlightedIndex: -1});
-      fetch(`/search?q=${e.target.value}`)
-        .then(res => res.json())
-        .then(search => {
-          const stateSearch = search.map(v => {
-            return {
-              id: v.id,
-              icon: searchIcons[v.type],
-              name: v.campgroundName,
-              text: `${v.type}: ${v.excerpt}`}
-          })
-          // Update the state for results, trimming it to top 5
-          this.setState({results: stateSearch.slice(0, 5)})
-        })
-        .catch(err => console.log("Error occurred while searching ", err))
+      this.doAsyncSearch(e)
     }
+  }
+
+  doAsyncSearch(e) {
+    fetch(`/search?q=${e.target.value}`)
+    .then(res => res.json())
+    .then(search => {
+      const stateSearch = search.map(v => {
+        return {
+          id: v.id,
+          icon: searchIcons[v.type],
+          name: v.campgroundName,
+          text: `${v.type}: ${v.excerpt}`}
+        })
+        // Update the state for results, trimming it to top 5
+        this.setState({results: stateSearch.slice(0, 5)})
+      })
+    .catch(err => console.log("Error occurred while searching ", err))
   }
 
   handleMouse(key) {
