@@ -60,6 +60,7 @@ class DiscoverMap extends React.Component {
           onClick={this.handleClick}
           onMouseOver={this.handleHover}
           onMouseOut={() => this.setState({hoveredProvince: null})}
+          onKeyDown={this.handleClick}
         >
           <CanadaMapSVG />
           <span className='DiscoverSVGMap__map-text bold flex-center'>
