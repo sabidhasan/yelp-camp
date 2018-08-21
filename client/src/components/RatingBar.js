@@ -23,7 +23,6 @@ class RatingBar extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmounting');
     const elem = document.querySelector('.RatingBar--editable');
     if (!elem) return;
     elem.removeEventListener('keydown', this.handleKeyboard);
