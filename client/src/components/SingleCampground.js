@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import LazyLoad from 'react-lazyload'
 import { Redirect } from 'react-router-dom'
 
 import CampMap from './CampMap'
@@ -180,7 +181,9 @@ class SingleCampground extends React.Component {
           paymentMethods={this.state.paymentMethods}
         />
 
-        <img className='SingleCampground__image' src={this.state.image} alt='Campground' />
+        <LazyLoad once>
+          <img className='SingleCampground__image' src={this.state.image} alt='Campground' />
+        </LazyLoad>
 
         <section className='SingleCampground__activities'>
           <h1>Activities at {this.state.name}</h1>
