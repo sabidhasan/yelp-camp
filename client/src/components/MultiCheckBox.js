@@ -87,9 +87,13 @@ class MultiCheckBox extends React.Component {
 }
 
 MultiCheckBox.propTypes = {
-  items: PropTypes.array,
-  onChange: PropTypes.func,
+  items: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
   defaultText: PropTypes.string
+}
+
+MultiCheckBox.defaultProps = {
+  defaultText: ''
 }
 
 export default MultiCheckBox

@@ -20,7 +20,7 @@ const ReviewButton = (props) => {
 }
 
 ReviewButton.propTypes = {
-  toggleReviewForm: PropTypes.func
+  toggleReviewForm: PropTypes.func.isRequired
 }
 
 export default ReviewButton
