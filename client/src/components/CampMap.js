@@ -25,14 +25,12 @@ export class CampMap extends React.Component {
     }
 
     return (
-      <div className='CampMap google-map'>
         <Map
           google={this.props.google}
           initialCenter={{ lat: lat, lng: lon }}
           zoom={8}>
           { marker }
         </Map>
-      </div>
     );
   }
 }
@@ -43,6 +41,7 @@ CampMap.propTypes = {
   google: PropTypes.object
 }
 
+
 export default GoogleApiWrapper({
-  apiKey: GoogleMapsAPIKey
+  apiKey: GoogleMapsAPIKey,
 })(CampMap)

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 
 import CampMap from './CampMap'
 import WeatherBox from './WeatherBox'
@@ -137,7 +137,7 @@ class SingleCampground extends React.Component {
   }
 
   render() {
-    if (this.state.redirect) return <Redirect to='/discover'/>
+    // if (this.state.redirect) return <Redirect to='/discover'/>
 
     return (
       <div className='SingleCampground'>
@@ -161,7 +161,9 @@ class SingleCampground extends React.Component {
           <h2>{this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review{(this.state.comments && this.state.comments.length !== 1 && 's')}</h2>
         </section>
 
-        <CampMap lat={this.state.lat} lon={this.state.lon} />
+        <section className='CampMap'>
+          <CampMap lat={this.state.lat} lon={this.state.lon}/>
+        </section>
 
         <section className='SingleCampground__info-weather'>
           <InfoBox address={this.state.address} phone={this.state.phone} email={this.state.email} />
