@@ -1,0 +1,57 @@
+route testing
+basic component existence testing
+props testing
+snapshot testing
+
+- App
+  - Header
+      withStickyBar           HOC
+  - LoginForm                 ? state
+      - XButton
+  - Cart                      ? state
+      - XButton
+  - IndexPage                 ? route
+      - Banner
+        - SearchBar           ? route     why?
+      - LandingText
+      - LandingTiles
+      - DiscoverTile
+      - Campgrounds
+        - CampgroundTile
+  - SingleCampground          ? route
+    - SingleCampgroundTitle   HOC
+      withStickyBar
+    - ReviewButton
+    - RatingBar
+    - CampMap
+      - CanadaMapSVG          ? props
+    - InfoBox
+    - WeatherBox
+    - Sidebar
+      - PricingTile
+    - Activities
+    - NewReviewForm
+      - RatingBar
+    - Reviews
+      - Review
+  - DiscoverSVGMap            ? route
+    - CanadaMapSVG
+  - DiscoverPage              ? route
+    - DiscoverGoogleMap
+    - DiscoverCampgroundTile  ? state
+  - Search                    ? route
+    - SearchResultTile        ? props
+      - RatingBar
+    - SearchBar               ? route     why?
+    - FilterSearch            ? state
+      - Select
+      - MultiCheckBox         ? props
+    - Pagination
+    - SearchResultsMap
+  - Footer
+
+
+
+withAuthentication
+withLoading
+withLocation

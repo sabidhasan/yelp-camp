@@ -15,7 +15,7 @@ const XButton = (props) => {
 
 XButton.propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func.isRequired
 }
 
 export default XButton
