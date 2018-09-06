@@ -6,7 +6,7 @@ class LoginForm extends React.Component {
   componentDidMount() {
     document.onkeydown = (e) => {if (e.key === 'Escape') this.props.toggleLoginForm()}
 
-    document.querySelector('.LoginForm__google').addEventListener('click', () => this.context.signIn('google'))
+    // document.querySelector('.LoginForm__google').addEventListener('click', () => this.context.signIn('google'))
   }
 
   static contextTypes = {
@@ -33,8 +33,8 @@ class LoginForm extends React.Component {
           </p>
 
           <button
-            className='LoginForm__login-button btn btn--small LoginForm__google'>
-            {/* // onClick={() => this.context.signIn('google')}> */}
+            className='LoginForm__login-button btn btn--small LoginForm__google'
+            onClick={() => this.context.signIn('google')}>
             <i className="fab fa-google"></i>Google Login
           </button>
           <button
