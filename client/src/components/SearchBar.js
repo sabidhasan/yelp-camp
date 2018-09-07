@@ -45,12 +45,12 @@ class SearchBar extends React.Component {
       this.changeFocus(true);
 
       this.setState({highlightedIndex: -1});
-      this.doAsyncSearch(e)
+      this.doAsyncSearch(e.target.value)
     }
   }
 
-  doAsyncSearch(e) {
-    fetch(`/search?q=${e.target.value}`)
+  doAsyncSearch(query) {
+    fetch(`/search?q=${query}`)
     .then(res => res.json())
     .then(search => {
       const stateSearch = search.map(v => {
