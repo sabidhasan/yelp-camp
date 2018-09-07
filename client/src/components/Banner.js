@@ -40,8 +40,8 @@ class Banner extends React.Component {
     // this.context.finishLoad(this.constructor.name);
     fetch('/quote')
       .then(res => res.json())
-      .then(quote => this.setState({quote: quote[0]}));
-      // .then(quote => this.setState({quote: quote[0]}, () => this.context.finishLoad(this.constructor.name)));
+      .then(quote => this.setState({quote: quote[0]}))
+      .catch(err => {console.log('Error occured in network request')})
   }
 
   render() {

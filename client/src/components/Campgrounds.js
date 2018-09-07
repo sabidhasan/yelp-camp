@@ -36,14 +36,14 @@ class Campgrounds extends React.Component {
   render() {
     return (
       <ul className='Campgrounds'>
-        <div className='Campgrounds__header flex-center'>
+        <li className='Campgrounds__header flex-center'>
           <h1 className='Campgrounds__header-title'>Some Awesome Campgrounds</h1>
           <i
             className={`Campgrounds__random fas fa-sync-alt ${this.state.spin ? 'Campgrounds__random--spin' : ''}`}
             onClick={this.newRandoms}
             ref={spinner => this.spinner = spinner}
             ></i>
-        </div>
+        </li>
         {this.state.campgrounds.map(val => {
           const rating = val.comments.reduce((acc, val) => acc + val.rating, 0) / val.comments.length || 0
           return (
