@@ -10,6 +10,7 @@ class Campgrounds extends React.Component {
       campgrounds: []
     };
 
+    this.spinner = {addEventListener: () => {}}
     this.newRandoms = this.newRandoms.bind(this);
   }
 
@@ -23,7 +24,8 @@ class Campgrounds extends React.Component {
     // this.context.startLoad(this.constructor.name)
     fetch('/campground?random=true')
       .then(res => res.json())
-      .then(cg => this.setState({ campgrounds: cg }));
+      .then(cg => this.setState({ campgrounds: cg }))
+      .catch(err => {console.log('An error occurred fetching campgrounds')})
       // .then(cg => this.setState({ campgrounds: cg }, () => this.context.finishLoad(this.constructor.name)))
   }
 
@@ -47,7 +49,7 @@ class Campgrounds extends React.Component {
         {this.state.campgrounds.map(val => {
           const rating = val.comments.reduce((acc, val) => acc + val.rating, 0) / val.comments.length || 0
           return (
-            <li key={val['_id']} className='CampgroundTile'>
+            <li key={val.id} className='CampgroundTile'>
               <CampgroundTile
                 id={val.id}
                 name={val.name}

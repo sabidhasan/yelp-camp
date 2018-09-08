@@ -23,7 +23,7 @@ const CampgroundTile = (props) => {
 }
 
 CampgroundTile.propTypes = {
-  image: PropTypes.array,
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   id: PropTypes.number,
   name: PropTypes.string,
   region: PropTypes.string,
