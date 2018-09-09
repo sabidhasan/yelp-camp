@@ -99,13 +99,13 @@ class SearchBar extends React.Component {
         role='option'
         aria-selected={i === this.state.highlightedIndex ? 'true' : 'false'}
         key={i}
-        className={`SearchBar__result${i === this.state.highlightedIndex ? '--selected' : '--unselected'}`}
+        className={`SearchBar__result SearchBar__result${i === this.state.highlightedIndex ? '--selected' : '--unselected'}`}
         onMouseMove={() => this.handleMouse(i)}
         onMouseOut={() => this.setState({highlightedIndex: -1})}
         onMouseDown={this.goToCampground}>
         <i className='SearchBar__result-icon' aria-hidden='true'>{v.icon}</i>
         <div className='SearchBar__result-text capitalize'>
-          <h2 className='bold' aria-label='Campground Name'>{v.name}</h2>
+          <h2 className='SearchBar__result-name bold' aria-label='Campground Name'>{v.name}</h2>
           <h2 aria-label='Matched text'>{v.text}</h2>
         </div>
       </li>

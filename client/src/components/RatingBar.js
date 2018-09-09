@@ -57,12 +57,11 @@ class RatingBar extends React.Component {
         >
         </span>
       ));
-    const role = this.props.updateRating ? 'radiogroup' : ''
     return (
       <div
         className={`RatingBar ${this.props.updateRating ? ' RatingBar--editable' : ''}`}
         aria-label={`Rating: ${this.props.rating} stars out of 5. ${this.props.updateRating ? 'Rating selectable with arrow keys' : ''} `}
-        role={role}
+        role='radiogroup'
         tabIndex={this.props.updateRating ? '0' : null}
       >
         {rating}

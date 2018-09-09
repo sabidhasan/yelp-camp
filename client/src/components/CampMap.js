@@ -38,7 +38,7 @@ export class CampMap extends React.Component {
 CampMap.propTypes = {
   lat: PropTypes.number,
   lon: PropTypes.number,
-  google: PropTypes.object
+  google: PropTypes.object.isRequired
 }
 
 

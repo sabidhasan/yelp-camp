@@ -55,7 +55,8 @@ class Cart extends React.Component {
         <XButton className='Cart__close bold' onClick={this.props.toggleCart} />
 
         <p className='Cart__message' id='Cart__message'>
-          You have {itemLength || 'no'} campground{itemLength !== 1 ? 's' : ''} in your cart.
+          You have <span className='Cart__message-count'>{itemLength || 'no'}</span> campground
+          {itemLength !== 1 ? 's' : ''} in your cart.
           {itemLength ? '' : ' Add campgrounds to your cart to save them for later.'}
         </p>
         <ReactCSSTransitionGroup
@@ -72,7 +73,7 @@ class Cart extends React.Component {
 }
 
 Cart.propTypes = {
-  cart: PropTypes.object,
+  cart: PropTypes.object.isRequired,
   removeFromCart: PropTypes.func,
   toggleCart: PropTypes.func
 }

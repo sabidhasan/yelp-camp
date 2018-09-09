@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Pagination = (props) => {
-  if (props.lastPage === 0) return null;
+  if (props.lastPage === 0 || !props.currentPage) return null;
 
   // Generate pages counter with current page already in there
   const allPages = [props.currentPage]
@@ -48,7 +48,7 @@ const Pagination = (props) => {
 Pagination.propTypes = {
   lastPage: PropTypes.number,
   currentPage: PropTypes.number,
-  goToPageHandler: PropTypes.func
+  goToPageHandler: PropTypes.func.isRequired
 }
 
 export default Pagination

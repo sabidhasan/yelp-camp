@@ -5,8 +5,6 @@ import XButton from './XButton'
 class LoginForm extends React.Component {
   componentDidMount() {
     document.onkeydown = (e) => {if (e.key === 'Escape') this.props.toggleLoginForm()}
-
-    // document.querySelector('.LoginForm__google').addEventListener('click', () => this.context.signIn('google'))
   }
 
   static contextTypes = {
