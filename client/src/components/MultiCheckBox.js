@@ -70,7 +70,7 @@ class MultiCheckBox extends React.Component {
                 key={i}
               >
                 <input
-                  className='MultiCheckBox__checkbox'
+                  className={`MultiCheckBox__checkbox ${checked ? 'MultiCheckBox__checkbox--checked' : ''}`}
                   type='checkbox'
                   value={v}
                   aria-describedby="MultiCheckBox__text"
