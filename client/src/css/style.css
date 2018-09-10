@@ -17,7 +17,7 @@
 html, body {
   font-family: 'IBM Plex Sans Condensed', sans-serif; font-size: 100%; margin: 0;
   padding: 0; box-sizing: border-box; background-color: var(--very-light);
-  background-image: url("../images/background.png");
+  /* background-image: url("../images/background.png"); */
 }
 body {
   min-height: 100vh;
@@ -451,7 +451,7 @@ button[disabled]:hover {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); grid-gap: 15px;
 }
 .Campgrounds__header {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; display: block;
 }
 .Campgrounds__header-title {
   flex: 1;
@@ -491,7 +491,7 @@ button[disabled]:hover {
   grid-column: span 2; margin: 0 0 0 3px; font-weight: 100; grid-area: region;
 }
 .CampgroundTile > .RatingBar {
-  margin: 0 1px 0 0; grid-area: rating;
+  margin: 0 1px 0 4px; grid-area: rating;
 }
 .CampgroundTile__review-count {
   margin: 0 1px 0 0; grid-area: reviews;
@@ -956,7 +956,10 @@ button[disabled]:hover {
 /* Component <SingleCampgroundTitle /> */
 .SingleCampgroundTitle {
   grid-area: title; margin: 0; color: var(--dark-main); font-size: 2.4rem;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 16px rgba(0, 0, 0, 0.25); font-weight: 600; justify-self: flex-start;
+}
+.SingleCampgroundTitle::before, .SingleCampgroundTitle::after {
+  display: none;
 }
 .SingleCampgroundTitle__region {
   display: block; font-size: 1.2rem; text-shadow: none; font-weight: normal; margin: 5px 0;

@@ -2,11 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
-// import { unregister } from './registerServiceWorker';
-
+import register  from './registerServiceWorker';
 import './css/style.css';
 
 import App from './components/App.js';
+register();
 // import registerServiceWorker from './registerServiceWorker';
 
 // TO--DO

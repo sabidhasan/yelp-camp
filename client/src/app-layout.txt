@@ -1,57 +1,52 @@
-route testing
-basic component existence testing
-props testing
-snapshot testing
-
-- App
-  - Header
-      withStickyBar           HOC
-  - LoginForm                 ? state
-      - XButton
-  - Cart                      ? state
-      - XButton
-  - IndexPage                 ? route
-      - Banner
-        - SearchBar           ? route     why?
-      - LandingText
-      - LandingTiles
-      - DiscoverTile
-      - Campgrounds
-        - CampgroundTile
-  - SingleCampground          ? route
-    - SingleCampgroundTitle   HOC
-      withStickyBar
-    - ReviewButton
-    - RatingBar
-    - CampMap
-      - CanadaMapSVG          ? props
-    - InfoBox
-    - WeatherBox
-    - Sidebar
-      - PricingTile
-    - Activities
-    - NewReviewForm
-      - RatingBar
-    - Reviews
-      - Review
-  - DiscoverSVGMap            ? route
-    - CanadaMapSVG
-  - DiscoverPage              ? route
-    - DiscoverGoogleMap
-    - DiscoverCampgroundTile  ? state
-  - Search                    ? route
-    - SearchResultTile        ? props
-      - RatingBar
-    - SearchBar               ? route     why?
-    - FilterSearch            ? state
-      - Select
-      - MultiCheckBox         ? props
-    - Pagination
-    - SearchResultsMap
-  - Footer
+    - App
+x     - Header
+o         withStickyBar           HOC
+x     - LoginForm                 ? state
+x         - XButton
+x     - Cart                      possibly add onkeydown event handler tester
+x         - XButton
+x     - IndexPage                 ? route
+x         - Banner
+x           - SearchBar           ? route     why?
+x         - LandingText
+x         - LandingTiles
+x         - DiscoverTile
+x         - Campgrounds
+x          - CampgroundTile
+      - SingleCampground          ? route
+        - SingleCampgroundTitle   HOC
+o         withStickyBar
+        - ReviewButton
+        - RatingBar
+o       - CampMap
+x         - CanadaMapSVG          ? props
+        - InfoBox
+        - WeatherBox
+        - Sidebar
+          - PricingTile
+        - Activities
+        - NewReviewForm
+          - RatingBar
+        - Reviews
+          - Review
+      - DiscoverSVGMap            ? route
+        - CanadaMapSVG
+      - DiscoverPage              ? route
+        - DiscoverGoogleMap
+        - DiscoverCampgroundTile  ? state
+      - Search                    ? route
+        - SearchResultTile        ? props
+          - RatingBar
+        - SearchBar               ? route     why?
+        - FilterSearch            ? state
+x        - Select
+x         - MultiCheckBox         ? props
+x       - Pagination
+o       - SearchResultsMap
+x     - Footer
 
 
-
+2/
 withAuthentication
 withLoading
 withLocation
