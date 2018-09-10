@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import haversine from 'haversine'
 
-const DiscoverCampgroundTile = (props, context) => {
+const DiscoverCampgroundTile = (props) => {
   if (!props.cg) return null;
   const cgLoc = {latitude: props.cg.lat, longitude: props.cg.lon}
 
   return (
     <div className='DiscoverCampgroundTile'>
-      {/* <a href={`/campground/${props.cg.id}`}><h2>{props.cg.name}</h2></a> */}
       <Link to={`/campground/${props.cg.id}`}>
         <h2>{props.cg.name}</h2>
       </Link>
@@ -21,7 +20,7 @@ const DiscoverCampgroundTile = (props, context) => {
 }
 
 DiscoverCampgroundTile.propTypes = {
-  userLocation: PropTypes.object,
+  userLocation: PropTypes.object.isRequired,
   cg: PropTypes.object
 }
 

@@ -5,7 +5,7 @@ import { weatherIcons } from '../helpers/helpers'
 const WeatherBox = (props) => {
   if (!props.weather || !Object.keys(props.weather).length) return (
     <div className='WeatherBox'>
-      <h2>No weather available</h2>
+      <h2 className='WeatherBox__error'>No weather available</h2>
     </div>
   )
 

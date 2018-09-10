@@ -13,7 +13,7 @@ const PricingTile = (props) => (
 
 PricingTile.propTypes = {
   data: PropTypes.object,
-  type: PropTypes.string
+  type: PropTypes.string.isRequired
 }
 
 export default PricingTile

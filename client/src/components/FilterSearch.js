@@ -27,7 +27,7 @@ class FilterSearch extends React.Component {
   handleChange(newValue, property) {
     // Apply filter
     this.setState({[property]: newValue}, () => {
-      if (this.props.onChange) this.props.onChange(this.state)
+      this.props.onChange(this.state);
     });
   }
 
@@ -38,7 +38,7 @@ class FilterSearch extends React.Component {
           className='FilterSearch__button btn bold btn--flat'
           onClick={this.toggleExpanded}>
           <i className="fas fa-sliders-h"></i>
-          {this.state.filterAreaExpanded ? 'Hide ' : 'Show '} Filters
+          {this.state.filterAreaExpanded ? 'Hide' : 'Show'} Filters
         </button>
         <div className={`FilterSearch__tiles ${this.state.filterAreaExpanded ? 'FilterSearch__tiles--expanded' : ''}`}>
           <div className='FilterSearch__section' tabIndex='0'>
@@ -61,7 +61,6 @@ class FilterSearch extends React.Component {
                   formatLabel={value => `${value}km`}
                   value={this.state.selectedDistances}
                   onChange={val => {
-                    console.log(val);
                     this.setState({selectedDistances: val})
 
                   }}
@@ -101,8 +100,8 @@ class FilterSearch extends React.Component {
 }
 
 FilterSearch.propTypes = {
-  filterCriteria: PropTypes.object,
-  onChange: PropTypes.func,
+  filterCriteria: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
   className: PropTypes.string
 }
 

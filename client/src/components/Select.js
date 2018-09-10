@@ -15,13 +15,11 @@ class Select extends React.Component {
   updateValue(newValueObject) {
     if (newValueObject === null) {
       // Reset the state
-      this.setState({value: null})
+      return this.setState({value: null})
     } else {
       this.setState({value: newValueObject.text})
     }
-    if (this.props.onChange) {
-      this.props.onChange(newValueObject ? newValueObject.value : null)
-    }
+    this.props.onChange(newValueObject.value)
   }
 
   toggleExpanded() {
@@ -41,15 +39,15 @@ class Select extends React.Component {
         </span>
         <ul className={`Select__items ${this.state.expanded ? 'Select__items--expanded' : ''}`}>
           <li
-            className='Select__item'
-            onClick={()=> this.updateValue(null)}
+            className='Select__item Select__item--first'
+            onClick={() => this.updateValue(null)}
             key={-1}>
             {this.props.defaultText}
           </li>
           {items
             .map((v, i) => (
               <li
-                className='Select__item'
+                className='Select__item Select__item--main'
                 onClick={() => this.updateValue(v)}
                 key={i}
                 aria-setsize={items.length}
@@ -65,7 +63,7 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   defaultText: PropTypes.string.isRequired
 }

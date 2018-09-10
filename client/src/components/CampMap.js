@@ -7,10 +7,10 @@ import PropTypes from 'prop-types'
 export class CampMap extends React.Component {
   render() {
     let lat = this.props.lat;
-    let lon = this.props.lon;
+    let lng = this.props.lon;
     let marker;
 
-    if (!lat || !lon) {
+    if (!lat || !lng) {
       return (
         <div className='CampMap CampMap--error google-map'>
           <CanadaMapSVG />
@@ -21,13 +21,13 @@ export class CampMap extends React.Component {
         </div>
       )
     } else {
-      marker = <Marker position={{ lat: lat, lng: lon }} />
+      marker = <Marker position={{ lat, lng }} />
     }
 
     return (
         <Map
           google={this.props.google}
-          initialCenter={{ lat: lat, lng: lon }}
+          initialCenter={{ lat, lng }}
           zoom={8}>
           { marker }
         </Map>
