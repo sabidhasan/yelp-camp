@@ -48,15 +48,16 @@ class MultiCheckBox extends React.Component {
     }
     this.setState({selectedIndices: oldState});
     // Fire event listener
-    if (this.props.onChange) {
-      this.props.onChange(oldState.map(v => this.props.items[v]))
-    }
+    this.props.onChange(oldState.map(v => this.props.items[v]))
   }
 
   render() {
     return (
     <React.Fragment>
-      <p className='bold'>{this.props.defaultText} ({this.props.items.length})</p>
+      <p className='bold'>
+        <span className='MultiCheckBox__title-text'>{this.props.defaultText} </span>
+        <span className='MultiCheckBox__title-length'>({this.props.items.length})</span>
+      </p>
       <button onClick={this.toggleSelect} className='btn btn--flat'>
         {`Select ${this.state.selectAll ? 'All' : 'None'}`}
       </button>
