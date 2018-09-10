@@ -30,7 +30,7 @@ class RatingBar extends React.Component {
 
   render() {
     // for rating of campgrounds
-    let initRating = this.props.rating || 0;
+    let initRating = (Math.round(this.props.rating * 10) / 10) || 0;
     let rating = new Array(5);
 
     for (var i = 0; i < rating.length; i++) {
