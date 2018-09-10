@@ -26,7 +26,7 @@ describe('<Header />', () => {
   });
 
   it('Component should be defined', () => {
-    expect(Header).toBeDefined();
+    expect(component).toBeDefined();
   });
 
   it('Header__login should be rendered once', () => {

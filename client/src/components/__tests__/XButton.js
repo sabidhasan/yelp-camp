@@ -19,7 +19,7 @@ describe('<XButton />', () => {
   })
 
   it('Component should be defined', () => {
-    expect(XButton).toBeDefined();
+    expect(component).toBeDefined();
   });
 
   it('Should have a button element', () => {

@@ -24,7 +24,7 @@ describe('<Cart />', () => {
   })
 
   it('Component should be defined', () => {
-    expect(Cart).toBeDefined();
+    expect(component).toBeDefined();
   });
 
   it('Should have a main .Cart element', () => {
