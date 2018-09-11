@@ -56,7 +56,9 @@ class MultiCheckBox extends React.Component {
     <React.Fragment>
       <p className='bold'>
         <span className='MultiCheckBox__title-text'>{this.props.defaultText} </span>
-        <span className='MultiCheckBox__title-length'>({this.props.items.length})</span>
+        <span className='MultiCheckBox__title-length'>
+          ({this.state.selectedIndices.length}/{this.props.items.length} Selected)
+        </span>
       </p>
       <button onClick={this.toggleSelect} className='btn btn--flat'>
         {`Select ${this.state.selectAll ? 'All' : 'None'}`}
