@@ -24,8 +24,6 @@ router.get('/campground', async function(req, res) {
     requestedID.push(req.query.id);
   } else if (req.query.random) {
     requestedID = helpers.generateRandomCampgroundIds(4);
-    console.log('hello');
-    console.log(requestedID);
   } else if (req.query.province) {
     // some province's CGs requested
     let province = helpers.provinces[req.query.province] || ''
