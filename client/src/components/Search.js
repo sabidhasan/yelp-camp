@@ -54,13 +54,23 @@ class Search extends React.Component {
         // this.makeFilterVariables();
 
         // Update maxDistance, activities and regions, provinces
-        const _fc = {regions: [], activities: [], provinces: [], maxDistance: 0};
-        _fc.provinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}));
+        // Make filter critera object (part of component state) - holds all criteria
+        const _fc = {regions: new Set(), activities: new Set(), provinces: [], maxDistance: 0};
+        // Update provinces from imported provinces
+        _fc.provinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}))
+        // Loop through search results
         search.forEach(r => {
+          // Update max distance if it's greater than existing
           _fc.maxDistance = Math.max(_fc.maxDistance, r.distanceFromUser || 0);
-          r.activities.forEach(v => {if (!_fc.activities.includes(v) && v) _fc.activities.push(v)});
-          if (!_fc.regions.includes(r.region) && r.region) _fc.regions.push(r.region)
+          // Add activity to set
+          r.activities.forEach(v => {
+              if (v) _fc.activities.add(v)
+          })
+          // Add region if not already in _fc
+          if (r.region) _fc.regions.add(r.region)
         });
+        _fc.regions = Array.from(_fc.regions);
+        _fc.activities = Array.from(_fc.activities);
 
         this.setState({
           filterCriteria: _fc,
@@ -161,7 +171,7 @@ class Search extends React.Component {
                   {' '} of {this.state.filteredResults.length}
                   {' '} for <span className='bold'>{this.searchQuery}</span>
                 </React.Fragment>
-              : this.searchQuery && this.searchResults && this.searchResults.length ?
+              : this.searchQuery && this.originalResults && this.originalResults.length ?
                 <React.Fragment>No campgrounds found with the applied filter(s)</React.Fragment>
                 : null
               }

@@ -51,7 +51,7 @@ SearchResultsMap.propTypes = {
   google: PropTypes.object,
   results: PropTypes.array,
   page: PropTypes.number,
-  hovered: PropTypes.bool
+  hovered: PropTypes.number
 }
 
 export default GoogleApiWrapper({

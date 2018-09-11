@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const formatPricing = (pricing) => {
   pricing = pricing.map(val => {
+    val = val.toString();
     val = val.replace('$', '');
     return val ? `$${val}` : ''
   });

@@ -158,7 +158,10 @@ class SingleCampground extends React.Component {
 
         <section className='SingleCampground__rating'>
           <RatingBar rating={this.calculateRating()} />
-          <h2>{this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review{(this.state.comments && this.state.comments.length !== 1 && 's')}</h2>
+          <h2>{this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review
+            {(this.state.comments && this.state.comments.length !== 1) || !this.state.comments ? 's' : ''}
+            {/* {(this.state.comments && this.state.comments.length !== 1 && 's')}</h2> */}
+          </h2>
         </section>
 
         <section className='CampMap'>
