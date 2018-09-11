@@ -174,7 +174,7 @@ const provinces = {
   'nb': 'new brunswick',
   'ns': 'nova scotia',
   'nl': 'newfoundland',
-  'yt': 'yukon',
+  'yt': 'yukon territory',
   'nt': 'northwest territories',
   'nu': 'nunavut'
 }
