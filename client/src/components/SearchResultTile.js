@@ -14,7 +14,7 @@ const SearchResultTile = (props) => (
       </a>
       <h2 className='SearchResultTile__region'>{props.regionAndProvince}</h2>
       <p className='SearchResultTile__address'>{props.address}</p>
-      <p className='SearchResultTile__distance'>{props.distance ? `${props.distance} km away` : null} </p>
+      <p className='SearchResultTile__distance'>{props.distance ? `${props.distance} km away` : null}</p>
       <p className='SearchResultTile__description'>{props.description}</p>
       <img className='SearchResultTile__image' src={props.images ? props.images[0] : null} alt='' />
 
@@ -28,16 +28,16 @@ const SearchResultTile = (props) => (
 )
 
 SearchResultTile.propTypes = {
-  id: PropTypes.number,
-  onTitleHover: PropTypes.func,
-  number: PropTypes.number,
-  name: PropTypes.string,
-  regionAndProvince: PropTypes.string,
-  address: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  onTitleHover: PropTypes.func.isRequired,
+  number: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  regionAndProvince: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
   distance: PropTypes.number,
   description: PropTypes.string,
   images: PropTypes.array,
-  rating: PropTypes.number,
+  rating: PropTypes.number.isRequired,
   comments: PropTypes.array,
 }
 
