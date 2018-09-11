@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { GoogleMapsAPIKey } from '../helpers/APIKeys.js'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 class SearchResultsMap extends React.Component {
@@ -55,5 +56,5 @@ SearchResultsMap.propTypes = {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg'
+  apiKey: GoogleMapsAPIKey
 })(SearchResultsMap)
