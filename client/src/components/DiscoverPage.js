@@ -31,7 +31,7 @@ class Discover extends React.Component {
 
   setSelected(id) {
     const selectedCampgroundObject = this.state.campgrounds.find(v => id === v.id);
-    this.setState({selectedCampgroundObject: selectedCampgroundObject})
+    this.setState({ selectedCampgroundObject })
   }
 
   componentDidMount() {
@@ -39,7 +39,10 @@ class Discover extends React.Component {
       .then(res => res.json())
       .then(provCG => {
         this.setState({campgrounds: provCG})
-      });
+      })
+      .catch(err => {
+        console.log('Error occured in fetching data');
+      })
   }
 
   render() {
@@ -47,10 +50,15 @@ class Discover extends React.Component {
     return (
       <div className='Discover'>
        <div className='Discover__title'>
-         <h1 className='Discover__header'>Discover campgrounds in {this.state.province.fullName}</h1>
-         <p>We have {this.state.campgrounds.length} campgrounds in {this.state.province.fullName}
-         , of which {this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length}
-         {' '} are shown on the map</p>
+         <h1 className='Discover__header'>
+           Discover campgrounds in <span className='Discover__province'>{this.state.province.fullName}</span>
+         </h1>
+         <p>
+           We have <span className='Discover__length'>{this.state.campgrounds.length}
+           </span> campgrounds in {this.state.province.fullName}, of which
+           {this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length} are
+           {' '} shown on the map
+        </p>
        </div>
 
        <div className='Discover__content'>
@@ -65,7 +73,6 @@ class Discover extends React.Component {
             <DiscoverGoogleMap
              campgrounds={this.state.campgrounds}
              setSelected={this.setSelected}
-             // selectedId={this.state.selectedCampgroundObject.id}
             />
           </div>
         </div>

@@ -21,7 +21,8 @@ const SearchResultTile = (props) => (
       <div className='SearchResultTile__rating flex-center'>
         <RatingBar rating={props.rating} small={true} />
         <p className='SearchResultTile__rating-count'>
-          {((props.comments && props.comments.length) || 'No')} Review{(props.comments && props.comments.length !== 1) || !props.comments ? 's' : ''}
+          {((props.comments && props.comments.length) || 'No')} Review
+          {(!props.comments || props.comments.length !== 1) ? 's' : ''}
         </p>
       </div>
     </li>

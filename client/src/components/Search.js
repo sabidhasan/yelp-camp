@@ -86,7 +86,6 @@ class Search extends React.Component {
   }
 
   updateFilteredResults(val) {
-    // console.log(val);
     // Val contains info on whats selected, you apply the filter here.
     const filteredResults = [];
     for (let item in this.originalResults) {
