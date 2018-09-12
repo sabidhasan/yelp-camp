@@ -38,38 +38,16 @@ class SingleCampground extends React.Component {
     fetch(`/campground?id=${this.state.id}`)
     .then(res => res.json())
     .then(campground => {
-      this.setState({
-        comments: campground.comments,
-        image: campground.image,
-        name: campground.name,
-        region: campground.region,
-        description: campground.description,
-        address: campground.address,
-        lat: campground.lat,
-        lon: campground.lon,
-        weather: campground.weather,
-        email: campground.email,
-        phone: campground.phone,
-        sites: campground.sites,
-        hours: campground.hours,
-        prices: campground.prices,
-        paymentMethods: campground.paymentMethods,
-        activities: campground.activities,
-        province: campground.province
-      }, () => this.context.finishLoad(this.constructor.name, 'campground data'));
+      // The following properties are set: comments, image, name, region, description, address,
+      // lat, lon, weather, email, phone, sites, hours, prices, paymentMethods, activities, province
+      this.setState({ ...campground }, () => {
+        this.context.finishLoad(this.constructor.name, 'campground data')
+      });
     })
     .catch(err => {
-    //   //TO--DO proper error handling for all fetch
-      console.log("there is an error");
+      console.log('There is an error fetching the campgrounds');
       this.context.finishLoad(this.constructor.name, 'campground data');
-      // this.setState({e: true}, console.log(this.state));
-    //   window.location = `/not-found/${this.state.id}`;
     });
-  }
-
-  shouldComponentUpdate(prevProps, prevState) {
-    // Update only when props exist
-    return !(prevState.name === undefined);
   }
 
   calculateRating() {
@@ -90,8 +68,7 @@ class SingleCampground extends React.Component {
     //show true = show form, false = hide form
     if (event) event.preventDefault();
     if (!this.context.user || this.context.user.loading) {
-      this.props.toggleLoginForm();
-      return;
+      return this.props.toggleLoginForm();
     }
     this.setState({editable: show});
     if (show) {
@@ -129,16 +106,16 @@ class SingleCampground extends React.Component {
       });
       const result = await response.json();
       // Update comments array locally
-      this.setState({comments: result}, () => this.context.finishLoad(this.constructor.name, 'comments'));
+      this.setState({comments: result}, () => {
+        this.context.finishLoad(this.constructor.name, 'comments')
+      })
     } catch (err) {
-      console.log('error occure in deleteing review');
+      console.log('Error occured in deleteing review');
       this.context.finishLoad(this.constructor.name, 'comments');
     }
   }
 
   render() {
-    // if (this.state.redirect) return <Redirect to='/discover'/>
-
     return (
       <div className='SingleCampground'>
         <SingleCampgroundTitle
@@ -158,9 +135,9 @@ class SingleCampground extends React.Component {
 
         <section className='SingleCampground__rating'>
           <RatingBar rating={this.calculateRating()} />
-          <h2>{this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review
-            {(this.state.comments && this.state.comments.length !== 1) || !this.state.comments ? 's' : ''}
-            {/* {(this.state.comments && this.state.comments.length !== 1 && 's')}</h2> */}
+          <h2>
+            {this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review
+            {(!this.state.comments || this.state.comments.length !== 1) ? 's' : ''}
           </h2>
         </section>
 
@@ -191,7 +168,9 @@ class SingleCampground extends React.Component {
         </LazyLoad>
 
         <section className='SingleCampground__activities'>
-          <h1>Activities at {this.state.name}</h1>
+          <h1 className='SingleCampground__activities-header'>
+            Activities at {this.state.name}
+          </h1>
           <Activities activitiesList={this.state.activities} />
         </section>
 
