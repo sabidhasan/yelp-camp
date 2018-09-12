@@ -5,6 +5,7 @@ class RatingBar extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyboard = this.handleKeyboard.bind(this);
+    this.makeRatingArray = this.makeRatingArray.bind(this);
   }
 
   handleKeyboard(e) {
@@ -28,7 +29,7 @@ class RatingBar extends React.Component {
     elem.removeEventListener('keydown', this.handleKeyboard);
   }
 
-  render() {
+  makeRatingArray() {
     // for rating of campgrounds
     let initRating = (Math.round(this.props.rating * 10) / 10) || 0;
     let rating = new Array(5);
@@ -44,6 +45,11 @@ class RatingBar extends React.Component {
         initRating -= 1;
       }
     }
+    return rating
+  }
+
+  render() {
+    let rating = this.makeRatingArray();
     rating = rating.map((val, idx) => (
         <span
           aria-label={`${idx+1} Star`}
@@ -56,7 +62,7 @@ class RatingBar extends React.Component {
           }
         >
         </span>
-      ));
+    ));
     return (
       <div
         className={`RatingBar ${this.props.updateRating ? ' RatingBar--editable' : ''}`}
