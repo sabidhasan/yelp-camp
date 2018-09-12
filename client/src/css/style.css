@@ -615,7 +615,7 @@ button[disabled]:hover {
 
     /* Component <LoginForm />  */
 .LoginForm {
-  position: fixed; z-index: 3; top: 0; width: 100vw; height: 100vh; overflow: hidden;
+  position: fixed; z-index: 4; top: 0; width: 100vw; height: 100vh; overflow: hidden;
   background: rgba(0, 0, 0, 0.70);
 }
 .LoginForm__content {
@@ -1367,9 +1367,6 @@ button[disabled]:hover {
     display: none;
   }
   /* Component <FilterSearch/> */
-  .FilterSearch > button {
-    grid-column: 3;
-  }
   .FilterSearch__tiles {
     grid-template-columns: 1fr;
   }
@@ -1377,8 +1374,11 @@ button[disabled]:hover {
   .Pagination__count {
     display: none;
   }
+  .Pagination__link {
+    flex: 1 1;
+  }
   .Pagination__pages {
-    box-shadow: none; width: 100%;
+    box-shadow: none; width: 100%; border-radius: 0;
   }
 
   /* Component <DiscoverSVGMap /> */
