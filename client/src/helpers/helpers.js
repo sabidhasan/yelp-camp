@@ -32,6 +32,7 @@ export const weatherIcons = {
 }
 
 export const shortenDescription = (desc) => {
+  if (!desc) return ''
   let excerpt = desc.split(' ')
   if (excerpt.length > 20) {
     excerpt = excerpt.slice(0, 20)
