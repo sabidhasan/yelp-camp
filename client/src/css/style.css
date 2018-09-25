@@ -11,7 +11,7 @@
 
   /* --light-main: #336B87;  --dark-main: #2A3132;  --light: #90AFC5;
   --very-light: #fafafa;  --accent: #763626; */
-  --light-main: #9F4636;  --dark-main: #6C2D2C;  --light: #F1DCC9;
+  --light-main: #9F4636;  --dark-main: #6C2D2C;  --light: #eac0ac;
   --very-light: #fafafa;  --accent: #42313A;
 }
 html, body {
@@ -37,7 +37,7 @@ h1 {
 }
 h1::after, h1::before {
   /* Decorative lines for header */
-  content: ' '; width: 20%; height: 0.25rem; margin: 0 0 0 10px;
+  content: ' '; width: 15%; height: 0.25rem; margin: 0 0 0 10px;
   border-top: 1px solid; border-bottom: 1px solid; display: inline-block;
 }
 h1::before { margin: 0 10px 0 0;}
@@ -133,6 +133,10 @@ button[disabled]:hover {
   to {transform: translateY(-5px);}
 }
 @keyframes banner-images-fadein {
+  0% {transform: scale(0.1)}
+  /* 0% {} */
+  /* 100% {opacity: 1; transform: scale(1)} */
+  100% {transform: scale(0.1)}
   /* 0% {opacity: 0;}
   10% {opacity: 1;}
   20% {opacity: 1;}
@@ -282,10 +286,14 @@ button[disabled]:hover {
   display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr; opacity: 0.50;
 }
 .Banner__image {
-  width: 100%; height: 100%; object-fit: cover; opacity: 0; grid-column: 1;
-  grid-row: 1; animation: banner-images-fadein 27s infinite;
+  width: 100%; height: 100%; object-fit: cover; grid-column: 1;
+  grid-row: 1;
+  /* opacity: 0; */
+  /* animation: banner-images-fadein 1s linear 15s 1 normal forwards; */
+  /* animation-delay: 15s; */
+  /* animation-fill-mode: forwards; */
 }
-.Banner__image:nth-child(2) {
+/* .Banner__image:nth-child(2) {
   animation-delay: 4.5s;
 }
 .Banner__image:nth-child(3) {
@@ -299,13 +307,13 @@ button[disabled]:hover {
 }
 .Banner__image:nth-child(6) {
   animation-delay: 21.5s;
-}
+} */
 .Banner__logo {
   transform: translateY(-25px) scaleX(0.92); height: 4.2rem;
 }
 .Banner__content {
   display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
-  text-align: center; width: 100%;
+  text-align: center; width: 100%; max-height: 91vh;
 }
 .Banner__quote {
   flex-basis: 200px; display: flex; align-items: flex-end; color: var(--dark-main);
@@ -1168,6 +1176,9 @@ button[disabled]:hover {
 }
 .Discover__header {
   text-transform: capitalize;
+}
+.Discover__province {
+  padding-left: 8px;
 }
 .Discover__map {
   border: 2px solid var(--accent); height: 500px; border-radius: 4px; padding: 0;
