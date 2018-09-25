@@ -7,6 +7,7 @@ import DiscoverTile from './DiscoverTile'
 import Campgrounds from './Campgrounds'
 
 const IndexPage = (props) => {
+  document.title = 'YelpCamp'
   return (
     <React.Fragment>
       <Banner {...props} />

@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
-// import { Redirect } from 'react-router-dom'
+import fetchNewPost from '../services/fetchNewPost'
+import fetchCampground from '../services/fetchCampground'
 
 import CampMap from './CampMap'
 import WeatherBox from './WeatherBox'
@@ -33,21 +34,20 @@ class SingleCampground extends React.Component {
     finishLoad: PropTypes.func
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.context.startLoad(this.constructor.name, 'campground data');
-    fetch(`/campground?id=${this.state.id}`)
-    .then(res => res.json())
-    .then(campground => {
+    try {
+      const campground = await fetchCampground(this.state.id);
       // The following properties are set: comments, image, name, region, description, address,
       // lat, lon, weather, email, phone, sites, hours, prices, paymentMethods, activities, province
       this.setState({ ...campground }, () => {
-        this.context.finishLoad(this.constructor.name, 'campground data')
+        this.context.finishLoad(this.constructor.name, 'campground data');
+        document.title = `YelpCamp | ${this.state.name}`
       });
-    })
-    .catch(err => {
+    } catch (err) {
       console.log('There is an error fetching the campgrounds');
       this.context.finishLoad(this.constructor.name, 'campground data');
-    });
+    }
   }
 
   calculateRating() {
@@ -73,7 +73,8 @@ class SingleCampground extends React.Component {
     this.setState({editable: show});
     if (show) {
       const form = ReactDOM.findDOMNode(this.refs.reviewForm);
-      window.scrollTo(0, form.offsetTop - 350);
+      // If node not found ignore - for testing purposes
+      if (form) window.scrollTo(0, form.offsetTop - 350);
     }
   }
 
@@ -92,7 +93,7 @@ class SingleCampground extends React.Component {
 
     try {
       this.context.startLoad(this.constructor.name, 'comments');
-      const response = await fetch('/comment', {
+      const postBody = {
         body: JSON.stringify({
           userID: userToken,
           campgroundID: this.state.id,
@@ -103,10 +104,9 @@ class SingleCampground extends React.Component {
           'Content-Type': 'application/json'
         },
         method: 'DELETE'
-      });
-      const result = await response.json();
-      // Update comments array locally
-      this.setState({comments: result}, () => {
+      }
+      const comments = await fetchNewPost(postBody)
+      this.setState({ comments }, () => {
         this.context.finishLoad(this.constructor.name, 'comments')
       })
     } catch (err) {
@@ -135,7 +135,7 @@ class SingleCampground extends React.Component {
 
         <section className='SingleCampground__rating'>
           <RatingBar rating={this.calculateRating()} />
-          <h2>
+          <h2 className='SingleCampground__rating-count'>
             {this.state.comments && this.state.comments.length ? this.state.comments.length : 'No'} Review
             {(!this.state.comments || this.state.comments.length !== 1) ? 's' : ''}
           </h2>

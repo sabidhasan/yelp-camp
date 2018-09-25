@@ -28,10 +28,10 @@ Review.contextTypes = {
 Review.propTypes = {
   photoURL: PropTypes.string,
   displayName: PropTypes.string,
-  rating: PropTypes.number,
-  time: PropTypes.string,
-  uid: PropTypes.number,
-  deleteReview: PropTypes.func,
+  rating: PropTypes.number.isRequired,
+  time: PropTypes.string.isRequired,
+  uid: PropTypes.string,
+  deleteReview: PropTypes.func.isRequired,
   text: PropTypes.string
 };
 

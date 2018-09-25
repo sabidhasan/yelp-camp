@@ -29,36 +29,36 @@ class RatingBar extends React.Component {
     elem.removeEventListener('keydown', this.handleKeyboard);
   }
 
-  makeRatingArray() {
+  makeRatingArray(initRating) {
     // for rating of campgrounds
-    let initRating = (Math.round(this.props.rating * 10) / 10) || 0;
     let rating = new Array(5);
 
     for (var i = 0; i < rating.length; i++) {
       if (initRating <= 0) {
         rating[i] = 0;
-      } else if (initRating < 1) {
-        rating[i] = initRating;
+      } else if (initRating < 100) {
+        rating[i] = Math.round(initRating / 10) * 10;
         initRating = 0;
       } else {
-        rating[i] = 1;
-        initRating -= 1;
+        rating[i] = 100;
+        initRating = Math.round(initRating - 100);
       }
     }
     return rating
   }
 
   render() {
-    let rating = this.makeRatingArray();
+    const initRating = (Math.round(this.props.rating * 10) * 10) || 0;
+    let rating = this.makeRatingArray(initRating);
     rating = rating.map((val, idx) => (
         <span
           aria-label={`${idx+1} Star`}
-          aria-checked={(Math.floor(val * 10) / 10 * 100) !== 0 ? 'true' : 'false'}
+          aria-checked={val !== 0 ? 'true' : 'false'}
           role='radio'
           key={idx}
           onClick={() => {if (this.props.updateRating) this.props.updateRating(idx + 1)}}
-          className={'RatingBar__star star' + (Math.floor(val * 10) / 10 * 100) +
-              ` ${this.props.small ? 'RatingBar__star--small' : ''}`
+          className={`RatingBar__star star${val}` +
+              `${this.props.small ? ' RatingBar__star--small' : ''}`
           }
         >
         </span>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const FourOhFour = (props) => {
+  document.title = 'YelpCamp | Page Not Found'
   return (
     <div className='FourOhFour'>
       <h1>404!</h1>

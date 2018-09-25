@@ -15,16 +15,19 @@ class DiscoverMap extends React.Component {
     this.getProvinceName = this.getProvinceName.bind(this);
   }
 
+  componentDidMount() {
+    document.title = 'YelpCamp | Discover campgrounds in Canada'
+  }
+
   getProvinceName(e) {
-    // if the hovered item isnt in the svg, then return null (could be hovering
-    // on parent div)
+    // if hovered item isnt in svg, return null (could be hovering on parent div)
     if (!['svg', 'path'].includes(e.target.tagName)) return null;
     const classList = Array.from(e.target.classList);
     const provName = classList[classList.length - 1];
     if (!provName) return null;
     return {
-      fullName: provinces[provName.slice(-2)],
-      shortName: provName.slice(-2)
+      fullName: provinces[provName.slice(-2).toLowerCase()],
+      shortName: provName.slice(-2).toLowerCase()
     }
   }
 
@@ -33,11 +36,10 @@ class DiscoverMap extends React.Component {
     if (!clickedProvince) return;
 
     // if command or control is pressed Redirect in new window
-    if (e.ctrlKey || e.metaKey) {
+    if ((e.ctrlKey || e.metaKey) && e.button === 0) {
       window.open(`/discover/${clickedProvince.shortName}`) ;
-    } else {
+    } else if (e.which === 13 || e.button === 0) {
       this.props.history.push(`/discover/${clickedProvince.shortName}`)
-      // window.location = `/discover/${clickedProvince.shortName}`;
     }
   }
 
@@ -70,8 +72,8 @@ class DiscoverMap extends React.Component {
               ` ${this.state.hoveredProvince} `
               :
               // Show scrolling list of provinces
-              <div className='DiscoverSVGMap__scroll'>{Object.keys(provinces)
-                .map((prov, idx) => (
+              <div className='DiscoverSVGMap__scroll'>
+                {Object.keys(provinces).map((prov, idx) => (
                   <span key={idx} className='DiscoverSVGMap__scroll-prov'>{prov}</span>
                 ))
               }</div>
