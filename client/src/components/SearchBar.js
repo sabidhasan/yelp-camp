@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { debounce } from 'lodash'
 import { searchIcons } from '../helpers/helpers'
+import fetchSearch from '../services/fetchSearch'
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -49,21 +50,20 @@ class SearchBar extends React.Component {
     }
   }
 
-  doAsyncSearch(query) {
-    fetch(`/search?q=${query}`)
-    .then(res => res.json())
-    .then(search => {
-      const stateSearch = search.map(v => {
-        return {
-          id: v.id,
-          icon: searchIcons[v.type],
-          name: v.campgroundName,
-          text: `${v.type}: ${v.excerpt}`}
-        })
-        // Update the state for results, trimming it to top 5
-        this.setState({results: stateSearch.slice(0, 5)})
-      })
-    .catch(err => console.log("Error occurred while searching ", err))
+  async doAsyncSearch(query) {
+    try {
+      const search = await fetchSearch(query)
+      const stateSearch = search.map(v => ({
+        id: v.id,
+        icon: searchIcons[v.type],
+        name: v.campgroundName,
+        text: `${v.type}: ${v.excerpt}`
+      }))
+      // Update the state for results, trimming it to top 5
+      this.setState({results: stateSearch.slice(0, 5)})
+    } catch(err) {
+      console.log("Error occurred while searching ", err)
+    }
   }
 
   handleMouse(key) {

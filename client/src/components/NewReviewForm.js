@@ -1,9 +1,9 @@
 import React from 'react'
-import LazyLoad from 'react-lazyload';
 import PropTypes from 'prop-types'
 import RatingBar from './RatingBar'
 
 import CircularProgressbar from 'react-circular-progressbar';
+import fetchNewPost from '../services/fetchNewPost'
 
 class NewReviewForm extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class NewReviewForm extends React.Component {
 
   componentDidMount() {
     // Set focus on form when mounted
-    this.form.querySelector('textarea').focus();
+    if (this.form) this.form.querySelector('textarea').focus();
   }
 
   async postReview(event) {
@@ -37,7 +37,10 @@ class NewReviewForm extends React.Component {
     // Check for not signed in user
     event.preventDefault();
     if (!this.context.user || this.context.user.loading) {
-      this.setState({errorMessage: 'Sorry, could not post review at this time. Try logging out and logging back in.'})
+      this.setState({
+        errorMessage: 'Sorry, could not post review at this time. Try logging out and logging back in.'
+      });
+      return;
     }
 
     // Check for review length, rating given and no-text
@@ -51,38 +54,43 @@ class NewReviewForm extends React.Component {
       this.setState({errorMessage: 'Please pick a rating'});
       return;
     }
-
     // Get user token first
     try {
       var userToken = await this.context.user.getIdToken();
     } catch(err) {
-      this.setState({errorMessage: 'Sorry, your user ID is not valid. Try logging out and logging back in.'})
+      this.setState({errorMessage: 'Sorry, your user ID is not valid. Try logging out and logging back in.'});
+      return;
     }
 
     this.setState({errorMessage: 'Posting comment...', disableForm: true})
+    const postBody = {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: userToken,
+        campgroundID: this.props.campgroundID,
+        displayName: this.context.user.displayName,
+        photoURL: this.context.user.photoURL,
+        uid: this.context.user.uid,
+        pickedRating: this.state.pickedRating,
+        reviewText: this.state.reviewText
+      })
+    }
     try {
-      const response = await fetch('/comment', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userID: userToken,
-          campgroundID: this.props.campgroundID,
-          displayName: this.context.user.displayName,
-          photoURL: this.context.user.photoURL,
-          uid: this.context.user.uid,
-          pickedRating: this.state.pickedRating,
-          reviewText: this.state.reviewText
-        })
-      });
-      const result = await response.json();
+      const response = await fetchNewPost(postBody);
+
       // Update comments array locally
-      this.props.addNewComment(result);
+      if (response) {
+        this.props.addNewComment(response);
+      } else {
+        throw new Error()
+      }
     } catch (err) {
       this.setState({
-        errorMessage: 'Could not post review at this time. Please try again later',
+        errorMessage: 'Could not post review at this time. Please try again later.',
         disableForm: false
       });
     }
@@ -94,7 +102,7 @@ class NewReviewForm extends React.Component {
   }
 
   updatePickedRating(newRating) {
-    this.setState({pickedRating: newRating})
+    this.setState({pickedRating: newRating, errorMessage: null})
   }
 
   render() {
@@ -114,10 +122,18 @@ class NewReviewForm extends React.Component {
       >
         <RatingBar rating={this.state.pickedRating} updateRating={this.updatePickedRating} />
         <span className='NewReviewForm__author bold'>
-          Posting publically as {this.context.user.displayName}
-          <LazyLoad once>
-            <img src={this.context.user.photoURL} className='NewReviewForm__image' alt ='User icon'/>
-          </LazyLoad>
+          Posting publically as {this.context.user && this.context.user.displayName}
+          {
+            this.context.user && this.context.user.photoURL
+            ?
+              <img
+                src={this.context.user.photoURL}
+                className='NewReviewForm__image'
+                alt ='User icon'
+              />
+            :
+              null
+          }
         </span>
         <textarea
           required
@@ -138,20 +154,28 @@ class NewReviewForm extends React.Component {
           {this.state.errorMessage}
         </span>
         <div className='NewReviewForm__controls'>
-          <button className='btn btn--small'
+          <button className='NewReviewForm__post-review btn btn--small'
             onClick={this.postReview}
             disabled={this.state.disableForm ? true : false}
             aria-disabled={this.state.disableForm ? 'true' : 'false'}
           >
             Post Your Review
           </button>
-          <button className='btn btn--small' onClick={(event) => {
-            this.setState({pickedRating: 0, reviewText: '', errorMessage: null, disableForm: false});
-            this.props.toggleReviewForm(event, false)
-          }}>Cancel</button>
+          <button
+            className='NewReviewForm__cancel btn btn--small'
+            onClick={(event) => {
+              this.setState({
+                pickedRating: 0, reviewText: '', errorMessage: null, disableForm: false
+              });
+              this.props.toggleReviewForm(event, false);
+          }}>
+            Cancel
+          </button>
           <div className='NewReviewForm__progress flex-center bold'>
             {fillPercentage > 85
-              ? <span>{1000-this.state.reviewText.length} characters left</span>
+              ? <span className='NewReviewForm__warning'>
+                  {1000-this.state.reviewText.length} characters left
+                </span>
               : null
             }
             <CircularProgressbar styles={styles} percentage={fillPercentage} strokeWidth={15} />

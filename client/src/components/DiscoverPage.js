@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 import { provinces } from '../helpers/helpers'
 import DiscoverGoogleMap from './DiscoverGoogleMap'
 import DiscoverCampgroundTile from './DiscoverCampgroundTile'
+import fetchDiscover from '../services/fetchDiscover'
 
 class Discover extends React.Component {
   constructor(props) {
     super(props)
     if (!provinces[this.props.match.params.province]) {
-      // window.location = '/'
       props.history.push('/');
     };
     const province = {
@@ -34,15 +34,14 @@ class Discover extends React.Component {
     this.setState({ selectedCampgroundObject })
   }
 
-  componentDidMount() {
-    fetch(`/campground?province=${this.state.province.shortName}`)
-      .then(res => res.json())
-      .then(provCG => {
-        this.setState({campgrounds: provCG})
-      })
-      .catch(err => {
-        console.log('Error occured in fetching data');
-      })
+  async componentDidMount() {
+    try {
+      const campgrounds = await fetchDiscover()
+      this.setState({ campgrounds })
+      document.title = `YelpCamp | Campgrounds in ${this.state.province.fullName}`
+    } catch (err) {
+      this.props.history.push('/404')
+    }
   }
 
   render() {
@@ -56,7 +55,7 @@ class Discover extends React.Component {
          <p>
            We have <span className='Discover__length'>{this.state.campgrounds.length}
            </span> campgrounds in {this.state.province.fullName}, of which
-           {this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length} are
+           {' ' + this.state.campgrounds.filter(v => v.lat !== null && v.lon !== null).length} are
            {' '} shown on the map
         </p>
        </div>

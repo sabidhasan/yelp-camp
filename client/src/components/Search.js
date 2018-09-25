@@ -10,6 +10,7 @@ import SearchBar from './SearchBar'
 import FilterSearch from './FilterSearch'
 import Pagination from './Pagination'
 import SearchResultsMap from './SearchResultsMap'
+import fetchSearch from '../services/fetchSearch'
 
 class Search extends React.Component {
   constructor(props) {
@@ -37,69 +38,78 @@ class Search extends React.Component {
     finishLoad: PropTypes.func
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.context.startLoad(this.constructor.name);
-    fetch(`/search?q=${this.searchQuery}`)
-      .then(res => res.json())
-      .then(search => {
-        search = search.map(result => {
-          const cgLoc = {latitude: result.lat, longitude: result.lon}
-          if (this.context.userLocation && this.context.userLocation.latitude && this.context.userLocation.longitude && result.lat && result.lon) {
-            result.distanceFromUser = Math.round(haversine(cgLoc, this.context.userLocation))
-          }
-          return result;
-        });
-        // Update original results variable and generate select box variables from that
-        this.originalResults = search;
-        // this.makeFilterVariables();
+    document.title = `YelpCamp | Search - ${this.searchQuery}`
 
-        // Update maxDistance, activities and regions, provinces
-        // Make filter critera object (part of component state) - holds all criteria
-        const _fc = {regions: new Set(), activities: new Set(), provinces: [], maxDistance: 0};
-        // Update provinces from imported provinces
-        _fc.provinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}))
-        // Loop through search results
-        search.forEach(r => {
-          // Update max distance if it's greater than existing
-          _fc.maxDistance = Math.max(_fc.maxDistance, r.distanceFromUser || 0);
-          // Add activity to set
-          r.activities.forEach(v => {
-              if (v) _fc.activities.add(v)
-          })
-          // Add region if not already in _fc
-          if (r.region) _fc.regions.add(r.region)
-        });
-        _fc.regions = Array.from(_fc.regions);
-        _fc.activities = Array.from(_fc.activities);
+    let search = []
 
-        this.setState({
-          filterCriteria: _fc,
-          filteredResults: search,
-          page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)}, () => this.context.finishLoad(this.constructor.name)
-        );
+    try {
+      search = await fetchSearch(this.searchQuery);
+    } catch(err) {
+      // console.log(err);
+      console.log('error occred in fetch');
+      this.context.finishLoad(this.constructor.name)
+      return;
+    }
+    search = search.map(result => {
+      const cgLoc = {latitude: result.lat, longitude: result.lon}
+      if (
+        this.context.userLocation
+        && this.context.userLocation.latitude
+        && this.context.userLocation.longitude
+        && result.lat && result.lon
+      ) {
+        result.distanceFromUser = Math.round(haversine(cgLoc, this.context.userLocation))
+      }
+      return result;
+    });
+    // Update original results variable and generate select box variables from that
+    this.originalResults = search;
+    // Update maxDistance, activities and regions, provinces
+    // Make filter critera object (part of component state) - holds all criteria
+    const _fc = {regions: new Set(), activities: new Set(), provinces: [], maxDistance: 0};
+    _fc.provinces = Object.keys(provinces).map(v => ({value: v, text: provinces[v]}))
+    // Loop through search results
+    search.forEach(r => {
+      // Update max distance if it's greater than existing
+      _fc.maxDistance = Math.max(_fc.maxDistance, r.distanceFromUser || 0);
+      // Add activities to set
+      r.activities.forEach(v => {
+          if (v) _fc.activities.add(v)
       })
+      // Add region if not already in _fc
+      if (r.region) _fc.regions.add(r.region)
+    });
+
+    _fc.regions = Array.from(_fc.regions);
+    _fc.activities = Array.from(_fc.activities);
+
+    this.setState({
+      filterCriteria: _fc,
+      filteredResults: search,
+      page: Math.min(Math.ceil(search.length / 10) - 1, this.state.page)},
+      () => this.context.finishLoad(this.constructor.name)
+    );
   }
 
   goToPage(e, page) {
     e.preventDefault();
+    if (page < 0 || page > Math.ceil(this.state.filteredResults.length / 10) - 1) return
     this.setState({ page })
   }
 
   updateFilteredResults(val) {
     // Val contains info on whats selected, you apply the filter here.
-    const filteredResults = [];
-    for (let item in this.originalResults) {
-      // Filter based on province, region, activities
-      const _cI = this.originalResults[item];
-      if (
-        (!val.selectedProv || provinces[val.selectedProv].toLowerCase() === _cI.province.toLowerCase()) &&
+    const filteredResults = this.originalResults.filter(_cI => {
+      return (
+        (!val.selectedProv || provinces[val.selectedProv.toLowerCase()].toLowerCase() === _cI.province.toLowerCase()) &&
         (val.selectedRegions.includes(_cI.region) || (!_cI.region && this.state.filterCriteria.regions.length === val.selectedRegions.length)) &&
         (_cI.activities.some(v => val.selectedActivities.includes(v)) || (!_cI.activities.length && this.state.filterCriteria.activities.length === val.selectedActivities.length)) &&
         (!_cI.distanceFromUser || (_cI.distanceFromUser >= val.selectedDistances.min && _cI.distanceFromUser <= val.selectedDistances.max))
-        ) {
-          filteredResults.push(_cI)
-        }
-    }
+      )
+    })
+
     // Sort if needed
     if (val.sortBy === 'Distance') {
       filteredResults.sort((a, b) => {
@@ -109,7 +119,7 @@ class Search extends React.Component {
         return a.distanceFromUser > b.distanceFromUser ? 1 : -1;
       });
     }
-    this.setState({filteredResults: filteredResults, page: 0})
+    this.setState({ filteredResults, page: 0 })
   }
 
   render() {
@@ -129,12 +139,13 @@ class Search extends React.Component {
             images={r.images}
             id={r.id}
             distance={r.distanceFromUser}
-            onTitleHover={(id) => this.setState({hovered: id})}
+            onTitleHover={(hovered) => this.setState({ hovered })}
           />
         )
       })
 
     const currentResultEndUserFriendly = Math.min((this.state.page * 10) + 10, this.state.filteredResults.length)
+
     return (
       <div className='Search'>
         <div className='Search__filter-container'>
@@ -144,10 +155,10 @@ class Search extends React.Component {
               <h1>Search</h1>
               : <h1>{`Search for ${this.searchQuery}`}</h1>
           }
-          <Route
+          {/* <Route
             path="/"
             render={(props) => <SearchBar {...props} />}
-          />
+          /> */}
           {this.state.filterCriteria ?
             <FilterSearch
               filterCriteria={this.state.filterCriteria}
@@ -164,11 +175,11 @@ class Search extends React.Component {
         />
         <div className='Search__results'>
           <h2 className='Search__summary'>
-            {currentResultEndUserFriendly > 0
+            {this.state.filteredResults.length > 0
               ? <React.Fragment>
-                  Showing results {(this.state.page * 10) + 1}-{currentResultEndUserFriendly}
-                  {' '} of {this.state.filteredResults.length}
-                  {' '} for <span className='bold'>{this.searchQuery}</span>
+                {`Showing results ${(this.state.page * 10) + 1}-${currentResultEndUserFriendly} of
+                 ${this.state.filteredResults.length} for`}
+                 <span className='bold'>{this.searchQuery}</span>
                 </React.Fragment>
               : this.searchQuery && this.originalResults && this.originalResults.length ?
                 <React.Fragment>No campgrounds found with the applied filter(s)</React.Fragment>

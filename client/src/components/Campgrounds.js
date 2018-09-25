@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CampgroundTile from './CampgroundTile'
 
+import fetchRandoms from '../services/fetchRandoms'
+
 class Campgrounds extends React.Component {
   constructor(props) {
     super(props);
@@ -19,14 +21,15 @@ class Campgrounds extends React.Component {
     finishLoad: PropTypes.func
   }
 
-  newRandoms() {
+  async newRandoms() {
     // Reset the state, then add 10 new campgrounds to it
     // this.context.startLoad(this.constructor.name)
-    fetch('/campground?random=true')
-      .then(res => res.json())
-      .then(cg => this.setState({ campgrounds: cg }))
-      .catch(err => {console.log('An error occurred fetching campgrounds')})
-      // .then(cg => this.setState({ campgrounds: cg }, () => this.context.finishLoad(this.constructor.name)))
+    try {
+      const campgrounds = await fetchRandoms()
+      this.setState({ campgrounds })
+    } catch (err) {
+      console.log('An error occurred fetching campgrounds')
+    }
   }
 
   componentDidMount() {

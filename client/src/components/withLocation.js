@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import fetchLocation from '../services/fetchLocation'
 
 const withLocation = (Component) => {
   class withLocation extends React.Component {
@@ -24,13 +25,12 @@ const withLocation = (Component) => {
     async componentDidMount() {
       this.context.startLoad(this.constructor.name);
       // See if data is in localStorage
-      var location = localStorage.location && JSON.parse(localStorage.location);
+      var location = localStorage.location !== 'undefined' && JSON.parse(localStorage.location);
 
       if ((!location) || (!location.loc) || ((Date.now() - location.time) > 8e7)) {
         //Fetch location
         try {
-          const ipData = await fetch('https://ipinfo.io/json');
-          location = await ipData.json();
+          location = await fetchLocation();
           location.time = Date.now();
         } catch(e) {
           console.log('Could not get location...');
