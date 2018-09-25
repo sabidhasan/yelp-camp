@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Pagination /> Pagination component snapshot matches what is expected 1`] = `
+<div
+  className="Pagination flex-center"
+>
+  <span
+    className="Pagination__count"
+  >
+    Page 
+    1
+     of 
+    5
+  </span>
+  <div
+    className="Pagination__pages"
+  >
+    <button
+      className="Pagination__link bold Pagination__link--current"
+      key="1"
+      onClick={[Function]}
+    >
+      1
+    </button>
+    <button
+      className="Pagination__link bold "
+      key="2"
+      onClick={[Function]}
+    >
+      2
+    </button>
+    <button
+      className="Pagination__link bold "
+      key="3"
+      onClick={[Function]}
+    >
+      3
+    </button>
+    <button
+      className="Pagination__link bold "
+      key="4"
+      onClick={[Function]}
+    >
+      4
+    </button>
+    <button
+      className="Pagination__link bold "
+      key="5"
+      onClick={[Function]}
+    >
+      5
+    </button>
+    <button
+      className="Pagination__link Pagination__next-link bold"
+      onClick={[Function]}
+    >
+      Next »
+    </button>
+  </div>
+</div>
+`;

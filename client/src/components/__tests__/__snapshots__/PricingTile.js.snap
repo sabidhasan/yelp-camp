@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PricingTile /> LoginForm component snapshot matches what is expected 1`] = `
+<Fragment>
+  <h3>
+    Title
+  </h3>
+  <div
+    className="Sidebar__text"
+  >
+    No Title pricing provided
+  </div>
+</Fragment>
+`;

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Reviews /> Reviews component snapshot matches what is expected 1`] = `
+<CSSTransitionGroup
+  className="Reviews"
+  component="ul"
+  transitionAppear={false}
+  transitionEnter={true}
+  transitionEnterTimeout={300}
+  transitionLeave={true}
+  transitionLeaveTimeout={300}
+  transitionName="Reviews-delete"
+>
+  <Review
+    deleteReview={[Function]}
+    displayName="Name"
+    id={1}
+    key="1"
+    photoURL="url"
+    rating={3.3}
+    text="Test"
+    time="October 1, 2018"
+    uid="10"
+  />
+  <Review
+    deleteReview={[Function]}
+    displayName="Name"
+    id={2}
+    key="2"
+    photoURL="url"
+    rating={3.3}
+    text="Test"
+    time="October 1, 2018"
+    uid="10"
+  />
+  <Review
+    deleteReview={[Function]}
+    displayName="Name"
+    id={3}
+    key="3"
+    photoURL="url"
+    rating={3.3}
+    text="Test"
+    time="October 1, 2018"
+    uid="10"
+  />
+  <Review
+    deleteReview={[Function]}
+    displayName="Name"
+    id={4}
+    key="4"
+    photoURL="url"
+    rating={3.3}
+    text="Test"
+    time="October 1, 2018"
+    uid="10"
+  />
+</CSSTransitionGroup>
+`;

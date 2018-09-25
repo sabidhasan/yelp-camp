@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Banner /> Banner component snapshot matches what is expected 1`] = `
+<div
+  className="Banner"
+  role="banner"
+>
+  <div
+    className="Banner__image-container"
+  >
+    <img
+      alt=""
+      className="Banner__image"
+      src="splash2.jpg"
+      srcSet="splash2.800.jpg 800w, splash2.1200.jpg 1200w, splash2.jpg"
+    />
+  </div>
+  <div
+    className="Banner__content"
+  >
+    <div
+      className="Banner__title-container"
+    >
+      <h1
+        className="Banner__title"
+      >
+        YelpCamp
+        <img
+          alt="YelpCamp"
+          className="Banner__logo"
+          src="logo.png"
+        />
+      </h1>
+      <h2
+        className="Banner__subtitle"
+      >
+        Search for campgrounds across Canada
+      </h2>
+    </div>
+    <Route
+      path="/"
+      render={[Function]}
+    />
+    <span
+      className="Banner__quote bold"
+    />
+    <i
+      className="fas fa-chevron-down Banner__chevron"
+    />
+  </div>
+</div>
+`;

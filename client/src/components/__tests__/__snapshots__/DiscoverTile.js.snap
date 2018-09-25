@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DiscoverTile /> DiscoverTile component snapshot matches what is expected 1`] = `
+<div
+  className="DiscoverTile flex-center"
+>
+  <LazyLoad
+    offset={0}
+    once={true}
+    overflow={false}
+    resize={false}
+    scroll={true}
+    unmountIfInvisible={false}
+  >
+    <img
+      alt="Sunset over mountains"
+      className="DiscoverTile__img"
+      src="test2.jpg"
+    />
+  </LazyLoad>
+  <span
+    className="DiscoverTile__text"
+  >
+    Find campgrounds in your province, and across Canada
+  </span>
+  <Link
+    className="DiscoverTile__button btn btn--large"
+    replace={false}
+    to="/discover"
+  >
+    DISCOVER
+  </Link>
+</div>
+`;

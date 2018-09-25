@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Select /> Select component snapshot matches what is expected 1`] = `
+<div
+  className="Select"
+  onClick={[Function]}
+  tabIndex="0"
+>
+  <span
+    className="Select__current-value bold "
+  >
+    Test Text
+  </span>
+  <ul
+    className="Select__items "
+  >
+    <li
+      className="Select__item Select__item--first"
+      key="-1"
+      onClick={[Function]}
+    >
+      Test Text
+    </li>
+    <li
+      aria-posinset={1}
+      aria-setsize={3}
+      className="Select__item Select__item--main"
+      key="0"
+      onClick={[Function]}
+    >
+      First
+    </li>
+    <li
+      aria-posinset={2}
+      aria-setsize={3}
+      className="Select__item Select__item--main"
+      key="1"
+      onClick={[Function]}
+    >
+      Second
+    </li>
+    <li
+      aria-posinset={3}
+      aria-setsize={3}
+      className="Select__item Select__item--main"
+      key="2"
+      onClick={[Function]}
+    >
+      Third
+    </li>
+  </ul>
+</div>
+`;

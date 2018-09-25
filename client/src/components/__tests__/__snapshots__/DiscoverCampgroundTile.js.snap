@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MultiCheckBox /> LoginForm component snapshot matches what is expected 1`] = `
+<div
+  className="DiscoverCampgroundTile"
+>
+  <Link
+    replace={false}
+    to="/campground/undefined"
+  >
+    <h2 />
+  </Link>
+  <p>
+     Region
+  </p>
+  <p />
+  <p>
+    ~
+    153
+     km away
+  </p>
+</div>
+`;

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RatingBar /> RatingBar component snapshot matches what is expected 1`] = `
+<div
+  aria-label="Rating: 3 stars out of 5. Rating selectable with arrow keys "
+  className="RatingBar  RatingBar--editable"
+  role="radiogroup"
+  tabIndex="0"
+>
+  <span
+    aria-checked="true"
+    aria-label="1 Star"
+    className="RatingBar__star star100 RatingBar__star--small"
+    key="0"
+    onClick={[Function]}
+    role="radio"
+  />
+  <span
+    aria-checked="true"
+    aria-label="2 Star"
+    className="RatingBar__star star100 RatingBar__star--small"
+    key="1"
+    onClick={[Function]}
+    role="radio"
+  />
+  <span
+    aria-checked="true"
+    aria-label="3 Star"
+    className="RatingBar__star star100 RatingBar__star--small"
+    key="2"
+    onClick={[Function]}
+    role="radio"
+  />
+  <span
+    aria-checked="false"
+    aria-label="4 Star"
+    className="RatingBar__star star0 RatingBar__star--small"
+    key="3"
+    onClick={[Function]}
+    role="radio"
+  />
+  <span
+    aria-checked="false"
+    aria-label="5 Star"
+    className="RatingBar__star star0 RatingBar__star--small"
+    key="4"
+    onClick={[Function]}
+    role="radio"
+  />
+</div>
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SingleCampgroundTitle /> SingleCampgroundTitle component snapshot matches what is expected 1`] = `
+<withStickyBar
+  name="Title"
+  region="Test"
+>
+  <SingleCampgroundTitle
+    name="Title"
+    region="Test"
+  >
+    <h1
+      aria-label="Campground name"
+      className="SingleCampgroundTitle "
+    >
+      Title
+    </h1>
+    <h2
+      aria-label="Campground region"
+      className="SingleCampgroundTitle__region"
+    >
+      Test
+       Region
+    </h2>
+  </SingleCampgroundTitle>
+</withStickyBar>
+`;

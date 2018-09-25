@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MultiCheckBox /> LoginForm component snapshot matches what is expected 1`] = `
+<div
+  className="FilterSearch Test-Class"
+>
+  <button
+    className="FilterSearch__button btn bold btn--flat"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-sliders-h"
+    />
+    Show
+     Filters
+  </button>
+  <div
+    className="FilterSearch__tiles "
+  >
+    <div
+      className="FilterSearch__section"
+      tabIndex="0"
+    >
+      <h2>
+        Region
+      </h2>
+      <MultiCheckBox
+        defaultText="Select Regions"
+        items={
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ]
+        }
+        onChange={[Function]}
+      />
+    </div>
+    <div
+      className="FilterSearch__section FilterSearch__distance"
+    >
+      <h2>
+        Distance
+      </h2>
+      <InputRange
+        allowSameValues={false}
+        classNames={
+          Object {
+            "activeTrack": "input-range__track input-range__track--active",
+            "disabledInputRange": "input-range input-range--disabled",
+            "inputRange": "input-range",
+            "labelContainer": "input-range__label-container",
+            "maxLabel": "input-range__label input-range__label--max",
+            "minLabel": "input-range__label input-range__label--min",
+            "slider": "input-range__slider",
+            "sliderContainer": "input-range__slider-container",
+            "track": "input-range__track input-range__track--background",
+            "valueLabel": "input-range__label input-range__label--value",
+          }
+        }
+        disabled={false}
+        formatLabel={[Function]}
+        maxValue={2}
+        minValue={0}
+        onChange={[Function]}
+        onChangeComplete={[Function]}
+        step={1}
+        value={
+          Object {
+            "max": 2,
+            "min": 0,
+          }
+        }
+      />
+      <h2>
+        Province
+      </h2>
+      <Select
+        defaultText="All Provinces"
+        items={
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ]
+        }
+        onChange={[Function]}
+      />
+      <h2>
+        Sort
+      </h2>
+      <Select
+        defaultText="Best Match"
+        items={
+          Array [
+            Object {
+              "text": "Distance",
+              "value": "Distance",
+            },
+          ]
+        }
+        onChange={[Function]}
+      />
+    </div>
+    <div
+      className="FilterSearch__section"
+    >
+      <h2>
+        Activities
+      </h2>
+      <MultiCheckBox
+        defaultText="Select Activities"
+        items={
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ]
+        }
+        onChange={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;

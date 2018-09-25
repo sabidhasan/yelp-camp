@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoginForm /> LoginForm component snapshot matches what is expected 1`] = `
+<div
+  className="LoginForm flex-center"
+>
+  <div
+    className="LoginForm__content"
+  >
+    <h1
+      className="LoginForm__title"
+    >
+      Sign Up or Sign In to YelpCamp
+    </h1>
+    <XButton
+      className="LoginForm__close bold"
+      onClick={[Function]}
+    />
+    <p
+      className="LoginForm__text"
+    >
+      We support logging in through 
+      <a
+        href="https://www.google.com"
+      >
+        Google
+      </a>
+       or 
+      <a
+        href="https://www.facebook.com"
+      >
+        Facebook
+      </a>
+      .
+      <br />
+      This is used verification, spam prevention and for your name if you choose to post a public comment. No other data is given to us by either provider.
+      <br />
+      Your data will not be kept on YelpCamp computers.
+    </p>
+    <button
+      className="LoginForm__login-button btn btn--small LoginForm__google"
+      onClick={[Function]}
+    >
+      <i
+        className="fab fa-google"
+      />
+      Google Login
+    </button>
+    <button
+      className="LoginForm__login-button btn btn--small LoginForm__facebook"
+      disabled={true}
+      onClick={[Function]}
+    >
+      <i
+        className="fab fa-facebook-square"
+      />
+      Facebook Login
+    </button>
+  </div>
+</div>
+`;

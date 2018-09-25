@@ -1,0 +1,714 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Search /> MultiCheckBox component snapshot matches what is expected 1`] = `
+<div
+  className="Search"
+>
+  <div
+    className="Search__filter-container"
+  >
+    <h1>
+      Search for Test Search
+    </h1>
+    <FilterSearch
+      className=""
+      filterCriteria={
+        Object {
+          "activities": Array [
+            "cable tv hookups",
+            "pull thru sites",
+            "full hookup sites",
+            "tenting sites",
+            "dumping station",
+            "open all year",
+            "flush toilets",
+            "pets allowed",
+            "laundromat",
+          ],
+          "maxDistance": 0,
+          "provinces": Array [
+            Object {
+              "text": "british columbia",
+              "value": "bc",
+            },
+            Object {
+              "text": "alberta",
+              "value": "ab",
+            },
+            Object {
+              "text": "saskatchewan",
+              "value": "sk",
+            },
+            Object {
+              "text": "manitoba",
+              "value": "mb",
+            },
+            Object {
+              "text": "ontario",
+              "value": "on",
+            },
+            Object {
+              "text": "quebec",
+              "value": "qc",
+            },
+            Object {
+              "text": "prince edward island",
+              "value": "pe",
+            },
+            Object {
+              "text": "new brunswick",
+              "value": "nb",
+            },
+            Object {
+              "text": "nova scotia",
+              "value": "ns",
+            },
+            Object {
+              "text": "newfoundland",
+              "value": "nl",
+            },
+            Object {
+              "text": "yukon territory",
+              "value": "yt",
+            },
+            Object {
+              "text": "northwest territories",
+              "value": "nt",
+            },
+            Object {
+              "text": "nunavut",
+              "value": "nu",
+            },
+          ],
+          "regions": Array [
+            "Montreal",
+            "North Lake",
+            "Kelowna",
+            "Thunder Bay",
+            "Edmonton",
+          ],
+        }
+      }
+      onChange={[Function]}
+    />
+  </div>
+  <Pagination
+    currentPage={1}
+    goToPageHandler={[Function]}
+    lastPage={3}
+    totalResults={25}
+  />
+  <div
+    className="Search__results"
+  >
+    <h2
+      className="Search__summary"
+    >
+      Showing results 1-10 of
+                       25 for
+      <span
+        className="bold"
+      >
+        Test Search
+      </span>
+    </h2>
+    <ol
+      className="Search__results-list"
+    >
+      <SearchResultTile
+        address=""
+        description=""
+        id={50}
+        key="50"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={1}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Montreal, Quebec"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={51}
+        key="51"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={2}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="North Lake, Manitoba"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={52}
+        key="52"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={3}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Kelowna, British Columbia"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={53}
+        key="53"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={4}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Thunder Bay, Ontario"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={54}
+        key="54"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={5}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Edmonton, Alberta"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={55}
+        key="55"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={6}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Kelowna, British Columbia"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={56}
+        key="56"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={7}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Montreal, Quebec"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={57}
+        key="57"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={8}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Thunder Bay, Ontario"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={58}
+        key="58"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={9}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Kelowna, British Columbia"
+      />
+      <SearchResultTile
+        address=""
+        description=""
+        id={59}
+        key="59"
+        name="Glowing Embers RV Park & Travel Centre"
+        number={10}
+        onTitleHover={[Function]}
+        rating={0}
+        regionAndProvince="Edmonton, Alberta"
+      />
+    </ol>
+    <Wrapper
+      hovered={null}
+      page={0}
+      results={
+        Array [
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 50,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 51,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Manitoba",
+            "region": "North Lake",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 52,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "British Columbia",
+            "region": "Kelowna",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 53,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Ontario",
+            "region": "Thunder Bay",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 54,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Alberta",
+            "region": "Edmonton",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 55,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "British Columbia",
+            "region": "Kelowna",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 56,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 57,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Ontario",
+            "region": "Thunder Bay",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 58,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "British Columbia",
+            "region": "Kelowna",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 59,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Alberta",
+            "region": "Edmonton",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 60,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 61,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Ontario",
+            "region": "Thunder Bay",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 62,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 63,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Manitoba",
+            "region": "North Lake",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 64,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Alberta",
+            "region": "Edmonton",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 65,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Ontario",
+            "region": "Thunder Bay",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 66,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 67,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "British Columbia",
+            "region": "Kelowna",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 68,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 69,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Alberta",
+            "region": "Edmonton",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 70,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "British Columbia",
+            "region": "Kelowna",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 71,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Manitoba",
+            "region": "North Lake",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 72,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Quebec",
+            "region": "Montreal",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 73,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Ontario",
+            "region": "Thunder Bay",
+          },
+          Object {
+            "activities": Array [
+              "cable tv hookups",
+              "pull thru sites",
+              "full hookup sites",
+              "tenting sites",
+              "dumping station",
+              "open all year",
+              "flush toilets",
+              "pets allowed",
+              "laundromat",
+            ],
+            "campgroundName": "Glowing Embers RV Park & Travel Centre",
+            "id": 74,
+            "lat": 53.541219,
+            "lon": -113.775276,
+            "province": "Alberta",
+            "region": "Edmonton",
+          },
+        ]
+      }
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Activities /> LoginForm component snapshot matches what is expected 1`] = `
+<ul
+  className="Activities"
+  role="table"
+>
+  <li
+    className="Activities__activity flex-center"
+    key="0"
+    role="cell"
+  >
+    <span
+      className="Activities__logo"
+    >
+      s
+    </span>
+    <span
+      className="Activities__name bold"
+    >
+      aa
+    </span>
+  </li>
+  <li
+    className="Activities__activity flex-center"
+    key="1"
+    role="cell"
+  >
+    <span
+      className="Activities__logo"
+    >
+      s
+    </span>
+    <span
+      className="Activities__name bold"
+    >
+      aa
+    </span>
+  </li>
+</ul>
+`;

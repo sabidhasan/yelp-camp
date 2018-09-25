@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer /> Footer component snapshot matches what is expected 1`] = `
+<footer
+  className="Footer flex-center"
+>
+  <h2
+    className="Footer__text"
+  >
+    YelpCamp 2018
+  </h2>
+  <p
+    role="contentinfo"
+  >
+    1234 Main St NW, Edmonton, AB T6J 1K1
+    <br />
+    <span
+      aria-label="Phone Number"
+      className="bold"
+    >
+      Phone
+    </span>
+    : 1 800 555 5555
+    <br />
+    <span
+      aria-label="Email Address"
+      className="bold"
+    >
+      Email
+    </span>
+    : contact@yelpcamp.com
+  </p>
+  <h2
+    className="Footer__about"
+  >
+    This website has no affiliation with Yelp, Inc. in any way.
+  </h2>
+  <h2
+    className="Footer__about"
+  >
+    Made with 
+    <span
+      aria-label="love"
+      role="img"
+    >
+      💚
+    </span>
+    and 
+    <span
+      aria-label="coffee"
+      role="img"
+    >
+      ☕
+    </span>
+     in Edmonton, Canada
+  </h2>
+  <div
+    className="Footer__social"
+  >
+    <a
+      aria-label="Twitter Link"
+      className="Footer__social-link"
+      href="http://twitter.com/abid786"
+      id="Footer__social-twitter"
+    >
+      <i
+        aria-labelledby="Footer__social-twitter"
+        className="fab fa-twitter Footer__twitter"
+      />
+    </a>
+    <a
+      aria-label="Github Link"
+      className="Footer__social-link"
+      href="https://github.com/sabidhasan#"
+      id="Footer__social-github"
+    >
+      <i
+        aria-labelledby="Footer__social-github"
+        className="fab fa-github-square Footer__github"
+      />
+    </a>
+    <a
+      aria-label="Stack Overflow Link"
+      className="Footer__social-link"
+      href="https://stackoverflow.com/users/7509481/abid-hasan"
+      id="Footer__social-stack"
+    >
+      <i
+        aria-labelledby="Footer__social-stack"
+        className="fab fa-stack-overflow Footer__stackoverflow"
+      />
+    </a>
+    <a
+      aria-label="LinkedIn Link"
+      className="Footer__social-link"
+      href="https://www.linkedin.com/in/abidhasan/"
+      id="Footer__social-linkedin"
+    >
+      <i
+        aria-labelledby="Footer__social-linkedin"
+        className="fab fa-linkedin Footer__linkedin"
+      />
+    </a>
+  </div>
+</footer>
+`;

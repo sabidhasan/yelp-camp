@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CampgroundTile /> CampgroundTile component snapshot matches what is expected 1`] = `
+<Fragment>
+  <LazyLoad
+    offset={0}
+    once={true}
+    overflow={false}
+    resize={false}
+    scroll={true}
+    unmountIfInvisible={false}
+  >
+    <img
+      alt=""
+      className="CampgroundTile__img"
+    />
+  </LazyLoad>
+  <Link
+    className="CampgroundTile__link"
+    replace={false}
+    to="campground/undefined"
+  >
+    <h2
+      className="CampgroundTile__name bold"
+    />
+  </Link>
+  <span
+    className="CampgroundTile__region"
+  />
+  <RatingBar
+    small={true}
+  />
+  <span
+    className="CampgroundTile__review-count"
+  >
+    5 Reviews
+  </span>
+</Fragment>
+`;

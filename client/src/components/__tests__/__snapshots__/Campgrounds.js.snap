@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Campgrounds /> Campgrounds component snapshot matches what is expected 1`] = `
+<ul
+  className="Campgrounds"
+>
+  <li
+    className="Campgrounds__header flex-center"
+  >
+    <h1
+      className="Campgrounds__header-title"
+    >
+      Some Awesome Campgrounds
+    </h1>
+    <i
+      className="Campgrounds__random fas fa-sync-alt "
+      onClick={[Function]}
+    />
+  </li>
+</ul>
+`;

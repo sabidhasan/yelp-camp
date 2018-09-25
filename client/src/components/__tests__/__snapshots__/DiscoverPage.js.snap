@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DiscoverPage /> DiscoverPage component snapshot matches what is expected 1`] = `
+<div
+  className="Discover"
+>
+  <div
+    className="Discover__title"
+  >
+    <h1
+      className="Discover__header"
+    >
+      Discover campgrounds in 
+      <span
+        className="Discover__province"
+      >
+        alberta
+      </span>
+    </h1>
+    <p>
+      We have 
+      <span
+        className="Discover__length"
+      >
+        3
+      </span>
+       campgrounds in 
+      alberta
+      , of which
+       3
+       are
+       
+       shown on the map
+    </p>
+  </div>
+  <div
+    className="Discover__content"
+  >
+    <div
+      className="Discover__map google-map"
+    >
+      <Wrapper
+        campgrounds={
+          Array [
+            Object {
+              "id": 1,
+            },
+            Object {
+              "id": 2,
+            },
+            Object {
+              "id": 3,
+            },
+          ]
+        }
+        setSelected={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;

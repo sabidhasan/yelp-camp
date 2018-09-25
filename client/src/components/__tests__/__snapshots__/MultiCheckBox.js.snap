@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MultiCheckBox /> MultiCheckBox component snapshot matches what is expected 1`] = `
+<Fragment>
+  <p
+    className="bold"
+  >
+    <span
+      className="MultiCheckBox__title-text"
+    >
+      Test Text
+       
+    </span>
+    <span
+      className="MultiCheckBox__title-length"
+    >
+      (
+      3
+      /
+      3
+       Selected)
+    </span>
+  </p>
+  <button
+    className="btn btn--flat"
+    onClick={[Function]}
+  >
+    Select None
+  </button>
+  <div
+    className="MultiCheckBox__container"
+  >
+    <label
+      className="MultiCheckBox__label"
+      key="0"
+    >
+      <input
+        aria-checked="checked"
+        aria-describedby="MultiCheckBox__text"
+        checked="checked"
+        className="MultiCheckBox__checkbox MultiCheckBox__checkbox--checked"
+        onChange={[Function]}
+        type="checkbox"
+        value="First"
+      />
+      <span
+        className="MultiCheckBox__text"
+        id="MultiCheckBox__text"
+      >
+        First
+      </span>
+    </label>
+    <label
+      className="MultiCheckBox__label"
+      key="1"
+    >
+      <input
+        aria-checked="checked"
+        aria-describedby="MultiCheckBox__text"
+        checked="checked"
+        className="MultiCheckBox__checkbox MultiCheckBox__checkbox--checked"
+        onChange={[Function]}
+        type="checkbox"
+        value="Second"
+      />
+      <span
+        className="MultiCheckBox__text"
+        id="MultiCheckBox__text"
+      >
+        Second
+      </span>
+    </label>
+    <label
+      className="MultiCheckBox__label"
+      key="2"
+    >
+      <input
+        aria-checked="checked"
+        aria-describedby="MultiCheckBox__text"
+        checked="checked"
+        className="MultiCheckBox__checkbox MultiCheckBox__checkbox--checked"
+        onChange={[Function]}
+        type="checkbox"
+        value="Third"
+      />
+      <span
+        className="MultiCheckBox__text"
+        id="MultiCheckBox__text"
+      >
+        Third
+      </span>
+    </label>
+  </div>
+</Fragment>
+`;

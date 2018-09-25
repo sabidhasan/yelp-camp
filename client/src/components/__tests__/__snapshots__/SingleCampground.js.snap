@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SingleCampground /> SingleCampground component snapshot matches what is expected 1`] = `
+<div
+  className="SingleCampground"
+>
+  <withStickyBar
+    name="Sample Name"
+    region="Region, Province"
+  />
+  <section
+    className="SingleCampground__review-link"
+  >
+    <ReviewButton
+      toggleReviewForm={[Function]}
+    />
+    <button
+      aria-label="Add to Shopping Cart"
+      className="SingleCampground__cart btn btn--flat"
+      onClick={[Function]}
+    >
+      <i
+        className="fas fa-shopping-cart"
+      />
+      Add to Cart
+    </button>
+  </section>
+  <section
+    className="SingleCampground__rating"
+  >
+    <RatingBar
+      rating={2.75}
+    />
+    <h2
+      className="SingleCampground__rating-count"
+    >
+      4
+       Review
+      s
+    </h2>
+  </section>
+  <section
+    className="CampMap"
+  >
+    <Wrapper />
+  </section>
+  <section
+    className="SingleCampground__info-weather"
+  >
+    <InfoBox />
+    <WeatherBox />
+  </section>
+  <section
+    className="SingleCampground__description"
+  >
+    <h2>
+      Description
+    </h2>
+    This is a description of the campground
+  </section>
+  <Sidebar />
+  <LazyLoad
+    offset={0}
+    once={true}
+    overflow={false}
+    resize={false}
+    scroll={true}
+    unmountIfInvisible={false}
+  >
+    <img
+      alt="Campground"
+      className="SingleCampground__image"
+    />
+  </LazyLoad>
+  <section
+    className="SingleCampground__activities"
+  >
+    <h1
+      className="SingleCampground__activities-header"
+    >
+      Activities at 
+      Sample Name
+    </h1>
+    <Activities />
+  </section>
+  <section
+    className="SingleCampground__reviews-header"
+  >
+    <h1>
+      Reviews
+    </h1>
+    <ReviewButton
+      toggleReviewForm={[Function]}
+    />
+  </section>
+  <Reviews
+    comments={
+      Array [
+        Object {
+          "rating": 4,
+        },
+        Object {
+          "rating": 2,
+        },
+        Object {
+          "rating": 1,
+        },
+        Object {
+          "rating": 4,
+        },
+      ]
+    }
+    deleteReview={[Function]}
+  />
+</div>
+`;

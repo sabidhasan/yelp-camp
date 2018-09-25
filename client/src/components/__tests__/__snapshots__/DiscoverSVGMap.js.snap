@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DiscoverSVGMap /> DiscoverSVGMap component snapshot matches what is expected 1`] = `
+<Fragment>
+  <h1>
+    Discover Campgrounds in Canada
+  </h1>
+  <p>
+    Explore all the campgrounds we have, from hiking the Rocky Mountains to the fields of Prince Edward Island. Click a province to see its campgrounds.
+  </p>
+  <div
+    className="DiscoverSVGMap"
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
+  >
+    <CanadaMapSVG />
+    <span
+      className="DiscoverSVGMap__map-text bold flex-center"
+    >
+      Discover
+      <div
+        className="DiscoverSVGMap__scroll"
+      >
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="0"
+        >
+          bc
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="1"
+        >
+          ab
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="2"
+        >
+          sk
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="3"
+        >
+          mb
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="4"
+        >
+          on
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="5"
+        >
+          qc
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="6"
+        >
+          pe
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="7"
+        >
+          nb
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="8"
+        >
+          ns
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="9"
+        >
+          nl
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="10"
+        >
+          yt
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="11"
+        >
+          nt
+        </span>
+        <span
+          className="DiscoverSVGMap__scroll-prov"
+          key="12"
+        >
+          nu
+        </span>
+      </div>
+      Campgrounds
+    </span>
+  </div>
+</Fragment>
+`;

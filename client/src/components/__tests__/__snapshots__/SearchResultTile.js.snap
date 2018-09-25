@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchResultTile /> Snapshot matches what is expected 1`] = `
+<li
+  className="SearchResultTile"
+>
+  <a
+    className="SearchResultTile__title-container"
+    href="/campground/4"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <h2
+      className="SearchResultTile__title bold"
+    >
+      5. Test Name
+    </h2>
+  </a>
+  <h2
+    className="SearchResultTile__region"
+  >
+    Region, Province
+  </h2>
+  <p
+    className="SearchResultTile__address"
+  >
+    123 Main St, City, PR
+  </p>
+  <p
+    className="SearchResultTile__distance"
+  >
+    10 km away
+  </p>
+  <p
+    className="SearchResultTile__description"
+  >
+    Some description
+  </p>
+  <img
+    alt=""
+    className="SearchResultTile__image"
+    src="source"
+  />
+  <div
+    className="SearchResultTile__rating flex-center"
+  >
+    <RatingBar
+      rating={5}
+      small={true}
+    />
+    <p
+      className="SearchResultTile__rating-count"
+    >
+      4
+       Review
+      s
+    </p>
+  </div>
+</li>
+`;

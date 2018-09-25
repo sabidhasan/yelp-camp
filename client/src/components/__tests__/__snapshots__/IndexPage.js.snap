@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IndexPage /> IndexPage component snapshot matches what is expected 1`] = `
+<Fragment>
+  <Banner />
+  <LandingText />
+  <LandingTiles />
+  <DiscoverTile />
+  <Campgrounds />
+</Fragment>
+`;

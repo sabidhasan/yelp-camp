@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InfoBox /> LoginForm component snapshot matches what is expected 1`] = `
+<div
+  className="InfoBox"
+>
+  <span
+    className="InfoBox__icon"
+  >
+    <span
+      aria-label="Address"
+      id="InfoBox__address"
+      role="img"
+    >
+      📍
+    </span>
+  </span>
+  <span
+    aria-labelledby="InfoBox__address"
+    className="InfoBox__data bold"
+  >
+    Some Address
+  </span>
+  <span
+    className="InfoBox__icon"
+  >
+    <span
+      aria-label="Get directions"
+      id="InfoBox__directions"
+      role="img"
+    >
+      🚗
+    </span>
+  </span>
+  <span
+    aria-labelledby="InfoBox__directions"
+    className="InfoBox__data"
+  >
+    <a
+      href="https://www.google.com/maps/dir/Some Address"
+    >
+      Get Directions
+    </a>
+  </span>
+  <span
+    aria-label="Phone"
+    className="InfoBox__icon"
+    id="InfoBox__phone"
+    role="img"
+  >
+    📞
+  </span>
+  <span
+    aria-labelledby="InfoBox__phone"
+    className="InfoBox__data"
+  >
+    123-456-7890
+  </span>
+  <span
+    aria-label="Email address"
+    className="InfoBox__icon"
+    id="InfoBox__email"
+    role="img"
+  >
+    ✉️
+  </span>
+  <span
+    aria-labelledby="InfoBox__email"
+    className="InfoBox__data"
+  >
+    Some Email
+  </span>
+</div>
+`;

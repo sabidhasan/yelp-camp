@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Sidebar /> LoginForm component snapshot matches what is expected 1`] = `
+<aside
+  className="Sidebar"
+>
+  <section
+    className="Sidebar__section"
+  >
+    <h2
+      className="Sidebar__heading"
+    >
+      Hours
+    </h2>
+    <div
+      className="Sidebar__details"
+    >
+      <h3
+        className="Sidebar__subheading Sidebar__daily"
+      >
+        Daily
+      </h3>
+      <div
+        className="Sidebar__text"
+      />
+      <h3
+        className="Sidebar__subheading Sidebar__seasonal"
+      >
+        Seasonal
+      </h3>
+      <div
+        className="Sidebar__text Sidebar__seasonal-text"
+      >
+        1 to 2
+      </div>
+    </div>
+  </section>
+  <section
+    className="Sidebar__section"
+  >
+    <h2
+      className="Sidebar__heading"
+    >
+      Camp Sites
+    </h2>
+    <div
+      className="Sidebar__details"
+    >
+      <div
+        className="Sidebar__text Sidebar__campsites"
+      >
+        No details on how many campsites at this location
+      </div>
+    </div>
+  </section>
+  <section
+    className="Sidebar__section"
+  >
+    <h2
+      className="Sidebar__heading"
+    >
+      Prices
+    </h2>
+    <div
+      className="Sidebar__details"
+    >
+      <h3
+        className="Sidebar__subheading"
+      >
+        Visitors
+      </h3>
+      <div
+        className="Sidebar__text Sidebar__pricing"
+      >
+        Free
+      </div>
+      <PricingTile
+        data={
+          Object {
+            "campsites": undefined,
+            "hours": Object {
+              "daily": Array [],
+              "seasonal": Array [
+                "1",
+                "2",
+              ],
+            },
+            "paymentMethods": Array [
+              "interac",
+              "cash",
+              "cash",
+            ],
+            "prices": Object {},
+          }
+        }
+        type="daily"
+      />
+      <PricingTile
+        data={
+          Object {
+            "campsites": undefined,
+            "hours": Object {
+              "daily": Array [],
+              "seasonal": Array [
+                "1",
+                "2",
+              ],
+            },
+            "paymentMethods": Array [
+              "interac",
+              "cash",
+              "cash",
+            ],
+            "prices": Object {},
+          }
+        }
+        type="weekly"
+      />
+      <PricingTile
+        data={
+          Object {
+            "campsites": undefined,
+            "hours": Object {
+              "daily": Array [],
+              "seasonal": Array [
+                "1",
+                "2",
+              ],
+            },
+            "paymentMethods": Array [
+              "interac",
+              "cash",
+              "cash",
+            ],
+            "prices": Object {},
+          }
+        }
+        type="seasonal"
+      />
+      <div
+        className="Sidebar__text"
+      />
+    </div>
+  </section>
+  <section
+    className="Sidebar__section"
+  >
+    <h2
+      className="Sidebar__heading"
+    >
+      Payment Methods
+    </h2>
+    <div
+      className="Sidebar__text"
+    >
+      <h2
+        className="Sidebar__payment"
+        key="0"
+      >
+        💳
+         
+        interac
+      </h2>
+      <h2
+        className="Sidebar__payment"
+        key="1"
+      >
+        💵
+         
+        cash
+      </h2>
+      <h2
+        className="Sidebar__payment"
+        key="2"
+      >
+        💵
+         
+        cash
+      </h2>
+    </div>
+  </section>
+</aside>
+`;

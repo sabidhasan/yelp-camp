@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchBar /> SearchBar component snapshot matches what is expected 1`] = `
+<form
+  autoComplete="off"
+  className="SearchBar"
+  onSubmit={[Function]}
+  role="search"
+>
+  <input
+    aria-labelledby="SearchBar__label"
+    className="SearchBar__input"
+    id="search"
+    name="search"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyUp={[Function]}
+    placeholder="Province, Region, City, Campground Name, Amenity, etc."
+    type="text"
+    value="Some Search Query"
+  />
+  <label
+    className="SearchBar__label bold flex-center"
+    htmlFor="search"
+    id="SearchBar__label"
+  >
+    Find
+  </label>
+  <button
+    aria-label="Search"
+    className="SearchBar__button flex-center"
+    onClick={[Function]}
+    type="submit"
+  >
+    <i
+      className="SearchBar__button-icon fas fa-search"
+    />
+  </button>
+  <ul
+    aria-atomic="true"
+    aria-hidden="true"
+    aria-label="Search results"
+    aria-live="assertive"
+    className="SearchBar__results--hidden"
+    role="listbox"
+  >
+    <p
+      className="SearchBar__no-results bold"
+    >
+      No results found for '
+      Some Search Query
+      '
+    </p>
+  </ul>
+</form>
+`;

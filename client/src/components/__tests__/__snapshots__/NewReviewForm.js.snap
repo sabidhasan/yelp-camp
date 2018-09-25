@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NewReviewForm /> NewReviewForm component snapshot matches what is expected 1`] = `
+<form
+  className="NewReviewForm"
+  role="textbox"
+>
+  <RatingBar
+    rating={0}
+    updateRating={[Function]}
+  />
+  <span
+    className="NewReviewForm__author bold"
+  >
+    Posting publically as 
+    Name
+    <img
+      alt="User icon"
+      className="NewReviewForm__image"
+      src="url"
+    />
+  </span>
+  <textarea
+    aria-invalid={false}
+    aria-required="true"
+    className="NewReviewForm__text"
+    maxLength={1000}
+    name="reviewText"
+    onChange={[Function]}
+    placeholder="Write your honest review here!"
+    required={true}
+    value=""
+  />
+  <span
+    aria-relevant="all"
+    className="NewReviewForm__error bold"
+    role="alert"
+  />
+  <div
+    className="NewReviewForm__controls"
+  >
+    <button
+      aria-disabled="false"
+      className="NewReviewForm__post-review btn btn--small"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Post Your Review
+    </button>
+    <button
+      className="NewReviewForm__cancel btn btn--small"
+      onClick={[Function]}
+    >
+      Cancel
+    </button>
+    <div
+      className="NewReviewForm__progress flex-center bold"
+    >
+      <t
+        background={false}
+        backgroundPadding={null}
+        classForPercentage={null}
+        className=""
+        classes={
+          Object {
+            "background": "CircularProgressbar-background",
+            "path": "CircularProgressbar-path",
+            "root": "CircularProgressbar",
+            "text": "CircularProgressbar-text",
+            "trail": "CircularProgressbar-trail",
+          }
+        }
+        counterClockwise={false}
+        initialAnimation={false}
+        percentage={0}
+        strokeWidth={15}
+        styles={
+          Object {
+            "path": Object {
+              "stroke": null,
+            },
+          }
+        }
+        textForPercentage={[Function]}
+      />
+    </div>
+  </div>
+</form>
+`;

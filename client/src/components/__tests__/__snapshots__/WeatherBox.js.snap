@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WeatherBox /> LoginForm component snapshot matches what is expected 1`] = `
+<div
+  className="WeatherBox"
+>
+  <h2
+    className="WeatherBox__header"
+  >
+    Current Conditions
+  </h2>
+  <span
+    aria-hidden="true"
+    className="WeatherBox__summary"
+  />
+  <span
+    className="WeatherBox__text"
+  >
+    Sample Summary
+  </span>
+  <span
+    className="WeatherBox__item"
+  >
+    Temp 
+    50
+    ℉
+  </span>
+  <span
+    className="WeatherBox__item"
+  >
+    Humidity 
+    5000
+    %
+  </span>
+  <span
+    className="WeatherBox__item"
+  >
+    Wind 
+    5
+     mph
+  </span>
+</div>
+`;

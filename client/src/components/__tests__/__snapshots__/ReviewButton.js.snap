@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReviewButton /> LoginForm component snapshot matches what is expected 1`] = `
+<button
+  aria-label="Write a Review"
+  className="ReviewButton btn btn--large"
+  onClick={[Function]}
+>
+  <span
+    aria-hidden="true"
+    aria-label="Review"
+    className="ReviewButton__icon"
+    role="img"
+  >
+    ✏️
+  </span>
+  Write a Review
+</button>
+`;
