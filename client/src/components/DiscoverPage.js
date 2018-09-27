@@ -36,7 +36,7 @@ class Discover extends React.Component {
 
   async componentDidMount() {
     try {
-      const campgrounds = await fetchDiscover()
+      const campgrounds = await fetchDiscover(this.state.province.shortName)
       this.setState({ campgrounds })
       document.title = `YelpCamp | Campgrounds in ${this.state.province.fullName}`
     } catch (err) {
