@@ -18,6 +18,7 @@ html, body {
   font-family: 'IBM Plex Sans Condensed', sans-serif; font-size: 100%; margin: 0;
   padding: 0; box-sizing: border-box; background-color: var(--very-light);
   /* background-image: url("../images/background.png"); */
+  background-image: url("https://i.imgur.com/MJAkxbh.png");
 }
 body {
   min-height: 100vh;
@@ -916,7 +917,8 @@ button[disabled]:hover {
 .SingleCampground {
   display: grid; grid-gap: 10px 25px; grid-template-columns: 3.5fr minmax(230px, 1fr);
   padding: 20px;
-  background: linear-gradient(to bottom, var(--light) 0%, var(--light) 380px, #fff 380px);
+  /* background: linear-gradient(to bottom, var(--light) 0%, var(--light) 380px, #fff 380px); */
+  background: linear-gradient(to bottom, var(--light) 0%, var(--light) 380px, rgba(255, 255, 255, 0) 380px);
   grid-template-areas:
       "title title"
       "region reviewlink"
@@ -1064,8 +1066,9 @@ button[disabled]:hover {
   height: 28px; margin: 0 7px 0 0; border-radius: 50%;
 }
 .NewReviewForm__text {
-  border: 0; width: 100%; min-height: 100px; font-size: 1.1rem; font-family: inherit;
-  grid-column: 1 / -1; resize: none; line-height: 1.5rem;
+  border: 1px solid var(--accent); width: 100%; min-height: 100px;
+  font-size: 1.1rem; font-family: inherit; margin: 8px 0; opacity: 0.8;
+  grid-column: 1 / -1; resize: none; line-height: 1.5rem; background: var(--light);
 }
 .NewReviewForm__error {
   grid-column: 1 / -1; color: var(--dark-main)
@@ -1083,7 +1086,7 @@ button[disabled]:hover {
   width: 30px; height: 30px; margin-left: 20px;
 }
 .CircularProgressbar .CircularProgressbar-path {
-  stroke: var(--dark-main); stroke-linecap: round; transition: all 0.6s;
+  stroke: var(--light); stroke-linecap: round; transition: all 0.6s;
 }
 .CircularProgressbar .CircularProgressbar-trail {
   stroke: var(--accent);

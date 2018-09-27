@@ -111,7 +111,7 @@ class NewReviewForm extends React.Component {
     if (fillPercentage === 100) {
       styles.path.stroke = 'red';
     } else if (fillPercentage > 85) {
-      styles.path.stroke = 'orange';
+      styles.path.stroke = 'pink';
     }
 
     return (
