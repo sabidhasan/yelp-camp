@@ -91,6 +91,8 @@ class SingleCampground extends React.Component {
       return;
     }
 
+    if (!window.confirm('Are you sure want to delete the review?\nThis action cannot be undone')) return
+
     try {
       this.context.startLoad(this.constructor.name, 'comments');
       const postBody = {
