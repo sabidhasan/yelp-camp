@@ -12,7 +12,12 @@ const Review = (props, context) => (
       </span>
       <div className='Review__rating'>
         <RatingBar className='Review__rating-bar' rating={props.rating} small={true} />
-        <span className='Review__time-stamp'>{formatDate(new Date(props.time))}</span>
+        <time
+          className='Review__time-stamp'
+          datetime={new Date(props.time)}
+        >
+          {formatDate(new Date(props.time))}
+        </time>
       </div>
       {context.user && context.user.uid === props.uid ?
         <XButton className='Review__delete bold' onClick={() => props.deleteReview(props.id)} />
