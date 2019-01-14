@@ -23,6 +23,7 @@ app.get('*', (req, res) => {
 // });
 
 // Start backend server
-app.listen(8090, function() {
-  console.log("Server running on port 8090 (http://localhost:8090).");
+const port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log(`Server running on port ${port} (http://localhost:${port}).`);
 });
