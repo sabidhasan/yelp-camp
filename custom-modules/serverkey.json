@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "yelp-camp-4ed80",
+  "private_key_id": "724098840f0ceb2cae655cf2d69336305a3d2282",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDWR9SJIpjGDYZg\n7ezAU4nneA/ksl0diIv8vlvO/ocUwblfHLqdDrTbMM86K5TjvH9S00Bxu8iy4TZf\nMRzLRyMfuX4Ye86hMZjMtqC6UrOWRW1trwlfaRBjqqKabveFQBqUt5/E4CodI/as\nTcvUkX4ds8PQPFKZeoFmAnkQ4zfgl9GCScm6kpk8bj+lK+PfWon1oXFT6eGFqMIB\nOE6ApRoIoG8I3DJPHdFpyf8Omob4j5hlaQNiqyftSR6bYiZDClhmEdW4xnRKbLm2\nrzoJTG6Hd/4jRECmZabwjjU3Q0ZRRqJxL3iEgjL9dLey5Lgm4KSBFyyDrYR5OInZ\nx7+mxwKZAgMBAAECggEAEYcvRQdHkCfdRQ+HufthzZJK81R9yaOSSk3qzHKSOF0l\nnZ8H5HIM0qmm9RivvxziHQA7BmXe46o76USAspLynHuiODyxNdfAEO4KSF0cfWw9\n280hV9fymo+3AymUy/MaJlRXWHwhWPniPMz7IYiQ1IgqBxFWjMelgkn6GKrYtsfX\nmruUS4viTh01Aij706qEHHWANoAY1qnJxHWEi5IOYxQyHu+8MEn2+W2Nk11KxjEd\n/okOIE/NLpa/ifmLLQQJn9+WGrRHFt8Ct3OOeClsn5W/jjMAGDcKHca14N0w4+Ni\nnYNtJ4Vx+GoAHm/5wLp+7TG64JLadKIYjaCerJbq+wKBgQD+NOy4oBt+OXKNw4nH\nOjDeu3s3onKNu0Wi3DturMyAACPx7EC+HPgzP1lg8abnaKTj6PJ/2leBk+RieKCg\nKphABM+T/xjuao5cMRQ73TrTWPRxN+dHXARt1HIsHqoRfxBgGR69ira7eRBtTvqv\ng7SDg+sGCkkd8xHy78vRfhReewKBgQDXys1norwWWKRqULUfgNIP3QZ4iU4jaeo6\nbuQtGi6C/ZXGJ0l14pyKERsFF4wrQVvFWGbz738FAFAzIEOZ3gOmVwx1hgxGbWKZ\nZsNQjN6aCjpDATeWj2QbGxE1EEuvnpKlpZTCiGZuXCuv6qBMbD6N3xcMrYD3DLZC\npwQulk0g+wKBgGzQEMhS2JHmW0+tdMuP8B1XWT4OTkS29e7poJMWao8cAEbtHyWB\n1whwxHyH1C7YD0TzkOIDf1ObD7bK9c65jORSatxp5K0hdYCnDYc2gpi3SiMwj9Ju\n5AJzXs/d7GSC5GqONidiOifzgYGYvhvlH57wF+lE+9lTE8rOtIsfEe8DAoGBAJB3\nWipOnUMMlw4B+DAeCwPJwgJCUgiNaN0zzhiP1aGmaXXeaWS9kHUyXHd9Oz7eI7Ur\nqMkYhl3vxsFjkT5ajvD2iAXJ9z/TDVaLoKi1lnVj8XtYPkHSv38SEOQIg9MQAzdY\ncg4GSSULGchM+IIRWZObThATvCoo3YAj1j3mK76vAoGAfANyc9fOES5wwdEZpjfU\nkDEVqa7AktMrtQ+H9pDO41TY82NyCBcnP+idUTEdcJ1hfncTpqzIPSWREM7Lx62n\nK+jFmRHQNgp67RGez2sKbjXufJqCZXv7kc89e4cF/BBuL3H+UuwO70dyG+C1t3a0\nrYGPvmf4kM/ZJaSgzDoSzpM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-t509a@yelp-camp-4ed80.iam.gserviceaccount.com",
+  "client_id": "108938851828094092571",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-t509a%40yelp-camp-4ed80.iam.gserviceaccount.com"
+}

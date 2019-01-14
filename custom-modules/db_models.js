@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 // Connect to MONGODB, and define schemas
-mongoose.connect('mongodb://localhost/yelp_camp')
+mongoose.connect('mongodb://heroku_r4qwxdhn:1v1lp9n108mp2i03gr4tmtiude@ds217131.mlab.com:17131/heroku_r4qwxdhn')
 
 var campgroundSchema = new mongoose.Schema({
   name: String, province: String, lat: Number, lon: Number,
