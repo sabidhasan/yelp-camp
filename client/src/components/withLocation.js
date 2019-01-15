@@ -25,7 +25,9 @@ const withLocation = (Component) => {
     async componentDidMount() {
       this.context.startLoad(this.constructor.name);
       // See if data is in localStorage
-      var location = localStorage.location !== 'undefined' && JSON.parse(localStorage.location);
+      var location = localStorage.location !== 'undefined'
+        && localStorage.location !== undefined
+        && JSON.parse(localStorage.location);
 
       if ((!location) || (!location.loc) || ((Date.now() - location.time) > 8e7)) {
         //Fetch location
