@@ -126,7 +126,7 @@ class App extends React.Component {
             <DiscoverPage {...routerProps} />
           )} />
 
-          <Route exact path='/search' render={(routerProps) => (
+          <Route exact path='/search-results' render={(routerProps) => (
             <Search {...routerProps} />
           )}/>
 

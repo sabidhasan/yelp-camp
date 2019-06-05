@@ -83,7 +83,11 @@ router.get('/campground', async function(req, res) {
 });
 
 router.get('/search', function(req, res) {
-  res.json(search.doSearch(req.query.q))
+  var ret = {};
+  if (req.query && req.query.q) {
+    ret = search.doSearch(req.query.q);
+  }
+  res.json(ret);
 });
 
 module.exports = router

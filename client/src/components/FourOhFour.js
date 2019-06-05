@@ -9,7 +9,7 @@ const FourOhFour = (props) => {
       <p>
         Sorry, the page could not be found.
         <br />
-        Try <Link className='FourOhFour__link' to={`/search`}>search</Link> or the <Link className='FourOhFour__link' to={`/`}>homepage</Link>
+        Try <Link className='FourOhFour__link' to={`/search-results`}>search</Link> or the <Link className='FourOhFour__link' to={`/`}>homepage</Link>
       </p>
     </div>
   )
